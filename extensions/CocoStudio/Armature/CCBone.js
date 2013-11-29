@@ -409,6 +409,17 @@ cc.Bone = cc.NodeRGBA.extend({
     },
 
     /**
+     * change display by name
+     * @param {String} name
+     * @param {Boolean} force
+     */
+
+    changeDisplayByName:function (name, force) {
+        this._displayManager.changeDisplayByName(name, force);
+    },
+
+
+    /**
      * displayManager setter
      * @param {cc.DisplayManager}
         */
