@@ -275,7 +275,7 @@ cc.SpriteFrameCache = cc.Class.extend(/** @lends cc.SpriteFrameCache# */{
     removeSpriteFrames: function () {
         this._spriteFrames = [];
         this._spriteFramesAliases = [];
-        this._loadedFileNames = {};
+        this._loadedFileNames = [];
     },
 
     /**
@@ -296,7 +296,7 @@ cc.SpriteFrameCache = cc.Class.extend(/** @lends cc.SpriteFrameCache# */{
             delete(this._spriteFrames[name]);
         }
         // XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
-        this._loadedFileNames = {};
+        this._loadedFileNames = [];
     },
 
     /**
