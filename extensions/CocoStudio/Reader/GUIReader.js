@@ -800,7 +800,11 @@ ccs.WidgetPropertiesReader0300 = ccs.WidgetPropertiesReader.extend({
             widget = ccs.LoadingBar.create();
             this.setPropsForLoadingBarFromJsonDictionary(widget, uiOptions);
         } else if (classname == "ScrollView") {
-            widget = ccs.ScrollView.create();
+            if(uiOptions["tag"] == 69){
+                widget = ccs.ScrollViewCircular.create();
+            }else{
+                widget = ccs.ScrollView.create();
+            }
             this.setPropsForScrollViewFromJsonDictionary(widget, uiOptions);
         }
         else if (classname == "TextArea") {
