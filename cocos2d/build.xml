@@ -207,6 +207,7 @@
                 <file name="CocoStudio/GUI/UIWidgets/UITextField.js"/>
                 <file name="CocoStudio/GUI/UIWidgets/Compatible/CompatibleClasses.js"/>
                 <file name="CocoStudio/GUI/UIWidgets/ScrollWidget/UIScrollView.js"/>
+                <file name="CocoStudio/GUI/UIWidgets/ScrollWidget/UIScrollViewCircular.js"/>
                 <file name="CocoStudio/GUI/UIWidgets/ScrollWidget/UIListView.js"/>
                 <file name="CocoStudio/GUI/UIWidgets/ScrollWidget/UIPageView.js"/>
                 <file name="CocoStudio/Trigger/ObjectFactory.js"/>

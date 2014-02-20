@@ -235,6 +235,7 @@
             '../extensions/CocoStudio/GUI/UIWidgets/UITextField.js',
             '../extensions/CocoStudio/GUI/UIWidgets/Compatible/CompatibleClasses.js',
             '../extensions/CocoStudio/GUI/UIWidgets/ScrollWidget/UIScrollView.js',
+            '../extensions/CocoStudio/GUI/UIWidgets/ScrollWidget/UIScrollViewCircular.js',
             '../extensions/CocoStudio/GUI/UIWidgets/ScrollWidget/UIListView.js',
             '../extensions/CocoStudio/GUI/UIWidgets/ScrollWidget/UIPageView.js',
             '../extensions/CocoStudio/Reader/GUIReader.js',

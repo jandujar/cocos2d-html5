@@ -47,6 +47,7 @@ ccs.UIMarginZero = ccs.MarginZero;
 ccs.UIListView = ccs.ListView;
 ccs.UIPageView = ccs.PageView;
 ccs.UIScrollView = ccs.ScrollView;
+ccs.UIScrollViewCircular = ccs.ScrollViewCircular;
 ccs.UIButton = ccs.Button;
 ccs.UICheckBox = ccs.CheckBox;
 ccs.UIImageView = ccs.ImageView;
