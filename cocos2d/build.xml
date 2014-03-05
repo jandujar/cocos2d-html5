@@ -196,6 +196,7 @@
                 <file name="CocoStudio/GUI/System/UIHelper.js"/>
                 <file name="CocoStudio/GUI/System/UILayer.js"/>
                 <file name="CocoStudio/GUI/UIWidgets/UIButton.js"/>
+                <file name="CocoStudio/GUI/UIWidgets/UIScaleButton.js"/>
                 <file name="CocoStudio/GUI/UIWidgets/UICheckBox.js"/>
                 <file name="CocoStudio/GUI/UIWidgets/UIImageView.js"/>
                 <file name="CocoStudio/GUI/UIWidgets/UILabel.js"/>
