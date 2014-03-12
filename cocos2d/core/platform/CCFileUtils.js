@@ -673,6 +673,11 @@ cc.FileUtils = cc.Class.extend({
      * @private
      */
     _getPathForFilename:function (filename, resourceDirectory, searchPath) {
+
+        if ((filename.substring(0, 7) == "http://") || (filename.substring(0, 8) == "https://")){
+            return "";
+        }
+
         var ret;
         var resourceRootPath = this.getResourceRootPath(); //cc.Application.getInstance().getResourceRootPath();
 
