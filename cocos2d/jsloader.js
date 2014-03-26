@@ -222,7 +222,6 @@
             '../extensions/CocoStudio/GUI/System/UIHelper.js',
             '../extensions/CocoStudio/GUI/System/UILayer.js',
             '../extensions/CocoStudio/GUI/UIWidgets/UIButton.js',
-            '../extensions/CocoStudio/GUI/UIWidgets/UIScaleButton.js',
             '../extensions/CocoStudio/GUI/UIWidgets/UICheckBox.js',
             '../extensions/CocoStudio/GUI/UIWidgets/UIImageView.js',
             '../extensions/CocoStudio/GUI/UIWidgets/UILabel.js',

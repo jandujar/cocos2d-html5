@@ -184,7 +184,7 @@ ccs.WidgetPropertiesReader0250 = ccs.WidgetPropertiesReader.extend({
         var classname = data["classname"];
         var uiOptions = data["options"];
         if (classname == "Button") {
-            widget = ccs.ButtonScale.create();
+            widget = ccs.Button.create();
             this.setPropsForButtonFromJsonDictionary(widget, uiOptions);
         }
         else if (classname == "CheckBox") {
@@ -215,7 +215,7 @@ ccs.WidgetPropertiesReader0250 = ccs.WidgetPropertiesReader.extend({
             this.setPropsForLabelFromJsonDictionary(widget, uiOptions);
         }
         else if (classname == "TextButton") {
-            widget = ccs.ButtonScale.create();
+            widget = ccs.Button.create();
             this.setPropsForButtonFromJsonDictionary(widget, uiOptions);
         }
         else if (classname == "TextField") {
@@ -781,7 +781,7 @@ ccs.WidgetPropertiesReader0300 = ccs.WidgetPropertiesReader.extend({
         var classname = data["classname"];
         var uiOptions = data["options"];
         if (classname == "Button") {
-            widget = ccs.ButtonScale.create();
+            widget = ccs.Button.create();
             this.setPropsForButtonFromJsonDictionary(widget, uiOptions);
         }
         else if (classname == "CheckBox") {
@@ -812,7 +812,7 @@ ccs.WidgetPropertiesReader0300 = ccs.WidgetPropertiesReader.extend({
             this.setPropsForLabelFromJsonDictionary(widget, uiOptions);
         }
         else if (classname == "TextButton") {
-            widget = ccs.ButtonScale.create();
+            widget = ccs.Button.create();
             this.setPropsForButtonFromJsonDictionary(widget, uiOptions);
         }
         else if (classname == "TextField") {
