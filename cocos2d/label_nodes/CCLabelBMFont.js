@@ -301,12 +301,10 @@ cc.BMFontConfiguration = cc.Class.extend(/** @lends cc.BMFontConfiguration# */{
         this.commonHeight = parseInt(/lineHeight=(\d+)/gi.exec(line)[1]);
 
         if (cc.renderContextType === cc.WEBGL) {
+            var texSize = cc.Configuration.getInstance().getMaxTextureSize();
             var scaleW = parseInt(/scaleW=(\d+)/gi.exec(line)[1]);
-            if(scaleW > cc.Configuration.getInstance().getMaxTextureSize())
-                cc.log("cc.LabelBMFont._parseCommonArguments(): page can't be larger than supported");
-
             var scaleH = parseInt(/scaleH=(\d+)/gi.exec(line)[1]);
-            if(scaleH > cc.Configuration.getInstance().getMaxTextureSize())
+            if(scaleW > texSize.width || scaleH > texSize.height)
                 cc.log("cc.LabelBMFont._parseCommonArguments(): page can't be larger than supported");
         }
 
@@ -496,7 +494,6 @@ cc.LabelBMFont = cc.SpriteBatchNode.extend(/** @lends cc.LabelBMFont# */{
 
         this._fntFile = "";
         this._reusedChar = [];
-        this._loadedEventListeners = [];
     },
     /**
      * return  texture is loaded
@@ -512,14 +509,18 @@ cc.LabelBMFont = cc.SpriteBatchNode.extend(/** @lends cc.LabelBMFont# */{
      * @param {Object} target
      */
     addLoadedEventListener:function(callback, target){
+        if(!this._loadedEventListeners)
+            this._loadedEventListeners = [];
         this._loadedEventListeners.push({eventCallback:callback, eventTarget:target});
     },
 
     _callLoadedEventCallbacks:function(){
+        if(!this._loadedEventListeners)
+            return;
         var locListeners = this._loadedEventListeners;
         for(var i = 0, len = locListeners.length;  i < len; i++){
             var selCallback = locListeners[i];
-            selCallback.eventCallback.call(selCallback.eventTarget, this);
+            cc.doCallback(selCallback.eventCallback, selCallback.eventTarget, this); 
         }
         locListeners.length = 0;
     },
@@ -978,7 +979,8 @@ cc.LabelBMFont = cc.SpriteBatchNode.extend(/** @lends cc.LabelBMFont# */{
                     start_line = false;
                     startOfWord = -1;
                     startOfLine = -1;
-                    i+= justSkipped;
+                    j--;
+                    skip -= justSkipped;
                     line++;
 
                     if (i >= stringLength)
@@ -1082,6 +1084,11 @@ cc.LabelBMFont = cc.SpriteBatchNode.extend(/** @lends cc.LabelBMFont# */{
                 if (this._string[ctr].charCodeAt(0) == 10 || this._string[ctr].charCodeAt(0) == 0) {
                     var lineWidth = 0;
                     var line_length = last_line.length;
+                    // if last line is empty we must just increase lineNumber and work with next line
+                    if (line_length == 0) {
+                        lineNumber++;
+                        continue;
+                    }
                     var index = i + line_length - 1 + lineNumber;
                     if (index < 0) continue;
 
@@ -1225,16 +1232,7 @@ cc.LabelBMFont = cc.SpriteBatchNode.extend(/** @lends cc.LabelBMFont# */{
      * @param {Number} [y] The anchor point.y of labelBMFont.
      */
     setAnchorPoint:function (point, y) {
-        var locAnchorPoint = this._anchorPoint;
-        if (arguments.length === 2) {
-            if ((point === locAnchorPoint._x) && (y === locAnchorPoint._y))
-                return;
-            cc.Node.prototype.setAnchorPoint.call(this, point, y);
-        } else {
-            if ((point.x === locAnchorPoint._x) && (point.y === locAnchorPoint._y))
-                return;
-            cc.Node.prototype.setAnchorPoint.call(this, point);
-        }
+	    cc.Node.prototype.setAnchorPoint.call(this, point, y);
         this.updateLabel();
     },
 
@@ -1253,11 +1251,11 @@ cc.LabelBMFont = cc.SpriteBatchNode.extend(/** @lends cc.LabelBMFont# */{
     },
 
     _getLetterPosXLeft:function (sp) {
-        return sp.getPositionX() * this._scaleX + (sp.getContentSize().width * this._scaleX * sp.getAnchorPoint().x);
+        return sp.getPositionX() * this._scaleX - (sp.getContentSize().width * this._scaleX * sp.getAnchorPoint().x);
     },
 
     _getLetterPosXRight:function (sp) {
-        return sp.getPositionX() * this._scaleX - (sp.getContentSize().width * this._scaleX * sp.getAnchorPoint().x);
+        return sp.getPositionX() * this._scaleX + (sp.getContentSize().width * this._scaleX * (1 - sp.getAnchorPoint().x));
     }
 });
 
@@ -1281,7 +1279,7 @@ cc.LabelBMFont = cc.SpriteBatchNode.extend(/** @lends cc.LabelBMFont# */{
  */
 cc.LabelBMFont.create = function (str, fntFile, width, alignment, imageOffset) {
     var ret = new cc.LabelBMFont();
-    if (arguments.length == 0) {
+    if (str === undefined) {
         if (ret && ret.init())
             return ret;
         return null;

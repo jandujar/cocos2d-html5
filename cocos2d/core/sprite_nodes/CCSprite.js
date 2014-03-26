@@ -39,7 +39,7 @@ cc.SPRITE_INDEX_NOT_INITIALIZED = -1;
  */
 
 cc.generateTextureCacheForColor = function (texture) {
-    if (texture.hasOwnProperty('channelCache')) {
+    if (texture.channelCache) {
         return texture.channelCache;
     }
 
@@ -339,14 +339,18 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
     },
 
     addLoadedEventListener:function(callback, target){
+        if(!this._loadedEventListeners)
+            this._loadedEventListeners = [];
         this._loadedEventListeners.push({eventCallback:callback, eventTarget:target});
     },
 
     _callLoadedEventCallbacks:function(){
+        if(!this._loadedEventListeners)
+            return;
         var locListeners = this._loadedEventListeners;
         for(var i = 0, len = locListeners.length;  i < len; i++){
             var selCallback = locListeners[i];
-            selCallback.eventCallback.call(selCallback.eventTarget, this);
+            cc.doCallback(selCallback.eventCallback, selCallback.eventTarget, this);
         }
         locListeners.length = 0;
     },
@@ -746,10 +750,7 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
      * @override
      */
     setAnchorPoint:function (anchor, y) {
-        if(arguments.length === 2)
-            cc.Node.prototype.setAnchorPoint.call(this, anchor, y);
-        else
-            cc.Node.prototype.setAnchorPoint.call(this, anchor);
+	    cc.Node.prototype.setAnchorPoint.call(this, anchor, y);
         this.SET_DIRTY_RECURSIVELY();
     },
 
@@ -947,7 +948,6 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
         this._quadDirty = true;
 
         this._textureLoaded = true;
-        this._loadedEventListeners = [];
 
         if (fileName) {
             if (typeof(fileName) === "string") {
@@ -978,7 +978,6 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
 
         this._newTextureWhenChangeColor = false;
         this._textureLoaded = true;
-        this._loadedEventListeners = [];
         this._textureRect_Canvas = {x: 0, y: 0, width: 0, height:0, validRect: false};
         this._drawSize_Canvas = cc.size(0, 0);
 
@@ -1018,7 +1017,7 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
 
     _setBlendFuncForWebGL: function (src, dst) {
         var locBlendFunc = this._blendFunc;
-        if (arguments.length === 1) {
+        if (dst === undefined) {
             locBlendFunc.src = src.src;
             locBlendFunc.dst = src.dst;
         } else {
@@ -1029,7 +1028,7 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
 
     _setBlendFuncForCanvas: function (src, dst) {
         var locBlendFunc = this._blendFunc;
-        if (arguments.length === 1) {
+        if (dst === undefined) {
             locBlendFunc.src = src.src;
             locBlendFunc.dst = src.dst;
         } else {
@@ -1308,7 +1307,7 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
 
         // by default use "Self Render".
         // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
-        this.setBatchNode(null);
+        this.setBatchNode(this._batchNode);
         this._quadDirty = true;
         this._callLoadedEventCallbacks();
     },
@@ -1334,7 +1333,7 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
 
         // by default use "Self Render".
         // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
-        this.setBatchNode(null);
+        this.setBatchNode(this._batchNode);
         this._callLoadedEventCallbacks();
     },
 
@@ -1400,7 +1399,7 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
         locTextureRect.y = 0 | (rect.y * scaleFactor);
         locTextureRect.width = 0 | (rect.width * scaleFactor);
         locTextureRect.height = 0 | (rect.height * scaleFactor);
-        locTextureRect.validRect = !(locTextureRect.width === 0 || locTextureRect.height === 0);
+        locTextureRect.validRect = !(locTextureRect.width === 0 || locTextureRect.height === 0 || locTextureRect.x < 0 || locTextureRect.y < 0);
 
         var relativeOffset = this._unflippedOffsetPositionFromCenter;
         if (this._flippedX)
@@ -1563,7 +1562,7 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
         }
 
         //cc.Node already sets isReorderChildDirty_ so this needs to be after batchNode check
-        cc.Node.prototype.addChild.call(this, child, zOrder, tag);
+        cc.NodeRGBA.prototype.addChild.call(this, child, zOrder, tag);
         this._hasChildren = true;
     },
 
@@ -1576,7 +1575,7 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
             tag = child._tag;
 
         //cc.Node already sets isReorderChildDirty_ so this needs to be after batchNode check
-        cc.Node.prototype.addChild.call(this, child, zOrder, tag);
+        cc.NodeRGBA.prototype.addChild.call(this, child, zOrder, tag);
         this._hasChildren = true;
     },
 
@@ -2013,7 +2012,7 @@ cc.Sprite = cc.NodeRGBA.extend(/** @lends cc.Sprite# */{
                 cc.glBlendFunc(this._blendFunc.src, this._blendFunc.dst);
                 //optimize performance for javascript
                 cc.glBindTexture2DN(0, locTexture);                   // = cc.glBindTexture2D(locTexture);
-                cc.glEnableVertexAttribs(cc.VERTEX_ATTRIB_FLAG_POSCOLORTEX);
+                cc.glEnableVertexAttribs(cc.VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
 
                 gl.bindBuffer(gl.ARRAY_BUFFER, this._quadWebBuffer);
                 if (this._quadDirty) {
