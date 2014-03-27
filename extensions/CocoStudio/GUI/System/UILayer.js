@@ -71,6 +71,7 @@ ccs.UILayer = cc.Layer.extend(/** @lends ccs.UILayer# */{
      * @returns {boolean}
      */
     checkTouchEvent: function (root, touch,event) {
+        if(!this.isVisible()){ return false };
         var arrayRootChildren = root.getChildren();
         var length = arrayRootChildren.length;
         for (var i = length - 1; i >= 0; i--) {

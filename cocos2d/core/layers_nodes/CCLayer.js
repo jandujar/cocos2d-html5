@@ -130,7 +130,7 @@ cc.Layer = cc.Node.extend(/** @lends cc.Layer# */{
      * @return {Boolean}
      */
     isTouchEnabled:function () {
-        return this._isTouchEnabled;
+        return this._isTouchEnabled && this.isVisible();
     },
 
     /**
@@ -273,7 +273,7 @@ cc.Layer = cc.Node.extend(/** @lends cc.Layer# */{
         var director = cc.Director.getInstance();
         // register 'parent' nodes first
         // since events are propagated in reverse order
-        if (this._isTouchEnabled)
+        if (this.isTouchEnabled())
             this.registerWithTouchDispatcher();
 
         // then iterate over all the children
@@ -296,7 +296,7 @@ cc.Layer = cc.Node.extend(/** @lends cc.Layer# */{
      */
     onExit:function () {
         var director = cc.Director.getInstance();
-        if (this._isTouchEnabled)
+        if (this.isTouchEnabled())
             cc.unregisterTouchDelegate(this);
 
         // remove this layer from the delegates who concern Accelerometer Sensor

@@ -614,7 +614,11 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * @return {Boolean} true if the node is visible, false if the node is hidden.
      */
     isVisible:function () {
-        return this._visible;
+        if(this.getParent()){
+            return this._visible && this.getParent().isVisible();
+        }else{
+            return this._visible;
+        }
     },
 
     /**

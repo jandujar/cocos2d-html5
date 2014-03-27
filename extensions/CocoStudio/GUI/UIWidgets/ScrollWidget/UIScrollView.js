@@ -1274,6 +1274,9 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
     },
 
     onTouchBegan: function (touch , event) {
+        if(!this.isVisible()){
+            return false;
+        }
         var pass = ccs.Layout.prototype.onTouchBegan.call(this, touch , event);
         if (this._hitted)        {
             this.handlePressLogic(this._touchStartPos);
