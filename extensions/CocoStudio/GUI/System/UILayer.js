@@ -164,7 +164,7 @@ ccs.UILayer = cc.Layer.extend(/** @lends ccs.UILayer# */{
     },
 
     onTouchBegan: function (touch, event) {
-        return this.checkEventWidget(touch,event);
+        return this.isVisible() && this.checkEventWidget(touch,event);
     },
 
     onTouchMoved: function (touch, event) {

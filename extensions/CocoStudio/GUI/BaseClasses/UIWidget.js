@@ -785,7 +785,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
         var touchPoint = touch.getLocation();
         this._touchStartPos.x = touchPoint.x;
         this._touchStartPos.y = touchPoint.y;
-        this._hitted = this.isEnabled() && this.isTouchEnabled()&& this.hitTest(touchPoint)&& this.clippingParentAreaContainPoint(touchPoint);
+        this._hitted = this.isEnabled() && this.isTouchEnabled() && this.isVisible() && this.hitTest(touchPoint)&& this.clippingParentAreaContainPoint(touchPoint);
         if(!this._hitted){
             return false;
         }
