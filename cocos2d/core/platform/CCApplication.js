@@ -406,8 +406,12 @@ cc.Application.getCurrentLanguage = function () {
         return ret;
 
     currentLang = currentLang.toLowerCase();
+    //change es-ES to es and etc..
+    var subcurrent = currentLang.split('-');
+    currentLang = subcurrent[0];
     switch (currentLang) {
         case "zh-cn":
+        case "zh":
             ret = cc.LANGUAGE_CHINESE;
             break;
         case "fr":
