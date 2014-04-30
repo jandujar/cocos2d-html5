@@ -1168,6 +1168,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
         var clonedWidget = this.createCloneInstance();
         clonedWidget.copyProperties(this);
         clonedWidget.copyClonedWidgetChildren(this);
+        clonedWidget.copyLayoutParameters(this);
         return clonedWidget;
     },
 
@@ -1187,6 +1188,17 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
 
     copySpecialProperties: function (model) {
 
+    },
+    copyLayoutParameters: function(widget){
+        var layoutParameter = widget.getLayoutParameter(ccs.LayoutParameterType.relative);
+        if(layoutParameter){
+            this.setLayoutParameter(layoutParameter);
+        }
+
+        layoutParameter = widget.getLayoutParameter(ccs.LayoutParameterType.linear);
+        if(layoutParameter){
+            this.setLayoutParameter(layoutParameter);
+        }
     },
 
     copyProperties: function (widget) {
