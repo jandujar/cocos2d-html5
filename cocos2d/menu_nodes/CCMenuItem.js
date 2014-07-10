@@ -33,7 +33,7 @@
 cc.ITEM_SIZE = 32;
 
 cc._globalFontSize = cc.ITEM_SIZE;
-cc._globalFontName = "Arial";
+cc._globalFontName = 'Arial';
 cc._globalFontNameRelease = false;
 
 /**
@@ -75,12 +75,12 @@ cc.DISABLE_TAG = 8803;
  * @extends cc.NodeRGBA
  */
 cc.MenuItem = cc.NodeRGBA.extend(/** @lends cc.MenuItem# */{
-    _target:null,
-    _callback:null,
-    _isSelected:false,
-    _isEnabled:false,
+    _target: null,
+    _callback: null,
+    _isSelected: false,
+    _isEnabled: false,
 
-    ctor:function(){
+    ctor: function() {
         cc.NodeRGBA.prototype.ctor.call(this);
         this._target = null;
         this._callback = null;
@@ -92,14 +92,14 @@ cc.MenuItem = cc.NodeRGBA.extend(/** @lends cc.MenuItem# */{
      * MenuItem is selected
      * @return {Boolean}
      */
-    isSelected:function () {
+    isSelected: function() {
         return this._isSelected;
     },
 
-    setOpacityModifyRGB:function (value) {
+    setOpacityModifyRGB: function(value) {
     },
 
-    isOpacityModifyRGB:function () {
+    isOpacityModifyRGB: function() {
         return false;
     },
 
@@ -109,7 +109,7 @@ cc.MenuItem = cc.NodeRGBA.extend(/** @lends cc.MenuItem# */{
      * @param {cc.Node} rec
      * @deprecated
      */
-    setTarget:function (selector, rec) {
+    setTarget: function(selector, rec) {
         this._target = rec;
         this._callback = selector;
     },
@@ -118,7 +118,7 @@ cc.MenuItem = cc.NodeRGBA.extend(/** @lends cc.MenuItem# */{
      * MenuItem is Enabled
      * @return {Boolean}
      */
-    isEnabled:function () {
+    isEnabled: function() {
         return this._isEnabled;
     },
 
@@ -126,7 +126,7 @@ cc.MenuItem = cc.NodeRGBA.extend(/** @lends cc.MenuItem# */{
      * set enable value of MenuItem
      * @param {Boolean} enable
      */
-    setEnabled:function (enable) {
+    setEnabled: function(enable) {
         this._isEnabled = enable;
     },
 
@@ -135,7 +135,7 @@ cc.MenuItem = cc.NodeRGBA.extend(/** @lends cc.MenuItem# */{
      * @param {cc.Node} target
      * @return {Boolean}
      */
-    initWithCallback:function (callback, target) {
+    initWithCallback: function(callback, target) {
         this.setAnchorPoint(0.5, 0.5);
         this._target = target;
         this._callback = callback;
@@ -148,7 +148,7 @@ cc.MenuItem = cc.NodeRGBA.extend(/** @lends cc.MenuItem# */{
      * return rect value of cc.MenuItem
      * @return {cc.Rect}
      */
-    rect:function () {
+    rect: function() {
         var locPosition = this._position, locContentSize = this._contentSize, locAnchorPoint = this._anchorPoint;
         return cc.rect(locPosition._x - locContentSize._width * locAnchorPoint._x,
             locPosition._y - locContentSize._height * locAnchorPoint._y,
@@ -158,14 +158,14 @@ cc.MenuItem = cc.NodeRGBA.extend(/** @lends cc.MenuItem# */{
     /**
      * same as setIsSelected(true)
      */
-    selected:function () {
+    selected: function() {
         this._isSelected = true;
     },
 
     /**
      * same as setIsSelected(false)
      */
-    unselected:function () {
+    unselected: function() {
         this._isSelected = false;
     },
 
@@ -174,7 +174,7 @@ cc.MenuItem = cc.NodeRGBA.extend(/** @lends cc.MenuItem# */{
      * @param {function|String} callback
      * @param {cc.Node} target
      */
-    setCallback:function (callback, target) {
+    setCallback: function(callback, target) {
         this._target = target;
         this._callback = callback;
     },
@@ -182,14 +182,14 @@ cc.MenuItem = cc.NodeRGBA.extend(/** @lends cc.MenuItem# */{
     /**
      * call the selector with target
      */
-    activate:function () {
+    activate: function() {
         if (this._isEnabled) {
             var locTarget = this._target, locCallback = this._callback;
-            if(!locCallback)
-                return ;
-            if (locTarget && (typeof(locCallback) == "string")) {
+            if (!locCallback)
+                return;
+            if (locTarget && (typeof(locCallback) == 'string')) {
                 locTarget[locCallback](this);
-            } else if (locTarget && (typeof(locCallback) == "function")) {
+            } else if (locTarget && (typeof(locCallback) == 'function')) {
                 locCallback.call(locTarget, this);
             } else
                 locCallback(this);
@@ -204,9 +204,9 @@ cc.MenuItem = cc.NodeRGBA.extend(/** @lends cc.MenuItem# */{
  * @param {cc.Node} target
  * @return {cc.MenuItem}
  */
-cc.MenuItem.create = function (callback, target) {
+cc.MenuItem.create = function(callback, target) {
     var ret = new cc.MenuItem();
-    ret.initWithCallback(callback,target);
+    ret.initWithCallback(callback, target);
     return ret;
 };
 
@@ -225,7 +225,7 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
     _orginalScale: 0,
     _colorBackup: null,
 
-    ctor: function () {
+    ctor: function() {
         cc.MenuItem.prototype.ctor.call(this);
         this._disabledColor = null;
         this._label = null;
@@ -236,14 +236,14 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
     /**
      * @return {cc.Color3B}
      */
-    getDisabledColor:function () {
+    getDisabledColor: function() {
         return this._disabledColor;
     },
 
     /**
      * @param {cc.Color3B} color
      */
-    setDisabledColor:function (color) {
+    setDisabledColor: function(color) {
         this._disabledColor = color;
     },
 
@@ -251,14 +251,14 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
      * return label of MenuItemLabel
      * @return {cc.Node}
      */
-    getLabel:function () {
+    getLabel: function() {
         return this._label;
     },
 
     /**
      * @param {cc.Node} label
      */
-    setLabel:function (label) {
+    setLabel: function(label) {
         if (label) {
             this.addChild(label);
             label.setAnchorPoint(0, 0);
@@ -275,7 +275,7 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
     /**
      * @param {Boolean} enabled
      */
-    setEnabled:function (enabled) {
+    setEnabled: function(enabled) {
         if (this._isEnabled != enabled) {
             var locLabel = this._label;
             if (!enabled) {
@@ -291,28 +291,28 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
     /**
      * @param {Number} opacity from 0-255
      */
-    setOpacity:function (opacity) {
+    setOpacity: function(opacity) {
         this._label.setOpacity(opacity);
     },
 
     /**
      * @return {Number}
      */
-    getOpacity:function () {
+    getOpacity: function() {
         return this._label.getOpacity();
     },
 
     /**
      * @param {cc.Color3B} color
      */
-    setColor:function (color) {
+    setColor: function(color) {
         this._label.setColor(color);
     },
 
     /**
      * @return {cc.Color3B}
      */
-    getColor:function () {
+    getColor: function() {
         return this._label.getColor();
     },
 
@@ -322,7 +322,7 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
      * @param {cc.Node} target
      * @return {Boolean}
      */
-    initWithLabel:function (label, selector, target) {
+    initWithLabel: function(label, selector, target) {
         this.initWithCallback(selector, target);
         this._originalScale = 1.0;
         this._colorBackup = cc.white();
@@ -338,7 +338,7 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
     /**
      * @param {String} label
      */
-    setString:function (label) {
+    setString: function(label) {
         this._label.setString(label);
         this.setContentSize(this._label.getContentSize());
     },
@@ -346,7 +346,7 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
     /**
      * activate the menu item
      */
-    activate:function () {
+    activate: function() {
         if (this._isEnabled) {
             this.stopAllActions();
             this.setScale(this._originalScale);
@@ -357,7 +357,7 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
     /**
      * menu item is selected (runs callback)
      */
-    selected:function () {
+    selected: function() {
         if (this._isEnabled) {
             cc.MenuItem.prototype.selected.call(this);
 
@@ -376,7 +376,7 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
     /**
      * menu item goes back to unselected state
      */
-    unselected:function () {
+    unselected: function() {
         if (this._isEnabled) {
             cc.MenuItem.prototype.unselected.call(this);
             this.stopActionByTag(cc.ZOOM_ACTION_TAG);
@@ -393,7 +393,7 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
  * @param {cc.Node|Null} [target=]
  * @return {cc.MenuItemLabel}
  */
-cc.MenuItemLabel.create = function (label, selector, target) {
+cc.MenuItemLabel.create = function(label, selector, target) {
     var ret = new cc.MenuItemLabel();
     ret.initWithLabel(label, selector, target);
     return ret;
@@ -415,13 +415,13 @@ cc.MenuItemAtlasFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemAtlasFont# 
      * @param {cc.Node|Null} target
      * @return {Boolean}
      */
-    initWithString:function (value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target) {
-        if(!value || value.length == 0)
-            throw "cc.MenuItemAtlasFont.initWithString(): value should be non-null and its length should be greater than 0";
+    initWithString: function(value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target) {
+        if (!value || value.length == 0)
+            throw 'cc.MenuItemAtlasFont.initWithString(): value should be non-null and its length should be greater than 0';
 
         var label = new cc.LabelAtlas();
         label.initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap);
-        if (this.initWithLabel(label,  callback, target)) {
+        if (this.initWithLabel(label, callback, target)) {
             // do something ?
         }
         return true;
@@ -445,7 +445,7 @@ cc.MenuItemAtlasFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemAtlasFont# 
  * //OR
  * var item = cc.MenuItemAtlasFont.create('text to display', 'font.fnt', 12, 32, ' ',  game.run, game)
  */
-cc.MenuItemAtlasFont.create = function (value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target) {
+cc.MenuItemAtlasFont.create = function(value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target) {
     var ret = new cc.MenuItemAtlasFont();
     ret.initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap, callback, target);
     return ret;
@@ -457,13 +457,13 @@ cc.MenuItemAtlasFont.create = function (value, charMapFile, itemWidth, itemHeigh
  * @extends cc.MenuItemLabel
  */
 cc.MenuItemFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemFont# */{
-    _fontSize:null,
-    _fontName:null,
+    _fontSize: null,
+    _fontName: null,
 
-    ctor:function(){
+    ctor: function() {
         cc.MenuItemLabel.prototype.ctor.call(this);
         this._fontSize = 0;
-        this._fontName = "";
+        this._fontName = '';
     },
 
     /**
@@ -472,9 +472,9 @@ cc.MenuItemFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemFont# */{
      * @param {cc.Node} target
      * @return {Boolean}
      */
-    initWithString:function (value, callback, target) {
-        if(!value || value.length == 0)
-            throw "Value should be non-null and its length should be greater than 0";
+    initWithString: function(value, callback, target) {
+        if (!value || value.length == 0)
+            throw 'Value should be non-null and its length should be greater than 0';
 
         this._fontName = cc._globalFontName;
         this._fontSize = cc._globalFontSize;
@@ -489,7 +489,7 @@ cc.MenuItemFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemFont# */{
     /**
      * @param {Number} s
      */
-    setFontSize:function (s) {
+    setFontSize: function(s) {
         this._fontSize = s;
         this._recreateLabel();
     },
@@ -498,14 +498,14 @@ cc.MenuItemFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemFont# */{
      *
      * @return {Number}
      */
-    fontSize:function () {
+    fontSize: function() {
         return this._fontSize;
     },
 
     /**
      * @param {String} name
      */
-    setFontName:function (name) {
+    setFontName: function(name) {
         this._fontName = name;
         this._recreateLabel();
     },
@@ -513,11 +513,11 @@ cc.MenuItemFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemFont# */{
     /**
      * @return {String}
      */
-    fontName:function () {
+    fontName: function() {
         return this._fontName;
     },
 
-    _recreateLabel:function () {
+    _recreateLabel: function() {
         var label = cc.LabelTTF.create(this._label.getString(),
             this._fontName, this._fontSize);
         this.setLabel(label);
@@ -528,7 +528,7 @@ cc.MenuItemFont = cc.MenuItemLabel.extend(/** @lends cc.MenuItemFont# */{
  * a shared function to set the fontSize for menuitem font
  * @param {Number} fontSize
  */
-cc.MenuItemFont.setFontSize = function (fontSize) {
+cc.MenuItemFont.setFontSize = function(fontSize) {
     cc._globalFontSize = fontSize;
 };
 
@@ -536,7 +536,7 @@ cc.MenuItemFont.setFontSize = function (fontSize) {
  * a shared function to get the font size for menuitem font
  * @return {Number}
  */
-cc.MenuItemFont.fontSize = function () {
+cc.MenuItemFont.fontSize = function() {
     return cc._globalFontSize;
 };
 
@@ -544,7 +544,7 @@ cc.MenuItemFont.fontSize = function () {
  * a shared function to set the fontsize for menuitem font
  * @param name
  */
-cc.MenuItemFont.setFontName = function (name) {
+cc.MenuItemFont.setFontName = function(name) {
     if (cc._globalFontNameRelease) {
         cc._globalFontName = '';
     }
@@ -556,7 +556,7 @@ cc.MenuItemFont.setFontName = function (name) {
  * a shared function to get the font name for menuitem font
  * @return {String}
  */
-cc.MenuItemFont.fontName = function () {
+cc.MenuItemFont.fontName = function() {
     return cc._globalFontName;
 };
 
@@ -579,7 +579,7 @@ cc.MenuItemFont.fontName = function () {
  * cc.MenuItemFont.setFontName('my Fancy Font');
  * cc.MenuItemFont.setFontSize(62);
  */
-cc.MenuItemFont.create = function (value, callback, target) {
+cc.MenuItemFont.create = function(value, callback, target) {
     var ret = new cc.MenuItemFont();
     ret.initWithString(value, callback, target);
     return ret;
@@ -596,11 +596,11 @@ cc.MenuItemFont.create = function (value, callback, target) {
  * @extends cc.MenuItem
  */
 cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
-    _normalImage:null,
-    _selectedImage:null,
-    _disabledImage:null,
+    _normalImage: null,
+    _selectedImage: null,
+    _disabledImage: null,
 
-    ctor: function(){
+    ctor: function() {
         cc.MenuItem.prototype.ctor.call(this);
         this._normalImage = null;
         this._selectedImage = null;
@@ -610,14 +610,14 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
     /**
      * @return {cc.Sprite}
      */
-    getNormalImage:function () {
+    getNormalImage: function() {
         return this._normalImage;
     },
 
     /**
      * @param {cc.Sprite} normalImage
      */
-    setNormalImage:function (normalImage) {
+    setNormalImage: function(normalImage) {
         if (this._normalImage == normalImage) {
             return;
         }
@@ -634,7 +634,7 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
         this._updateImagesVisibility();
 
         if (normalImage.textureLoaded && !normalImage.textureLoaded()) {
-            normalImage.addLoadedEventListener(function (sender) {
+            normalImage.addLoadedEventListener(function(sender) {
                 this.setContentSize(sender.getContentSize());
             }, this);
         }
@@ -643,14 +643,14 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
     /**
      * @return {cc.Sprite}
      */
-    getSelectedImage:function () {
+    getSelectedImage: function() {
         return this._selectedImage;
     },
 
     /**
      * @param {cc.Sprite} selectedImage
      */
-    setSelectedImage:function (selectedImage) {
+    setSelectedImage: function(selectedImage) {
         if (this._selectedImage == selectedImage)
             return;
 
@@ -670,14 +670,14 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
     /**
      * @return {cc.Sprite}
      */
-    getDisabledImage:function () {
+    getDisabledImage: function() {
         return this._disabledImage;
     },
 
     /**
      * @param {cc.Sprite} disabledImage
      */
-    setDisabledImage:function (disabledImage) {
+    setDisabledImage: function(disabledImage) {
         if (this._disabledImage == disabledImage)
             return;
 
@@ -701,7 +701,7 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
      * @param {cc.Node} target
      * @return {Boolean}
      */
-    initWithNormalSprite:function (normalSprite, selectedSprite, disabledSprite, callback, target) {
+    initWithNormalSprite: function(normalSprite, selectedSprite, disabledSprite, callback, target) {
         this.initWithCallback(callback, target);
         this.setNormalImage(normalSprite);
         this.setSelectedImage(selectedSprite);
@@ -711,7 +711,7 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
             this.setContentSize(locNormalImage.getContentSize());
 
             if (locNormalImage.textureLoaded && !locNormalImage.textureLoaded()) {
-                locNormalImage.addLoadedEventListener(function (sender) {
+                locNormalImage.addLoadedEventListener(function(sender) {
                     this.setContentSize(sender.getContentSize());
                     this.setCascadeColorEnabled(true);
                     this.setCascadeOpacityEnabled(true);
@@ -726,7 +726,7 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
     /**
      * @param {cc.Color3B} color
      */
-    setColor:function (color) {
+    setColor: function(color) {
         this._normalImage.setColor(color);
 
         if (this._selectedImage)
@@ -739,14 +739,14 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
     /**
      * @return {cc.Color3B}
      */
-    getColor:function () {
+    getColor: function() {
         return this._normalImage.getColor();
     },
 
     /**
      * @param {Number} opacity 0 - 255
      */
-    setOpacity:function (opacity) {
+    setOpacity: function(opacity) {
         this._normalImage.setOpacity(opacity);
 
         if (this._selectedImage)
@@ -759,14 +759,14 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
     /**
      * @return {Number} opacity from 0 - 255
      */
-    getOpacity:function () {
+    getOpacity: function() {
         return this._normalImage.getOpacity();
     },
 
     /**
      * menu item is selected (runs callback)
      */
-    selected:function () {
+    selected: function() {
         cc.MenuItem.prototype.selected.call(this);
         if (this._normalImage) {
             if (this._disabledImage)
@@ -783,7 +783,7 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
     /**
      * menu item goes back to unselected state
      */
-    unselected:function () {
+    unselected: function() {
         cc.MenuItem.prototype.unselected.call(this);
         if (this._normalImage) {
             this._normalImage.setVisible(true);
@@ -799,14 +799,14 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
     /**
      * @param {Boolean} bEnabled
      */
-    setEnabled:function (bEnabled) {
+    setEnabled: function(bEnabled) {
         if (this._isEnabled != bEnabled) {
             cc.MenuItem.prototype.setEnabled.call(this, bEnabled);
             this._updateImagesVisibility();
         }
     },
 
-    _updateImagesVisibility:function () {
+    _updateImagesVisibility: function() {
         var locNormalImage = this._normalImage, locSelImage = this._selectedImage, locDisImage = this._disabledImage;
         if (this._isEnabled) {
             if (locNormalImage)
@@ -854,7 +854,7 @@ cc.MenuItemSprite = cc.MenuItem.extend(/** @lends cc.MenuItemSprite# */{
  * var item = cc.MenuItemSprite.create(normalImage, SelectedImage, disabledImage, targetNode.callback, targetNode)
  * //same as above, but with disabled image, and passing in callback function
  */
-cc.MenuItemSprite.create = function (normalSprite, selectedSprite, three, four, five) {
+cc.MenuItemSprite.create = function(normalSprite, selectedSprite, three, four, five) {
     var len = arguments.length;
     normalSprite = arguments[0];
     selectedSprite = arguments[1];
@@ -865,16 +865,16 @@ cc.MenuItemSprite.create = function (normalSprite, selectedSprite, three, four, 
         disabledImage = arguments[2];
         callback = arguments[3];
         target = arguments[4];
-    } else if (len == 4 && typeof arguments[3] === "function") {
+    } else if (len == 4 && typeof arguments[3] === 'function') {
         disabledImage = arguments[2];
         callback = arguments[3];
-    } else if (len == 4 && typeof arguments[2] === "function") {
+    } else if (len == 4 && typeof arguments[2] === 'function') {
         target = arguments[3];
         callback = arguments[2];
     } else if (len <= 2) {
         disabledImage = arguments[2];
     }
-    ret.initWithNormalSprite(normalSprite, selectedSprite, disabledImage,  callback, target);
+    ret.initWithNormalSprite(normalSprite, selectedSprite, disabledImage, callback, target);
     return ret;
 };
 
@@ -894,7 +894,7 @@ cc.MenuItemImage = cc.MenuItemSprite.extend(/** @lends cc.MenuItemImage# */{
      * sets the sprite frame for the normal image
      * @param {cc.SpriteFrame} frame
      */
-    setNormalSpriteFrame:function (frame) {
+    setNormalSpriteFrame: function(frame) {
         this.setNormalImage(cc.Sprite.createWithSpriteFrame(frame));
     },
 
@@ -902,7 +902,7 @@ cc.MenuItemImage = cc.MenuItemSprite.extend(/** @lends cc.MenuItemImage# */{
      * sets the sprite frame for the selected image
      * @param {cc.SpriteFrame} frame
      */
-    setSelectedSpriteFrame:function (frame) {
+    setSelectedSpriteFrame: function(frame) {
         this.setSelectedImage(cc.Sprite.createWithSpriteFrame(frame));
     },
 
@@ -910,19 +910,19 @@ cc.MenuItemImage = cc.MenuItemSprite.extend(/** @lends cc.MenuItemImage# */{
      * sets the sprite frame for the disabled image
      * @param {cc.SpriteFrame} frame
      */
-    setDisabledSpriteFrame:function (frame) {
+    setDisabledSpriteFrame: function(frame) {
         this.setDisabledImage(cc.Sprite.createWithSpriteFrame(frame));
     },
 
     /**
-     * @param {string|null} normalImage
-     * @param {string|null} selectedImage
-     * @param {string|null} disabledImage
+     * @param {?string} normalImage
+     * @param {?string} selectedImage
+     * @param {?string} disabledImage
      * @param {function|string|null} callback
-     * @param {cc.Node|null} target
-     * @returns {boolean}
+     * @param {?cc.Node} target
+     * @return {boolean}
      */
-    initWithNormalImage:function (normalImage, selectedImage, disabledImage, callback, target) {
+    initWithNormalImage: function(normalImage, selectedImage, disabledImage, callback, target) {
         var normalSprite = null;
         var selectedSprite = null;
         var disabledSprite = null;
@@ -956,11 +956,11 @@ cc.MenuItemImage = cc.MenuItemSprite.extend(/** @lends cc.MenuItemImage# */{
  * //same as above, but pass in the actual function and disabled image
  * var item = cc.MenuItemImage.create('normal.png', 'selected.png', 'disabled.png', gameScene.run, gameScene)
  */
-cc.MenuItemImage.create = function (normalImage, selectedImage, three, four, five) {
+cc.MenuItemImage.create = function(normalImage, selectedImage, three, four, five) {
     if (arguments.length == 0) {
         return cc.MenuItemImage.create(null, null, null, null, null);
     }
-    if (arguments.length == 3)  {
+    if (arguments.length == 3) {
         return cc.MenuItemImage.create(normalImage, selectedImage, null, three, null);
     }
     if (arguments.length == 4) {
@@ -980,12 +980,12 @@ cc.MenuItemImage.create = function (normalImage, selectedImage, three, four, fiv
  * @extends cc.MenuItem
  */
 cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
-    _selectedIndex:0,
-    _subItems:null,
-    _opacity:null,
-    _color:null,
+    _selectedIndex: 0,
+    _subItems: null,
+    _opacity: null,
+    _color: null,
 
-    ctor: function(){
+    ctor: function() {
         cc.MenuItem.prototype.ctor.call(this);
         this._selectedIndex = 0;
         this._subItems = [];
@@ -996,14 +996,14 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
     /**
      * @return {Number}
      */
-    getOpacity:function () {
+    getOpacity: function() {
         return this._opacity;
     },
 
     /**
      * @param {Number} Opacity
      */
-    setOpacity:function (Opacity) {
+    setOpacity: function(Opacity) {
         this._opacity = Opacity;
         if (this._subItems && this._subItems.length > 0) {
             for (var it = 0; it < this._subItems.length; it++) {
@@ -1015,14 +1015,14 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
     /**
      * @return {cc.Color3B}
      */
-    getColor:function () {
+    getColor: function() {
         return this._color;
     },
 
     /**
      * @param {cc.Color3B} Color
      */
-    setColor:function (Color) {
+    setColor: function(Color) {
         this._color = Color;
         if (this._subItems && this._subItems.length > 0) {
             for (var it = 0; it < this._subItems.length; it++) {
@@ -1034,14 +1034,14 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
     /**
      * @return {Number}
      */
-    getSelectedIndex:function () {
+    getSelectedIndex: function() {
         return this._selectedIndex;
     },
 
     /**
      * @param {Number} SelectedIndex
      */
-    setSelectedIndex:function (SelectedIndex) {
+    setSelectedIndex: function(SelectedIndex) {
         if (SelectedIndex != this._selectedIndex) {
             this._selectedIndex = SelectedIndex;
             var currItem = this.getChildByTag(cc.CURRENT_ITEM);
@@ -1060,14 +1060,14 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
      * similar to get children
      * @return {cc.MenuItem}
      */
-    getSubItems:function () {
+    getSubItems: function() {
         return this._subItems;
     },
 
     /**
      * @param {cc.MenuItem} SubItems
      */
-    setSubItems:function (SubItems) {
+    setSubItems: function(SubItems) {
         this._subItems = SubItems;
     },
 
@@ -1077,15 +1077,15 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
      * @param {cc.Node} args[last] the first item in the args array is a target
      * @return {Boolean}
      */
-    initWithItems:function (args) {
-        var l =  args.length;
+    initWithItems: function(args) {
+        var l = args.length;
         // passing callback.
-        if (typeof args[args.length-2] === 'function') {
-            this.initWithCallback( args[args.length-2], args[args.length-1] );
-            l = l-2;
-        } else if(typeof args[args.length-1] === 'function'){
-            this.initWithCallback( args[args.length-1], null );
-            l = l-1;
+        if (typeof args[args.length - 2] === 'function') {
+            this.initWithCallback(args[args.length - 2], args[args.length - 1]);
+            l = l - 2;
+        } else if (typeof args[args.length - 1] === 'function') {
+            this.initWithCallback(args[args.length - 1], null);
+            l = l - 1;
         } else {
             this.initWithCallback(null, null);
         }
@@ -1107,14 +1107,14 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
     /**
      * @param {cc.MenuItem} item
      */
-    addSubItem:function (item) {
+    addSubItem: function(item) {
         this._subItems.push(item);
     },
 
     /**
      * activate the menu item
      */
-    activate:function () {
+    activate: function() {
         // update index
         if (this._isEnabled) {
             var newIndex = (this._selectedIndex + 1) % this._subItems.length;
@@ -1126,7 +1126,7 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
     /**
      * menu item is selected (runs callback)
      */
-    selected:function () {
+    selected: function() {
         cc.MenuItem.prototype.selected.call(this);
         this._subItems[this._selectedIndex].selected();
     },
@@ -1134,7 +1134,7 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
     /**
      * menu item goes back to unselected state
      */
-    unselected:function () {
+    unselected: function() {
         cc.MenuItem.prototype.unselected.call(this);
         this._subItems[this._selectedIndex].unselected();
     },
@@ -1142,7 +1142,7 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
     /**
      * @param {Boolean} enabled
      */
-    setEnabled:function (enabled) {
+    setEnabled: function(enabled) {
         if (this._isEnabled != enabled) {
             cc.MenuItem.prototype.setEnabled.call(this, enabled);
             var locItems = this._subItems;
@@ -1157,11 +1157,11 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
      * returns the selected item
      * @return {cc.MenuItem}
      */
-    selectedItem:function () {
+    selectedItem: function() {
         return this._subItems[this._selectedIndex];
     },
 
-    onEnter:function () {
+    onEnter: function() {
         cc.Node.prototype.onEnter.call(this);
         this.setSelectedIndex(this._selectedIndex);
     }
@@ -1183,9 +1183,9 @@ cc.MenuItemToggle = cc.MenuItem.extend(/** @lends cc.MenuItemToggle# */{
  * notYetToggler.addSubItem(cc.MenuItemFont.create("Off"));
  * //this is useful for constructing a toggler without a callback function (you wish to control the behavior from somewhere else)
  */
-cc.MenuItemToggle.create = function (/*Multiple arguments follow*/) {
-    if((arguments.length > 0) && (arguments[arguments.length-1] == null))
-        cc.log("parameters should not be ending with null in Javascript");
+cc.MenuItemToggle.create = function(/*Multiple arguments follow*/) {
+    if ((arguments.length > 0) && (arguments[arguments.length - 1] == null))
+        cc.log('parameters should not be ending with null in Javascript');
     var ret = new cc.MenuItemToggle();
     ret.initWithItems(arguments);
     return ret;

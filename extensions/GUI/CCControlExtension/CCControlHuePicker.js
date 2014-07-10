@@ -31,25 +31,25 @@
  */
 
 cc.ControlHuePicker = cc.Control.extend({
-    _hue:0,
-    _huePercentage:0,
-    _background:null,
-    _slider:null,
-    _startPos:null,
+    _hue: 0,
+    _huePercentage: 0,
+    _background: null,
+    _slider: null,
+    _startPos: null,
 
     //maunally put in the setters
-    getHue:function () {
+    getHue: function() {
         return this._hue;
     },
-    setHue:function (hueValue) {
+    setHue: function(hueValue) {
         this._hue = hueValue;
         this.setHuePercentage(this._hue / 360.0);
     },
 
-    getHuePercentage:function () {
+    getHuePercentage: function() {
         return this._huePercentage;
     },
-    setHuePercentage:function (hueValueInPercent) {
+    setHuePercentage: function(hueValueInPercent) {
         this._huePercentage = hueValueInPercent;
         this._hue = this._huePercentage * 360.0;
 
@@ -73,29 +73,29 @@ cc.ControlHuePicker = cc.Control.extend({
         this._slider.setPosition(x, y);
     },
 
-    setEnabled:function (enabled) {
+    setEnabled: function(enabled) {
         cc.Control.prototype.setEnabled.call(this, enabled);
         if (this._slider) {
             this._slider.setOpacity(enabled ? 255 : 128);
         }
     },
 
-    getBackground:function () {
+    getBackground: function() {
         return this._background;
     },
-    getSlider:function () {
+    getSlider: function() {
         return this._slider;
     },
-    getStartPos:function () {
+    getStartPos: function() {
         return this._startPos;
     },
 
-    initWithTargetAndPos:function (target, pos) {
+    initWithTargetAndPos: function(target, pos) {
         if (cc.Control.prototype.init.call(this)) {
             this.setTouchEnabled(true);
             // Add background and slider sprites
-            this._background = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("huePickerBackground.png", target, pos, cc.p(0.0, 0.0));
-            this._slider = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, cc.p(0.5, 0.5));
+            this._background = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor('huePickerBackground.png', target, pos, cc.p(0.0, 0.0));
+            this._slider = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor('colourPicker.png', target, pos, cc.p(0.5, 0.5));
 
             this._slider.setPosition(pos.x, pos.y + this._background.getBoundingBox().height * 0.5);
             this._startPos = pos;
@@ -108,7 +108,7 @@ cc.ControlHuePicker = cc.Control.extend({
             return false;
     },
 
-    _updateSliderPosition:function (location) {
+    _updateSliderPosition: function(location) {
         // Clamp the position of the icon within the circle
         var backgroundBox = this._background.getBoundingBox();
 
@@ -130,20 +130,20 @@ cc.ControlHuePicker = cc.Control.extend({
         // send CCControl callback
         this.sendActionsForControlEvents(cc.CONTROL_EVENT_VALUECHANGED);
     },
-    _checkSliderPosition:function (location) {
+    _checkSliderPosition: function(location) {
         // compute the distance between the current location and the center
         var distance = Math.sqrt(Math.pow(location.x + 10, 2) + Math.pow(location.y, 2));
 
         // check that the touch location is within the circle
-        if (80 > distance && distance > 59)        {
+        if (80 > distance && distance > 59) {
             this._updateSliderPosition(location);
             return true;
         }
         return false;
     },
 
-    onTouchBegan:function (touch, event) {
-        if (!this.isEnabled() || !this.isVisible())        {
+    onTouchBegan: function(touch, event) {
+        if (!this.isEnabled() || !this.isVisible()) {
             return false;
         }
         var touchLocation = this.getTouchLocation(touch);
@@ -151,7 +151,7 @@ cc.ControlHuePicker = cc.Control.extend({
         // Check the touch position on the slider
         return this._checkSliderPosition(touchLocation);
     },
-    onTouchMoved:function (touch, event) {
+    onTouchMoved: function(touch, event) {
         // Get the touch location
         var touchLocation = this.getTouchLocation(touch);
 
@@ -163,7 +163,7 @@ cc.ControlHuePicker = cc.Control.extend({
     }
 });
 
-cc.ControlHuePicker.create = function (target, pos) {
+cc.ControlHuePicker.create = function(target, pos) {
     var pRet = new cc.ControlHuePicker();
     pRet.initWithTargetAndPos(target, pos);
     return pRet;

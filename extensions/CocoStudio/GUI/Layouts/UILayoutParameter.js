@@ -40,7 +40,7 @@ ccs.LayoutParameterType = {
 ccs.LayoutParameter = ccs.Class.extend(/** @lends ccs.LayoutParameter# */{
     _margin: null,
     _layoutParameterType: null,
-    ctor: function () {
+    ctor: function() {
         this._margin = new ccs.Margin();
         this._layoutParameterType = ccs.LayoutParameterType.none;
     },
@@ -49,23 +49,23 @@ ccs.LayoutParameter = ccs.Class.extend(/** @lends ccs.LayoutParameter# */{
      * Sets Margin parameter for LayoutParameter.
      * @param {ccs.Margin} margin
      */
-    setMargin: function (margin) {
+    setMargin: function(margin) {
         this._margin = margin;
     },
 
     /**
      * Gets Margin parameter of LayoutParameter.
-     * @returns {ccs.Margin}
+     * @return {ccs.Margin}
      */
-    getMargin: function () {
+    getMargin: function() {
         return this._margin;
     },
 
     /**
      * Gets LayoutParameterType of LayoutParameter.
-     * @returns {ccs.UILayoutParameterType}
+     * @return {ccs.UILayoutParameterType}
      */
-    getLayoutType: function () {
+    getLayoutType: function() {
         return this._layoutParameterType;
     }
 });
@@ -78,7 +78,7 @@ ccs.LayoutParameter = ccs.Class.extend(/** @lends ccs.LayoutParameter# */{
  * // example
  * var uiLayoutParameter = ccs.LayoutParameter.create();
  */
-ccs.LayoutParameter.create = function () {
+ccs.LayoutParameter.create = function() {
     var parameter = new ccs.LayoutParameter();
     return parameter;
 };
@@ -90,7 +90,7 @@ ccs.LayoutParameter.create = function () {
  */
 ccs.LinearLayoutParameter = ccs.LayoutParameter.extend(/** @lends ccs.LinearLayoutParameter# */{
     _linearGravity: null,
-    ctor: function () {
+    ctor: function() {
         ccs.LayoutParameter.prototype.ctor.call(this);
         this._linearGravity = ccs.LinearGravity.none;
         this._layoutParameterType = ccs.LayoutParameterType.linear;
@@ -100,15 +100,15 @@ ccs.LinearLayoutParameter = ccs.LayoutParameter.extend(/** @lends ccs.LinearLayo
      * Sets LinearGravity parameter for LayoutParameter.
      * @param {ccs.LinearGravity} gravity
      */
-    setGravity: function (gravity) {
+    setGravity: function(gravity) {
         this._linearGravity = gravity;
     },
 
     /**
      * Gets LinearGravity parameter for LayoutParameter.
-     * @returns {ccs.LinearGravity}
+     * @return {ccs.LinearGravity}
      */
-    getGravity: function () {
+    getGravity: function() {
         return this._linearGravity;
     }
 });
@@ -121,7 +121,7 @@ ccs.LinearLayoutParameter = ccs.LayoutParameter.extend(/** @lends ccs.LinearLayo
  * // example
  * var uiLinearLayoutParameter = ccs.LinearLayoutParameter.create();
  */
-ccs.LinearLayoutParameter.create = function () {
+ccs.LinearLayoutParameter.create = function() {
     var parameter = new ccs.LinearLayoutParameter();
     return parameter;
 };
@@ -133,14 +133,14 @@ ccs.LinearLayoutParameter.create = function () {
  */
 ccs.RelativeLayoutParameter = ccs.LayoutParameter.extend(/** @lends ccs.RelativeLayoutParameter# */{
     _relativeAlign: null,
-    _relativeWidgetName: "",
-    _relativeLayoutName: "",
-    _put:false,
-    ctor: function () {
+    _relativeWidgetName: '',
+    _relativeLayoutName: '',
+    _put: false,
+    ctor: function() {
         ccs.LayoutParameter.prototype.ctor.call(this);
         this._relativeAlign = ccs.RelativeAlign.alignNone;
-        this._relativeWidgetName = "";
-        this._relativeLayoutName = "";
+        this._relativeWidgetName = '';
+        this._relativeLayoutName = '';
         this._put = false;
         this._layoutParameterType = ccs.LayoutParameterType.relative;
     },
@@ -149,15 +149,15 @@ ccs.RelativeLayoutParameter = ccs.LayoutParameter.extend(/** @lends ccs.Relative
      * Sets RelativeAlign parameter for LayoutParameter.
      * @param {ccs.RelativeAlign} align
      */
-    setAlign: function (align) {
+    setAlign: function(align) {
         this._relativeAlign = align;
     },
 
     /**
      * Gets RelativeAlign parameter for LayoutParameter.
-     * @returns {ccs.RelativeAlign}
+     * @return {ccs.RelativeAlign}
      */
-    getAlign: function () {
+    getAlign: function() {
         return this._relativeAlign;
     },
 
@@ -165,15 +165,15 @@ ccs.RelativeLayoutParameter = ccs.LayoutParameter.extend(/** @lends ccs.Relative
      * Sets a key for LayoutParameter. Witch widget named this is relative to.
      * @param {String} name
      */
-    setRelativeToWidgetName: function (name) {
+    setRelativeToWidgetName: function(name) {
         this._relativeWidgetName = name;
     },
 
     /**
      * Gets the key of LayoutParameter. Witch widget named this is relative to.
-     * @returns {string}
+     * @return {string}
      */
-    getRelativeToWidgetName: function () {
+    getRelativeToWidgetName: function() {
         return this._relativeWidgetName;
     },
 
@@ -181,15 +181,15 @@ ccs.RelativeLayoutParameter = ccs.LayoutParameter.extend(/** @lends ccs.Relative
      * Sets a name in Relative Layout for LayoutParameter.
      * @param {String} name
      */
-    setRelativeName: function (name) {
+    setRelativeName: function(name) {
         this._relativeLayoutName = name;
     },
 
     /**
      * Gets a name in Relative Layout of LayoutParameter.
-     * @returns {string}
+     * @return {string}
      */
-    getRelativeName: function () {
+    getRelativeName: function() {
         return this._relativeLayoutName;
     }
 });
@@ -202,7 +202,7 @@ ccs.RelativeLayoutParameter = ccs.LayoutParameter.extend(/** @lends ccs.Relative
  * // example
  * var uiRelativeLayoutParameter = ccs.RelativeLayoutParameter.create();
  */
-ccs.RelativeLayoutParameter.create = function () {
+ccs.RelativeLayoutParameter.create = function() {
     var parameter = new ccs.RelativeLayoutParameter();
     return parameter;
 };

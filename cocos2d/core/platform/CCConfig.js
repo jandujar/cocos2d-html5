@@ -33,7 +33,7 @@
  * @constant
  * @type String
  */
-cc.ENGINE_VERSION = "Cocos2d-html5-v2.2.2";
+cc.ENGINE_VERSION = 'Cocos2d-html5-v2.2.2';
 
 /**
  * <p>
@@ -186,7 +186,7 @@ cc.RETINA_DISPLAY_SUPPORT = 1;
  * @constant
  * @type String
  */
-cc.RETINA_DISPLAY_FILENAME_SUFFIX = "-hd";
+cc.RETINA_DISPLAY_FILENAME_SUFFIX = '-hd';
 
 /**
  * <p>
@@ -264,7 +264,7 @@ cc.IS_RETINA_DISPLAY_SUPPORTED = 1;
  * @constant
  * @type String
  */
-cc.DEFAULT_ENGINE = cc.ENGINE_VERSION + "-canvas";
+cc.DEFAULT_ENGINE = cc.ENGINE_VERSION + '-canvas';
 
 /**
  *  Runtime information
@@ -278,8 +278,8 @@ cc.config = {
  * dump config info, but only in debug mode
  */
 cc.dumpConfig = function() {
-    for(var i in sys )
-        cc.log( i + " = " + sys[i] );
+    for (var i in sys)
+        cc.log(i + ' = ' + sys[i]);
 };
 
 /**

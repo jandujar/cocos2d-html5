@@ -29,16 +29,16 @@
  */
 ccs.ActionObject = ccs.Class.extend({
     _actionNodeList: null,
-    _name: "",
+    _name: '',
     _loop: false,
     _pause: false,
     _playing: false,
     _unitTime: 0,
     _currentTime: 0,
-    _scheduler:null,
-    ctor: function () {
+    _scheduler: null,
+    ctor: function() {
         this._actionNodeList = [];
-        this._name = "";
+        this._name = '';
         this._loop = false;
         this._pause = false;
         this._playing = false;
@@ -52,15 +52,15 @@ ccs.ActionObject = ccs.Class.extend({
      * Sets name for object
      * @param {string} name
      */
-    setName: function (name) {
+    setName: function(name) {
         this._name = name;
     },
 
     /**
      * Gets name for object
-     * @returns {string}
+     * @return {string}
      */
-    getName: function () {
+    getName: function() {
         return this._name;
     },
 
@@ -68,15 +68,15 @@ ccs.ActionObject = ccs.Class.extend({
      * Sets if the action will loop play.
      * @param {boolean} loop
      */
-    setLoop: function (loop) {
+    setLoop: function(loop) {
         this._loop = loop;
     },
 
     /**
      * Gets if the action will loop play.
-     * @returns {boolean}
+     * @return {boolean}
      */
-    getLoop: function () {
+    getLoop: function() {
         return this._loop;
     },
 
@@ -84,7 +84,7 @@ ccs.ActionObject = ccs.Class.extend({
      * Sets the time interval of frame.
      * @param {number} time
      */
-    setUnitTime: function (time) {
+    setUnitTime: function(time) {
         this._unitTime = time;
         var frameNum = this._actionNodeList.length;
         for (var i = 0; i < frameNum; i++) {
@@ -95,17 +95,17 @@ ccs.ActionObject = ccs.Class.extend({
 
     /**
      * Gets the time interval of frame.
-     * @returns {number}
+     * @return {number}
      */
-    getUnitTime: function () {
+    getUnitTime: function() {
         return this._unitTime;
     },
 
     /**
      * Gets the current time of frame.
-     * @returns {number}
+     * @return {number}
      */
-    getCurrentTime: function () {
+    getCurrentTime: function() {
         return this._currentTime;
     },
 
@@ -113,15 +113,15 @@ ccs.ActionObject = ccs.Class.extend({
      * Sets the current time of frame.
      * @param time
      */
-    setCurrentTime: function (time) {
+    setCurrentTime: function(time) {
         this._currentTime = time;
     },
 
     /**
      * Return if the action is playing.
-     * @returns {boolean}
+     * @return {boolean}
      */
-    isPlaying: function () {
+    isPlaying: function() {
         return this._playing;
     },
 
@@ -130,11 +130,11 @@ ccs.ActionObject = ccs.Class.extend({
      * @param {Object} dic
      * @param {Object} root
      */
-    initWithDictionary: function (dic, root) {
-        this.setName(dic["name"]);
-        this.setLoop(dic["loop"]);
-        this.setUnitTime(dic["unittime"]);
-        var actionNodeList = dic["actionnodelist"];
+    initWithDictionary: function(dic, root) {
+        this.setName(dic['name']);
+        this.setLoop(dic['loop']);
+        this.setUnitTime(dic['unittime']);
+        var actionNodeList = dic['actionnodelist'];
         for (var i = 0; i < actionNodeList.length; i++) {
             var locActionNode = new ccs.ActionNode();
             var locActionNodeDic = actionNodeList[i];
@@ -149,7 +149,7 @@ ccs.ActionObject = ccs.Class.extend({
      * Adds a ActionNode to play the action.
      * @param {ccs.ActionNode} node
      */
-    addActionNode: function (node) {
+    addActionNode: function(node) {
         if (!node) {
             return;
         }
@@ -161,7 +161,7 @@ ccs.ActionObject = ccs.Class.extend({
      * Removes a ActionNode which play the action.
      * @param {ccs.ActionNode} node
      */
-    removeActionNode: function (node) {
+    removeActionNode: function(node) {
         if (node == null) {
             return;
         }
@@ -172,7 +172,7 @@ ccs.ActionObject = ccs.Class.extend({
      * Play the action.
      * @param {cc.CallFunc} fun
      */
-    play: function (fun) {
+    play: function(fun) {
         this.stop();
         this.updateToFrameByTime(0);
         var frameNum = this._actionNodeList.length;
@@ -188,14 +188,14 @@ ccs.ActionObject = ccs.Class.extend({
     /**
      * pause the action.
      */
-    pause: function () {
+    pause: function() {
         this._pause = true;
     },
 
     /**
      * stop the action.
      */
-    stop: function () {
+    stop: function() {
         for (var i = 0; i < this._actionNodeList.length; i++) {
             var locActionNode = this._actionNodeList[i];
             locActionNode.stopAction();
@@ -207,14 +207,14 @@ ccs.ActionObject = ccs.Class.extend({
     /**
      * Method of update frame .
      */
-    updateToFrameByTime: function (time) {
+    updateToFrameByTime: function(time) {
         this._currentTime = time;
         for (var i = 0; i < this._actionNodeList.length; i++) {
             var locActionNode = this._actionNodeList[i];
             locActionNode.updateActionToTimeLine(time);
         }
     },
-    simulationActionUpdate: function (dt) {
+    simulationActionUpdate: function(dt) {
         if (this._loop) {
             var isEnd = true;
             var actionNodeList = this._actionNodeList;

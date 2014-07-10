@@ -31,39 +31,39 @@
  */
 
 cc.ControlColourPicker = cc.Control.extend({
-    _hsv:null,
-    _colourPicker:null,
-    _huePicker:null,
+    _hsv: null,
+    _colourPicker: null,
+    _huePicker: null,
 
-    _background:null,
+    _background: null,
 
-    hueSliderValueChanged:function (sender, controlEvent) {
+    hueSliderValueChanged: function(sender, controlEvent) {
         this._hsv.h = sender.getHue();
 
         // Update the value
         var rgb = cc.ControlUtils.RGBfromHSV(this._hsv);
-        cc.Control.prototype.setColor.call(this,cc.c3(0 | (rgb.r * 255), 0 | (rgb.g * 255), 0 | (rgb.b * 255)));
+        cc.Control.prototype.setColor.call(this, cc.c3(0 | (rgb.r * 255), 0 | (rgb.g * 255), 0 | (rgb.b * 255)));
 
         // Send CCControl callback
         this.sendActionsForControlEvents(cc.CONTROL_EVENT_VALUECHANGED);
         this._updateControlPicker();
     },
 
-    colourSliderValueChanged:function (sender, controlEvent) {
+    colourSliderValueChanged: function(sender, controlEvent) {
         this._hsv.s = sender.getSaturation();
         this._hsv.v = sender.getBrightness();
 
 
         // Update the value
         var rgb = cc.ControlUtils.RGBfromHSV(this._hsv);
-        cc.Control.prototype.setColor.call(this,cc.c3(0 | (rgb.r * 255), 0 | (rgb.g * 255), 0 | (rgb.b * 255)));
+        cc.Control.prototype.setColor.call(this, cc.c3(0 | (rgb.r * 255), 0 | (rgb.g * 255), 0 | (rgb.b * 255)));
 
         // Send CCControl callback
         this.sendActionsForControlEvents(cc.CONTROL_EVENT_VALUECHANGED);
     },
 
-    setColor:function (color) {
-        cc.Control.prototype.setColor.call(this,color);
+    setColor: function(color) {
+        cc.Control.prototype.setColor.call(this, color);
         //this._colorValue = color;
         var rgba = new cc.RGBA();
         rgba.r = color.r / 255.0;
@@ -75,11 +75,11 @@ cc.ControlColourPicker = cc.Control.extend({
         this._updateHueAndControlPicker();
     },
 
-    getBackground:function () {
+    getBackground: function() {
         return this._background;
     },
 
-    init:function () {
+    init: function() {
         if (cc.Control.prototype.init.call(this)) {
             this.setTouchEnabled(true);
             // Cache the sprites
@@ -100,7 +100,7 @@ cc.ControlColourPicker = cc.Control.extend({
             this._hsv = new cc.HSV(0, 0, 0);
 
             // Add image
-            this._background = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("menuColourPanelBackground.png", spriteSheet, cc.PointZero(), cc.p(0.5, 0.5));
+            this._background = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor('menuColourPanelBackground.png', spriteSheet, cc.PointZero(), cc.p(0.5, 0.5));
 
             var backgroundPointZero = cc.pSub(this._background.getPosition(),
                 cc.p(this._background.getContentSize().width / 2, this._background.getContentSize().height / 2));
@@ -129,17 +129,17 @@ cc.ControlColourPicker = cc.Control.extend({
             return false;
     },
 
-    _updateControlPicker:function () {
+    _updateControlPicker: function() {
         this._huePicker.setHue(this._hsv.h);
         this._colourPicker.updateWithHSV(this._hsv);
     },
 
-    _updateHueAndControlPicker:function () {
+    _updateHueAndControlPicker: function() {
         this._huePicker.setHue(this._hsv.h);
         this._colourPicker.updateWithHSV(this._hsv);
         this._colourPicker.updateDraggerWithHSV(this._hsv);
     },
-    setEnabled:function (enabled) {
+    setEnabled: function(enabled) {
         cc.Control.prototype.setEnabled.call(this, enabled);
         if (this._huePicker != null) {
             this._huePicker.setEnabled(enabled);
@@ -148,13 +148,13 @@ cc.ControlColourPicker = cc.Control.extend({
             this._colourPicker.setEnabled(enabled);
         }
     },
-    onTouchBegan:function () {
+    onTouchBegan: function() {
         //ignore all touches, handled by children
         return false;
     }
 });
 
-cc.ControlColourPicker.create = function () {
+cc.ControlColourPicker.create = function() {
     var pRet = new cc.ControlColourPicker();
     pRet.init();
     return pRet;
@@ -162,5 +162,5 @@ cc.ControlColourPicker.create = function () {
 
 // compatible with NPM
 var res = res || {};
-res.CCControlColourPickerSpriteSheet_plist = res.CCControlColourPickerSpriteSheet_plist || "res/extensions/CCControlColourPickerSpriteSheet.plist";
-res.CCControlColourPickerSpriteSheet_png = res.CCControlColourPickerSpriteSheet_png || "res/extensions/CCControlColourPickerSpriteSheet.png";
+res.CCControlColourPickerSpriteSheet_plist = res.CCControlColourPickerSpriteSheet_plist || 'res/extensions/CCControlColourPickerSpriteSheet.plist';
+res.CCControlColourPickerSpriteSheet_png = res.CCControlColourPickerSpriteSheet_png || 'res/extensions/CCControlColourPickerSpriteSheet.png';

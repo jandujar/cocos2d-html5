@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-ccs.sendEvent = function (event) {
+ccs.sendEvent = function(event) {
     var triggerObjArr = ccs.TriggerMng.getInstance().get(event);
     if (triggerObjArr == null) {
         return;
@@ -35,6 +35,6 @@ ccs.sendEvent = function (event) {
     }
 };
 
-ccs.registerTriggerClass = function (className, func) {
+ccs.registerTriggerClass = function(className, func) {
     new ccs.TInfo(className, func);
 };

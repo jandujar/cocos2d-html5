@@ -24,29 +24,29 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-cc.km_mat4_stack = function(capacity, item_count, top, stack){
-    this.top = top ;
-    this.stack = stack ;
+cc.km_mat4_stack = function(capacity, item_count, top, stack) {
+    this.top = top;
+    this.stack = stack;
 };
 
 cc.km_mat4_stack.INITIAL_SIZE = 30;
 
-cc.km_mat4_stack_initialize = function(stack){
+cc.km_mat4_stack_initialize = function(stack) {
     stack.stack = [];                                   //allocate the memory
     stack.top = null;                                   //Set the top to NULL
 };
 
-cc.km_mat4_stack_push = function(stack, item){
+cc.km_mat4_stack_push = function(stack, item) {
     stack.stack.push(stack.top);
     stack.top = new cc.kmMat4();
     cc.kmMat4Assign(stack.top, item);
 };
 
-cc.km_mat4_stack_pop = function(stack, pOut){
+cc.km_mat4_stack_pop = function(stack, pOut) {
     stack.top = stack.stack.pop();
 };
 
-cc.km_mat4_stack_release = function(stack){
+cc.km_mat4_stack_release = function(stack) {
     stack.stack = null;
     stack.top = null;
     stack = null;

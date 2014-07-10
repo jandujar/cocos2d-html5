@@ -24,26 +24,26 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-(function () {
+(function() {
     var d = document;
     var c = {
-        COCOS2D_DEBUG:2, //0 to turn debug off, 1 for basic debug, and 2 for full debug
-        box2d:false,
-        chipmunk:false,
-        showFPS:true,
-        loadExtension:false,
-        frameRate:60,
-        renderMode:0,       //Choose of RenderMode: 0(default), 1(Canvas only), 2(WebGL only)
-        tag:'gameCanvas', //the dom element to run cocos2d on
-        engineDir:'../cocos2d/',
+        COCOS2D_DEBUG: 2, //0 to turn debug off, 1 for basic debug, and 2 for full debug
+        box2d: false,
+        chipmunk: false,
+        showFPS: true,
+        loadExtension: false,
+        frameRate: 60,
+        renderMode: 0,       //Choose of RenderMode: 0(default), 1(Canvas only), 2(WebGL only)
+        tag: 'gameCanvas', //the dom element to run cocos2d on
+        engineDir: '../cocos2d/',
         //SingleEngineFile:'',
-        appFiles:[
+        appFiles: [
             'src/resource.js',
             'src/myApp.js'//add your own files in order here
         ]
     };
 
-    if(!d.createElement('canvas').getContext){
+    if (!d.createElement('canvas').getContext) {
         var s = d.createElement('div');
         s.innerHTML = '<h2>Your browser does not support HTML5 canvas!</h2>' +
             '<p>Google Chrome is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier.Click the logo to download.</p>' +
@@ -51,14 +51,14 @@
         var p = d.getElementById(c.tag).parentNode;
         p.style.background = 'none';
         p.style.border = 'none';
-        p.insertBefore(s,d.getElementById(c.tag));
+        p.insertBefore(s, d.getElementById(c.tag));
 
         d.body.style.background = '#ffffff';
         return;
     }
 
 
-    window.addEventListener('DOMContentLoaded', function () {
+    window.addEventListener('DOMContentLoaded', function() {
         this.removeEventListener('DOMContentLoaded', arguments.callee, false);
         //first load engine file if specified
         var s = d.createElement('script');

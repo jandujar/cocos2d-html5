@@ -29,14 +29,14 @@
  * @extends cc.Class
  */
 cc.Touch = cc.Class.extend(/** @lends cc.Touch# */{
-    _point:null,
-    _prevPoint:cc.PointZero(),
-    _id:0,
+    _point: null,
+    _prevPoint: cc.PointZero(),
+    _id: 0,
 
     /**
      * Constructor
      */
-    ctor:function (x, y, id) {
+    ctor: function(x, y, id) {
         this._point = cc.p(x || 0, y || 0);
         this._id = id || 0;
     },
@@ -45,35 +45,35 @@ cc.Touch = cc.Class.extend(/** @lends cc.Touch# */{
      * get point of touch
      * @return {cc.Point}
      */
-    getLocation:function () {
+    getLocation: function() {
         return this._point;
     },
 
     /**
      * @return {cc.Point}
      */
-    getPreviousLocation:function () {
+    getPreviousLocation: function() {
         return this._prevPoint;
     },
 
     /**
      * @return {cc.Point}
      */
-    getDelta:function () {
+    getDelta: function() {
         return cc.pSub(this._point, this._prevPoint);
     },
 
     /**
      * @return {Number}
      */
-    getID:function () {
+    getID: function() {
         return this._id;
     },
 
     /**
      * @return {Number}
      */
-    getId:function () {
+    getId: function() {
         return this._id;
     },
 
@@ -83,13 +83,13 @@ cc.Touch = cc.Class.extend(/** @lends cc.Touch# */{
      * @param  {Number} x
      * @param  {Number} y
      */
-    setTouchInfo:function (id, x, y) {
+    setTouchInfo: function(id, x, y) {
         this._prevPoint = this._point;
         this._point = cc.p(x || 0, y || 0);
         this._id = id;
     },
 
-    _setPrevPoint:function (x, y) {
+    _setPrevPoint: function(x, y) {
         this._prevPoint = cc.p(x || 0, y || 0);
     }
 });
@@ -99,7 +99,7 @@ cc.Touch = cc.Class.extend(/** @lends cc.Touch# */{
  * @extends cc.Class
  */
 cc.TouchDelegate = cc.Class.extend(/** @lends cc.TouchDelegate# */{
-    _eventTypeFuncMap:null,
+    _eventTypeFuncMap: null,
 
     /**
      * Virtual function
@@ -107,7 +107,7 @@ cc.TouchDelegate = cc.Class.extend(/** @lends cc.TouchDelegate# */{
      * @param {event} event
      * @return {Boolean}
      */
-    onTouchBegan:function (touch, event) {
+    onTouchBegan: function(touch, event) {
         return false;
     },
 
@@ -116,7 +116,7 @@ cc.TouchDelegate = cc.Class.extend(/** @lends cc.TouchDelegate# */{
      * @param {cc.Touch} touch
      * @param {event} event
      */
-    onTouchMoved:function (touch, event) {
+    onTouchMoved: function(touch, event) {
     },
 
     /**
@@ -124,7 +124,7 @@ cc.TouchDelegate = cc.Class.extend(/** @lends cc.TouchDelegate# */{
      * @param {cc.Touch} touch
      * @param {event} event
      */
-    onTouchEnded:function (touch, event) {
+    onTouchEnded: function(touch, event) {
     },
 
     /**
@@ -132,7 +132,7 @@ cc.TouchDelegate = cc.Class.extend(/** @lends cc.TouchDelegate# */{
      * @param {cc.Touch} touch
      * @param {event} event
      */
-    onTouchCancelled:function (touch, event) {
+    onTouchCancelled: function(touch, event) {
     },
 
     /**
@@ -140,7 +140,7 @@ cc.TouchDelegate = cc.Class.extend(/** @lends cc.TouchDelegate# */{
      * @param {Array} touches
      * @param {event} event
      */
-    onTouchesBegan:function (touches, event) {
+    onTouchesBegan: function(touches, event) {
     },
 
     /**
@@ -148,7 +148,7 @@ cc.TouchDelegate = cc.Class.extend(/** @lends cc.TouchDelegate# */{
      * @param {Array} touches
      * @param {event} event
      */
-    onTouchesMoved:function (touches, event) {
+    onTouchesMoved: function(touches, event) {
     },
 
     /**
@@ -156,7 +156,7 @@ cc.TouchDelegate = cc.Class.extend(/** @lends cc.TouchDelegate# */{
      * @param {Array} touches
      * @param {event} event
      */
-    onTouchesEnded:function (touches, event) {
+    onTouchesEnded: function(touches, event) {
     },
 
     /**
@@ -164,7 +164,7 @@ cc.TouchDelegate = cc.Class.extend(/** @lends cc.TouchDelegate# */{
      * @param {Array} touches
      * @param {event} event
      */
-    onTouchesCancelled:function (touches, event) {
+    onTouchesCancelled: function(touches, event) {
     },
 
     /*
@@ -174,13 +174,13 @@ cc.TouchDelegate = cc.Class.extend(/** @lends cc.TouchDelegate# */{
      * I don't know why, so add these functions for the subclass to invoke it's own retain() and  release
      *Virtual function
      */
-    touchDelegateRetain:function () {
+    touchDelegateRetain: function() {
     },
 
     /**
      * Virtual function
      */
-    touchDelegateRelease:function () {
+    touchDelegateRelease: function() {
     }
 });
 
@@ -206,7 +206,7 @@ cc.TargetedTouchDelegate = cc.TouchDelegate.extend(/** @lends cc.TargetedTouchDe
      * @param {event} event
      * @return {Boolean}
      */
-    onTouchBegan:function (touch, event) {
+    onTouchBegan: function(touch, event) {
         return false;
     },
 
@@ -215,7 +215,7 @@ cc.TargetedTouchDelegate = cc.TouchDelegate.extend(/** @lends cc.TargetedTouchDe
      * @param {cc.Touch} touch
      * @param {event} event
      */
-    onTouchMoved:function (touch, event) {
+    onTouchMoved: function(touch, event) {
     },
 
     /**
@@ -223,7 +223,7 @@ cc.TargetedTouchDelegate = cc.TouchDelegate.extend(/** @lends cc.TargetedTouchDe
      * @param {cc.Touch} touch
      * @param {event} event
      */
-    onTouchEnded:function (touch, event) {
+    onTouchEnded: function(touch, event) {
     },
 
     /**
@@ -231,7 +231,7 @@ cc.TargetedTouchDelegate = cc.TouchDelegate.extend(/** @lends cc.TargetedTouchDe
      * @param {cc.Touch} touch
      * @param {event} event
      */
-    onTouchCancelled:function (touch, event) {
+    onTouchCancelled: function(touch, event) {
     }
 });
 
@@ -247,7 +247,7 @@ cc.StandardTouchDelegate = cc.TouchDelegate.extend(/** @lends cc.StandardTouchDe
      * @param {Array} touches
      * @param {event} event
      */
-    onTouchesBegan:function (touches, event) {
+    onTouchesBegan: function(touches, event) {
     },
 
     /**
@@ -255,7 +255,7 @@ cc.StandardTouchDelegate = cc.TouchDelegate.extend(/** @lends cc.StandardTouchDe
      * @param {Array} touches
      * @param {event} event
      */
-    onTouchesMoved:function (touches, event) {
+    onTouchesMoved: function(touches, event) {
     },
 
     /**
@@ -263,7 +263,7 @@ cc.StandardTouchDelegate = cc.TouchDelegate.extend(/** @lends cc.StandardTouchDe
      * @param {Array} touches
      * @param {event} event
      */
-    onTouchesEnded:function (touches, event) {
+    onTouchesEnded: function(touches, event) {
     },
 
     /**
@@ -271,7 +271,7 @@ cc.StandardTouchDelegate = cc.TouchDelegate.extend(/** @lends cc.StandardTouchDe
      * @param {Array} touches
      * @param {event} event
      */
-    onTouchesCancelled:function (touches, event) {
+    onTouchesCancelled: function(touches, event) {
     }
 });
 

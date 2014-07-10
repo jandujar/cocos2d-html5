@@ -90,7 +90,7 @@ cc.TouchMax = 4;
  * @param {cc.TouchHandler} p2
  * @return {Boolean}
  */
-cc.less = function (p1, p2) {
+cc.less = function(p1, p2) {
     return p1.getPriority() > p2.getPriority();
 };
 
@@ -98,7 +98,7 @@ cc.less = function (p1, p2) {
  * @param {Number} type
  * Constructor
  */
-cc.TouchHandlerHelperData = function (type) {
+cc.TouchHandlerHelperData = function(type) {
     // we only use the type
     this.type = type;
 };
@@ -121,22 +121,22 @@ cc.TouchHandlerHelperData = function (type) {
  * @extends cc.Class
  */
 cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
-    _mousePressed:false,
-    _targetedHandlers:null,
-    _standardHandlers:null,
-    _locked:false,
-    _toAdd:false,
-    _toRemove:false,
-    _handlersToAdd:null,
-    _handlersToRemove:null,
-    _toQuit:false,
-    _dispatchEvents:false,
-    _handlerHelperData:[new cc.TouchHandlerHelperData(cc.TOUCH_BEGAN), new cc.TouchHandlerHelperData(cc.TOUCH_MOVED), new cc.TouchHandlerHelperData(cc.TOUCH_ENDED), new cc.TouchHandlerHelperData(cc.TOUCH_CANCELLED)],
+    _mousePressed: false,
+    _targetedHandlers: null,
+    _standardHandlers: null,
+    _locked: false,
+    _toAdd: false,
+    _toRemove: false,
+    _handlersToAdd: null,
+    _handlersToRemove: null,
+    _toQuit: false,
+    _dispatchEvents: false,
+    _handlerHelperData: [new cc.TouchHandlerHelperData(cc.TOUCH_BEGAN), new cc.TouchHandlerHelperData(cc.TOUCH_MOVED), new cc.TouchHandlerHelperData(cc.TOUCH_ENDED), new cc.TouchHandlerHelperData(cc.TOUCH_CANCELLED)],
 
     /**
      * @return {Boolean}
      */
-    init:function () {
+    init: function() {
         this._dispatchEvents = true;
         this._targetedHandlers = [];
         this._standardHandlers = [];
@@ -151,11 +151,11 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
         return true;
     },
 
-    _setMousePressed:function (pressed) {
+    _setMousePressed: function(pressed) {
         this._mousePressed = pressed;
     },
 
-    _getMousePressed:function () {
+    _getMousePressed: function() {
         return this._mousePressed;
     },
 
@@ -163,14 +163,14 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
      * Whether or not the events are going to be dispatched. Default: true
      * @return {Boolean}
      */
-    isDispatchEvents:function () {
+    isDispatchEvents: function() {
         return this._dispatchEvents;
     },
 
     /**
      * @param {Boolean} dispatchEvents
      */
-    setDispatchEvents:function (dispatchEvents) {
+    setDispatchEvents: function(dispatchEvents) {
         this._dispatchEvents = dispatchEvents;
     },
 
@@ -181,7 +181,7 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
      * @param {Object} delegate
      * @param {Number} [priority=0]
      */
-    _addStandardDelegate:function (delegate, priority) {
+    _addStandardDelegate: function(delegate, priority) {
         priority = priority || 0;
         var handler = cc.StandardTouchHandler.create(delegate, priority);
 
@@ -206,7 +206,7 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
      * @param {Number} priority
      * @param {Boolean} swallowsTouches
      */
-    _addTargetedDelegate:function (delegate, priority, swallowsTouches) {
+    _addTargetedDelegate: function(delegate, priority, swallowsTouches) {
         var handler = cc.TargetedTouchHandler.create(delegate, priority, swallowsTouches);
         if (!this._locked) {
             this._targetedHandlers = this.forceAddHandler(handler, this._targetedHandlers);
@@ -230,7 +230,7 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
      * @param {Array} array
      * @return {Array}
      */
-    forceAddHandler:function (handler, array) {
+    forceAddHandler: function(handler, array) {
         var u = 0, h;
 
         for (var i = 0; i < array.length; i++) {
@@ -239,7 +239,7 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
                 if (h.getPriority() < handler.getPriority())
                     ++u;
                 if (h.getDelegate() == handler.getDelegate()) {
-                    cc.log("cc.TouchDispatcher.forceAddHandler(): The handler has been added.");
+                    cc.log('cc.TouchDispatcher.forceAddHandler(): The handler has been added.');
                     return array;
                 }
             }
@@ -250,7 +250,7 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
     /**
      *  Force remove all delegates
      */
-    forceRemoveAllDelegates:function () {
+    forceRemoveAllDelegates: function() {
         this._standardHandlers.length = 0;
         this._targetedHandlers.length = 0;
     },
@@ -260,7 +260,7 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
      * The delegate will be released
      * @param {cc.TouchDelegate} delegate
      */
-    _removeDelegate:function (delegate) {
+    _removeDelegate: function(delegate) {
         if (delegate == null) {
             return;
         }
@@ -285,7 +285,7 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
     /**
      * Removes all touch delegates, releasing all the delegates
      */
-    removeAllDelegates:function () {
+    removeAllDelegates: function() {
         if (!this._locked) {
             this.forceRemoveAllDelegates();
         } else {
@@ -298,11 +298,11 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
      * @param {Number} priority
      * @param {cc.TouchDelegate} delegate
      */
-    setPriority:function (priority, delegate) {
-        if(!delegate)
-            throw "cc.TouchDispatcher.setPriority(): delegate should be non-null.";
+    setPriority: function(priority, delegate) {
+        if (!delegate)
+            throw 'cc.TouchDispatcher.setPriority(): delegate should be non-null.';
         var handler = this.findHandler(delegate);
-        if(!handler){
+        if (!handler) {
             cc.log("cc.TouchDispatcher.setPriority(): Can't find TouchHandler.");
             return;
         }
@@ -319,9 +319,9 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
      * @param {event} event
      * @param {Number} index
      */
-    touches:function (touches, event, index) {
-        if(index< 0 || index >=4)
-            throw "cc.TouchDispatcher.touches(): invalid index";
+    touches: function(touches, event, index) {
+        if (index < 0 || index >= 4)
+            throw 'cc.TouchDispatcher.touches(): invalid index';
 
         this._locked = true;
 
@@ -472,7 +472,7 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
      * @param {Array} touches
      * @param {event} event
      */
-    touchesBegan:function (touches, event) {
+    touchesBegan: function(touches, event) {
         if (this._dispatchEvents) {
             this.touches(touches, event, cc.TOUCH_BEGAN);
         }
@@ -482,7 +482,7 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
      * @param {Array} touches
      * @param {event} event
      */
-    touchesMoved:function (touches, event) {
+    touchesMoved: function(touches, event) {
         if (this._dispatchEvents) {
             this.touches(touches, event, cc.TOUCH_MOVED);
         }
@@ -492,7 +492,7 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
      * @param {Array} touches
      * @param {event} event
      */
-    touchesEnded:function (touches, event) {
+    touchesEnded: function(touches, event) {
         if (this._dispatchEvents) {
             this.touches(touches, event, cc.TOUCH_ENDED);
         }
@@ -502,7 +502,7 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
      * @param {Array} touches
      * @param {event} event
      */
-    touchesCancelled:function (touches, event) {
+    touchesCancelled: function(touches, event) {
         if (this._dispatchEvents) {
             this.touches(touches, event, cc.TOUCH_CANCELLED);
         }
@@ -513,12 +513,12 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
      * @param {cc.TouchDelegate} delegate
      * @return {cc.TargetedTouchHandler|cc.StandardTouchHandler|Null}
      */
-    findHandler:function (array, delegate) {
+    findHandler: function(array, delegate) {
         switch (arguments.length) {
             case 1:
                 delegate = arguments[0];
-                if(!delegate)
-                    throw "cc.TouchDispatcher.findHandler(): delegate should be non-null.";
+                if (!delegate)
+                    throw 'cc.TouchDispatcher.findHandler(): delegate should be non-null.';
                 for (var i = 0; i < this._targetedHandlers.length; i++) {
                     if (this._targetedHandlers[i].getDelegate() == delegate) {
                         return this._targetedHandlers[i];
@@ -532,10 +532,10 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
                 return null;
                 break;
             case 2:
-                if(!array)
-                    throw "cc.TouchDispatcher.findHandler(): array should be non-null.";
-                if(!delegate)
-                    throw "cc.TouchDispatcher.findHandler(): delegate should be non-null.";
+                if (!array)
+                    throw 'cc.TouchDispatcher.findHandler(): array should be non-null.';
+                if (!delegate)
+                    throw 'cc.TouchDispatcher.findHandler(): delegate should be non-null.';
 
                 for (i = 0; i < array.length; i++) {
                     if (array[i].getDelegate() == delegate) {
@@ -546,7 +546,7 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
                 return null;
                 break;
             default:
-                throw "Argument must be non-nil ";
+                throw 'Argument must be non-nil ';
                 break;
         }
     },
@@ -554,7 +554,7 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
     /**
      * @param {cc.TouchDelegate} delegate
      */
-    forceRemoveDelegate:function (delegate) {
+    forceRemoveDelegate: function(delegate) {
         var handler;
         // XXX: remove it from both handlers ???
         // remove handler from m_pStandardHandlers
@@ -578,7 +578,7 @@ cc.TouchDispatcher = cc.Class.extend(/** @lends cc.TouchDispatcher# */ {
     /**
      * @param {Array} array
      */
-    rearrangeHandlers:function (array) {
+    rearrangeHandlers: function(array) {
         array.sort(cc.less);
     }
 });
@@ -590,7 +590,7 @@ cc.TouchDispatcher.preTouchPoint = cc.p(0, 0);
 
 cc.TouchDispatcher.isRegisterEvent = false;
 
-cc.getHTMLElementPosition = function (element) {
+cc.getHTMLElementPosition = function(element) {
     var docElem = document.documentElement;
     var win = window;
     var box = null;
@@ -599,29 +599,29 @@ cc.getHTMLElementPosition = function (element) {
     } else {
         if (element instanceof HTMLCanvasElement) {
             box = {
-                left:0,
-                top:0,
-                width:element.width,
-                height:element.height
+                left: 0,
+                top: 0,
+                width: element.width,
+                height: element.height
             };
         } else {
             box = {
-                left:0,
-                top:0,
-                width:parseInt(element.style.width),
-                height:parseInt(element.style.height)
+                left: 0,
+                top: 0,
+                width: parseInt(element.style.width),
+                height: parseInt(element.style.height)
             };
         }
     }
     return {
-        left:box.left + win.pageXOffset - docElem.clientLeft,
-        top:box.top + win.pageYOffset - docElem.clientTop,
-        width:box.width,
-        height:box.height
+        left: box.left + win.pageXOffset - docElem.clientLeft,
+        top: box.top + win.pageYOffset - docElem.clientTop,
+        width: box.width,
+        height: box.height
     };
 };
 
-cc.ProcessMouseupEvent = function (element, event) {
+cc.ProcessMouseupEvent = function(element, event) {
     var pos = cc.getHTMLElementPosition(element);
 
     var tx, ty;
@@ -651,15 +651,15 @@ cc.ProcessMouseupEvent = function (element, event) {
 /**
  * @param {HTMLCanvasElement|HTMLDivElement} element
  */
-cc.TouchDispatcher.registerHtmlElementEvent = function (element) {
+cc.TouchDispatcher.registerHtmlElementEvent = function(element) {
     if (cc.TouchDispatcher.isRegisterEvent) return;
 
     if (!cc.Browser.isMobile) {
-        window.addEventListener('mousedown', function (event) {
+        window.addEventListener('mousedown', function(event) {
             cc.Director.getInstance().getTouchDispatcher()._setMousePressed(true);
         });
 
-        window.addEventListener('mouseup', function (event) {
+        window.addEventListener('mouseup', function(event) {
             cc.Director.getInstance().getTouchDispatcher()._setMousePressed(false);
 
             var pos = cc.getHTMLElementPosition(element);
@@ -677,7 +677,7 @@ cc.TouchDispatcher.registerHtmlElementEvent = function (element) {
 
             if (!cc.rectContainsPoint(new cc.Rect(pos.left, pos.top, pos.width, pos.height), cc.p(tx, ty))) {
                 var location = cc.EGLView.getInstance().convertToLocationInView(tx, ty, pos);
-                var touch = new cc.Touch(location.x,  location.y);
+                var touch = new cc.Touch(location.x, location.y);
                 touch._setPrevPoint(cc.TouchDispatcher.preTouchPoint.x, cc.TouchDispatcher.preTouchPoint.y);
                 cc.TouchDispatcher.preTouchPoint.x = location.x;
                 cc.TouchDispatcher.preTouchPoint.y = location.y;
@@ -690,7 +690,7 @@ cc.TouchDispatcher.registerHtmlElementEvent = function (element) {
         });
 
         //register canvas mouse event
-        element.addEventListener("mousedown", function (event) {
+        element.addEventListener('mousedown', function(event) {
             var pos = cc.getHTMLElementPosition(element);
 
             var tx, ty;
@@ -705,7 +705,7 @@ cc.TouchDispatcher.registerHtmlElementEvent = function (element) {
             }
 
             var location = cc.EGLView.getInstance().convertToLocationInView(tx, ty, pos);
-            var touch = new cc.Touch(location.x,  location.y);
+            var touch = new cc.Touch(location.x, location.y);
             touch._setPrevPoint(cc.TouchDispatcher.preTouchPoint.x, cc.TouchDispatcher.preTouchPoint.y);
             cc.TouchDispatcher.preTouchPoint.x = location.x;
             cc.TouchDispatcher.preTouchPoint.y = location.y;
@@ -716,11 +716,11 @@ cc.TouchDispatcher.registerHtmlElementEvent = function (element) {
             cc.EGLView.getInstance().touchesBegan(posArr, null);
         });
 
-        element.addEventListener("mouseup", function (event) {
+        element.addEventListener('mouseup', function(event) {
             cc.ProcessMouseupEvent(element, event);
         });
 
-        element.addEventListener("mousemove", function (event) {
+        element.addEventListener('mousemove', function(event) {
             var pos = cc.getHTMLElementPosition(element);
 
             var tx, ty;
@@ -735,7 +735,7 @@ cc.TouchDispatcher.registerHtmlElementEvent = function (element) {
             }
 
             var location = cc.EGLView.getInstance().convertToLocationInView(tx, ty, pos);
-            var touch = new cc.Touch(location.x,  location.y);
+            var touch = new cc.Touch(location.x, location.y);
             //TODO this feature only chrome support
             //if((event.button == 0) && (event.which == 1))
             //    touch._setPressed(true);
@@ -749,29 +749,29 @@ cc.TouchDispatcher.registerHtmlElementEvent = function (element) {
             //csx cc.Director.getInstance().getTouchDispatcher().touchesMoved(posArr, null);
             cc.EGLView.getInstance().touchesMoved(posArr, null);
         });
-    } 
-    else if(window.navigator.msPointerEnabled){ 
+    }
+    else if (window.navigator.msPointerEnabled) {
         var _pointerEventsMap = {
-            "MSPointerDown"     : "touchesBegan",
-            "MSPointerMove"     : "touchesMoved",
-            "MSPointerUp"       : "touchesEnded",
-            "MSPointerCancel"   : "touchesCancelled" 
+            'MSPointerDown' : 'touchesBegan',
+            'MSPointerMove' : 'touchesMoved',
+            'MSPointerUp' : 'touchesEnded',
+            'MSPointerCancel' : 'touchesCancelled'
         };
 
-        for(var i in _pointerEventsMap){
-            (function(_pointerEvent, _touchEvent){
-                element.addEventListener(_pointerEvent, function (event){
+        for (var i in _pointerEventsMap) {
+            (function(_pointerEvent, _touchEvent) {
+                element.addEventListener(_pointerEvent, function(event) {
                     var pos = cc.getHTMLElementPosition(element);
 
                     pos.left -= document.body.scrollLeft;
                     pos.top -= document.body.scrollTop;
-                    
+
                     var tx, ty, touch, preLocation;
                     tx = event.clientX;
                     ty = event.clientY;
 
                     var location = cc.EGLView.getInstance().convertToLocationInView(tx, ty, pos);
-                    var touch = new cc.Touch(location.x,  location.y);
+                    var touch = new cc.Touch(location.x, location.y);
                     touch._setPrevPoint(cc.TouchDispatcher.preTouchPoint.x, cc.TouchDispatcher.preTouchPoint.y);
                     cc.TouchDispatcher.preTouchPoint.x = location.x;
                     cc.TouchDispatcher.preTouchPoint.y = location.y;
@@ -786,7 +786,7 @@ cc.TouchDispatcher.registerHtmlElementEvent = function (element) {
     else {
 
         //register canvas touch event
-        element.addEventListener("touchstart", function (event) {
+        element.addEventListener('touchstart', function(event) {
             if (!event.changedTouches) return;
 
             var posArr = [];
@@ -807,7 +807,7 @@ cc.TouchDispatcher.registerHtmlElementEvent = function (element) {
 
                     var location = cc.EGLView.getInstance().convertToLocationInView(tx, ty, pos);
                     touch = null;
-                    if (touch_event.hasOwnProperty("identifier")) {
+                    if (touch_event.hasOwnProperty('identifier')) {
                         touch = new cc.Touch(location.x, location.y, touch_event.identifier);
                         //use Touch Pool
                         preLocation = cc.TouchDispatcher._getPreTouch(touch).getLocation();
@@ -829,7 +829,7 @@ cc.TouchDispatcher.registerHtmlElementEvent = function (element) {
             event.preventDefault();
         }, false);
 
-        element.addEventListener("touchmove", function (event) {
+        element.addEventListener('touchmove', function(event) {
             if (!event.changedTouches) return;
 
             var posArr = [];
@@ -851,7 +851,7 @@ cc.TouchDispatcher.registerHtmlElementEvent = function (element) {
                     var location = cc.EGLView.getInstance().convertToLocationInView(tx, ty, pos);
 
                     touch = null;
-                    if (touch_event.hasOwnProperty("identifier")) {
+                    if (touch_event.hasOwnProperty('identifier')) {
                         touch = new cc.Touch(location.x, location.y, touch_event.identifier);
                         //use Touch Pool
                         preLocation = cc.TouchDispatcher._getPreTouch(touch).getLocation();
@@ -873,7 +873,7 @@ cc.TouchDispatcher.registerHtmlElementEvent = function (element) {
             event.preventDefault();
         }, false);
 
-        element.addEventListener("touchend", function (event) {
+        element.addEventListener('touchend', function(event) {
             if (!event.changedTouches) return;
 
             var posArr = [];
@@ -895,7 +895,7 @@ cc.TouchDispatcher.registerHtmlElementEvent = function (element) {
                     var location = cc.EGLView.getInstance().convertToLocationInView(tx, ty, pos);
 
                     touch = null;
-                    if (touch_event.hasOwnProperty("identifier")) {
+                    if (touch_event.hasOwnProperty('identifier')) {
                         touch = new cc.Touch(location.x, location.y, touch_event.identifier);
                         //use Touch Pool
                         preLocation = cc.TouchDispatcher._getPreTouch(touch).getLocation();
@@ -917,7 +917,7 @@ cc.TouchDispatcher.registerHtmlElementEvent = function (element) {
             event.preventDefault();
         }, false);
 
-        element.addEventListener("touchcancel", function (event) {
+        element.addEventListener('touchcancel', function(event) {
             if (!event.changedTouches) return;
 
             var posArr = [];
@@ -939,7 +939,7 @@ cc.TouchDispatcher.registerHtmlElementEvent = function (element) {
                     var location = cc.EGLView.getInstance().convertToLocationInView(tx, ty, pos);
 
                     touch = null;
-                    if (touch_event.hasOwnProperty("identifier")) {
+                    if (touch_event.hasOwnProperty('identifier')) {
                         touch = new cc.Touch(location.x, location.y, touch_event.identifier);
                         //use Touch Pool
                         preLocation = cc.TouchDispatcher._getPreTouch(touch).getLocation();
@@ -969,7 +969,7 @@ cc.TouchDispatcher.registerHtmlElementEvent = function (element) {
  * @param {cc.Touch} touch
  * @return {cc.Touch} preTouch
  */
-cc.TouchDispatcher._getPreTouch = function (touch) {
+cc.TouchDispatcher._getPreTouch = function(touch) {
     var preTouch = null;
     var preTouchPool = cc.TouchDispatcher._preTouchPool;
     var id = touch.getId();
@@ -988,7 +988,7 @@ cc.TouchDispatcher._getPreTouch = function (touch) {
 /**
  * @param {cc.Touch} touch
  */
-cc.TouchDispatcher._setPreTouch = function (touch) {
+cc.TouchDispatcher._setPreTouch = function(touch) {
     var find = false;
     var preTouchPool = cc.TouchDispatcher._preTouchPool;
     var id = touch.getId();
@@ -1015,7 +1015,7 @@ cc.TouchDispatcher._setPreTouch = function (touch) {
 /**
  * @param {cc.Touch} touch
  */
-cc.TouchDispatcher._deletePreTouchWithSameId = function (touch) {
+cc.TouchDispatcher._deletePreTouchWithSameId = function(touch) {
     var changeTouch;
     var preTouchPool = cc.TouchDispatcher._preTouchPool;
     var id = touch.getId();
@@ -1046,7 +1046,7 @@ cc.TouchDispatcher._preTouchPoolPointer = 0;
  * @param {Boolean} swallowsTouches
  * @param {Object} delegate
  */
-cc.registerTargetedDelegate = function(priority, swallowsTouches, delegate){
+cc.registerTargetedDelegate = function(priority, swallowsTouches, delegate) {
     cc.Director.getInstance().getTouchDispatcher()._addTargetedDelegate(delegate, priority, swallowsTouches);
 };
 
@@ -1056,7 +1056,7 @@ cc.registerTargetedDelegate = function(priority, swallowsTouches, delegate){
  * @param {Object} delegate
  * @param {Number} [priority=]
  */
-cc.registerStandardDelegate = function(delegate, priority){
+cc.registerStandardDelegate = function(delegate, priority) {
     cc.Director.getInstance().getTouchDispatcher()._addStandardDelegate(delegate, priority);
 };
 
@@ -1064,6 +1064,6 @@ cc.registerStandardDelegate = function(delegate, priority){
  * Removes a touch delegate. from TouchDispatcher
  * @param delegate
  */
-cc.unregisterTouchDelegate = function(delegate){
+cc.unregisterTouchDelegate = function(delegate) {
     cc.Director.getInstance().getTouchDispatcher()._removeDelegate(delegate);
 };

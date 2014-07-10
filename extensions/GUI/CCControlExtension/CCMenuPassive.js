@@ -24,14 +24,14 @@
 
 cc.Spacer = cc.Layer.extend({});
 
-cc.Spacer.verticalSpacer = function (space) {
+cc.Spacer.verticalSpacer = function(space) {
     var pRet = new cc.Spacer();
     pRet.init();
     pRet.setContentSize(0, space);
     return pRet;
 };
 
-cc.Spacer.horizontalSpacer = function (space) {
+cc.Spacer.horizontalSpacer = function(space) {
     var pRet = new cc.Spacer();
     pRet.init();
     pRet.setContentSize(space, 0);
@@ -39,19 +39,19 @@ cc.Spacer.horizontalSpacer = function (space) {
 };
 
 cc.MenuPassive = cc.Layer.extend({
-    RGBAProtocol:true,
+    RGBAProtocol: true,
 
-    _color:null,
-    _opacity:0,
+    _color: null,
+    _opacity: 0,
 
-    ctor:function () {
+    ctor: function() {
     },
 
     /** Color: conforms with CCRGBAProtocol protocol */
-    getColor:function () {
+    getColor: function() {
         return this._color;
     },
-    setColor:function (color) {
+    setColor: function(color) {
         this._color = color;
 
         if (this._children && this._children.length > 0) {
@@ -64,11 +64,11 @@ cc.MenuPassive = cc.Layer.extend({
     },
 
     /** Opacity: conforms with CCRGBAProtocol protocol */
-    getOpacity:function () {
+    getOpacity: function() {
         return this._opacity;
     },
 
-    setOpacity:function (opacity) {
+    setOpacity: function(opacity) {
         this._opacity = opacity;
 
         if (this._children && this._children.length > 0) {
@@ -81,7 +81,7 @@ cc.MenuPassive = cc.Layer.extend({
     },
 
     /** initializes a CCMenu with it's items */
-    initWithItems:function (item, args) {
+    initWithItems: function(item, args) {
         if (this.init()) {
             //this.m_bIsTouchEnabled = false;
 
@@ -111,14 +111,14 @@ cc.MenuPassive = cc.Layer.extend({
     },
 
     /** align items vertically */
-    alignItemsVertically:function () {
+    alignItemsVertically: function() {
         this.alignItemsVerticallyWithPadding(cc.DEFAULT_PADDING);
     },
 
     /** align items vertically with padding
      @since v0.7.2
      */
-    alignItemsVerticallyWithPadding:function (padding) {
+    alignItemsVerticallyWithPadding: function(padding) {
         var height = -padding;
 
         var i;
@@ -145,14 +145,14 @@ cc.MenuPassive = cc.Layer.extend({
     },
 
     /** align items horizontally */
-    alignItemsHorizontally:function () {
+    alignItemsHorizontally: function() {
         this.alignItemsHorizontallyWithPadding(cc.DEFAULT_PADDING);
     },
 
     /** align items horizontally with padding
      @since v0.7.2
      */
-    alignItemsHorizontallyWithPadding:function (padding) {
+    alignItemsHorizontallyWithPadding: function(padding) {
         var width = -padding;
         var i;
         if (this._children && this._children.length > 0) {
@@ -178,7 +178,7 @@ cc.MenuPassive = cc.Layer.extend({
     },
 
     /** align items in rows of columns */
-    alignItemsInColumns:function (columns) {
+    alignItemsInColumns: function(columns) {
         var rows = [];
         var i;
         for (i = 1; i < arguments.length; i++) {
@@ -195,15 +195,15 @@ cc.MenuPassive = cc.Layer.extend({
         if (this._children && this._children.length > 0) {
             for (i = 0; i < this._children.length; i++) {
                 if (this._children[i]) {
-                    if(row >= rows.length){
-                        cc.log("cc.MenuPassive.alignItemsInColumns(): invalid row index");
+                    if (row >= rows.length) {
+                        cc.log('cc.MenuPassive.alignItemsInColumns(): invalid row index');
                         continue;
                     }
 
                     rowColumns = rows[row];
                     // can not have zero columns on a row
-                    if(!rowColumns) {
-                        cc.log("cc.MenuPassive.alignItemsInColumns(): can not have zero columns on a row");
+                    if (!rowColumns) {
+                        cc.log('cc.MenuPassive.alignItemsInColumns(): can not have zero columns on a row');
                         continue;
                     }
 
@@ -265,7 +265,7 @@ cc.MenuPassive = cc.Layer.extend({
     },
 
     /** align items in columns of rows */
-    alignItemsInRows:function (rows) {
+    alignItemsInRows: function(rows) {
         var columns = [];
         var i;
         for (i = 1; i < arguments.length; i++) {
@@ -287,14 +287,14 @@ cc.MenuPassive = cc.Layer.extend({
             for (i = 0; i < this._children.length; i++) {
                 if (this._children[i]) {
                     // check if too many menu items for the amount of rows/columns
-                    if(column >= columns.length){
-                        cc.log("cc.MenuPassive.alignItemsInRows(): invalid row index");
+                    if (column >= columns.length) {
+                        cc.log('cc.MenuPassive.alignItemsInRows(): invalid row index');
                         continue;
                     }
 
                     columnRows = columns[column];
                     // can't have zero rows on a column
-                    if(!columnRows) {
+                    if (!columnRows) {
                         cc.log("cc.MenuPassive.alignItemsInColumns(): can't have zero rows on a column");
                         continue;
                     }
@@ -360,15 +360,15 @@ cc.MenuPassive = cc.Layer.extend({
     },
 
     //RGBA protocol
-    setOpacityModifyRGB:function (bValue) {
+    setOpacityModifyRGB: function(bValue) {
     },
-    isOpacityModifyRGB:function () {
+    isOpacityModifyRGB: function() {
         return false;
     }
 });
 
 /** creates an empty CCMenu */
-cc.MenuPassive.create = function (item) {
+cc.MenuPassive.create = function(item) {
     if (arguments.length == 0) {
         item = null;
     }
@@ -389,6 +389,6 @@ cc.MenuPassive.create = function (item) {
  * other items. It is used for script, it can't init with undetermined
  * number of variables.
  */
-cc.MenuPassive.createWithItem = function (item) {
+cc.MenuPassive.createWithItem = function(item) {
     return cc.MenuPassive.create(item, null);
 };

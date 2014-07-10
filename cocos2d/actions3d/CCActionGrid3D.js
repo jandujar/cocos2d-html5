@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 cc.RAND_MAX = 0xffffff;
-cc.rand = function () {
+cc.rand = function() {
     return Math.random() * cc.RAND_MAX;
 };
 /**
@@ -34,11 +34,11 @@ cc.rand = function () {
  * @extends cc.Grid3DAction
  */
 cc.Waves3D = cc.Grid3DAction.extend(/** @lends cc.Waves3D# */{
-    _waves:null,
-    _amplitude:null,
-    _amplitudeRate:null,
+    _waves: null,
+    _amplitude: null,
+    _amplitudeRate: null,
 
-    ctor:function () {
+    ctor: function() {
         cc.GridAction.prototype.ctor.call(this);
 
         this._waves = 0;
@@ -50,7 +50,7 @@ cc.Waves3D = cc.Grid3DAction.extend(/** @lends cc.Waves3D# */{
      * get Amplitude
      * @return {Number}
      */
-    getAmplitude:function () {
+    getAmplitude: function() {
         return this._amplitude;
     },
 
@@ -58,7 +58,7 @@ cc.Waves3D = cc.Grid3DAction.extend(/** @lends cc.Waves3D# */{
      * set Amplitude
      * @param {Number} amplitude
      */
-    setAmplitude:function (amplitude) {
+    setAmplitude: function(amplitude) {
         this._amplitude = amplitude;
     },
 
@@ -66,7 +66,7 @@ cc.Waves3D = cc.Grid3DAction.extend(/** @lends cc.Waves3D# */{
      * get Amplitude Rate
      * @return {Number}
      */
-    getAmplitudeRate:function () {
+    getAmplitudeRate: function() {
         return this._amplitudeRate;
     },
 
@@ -74,7 +74,7 @@ cc.Waves3D = cc.Grid3DAction.extend(/** @lends cc.Waves3D# */{
      * set Amplitude Rate
      * @param {Number} amplitudeRate
      */
-    setAmplitudeRate:function (amplitudeRate) {
+    setAmplitudeRate: function(amplitudeRate) {
         this._amplitudeRate = amplitudeRate;
     },
 
@@ -86,7 +86,7 @@ cc.Waves3D = cc.Grid3DAction.extend(/** @lends cc.Waves3D# */{
      * @param {Number} amplitude
      * @return {Boolean}
      */
-    initWithDuration:function (duration, gridSize, waves, amplitude) {
+    initWithDuration: function(duration, gridSize, waves, amplitude) {
         if (cc.Grid3DAction.prototype.initWithDuration.call(this, duration, gridSize)) {
             this._waves = waves;
             this._amplitude = amplitude;
@@ -96,7 +96,7 @@ cc.Waves3D = cc.Grid3DAction.extend(/** @lends cc.Waves3D# */{
         return false;
     },
 
-    update:function (time) {
+    update: function(time) {
         var locGridSize = this._gridSize;
         var locAmplitude = this._amplitude, locPos = cc.p(0, 0);
         var locAmplitudeRate = this._amplitudeRate, locWaves = this._waves;
@@ -121,7 +121,7 @@ cc.Waves3D = cc.Grid3DAction.extend(/** @lends cc.Waves3D# */{
  * @param {Number} amplitude
  * @return {cc.Waves3D}
  */
-cc.Waves3D.create = function (duration, gridSize, waves, amplitude) {
+cc.Waves3D.create = function(duration, gridSize, waves, amplitude) {
     var action = new cc.Waves3D();
     action.initWithDuration(duration, gridSize, waves, amplitude);
     return action;
@@ -138,7 +138,7 @@ cc.FlipX3D = cc.Grid3DAction.extend(/** @lends cc.Waves3D# */{
      * @param {Number} duration
      * @return {Boolean}
      */
-    initWithDuration:function (duration) {
+    initWithDuration: function(duration) {
         return cc.Grid3DAction.prototype.initWithDuration.call(this, duration, cc.size(1, 1));
     },
 
@@ -148,16 +148,16 @@ cc.FlipX3D = cc.Grid3DAction.extend(/** @lends cc.Waves3D# */{
      * @param {Number} duration
      * @return {Boolean}
      */
-    initWithSize:function (gridSize, duration) {
+    initWithSize: function(gridSize, duration) {
         if (gridSize.width != 1 || gridSize.height != 1) {
             // Grid size must be (1,1)
-            cc.log("Grid size must be (1,1)");
+            cc.log('Grid size must be (1,1)');
             return false;
         }
-        return  cc.Grid3DAction.prototype.initWithDuration.call(this, duration, gridSize);
+        return cc.Grid3DAction.prototype.initWithDuration.call(this, duration, gridSize);
     },
 
-    update:function (time) {
+    update: function(time) {
         var angle = Math.PI * time; // 180 degrees
         var mz = Math.sin(angle);
         angle = angle / 2.0; // x calculates degrees from 0 to 90
@@ -191,7 +191,7 @@ cc.FlipX3D = cc.Grid3DAction.extend(/** @lends cc.Waves3D# */{
             x = x1;
         }
 
-        diff.x = ( x - x * mx );
+        diff.x = (x - x * mx);
         diff.z = Math.abs(parseFloat((x * mz) / 4.0));
 
         // bottom-left
@@ -225,7 +225,7 @@ cc.FlipX3D = cc.Grid3DAction.extend(/** @lends cc.Waves3D# */{
  * @param {Number} duration
  * @return {cc.FlipX3D}
  */
-cc.FlipX3D.create = function (duration) {
+cc.FlipX3D.create = function(duration) {
     var action = new cc.FlipX3D();
     action.initWithDuration(duration);
     return action;
@@ -237,7 +237,7 @@ cc.FlipX3D.create = function (duration) {
  * @extends cc.FlipX3D
  */
 cc.FlipY3D = cc.FlipX3D.extend(/** @lends cc.FlipY3D# */{
-    update:function (time) {
+    update: function(time) {
         var angle = Math.PI * time; // 180 degrees
         var mz = Math.sin(angle);
         angle = angle / 2.0;     // x calculates degrees from 0 to 90
@@ -306,7 +306,7 @@ cc.FlipY3D = cc.FlipX3D.extend(/** @lends cc.FlipY3D# */{
  * @param {Number} duration
  * @return {cc.FlipY3D}
  */
-cc.FlipY3D.create = function (duration) {
+cc.FlipY3D.create = function(duration) {
     var action = new cc.FlipY3D();
     action.initWithDuration(duration);
     return action;
@@ -319,15 +319,15 @@ cc.FlipY3D.create = function (duration) {
  */
 cc.Lens3D = cc.Grid3DAction.extend(/** @lends cc.Lens3D# */{
     /* lens center position */
-    _position:null,
-    _radius:0,
+    _position: null,
+    _radius: 0,
     /** lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect */
-    _lensEffect:0,
+    _lensEffect: 0,
     /** lens is concave. (true = concave, false = convex) default is convex i.e. false */
-    _concave:false,
-    _dirty:false,
+    _concave: false,
+    _dirty: false,
 
-    ctor:function () {
+    ctor: function() {
         cc.GridAction.prototype.ctor.call(this);
 
         this._position = cc._pConst(0, 0);
@@ -341,7 +341,7 @@ cc.Lens3D = cc.Grid3DAction.extend(/** @lends cc.Lens3D# */{
      * Get lens center position
      * @return {Number}
      */
-    getLensEffect:function () {
+    getLensEffect: function() {
         return this._lensEffect;
     },
 
@@ -349,7 +349,7 @@ cc.Lens3D = cc.Grid3DAction.extend(/** @lends cc.Lens3D# */{
      * Set lens center position
      * @param {Number} lensEffect
      */
-    setLensEffect:function (lensEffect) {
+    setLensEffect: function(lensEffect) {
         this._lensEffect = lensEffect;
     },
 
@@ -357,7 +357,7 @@ cc.Lens3D = cc.Grid3DAction.extend(/** @lends cc.Lens3D# */{
      * Set whether lens is concave
      * @param {Boolean} concave
      */
-    setConcave:function (concave) {
+    setConcave: function(concave) {
         this._concave = concave;
     },
 
@@ -365,7 +365,7 @@ cc.Lens3D = cc.Grid3DAction.extend(/** @lends cc.Lens3D# */{
      * get Position
      * @return {cc.Point}
      */
-    getPosition:function () {
+    getPosition: function() {
         return this._position;
     },
 
@@ -373,7 +373,7 @@ cc.Lens3D = cc.Grid3DAction.extend(/** @lends cc.Lens3D# */{
      * set Position
      * @param {cc.Point} position
      */
-    setPosition:function (position) {
+    setPosition: function(position) {
         if (!cc.pointEqualToPoint(position, this._position)) {
             this._position._x = position.x;
             this._position._y = position.y;
@@ -389,7 +389,7 @@ cc.Lens3D = cc.Grid3DAction.extend(/** @lends cc.Lens3D# */{
      * @param {Number} radius
      * @return {Boolean}
      */
-    initWithDuration:function (duration, gridSize, position, radius) {
+    initWithDuration: function(duration, gridSize, position, radius) {
         if (cc.Grid3DAction.prototype.initWithDuration.call(this, duration, gridSize)) {
             this.setPosition(position);
             this._radius = radius;
@@ -400,7 +400,7 @@ cc.Lens3D = cc.Grid3DAction.extend(/** @lends cc.Lens3D# */{
         return false;
     },
 
-    update:function (time) {
+    update: function(time) {
         if (this._dirty) {
             var locGridSizeWidth = this._gridSize.width, locGridSizeHeight = this._gridSize.height;
             var locRadius = this._radius, locLensEffect = this._lensEffect;
@@ -451,7 +451,7 @@ cc.Lens3D = cc.Grid3DAction.extend(/** @lends cc.Lens3D# */{
  * @param {Number} radius
  * @return {cc.Lens3D}
  */
-cc.Lens3D.create = function (duration, gridSize, position, radius) {
+cc.Lens3D.create = function(duration, gridSize, position, radius) {
     var action = new cc.Lens3D();
     action.initWithDuration(duration, gridSize, position, radius);
     return action;
@@ -464,13 +464,13 @@ cc.Lens3D.create = function (duration, gridSize, position, radius) {
  */
 cc.Ripple3D = cc.Grid3DAction.extend(/** @lends cc.Ripple3D# */{
     /* center position */
-    _position:null,
-    _radius:null,
-    _waves:null,
-    _amplitude:null,
-    _amplitudeRate:null,
+    _position: null,
+    _radius: null,
+    _waves: null,
+    _amplitude: null,
+    _amplitudeRate: null,
 
-    ctor:function () {
+    ctor: function() {
         cc.GridAction.prototype.ctor.call(this);
 
         this._position = cc._pConst(0, 0);
@@ -484,7 +484,7 @@ cc.Ripple3D = cc.Grid3DAction.extend(/** @lends cc.Ripple3D# */{
      * get center position
      * @return {cc.Point}
      */
-    getPosition:function () {
+    getPosition: function() {
         return this._position;
     },
 
@@ -492,7 +492,7 @@ cc.Ripple3D = cc.Grid3DAction.extend(/** @lends cc.Ripple3D# */{
      * set center position
      * @param {cc.Point} position
      */
-    setPosition:function (position) {
+    setPosition: function(position) {
         this._position._x = position.x;
         this._position._y = position.y;
     },
@@ -501,7 +501,7 @@ cc.Ripple3D = cc.Grid3DAction.extend(/** @lends cc.Ripple3D# */{
      * get Amplitude
      * @return {Number}
      */
-    getAmplitude:function () {
+    getAmplitude: function() {
         return this._amplitude;
     },
 
@@ -509,7 +509,7 @@ cc.Ripple3D = cc.Grid3DAction.extend(/** @lends cc.Ripple3D# */{
      * set Amplitude
      * @param {Number} amplitude
      */
-    setAmplitude:function (amplitude) {
+    setAmplitude: function(amplitude) {
         this._amplitude = amplitude;
     },
 
@@ -517,7 +517,7 @@ cc.Ripple3D = cc.Grid3DAction.extend(/** @lends cc.Ripple3D# */{
      * get Amplitude rate
      * @return {*}
      */
-    getAmplitudeRate:function () {
+    getAmplitudeRate: function() {
         return this._amplitudeRate;
     },
 
@@ -525,7 +525,7 @@ cc.Ripple3D = cc.Grid3DAction.extend(/** @lends cc.Ripple3D# */{
      * get amplitude rate
      * @param {Number} amplitudeRate
      */
-    setAmplitudeRate:function (amplitudeRate) {
+    setAmplitudeRate: function(amplitudeRate) {
         this._amplitudeRate = amplitudeRate;
     },
 
@@ -539,7 +539,7 @@ cc.Ripple3D = cc.Grid3DAction.extend(/** @lends cc.Ripple3D# */{
      * @param {Number} amplitude
      * @return {Boolean}
      */
-    initWithDuration:function (duration, gridSize, position, radius, waves, amplitude) {
+    initWithDuration: function(duration, gridSize, position, radius, waves, amplitude) {
         if (cc.Grid3DAction.prototype.initWithDuration.call(this, duration, gridSize)) {
             this.setPosition(position);
             this._radius = radius;
@@ -551,7 +551,7 @@ cc.Ripple3D = cc.Grid3DAction.extend(/** @lends cc.Ripple3D# */{
         return false;
     },
 
-    update:function (time) {
+    update: function(time) {
         var locGridSizeWidth = this._gridSize.width, locGridSizeHeight = this._gridSize.height;
         var locPos = cc.p(0, 0), locRadius = this._radius;
         var locWaves = this._waves, locAmplitude = this._amplitude, locAmplitudeRate = this._amplitudeRate;
@@ -587,7 +587,7 @@ cc.Ripple3D = cc.Grid3DAction.extend(/** @lends cc.Ripple3D# */{
  * @param {Number} amplitude
  * @return {cc.Ripple3D}
  */
-cc.Ripple3D.create = function (duration, gridSize, position, radius, waves, amplitude) {
+cc.Ripple3D.create = function(duration, gridSize, position, radius, waves, amplitude) {
     var action = new cc.Ripple3D();
     action.initWithDuration(duration, gridSize, position, radius, waves, amplitude);
     return action;
@@ -599,10 +599,10 @@ cc.Ripple3D.create = function (duration, gridSize, position, radius, waves, ampl
  * @extends cc.Grid3DAction
  */
 cc.Shaky3D = cc.Grid3DAction.extend(/** @lends cc.Shaky3D# */{
-    _randRange:null,
-    _shakeZ:null,
+    _randRange: null,
+    _shakeZ: null,
 
-    ctor:function () {
+    ctor: function() {
         cc.GridAction.prototype.ctor.call(this);
 
         this._randRange = 0;
@@ -617,7 +617,7 @@ cc.Shaky3D = cc.Grid3DAction.extend(/** @lends cc.Shaky3D# */{
      * @param {Boolean} shakeZ
      * @return {Boolean}
      */
-    initWithDuration:function (duration, gridSize, range, shakeZ) {
+    initWithDuration: function(duration, gridSize, range, shakeZ) {
         if (cc.Grid3DAction.prototype.initWithDuration.call(this, duration, gridSize)) {
             this._randRange = range;
             this._shakeZ = shakeZ;
@@ -626,7 +626,7 @@ cc.Shaky3D = cc.Grid3DAction.extend(/** @lends cc.Shaky3D# */{
         return false;
     },
 
-    update:function (time) {
+    update: function(time) {
         var locGridSizeWidth = this._gridSize.width, locGridSizeHeight = this._gridSize.height;
         var locRandRange = this._randRange, locShakeZ = this._shakeZ, locP = cc.p(0, 0);
         var v;
@@ -653,7 +653,7 @@ cc.Shaky3D = cc.Grid3DAction.extend(/** @lends cc.Shaky3D# */{
  * @param {Boolean} shakeZ
  * @return {cc.Shaky3D}
  */
-cc.Shaky3D.create = function (duration, gridSize, range, shakeZ) {
+cc.Shaky3D.create = function(duration, gridSize, range, shakeZ) {
     var action = new cc.Shaky3D();
     action.initWithDuration(duration, gridSize, range, shakeZ);
     return action;
@@ -665,11 +665,11 @@ cc.Shaky3D.create = function (duration, gridSize, range, shakeZ) {
  * @extends cc.Grid3DAction
  */
 cc.Liquid = cc.Grid3DAction.extend(/** @lends cc.Liquid# */{
-    _waves:null,
-    _amplitude:null,
-    _amplitudeRate:null,
+    _waves: null,
+    _amplitude: null,
+    _amplitudeRate: null,
 
-    ctor:function () {
+    ctor: function() {
         cc.GridAction.prototype.ctor.call(this);
 
         this._waves = 0;
@@ -681,7 +681,7 @@ cc.Liquid = cc.Grid3DAction.extend(/** @lends cc.Liquid# */{
      * get amplitude
      * @return {Number}
      */
-    getAmplitude:function () {
+    getAmplitude: function() {
         return this._amplitude;
     },
 
@@ -689,7 +689,7 @@ cc.Liquid = cc.Grid3DAction.extend(/** @lends cc.Liquid# */{
      * set amplitude
      * @param {Number} amplitude
      */
-    setAmplitude:function (amplitude) {
+    setAmplitude: function(amplitude) {
         this._amplitude = amplitude;
     },
 
@@ -697,7 +697,7 @@ cc.Liquid = cc.Grid3DAction.extend(/** @lends cc.Liquid# */{
      * get amplitude rate
      * @return {Number}
      */
-    getAmplitudeRate:function () {
+    getAmplitudeRate: function() {
         return this._amplitudeRate;
     },
 
@@ -705,7 +705,7 @@ cc.Liquid = cc.Grid3DAction.extend(/** @lends cc.Liquid# */{
      * set amplitude rate
      * @param {Number} amplitudeRate
      */
-    setAmplitudeRate:function (amplitudeRate) {
+    setAmplitudeRate: function(amplitudeRate) {
         this._amplitudeRate = amplitudeRate;
     },
 
@@ -717,7 +717,7 @@ cc.Liquid = cc.Grid3DAction.extend(/** @lends cc.Liquid# */{
      * @param {Number} amplitude
      * @return {Boolean}
      */
-    initWithDuration:function (duration, gridSize, waves, amplitude) {
+    initWithDuration: function(duration, gridSize, waves, amplitude) {
         if (cc.Grid3DAction.prototype.initWithDuration.call(this, duration, gridSize)) {
             this._waves = waves;
             this._amplitude = amplitude;
@@ -727,7 +727,7 @@ cc.Liquid = cc.Grid3DAction.extend(/** @lends cc.Liquid# */{
         return false;
     },
 
-    update:function (time) {
+    update: function(time) {
         var locSizeWidth = this._gridSize.width, locSizeHeight = this._gridSize.height, locPos = cc.p(0, 0);
         var locWaves = this._waves, locAmplitude = this._amplitude, locAmplitudeRate = this._amplitudeRate;
         var v;
@@ -752,7 +752,7 @@ cc.Liquid = cc.Grid3DAction.extend(/** @lends cc.Liquid# */{
  * @param {Number} amplitude
  * @return {cc.Liquid}
  */
-cc.Liquid.create = function (duration, gridSize, waves, amplitude) {
+cc.Liquid.create = function(duration, gridSize, waves, amplitude) {
     var action = new cc.Liquid();
     action.initWithDuration(duration, gridSize, waves, amplitude);
     return action;
@@ -764,13 +764,13 @@ cc.Liquid.create = function (duration, gridSize, waves, amplitude) {
  * @extends cc.Grid3DAction
  */
 cc.Waves = cc.Grid3DAction.extend(/** @lends cc.Waves# */{
-    _waves:null,
-    _amplitude:null,
-    _amplitudeRate:null,
-    _vertical:null,
-    _horizontal:null,
+    _waves: null,
+    _amplitude: null,
+    _amplitudeRate: null,
+    _vertical: null,
+    _horizontal: null,
 
-    ctor:function () {
+    ctor: function() {
         cc.GridAction.prototype.ctor.call(this);
 
         this._waves = 0;
@@ -784,7 +784,7 @@ cc.Waves = cc.Grid3DAction.extend(/** @lends cc.Waves# */{
      * get amplitude
      * @return {Number}
      */
-    getAmplitude:function () {
+    getAmplitude: function() {
         return this._amplitude;
     },
 
@@ -792,7 +792,7 @@ cc.Waves = cc.Grid3DAction.extend(/** @lends cc.Waves# */{
      * set amplitude
      * @param {Number} amplitude
      */
-    setAmplitude:function (amplitude) {
+    setAmplitude: function(amplitude) {
         this._amplitude = amplitude;
     },
 
@@ -800,7 +800,7 @@ cc.Waves = cc.Grid3DAction.extend(/** @lends cc.Waves# */{
      * get amplitude rate
      * @return {Number}
      */
-    getAmplitudeRate:function () {
+    getAmplitudeRate: function() {
         return this._amplitudeRate;
     },
 
@@ -808,7 +808,7 @@ cc.Waves = cc.Grid3DAction.extend(/** @lends cc.Waves# */{
      * set amplitude rate
      * @param {Number} amplitudeRate
      */
-    setAmplitudeRate:function (amplitudeRate) {
+    setAmplitudeRate: function(amplitudeRate) {
         this._amplitudeRate = amplitudeRate;
     },
 
@@ -822,7 +822,7 @@ cc.Waves = cc.Grid3DAction.extend(/** @lends cc.Waves# */{
      * @param {Boolean} vertical
      * @return {Boolean}
      */
-    initWithDuration:function (duration, gridSize, waves, amplitude, horizontal, vertical) {
+    initWithDuration: function(duration, gridSize, waves, amplitude, horizontal, vertical) {
         if (cc.Grid3DAction.prototype.initWithDuration.call(this, duration, gridSize)) {
             this._waves = waves;
             this._amplitude = amplitude;
@@ -834,7 +834,7 @@ cc.Waves = cc.Grid3DAction.extend(/** @lends cc.Waves# */{
         return false;
     },
 
-    update:function (time) {
+    update: function(time) {
         var locSizeWidth = this._gridSize.width, locSizeHeight = this._gridSize.height, locPos = cc.p(0, 0);
         var locVertical = this._vertical, locHorizontal = this._horizontal;
         var locWaves = this._waves, locAmplitude = this._amplitude, locAmplitudeRate = this._amplitudeRate;
@@ -864,7 +864,7 @@ cc.Waves = cc.Grid3DAction.extend(/** @lends cc.Waves# */{
  * @param {Boolean} vertical
  * @return {cc.Waves}
  */
-cc.Waves.create = function (duration, gridSize, waves, amplitude, horizontal, vertical) {
+cc.Waves.create = function(duration, gridSize, waves, amplitude, horizontal, vertical) {
     var action = new cc.Waves();
     action.initWithDuration(duration, gridSize, waves, amplitude, horizontal, vertical);
     return action;
@@ -878,12 +878,12 @@ cc.Waves.create = function (duration, gridSize, waves, amplitude, horizontal, ve
  */
 cc.Twirl = cc.Grid3DAction.extend({
     /* twirl center */
-    _position:null,
-    _twirls:null,
-    _amplitude:null,
-    _amplitudeRate:null,
+    _position: null,
+    _twirls: null,
+    _amplitude: null,
+    _amplitudeRate: null,
 
-    ctor:function () {
+    ctor: function() {
         cc.GridAction.prototype.ctor.call(this);
 
         this._position = cc._pConst(0, 0);
@@ -896,7 +896,7 @@ cc.Twirl = cc.Grid3DAction.extend({
      * get twirl center
      * @return {cc.Point}
      */
-    getPosition:function () {
+    getPosition: function() {
         return this._position;
     },
 
@@ -904,7 +904,7 @@ cc.Twirl = cc.Grid3DAction.extend({
      * set twirl center
      * @param {cc.Point} position
      */
-    setPosition:function (position) {
+    setPosition: function(position) {
         this._position._x = position.x;
         this._position._y = position.y;
     },
@@ -913,7 +913,7 @@ cc.Twirl = cc.Grid3DAction.extend({
      * get amplitude
      * @return {Number}
      */
-    getAmplitude:function () {
+    getAmplitude: function() {
         return this._amplitude;
     },
 
@@ -921,7 +921,7 @@ cc.Twirl = cc.Grid3DAction.extend({
      * set amplitude
      * @param {Number} amplitude
      */
-    setAmplitude:function (amplitude) {
+    setAmplitude: function(amplitude) {
         this._amplitude = amplitude;
     },
 
@@ -929,7 +929,7 @@ cc.Twirl = cc.Grid3DAction.extend({
      * get amplitude rate
      * @return {Number}
      */
-    getAmplitudeRate:function () {
+    getAmplitudeRate: function() {
         return this._amplitudeRate;
     },
 
@@ -937,12 +937,12 @@ cc.Twirl = cc.Grid3DAction.extend({
      * set amplitude rate
      * @param {Number} amplitudeRate
      */
-    setAmplitudeRate:function (amplitudeRate) {
+    setAmplitudeRate: function(amplitudeRate) {
         this._amplitudeRate = amplitudeRate;
     },
 
     /** initializes the action with center position, number of twirls, amplitude, a grid size and duration */
-    initWithDuration:function (duration, gridSize, position, twirls, amplitude) {
+    initWithDuration: function(duration, gridSize, position, twirls, amplitude) {
         if (cc.Grid3DAction.prototype.initWithDuration.call(this, duration, gridSize)) {
             this.setPosition(position);
             this._twirls = twirls;
@@ -953,7 +953,7 @@ cc.Twirl = cc.Grid3DAction.extend({
         return false;
     },
 
-    update:function (time) {
+    update: function(time) {
         var c = this._position;
         var locSizeWidth = this._gridSize.width, locSizeHeight = this._gridSize.height, locPos = cc.p(0, 0);
         var amp = 0.1 * this._amplitude * this._amplitudeRate;
@@ -991,7 +991,7 @@ cc.Twirl = cc.Grid3DAction.extend({
  * @param {Number} amplitude
  * @return {cc.Twirl}
  */
-cc.Twirl.create = function (duration, gridSize, position, twirls, amplitude) {
+cc.Twirl.create = function(duration, gridSize, position, twirls, amplitude) {
     var action = new cc.Twirl();
     action.initWithDuration(duration, gridSize, position, twirls, amplitude);
     return action;

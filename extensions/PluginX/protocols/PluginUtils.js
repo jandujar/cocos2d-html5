@@ -23,32 +23,32 @@
  ****************************************************************************/
 
 
-plugin.PluginData = function (obj, className) {
+plugin.PluginData = function(obj, className) {
     this.obj = obj;
     this.className = className;
 };
 
 plugin.PluginUtils = {
-    _objMap:{},
-    _pluginMap:{},
-    initPlugin: function (tmpPlugin, obj, className) {
-        var data = new plugin.PluginData(obj,className);
+    _objMap: {},
+    _pluginMap: {},
+    initPlugin: function(tmpPlugin, obj, className) {
+        var data = new plugin.PluginData(obj, className);
         this.setPluginData(tmpPlugin, data);
     },
 
-    getPluginData: function (keyObj) {
+    getPluginData: function(keyObj) {
         return this._objMap[keyObj._pluginName];
     },
 
-    setPluginData: function (plugin, data) {
+    setPluginData: function(plugin, data) {
         this.erasePluginData(plugin);
         this._objMap[data.className] = data;
         this._pluginMap[data.className] = plugin;
     },
 
-    erasePluginData: function (keyObj) {
+    erasePluginData: function(keyObj) {
        var data = this._objMap[keyObj];
-       if(data){
+       if (data) {
            var key = data.className;
 
            var pluginIt = this._pluginMap[key];
@@ -57,65 +57,65 @@ plugin.PluginUtils = {
                delete this._pluginMap[key];
            }
 
-           delete this._objMap[keyObj]
+           delete this._objMap[keyObj];
         }
     },
 
-    getPluginPtr: function (obj) {
+    getPluginPtr: function(obj) {
         return this._pluginMap[obj.className];
     },
 
-    getObjFromParam: function (param) {
+    getObjFromParam: function(param) {
 
     },
 
-    createDictFromMap: function (paramMap) {
+    createDictFromMap: function(paramMap) {
         return paramMap;
     },
 
     /**
      @brief method don't have return value
      */
-    callOCFunctionWithName_oneParam: function (tmpPlugin, funcName, param) {
+    callOCFunctionWithName_oneParam: function(tmpPlugin, funcName, param) {
 
     },
-    callOCFunctionWithName: function (tmpPlugin, funcName) {
+    callOCFunctionWithName: function(tmpPlugin, funcName) {
     },
 
     /**
      @brief method return int value
      */
-    callOCIntFunctionWithName_oneParam: function (tmpPlugin, funcName, param) {
+    callOCIntFunctionWithName_oneParam: function(tmpPlugin, funcName, param) {
     },
-    callOCIntFunctionWithName: function (tmpPlugin, funcName) {
+    callOCIntFunctionWithName: function(tmpPlugin, funcName) {
     },
 
     /**
      @brief method return float value
      */
-    callOCFloatFunctionWithName_oneParam: function (tmpPlugin, funcName, param) {
+    callOCFloatFunctionWithName_oneParam: function(tmpPlugin, funcName, param) {
     },
-    callOCFloatFunctionWithName: function (tmpPlugin, funcName) {
+    callOCFloatFunctionWithName: function(tmpPlugin, funcName) {
     },
 
     /**
      @brief method return bool value
      */
-    callOCBoolFunctionWithName_oneParam: function (tmpPlugin, funcName, param) {
+    callOCBoolFunctionWithName_oneParam: function(tmpPlugin, funcName, param) {
     },
-    callOCBoolFunctionWithName: function (tmpPlugin, funcName) {
+    callOCBoolFunctionWithName: function(tmpPlugin, funcName) {
     },
 
     /**
      @brief method return string value
      */
-    callOCStringFunctionWithName_oneParam: function (tmpPlugin, funcName, param) {
+    callOCStringFunctionWithName_oneParam: function(tmpPlugin, funcName, param) {
     },
-    callOCStringFunctionWithName: function (tmpPlugin, funcName) {
+    callOCStringFunctionWithName: function(tmpPlugin, funcName) {
     },
 
-    callRetFunctionWithParam: function (tmpPlugin, funcName, param) {
+    callRetFunctionWithParam: function(tmpPlugin, funcName, param) {
     },
-    callRetFunction: function (tmpPlugin, funcName) {
+    callRetFunction: function(tmpPlugin, funcName) {
     }
 };

@@ -27,7 +27,7 @@
 cc.s_sharedNotificationCenter = null;
 
 cc.NotificationCenter = cc.Class.extend({
-    ctor:function() {
+    ctor: function() {
         this._observers = [];
     },
 
@@ -37,7 +37,7 @@ cc.NotificationCenter = cc.Class.extend({
      * @param {String} name
      * @param {cc.Class} obj
      */
-    addObserver:function(target, selector, name, obj) {
+    addObserver: function(target, selector, name, obj) {
         if (this._observerExisted(target, name))
             return;
 
@@ -53,7 +53,7 @@ cc.NotificationCenter = cc.Class.extend({
      * @param {cc.Class} target
      * @param {String} name
      */
-    removeObserver:function(target, name) {
+    removeObserver: function(target, name) {
         for (var i = 0; i < this._observers.length; i++) {
             var observer = this._observers[i];
             if (!observer)
@@ -68,13 +68,13 @@ cc.NotificationCenter = cc.Class.extend({
     /**
      * Removes all notifications registered by this target
      * @param {cc.Class} target  The target of this notification.
-     * @returns {number} the number of observers removed
+     * @return {number} the number of observers removed
      */
-    removeAllObservers:function(target){
+    removeAllObservers: function(target) {
         var removes = [];
-        for(var i = 0; i< this._observers.length;i++){
+        for (var i = 0; i < this._observers.length; i++) {
             var selObserver = this._observers[i];
-            if(selObserver.getTarget() == target)
+            if (selObserver.getTarget() == target)
                 removes.push(selObserver);
         }
         cc.ArrayRemoveArray(this._observers, removes);
@@ -85,7 +85,7 @@ cc.NotificationCenter = cc.Class.extend({
      * @param {String} name
      * @param {cc.Class} object
      */
-    postNotification:function(name, object) {
+    postNotification: function(name, object) {
         for (var i = 0; i < this._observers.length; i++) {
             var observer = this._observers[i];
             if (!observer)
@@ -101,7 +101,7 @@ cc.NotificationCenter = cc.Class.extend({
      * @return {Boolean}
      * @private
      */
-    _observerExisted:function(target, name) {
+    _observerExisted: function(target, name) {
         for (var i = 0; i < this._observers.length; i++)
         {
             var observer = this._observers[i];
@@ -112,7 +112,7 @@ cc.NotificationCenter = cc.Class.extend({
         }
         return false;
     },
-    _observers:null
+    _observers: null
 });
 
 /**
@@ -132,7 +132,7 @@ cc.NotificationObserver = cc.Class.extend({
      * @param {String} name
      * @param {cc.Class} obj
      */
-    ctor:function (target, selector, name, obj) {
+    ctor: function(target, selector, name, obj) {
         this._target = target;
         this._selector = selector;
         this._name = name;
@@ -142,46 +142,46 @@ cc.NotificationObserver = cc.Class.extend({
     /**
      * @param {cc.Class} obj
      */
-    performSelector:function (obj) {
-        if (this._target && (typeof(this._selector) == "string")) {
+    performSelector: function(obj) {
+        if (this._target && (typeof(this._selector) == 'string')) {
             this._target[this._selector](obj);
-        } else if (this._target && (typeof(this._selector) == "function")) {
+        } else if (this._target && (typeof(this._selector) == 'function')) {
             this._selector.call(this._target, obj);
         } else {
             this._selector(obj);
         }
     },
 
-    _target:null,
-    _selector:null,
-    _name:null,
-    _object:null,
+    _target: null,
+    _selector: null,
+    _name: null,
+    _object: null,
 
     /**
      * @return {cc.Class}
      */
-    getTarget:function () {
+    getTarget: function() {
         return this._target;
     },
 
     /**
      * @return {String}
      */
-    getSelector:function () {
+    getSelector: function() {
         return this._selector;
     },
 
     /**
      * @return {String}
      */
-    getName:function () {
+    getName: function() {
         return this._name;
     },
 
     /**
      * @return {cc.Class}
      */
-    getObject:function () {
+    getObject: function() {
         return this._object;
     }
 });

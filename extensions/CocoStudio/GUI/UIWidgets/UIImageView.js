@@ -32,21 +32,21 @@ ccs.ImageView = ccs.Widget.extend(/** @lends ccs.ImageView# */{
     _prevIgnoreSize: true,
     _capInsets: null,
     _imageRenderer: null,
-    _textureFile: "",
+    _textureFile: '',
     _imageTexType: null,
     _imageTextureSize: null,
-    ctor: function () {
+    ctor: function() {
         ccs.Widget.prototype.ctor.call(this);
         this._scale9Enabled = false;
         this._prevIgnoreSize = true;
-        this._capInsets = cc.rect(0,0,0,0);
+        this._capInsets = cc.rect(0, 0, 0, 0);
         this._imageRenderer = null;
-        this._textureFile = "";
+        this._textureFile = '';
         this._imageTexType = ccs.TextureResType.local;
         this._imageTextureSize = cc.size(this._size.width, this._size.height);
     },
 
-    initRenderer: function () {
+    initRenderer: function() {
         this._imageRenderer = cc.Sprite.create();
         cc.NodeRGBA.prototype.addChild.call(this, this._imageRenderer, ccs.IMAGERENDERERZ, -1);
     },
@@ -56,14 +56,14 @@ ccs.ImageView = ccs.Widget.extend(/** @lends ccs.ImageView# */{
      * @param {String} fileName
      * @param {ccs.TextureResType} texType
      */
-    loadTexture: function (fileName, texType) {
+    loadTexture: function(fileName, texType) {
         if (!fileName) {
             return;
         }
         texType = texType || ccs.TextureResType.local;
         this._textureFile = fileName;
         this._imageTexType = texType;
-        var imageRenderer = this._imageRenderer
+        var imageRenderer = this._imageRenderer;
         switch (this._imageTexType) {
             case ccs.TextureResType.local:
                 imageRenderer.initWithFile(fileName);
@@ -76,11 +76,11 @@ ccs.ImageView = ccs.Widget.extend(/** @lends ccs.ImageView# */{
         }
 
         var locRendererSize = imageRenderer.getContentSize();
-        if(imageRenderer.textureLoaded()){
+        if (imageRenderer.textureLoaded()) {
             this._imageTextureSize.width = locRendererSize.width;
             this._imageTextureSize.height = locRendererSize.height;
-        }else{
-            imageRenderer.addLoadedEventListener(function(){
+        }else {
+            imageRenderer.addLoadedEventListener(function() {
                 var locSize = imageRenderer.getContentSize();
                 this._imageTextureSize.width = locSize.width;
                 this._imageTextureSize.height = locSize.height;
@@ -107,8 +107,8 @@ ccs.ImageView = ccs.Widget.extend(/** @lends ccs.ImageView# */{
      * set texture rect
      * @param {cc.Rect} rect
      */
-    setTextureRect: function (rect) {
-        if (!this._scale9Enabled){
+    setTextureRect: function(rect) {
+        if (!this._scale9Enabled) {
             this._imageRenderer.setTextureRect(rect);
         }
     },
@@ -117,7 +117,7 @@ ccs.ImageView = ccs.Widget.extend(/** @lends ccs.ImageView# */{
      * Sets whether the widget should be flipped horizontally or not.
      * @param {Boolean} flipX
      */
-    setFlippedX: function (flipX) {
+    setFlippedX: function(flipX) {
         if (!this._scale9Enabled) {
             this._imageRenderer.setFlippedX(flipX);
         }
@@ -127,7 +127,7 @@ ccs.ImageView = ccs.Widget.extend(/** @lends ccs.ImageView# */{
      * override "setFlippedY" of widget.
      * @param {Boolean} flipY
      */
-    setFlippedY: function (flipY) {
+    setFlippedY: function(flipY) {
         if (!this._scale9Enabled) {
             this._imageRenderer.setFlippedY(flipY);
         }
@@ -135,9 +135,9 @@ ccs.ImageView = ccs.Widget.extend(/** @lends ccs.ImageView# */{
 
     /**
      * override "isFlippedX" of widget.
-     * @returns {Boolean}
+     * @return {Boolean}
      */
-    isFlippedX: function () {
+    isFlippedX: function() {
         if (this._scale9Enabled)
             return false;
         else
@@ -146,9 +146,9 @@ ccs.ImageView = ccs.Widget.extend(/** @lends ccs.ImageView# */{
 
     /**
      * override "isFlippedY" of widget.
-     * @returns {Boolean}
+     * @return {Boolean}
      */
-    isFlippedY: function () {
+    isFlippedY: function() {
         if (this._scale9Enabled)
             return false;
         else
@@ -159,7 +159,7 @@ ccs.ImageView = ccs.Widget.extend(/** @lends ccs.ImageView# */{
      * Sets if button is using scale9 renderer.
      * @param {Boolean} able
      */
-    setScale9Enabled: function (able) {
+    setScale9Enabled: function(able) {
         if (this._scale9Enabled == able) {
             return;
         }
@@ -191,7 +191,7 @@ ccs.ImageView = ccs.Widget.extend(/** @lends ccs.ImageView# */{
      * ignoreContentAdaptWithSize
      * @param {Boolean} ignore
      */
-    ignoreContentAdaptWithSize: function (ignore) {
+    ignoreContentAdaptWithSize: function(ignore) {
         if (!this._scale9Enabled || (this._scale9Enabled && !ignore)) {
             ccs.Widget.prototype.ignoreContentAdaptWithSize.call(this, ignore);
             this._prevIgnoreSize = ignore;
@@ -202,7 +202,7 @@ ccs.ImageView = ccs.Widget.extend(/** @lends ccs.ImageView# */{
      * Sets capinsets for button, if button is using scale9 renderer.
      * @param {cc.Rect} capInsets
      */
-    setCapInsets: function (capInsets) {
+    setCapInsets: function(capInsets) {
         this._capInsets = capInsets;
         if (!this._scale9Enabled) {
             return;
@@ -215,8 +215,8 @@ ccs.ImageView = ccs.Widget.extend(/** @lends ccs.ImageView# */{
      * @param {cc.Point|Number} point The anchor point of UIImageView or The anchor point.x of UIImageView.
      * @param {Number} [y] The anchor point.y of UIImageView.
      */
-    setAnchorPoint: function (point, y) {
-        if(arguments.length === 2){
+    setAnchorPoint: function(point, y) {
+        if (arguments.length === 2) {
             ccs.Widget.prototype.setAnchorPoint.call(this, point, y);
             this._imageRenderer.setAnchorPoint(point, y);
         } else {
@@ -225,28 +225,28 @@ ccs.ImageView = ccs.Widget.extend(/** @lends ccs.ImageView# */{
         }
     },
 
-    onSizeChanged: function () {
+    onSizeChanged: function() {
         ccs.Widget.prototype.onSizeChanged.call(this);
         this.imageTextureScaleChangedWithSize();
     },
 
     /**
      * override "getContentSize" method of widget.
-     * @returns {cc.Size}
+     * @return {cc.Size}
      */
-    getContentSize: function () {
+    getContentSize: function() {
         return this._imageTextureSize;
     },
 
     /**
      * override "getVirtualRenderer" method of widget.
-     * @returns {cc.Node}
+     * @return {cc.Node}
      */
-    getVirtualRenderer: function () {
+    getVirtualRenderer: function() {
         return this._imageRenderer;
     },
 
-    imageTextureScaleChangedWithSize: function () {
+    imageTextureScaleChangedWithSize: function() {
         if (this._ignoreSize) {
             if (!this._scale9Enabled) {
                 this._imageRenderer.setScale(1.0);
@@ -273,17 +273,17 @@ ccs.ImageView = ccs.Widget.extend(/** @lends ccs.ImageView# */{
 
     /**
      * Returns the "class name" of widget.
-     * @returns {string}
+     * @return {string}
      */
-    getDescription: function () {
-        return "ImageView";
+    getDescription: function() {
+        return 'ImageView';
     },
 
-    createCloneInstance:function(){
+    createCloneInstance: function() {
         return ccs.ImageView.create();
     },
 
-    copySpecialProperties: function (imageView) {
+    copySpecialProperties: function(imageView) {
         this._prevIgnoreSize = imageView._prevIgnoreSize;
         this.setScale9Enabled(imageView._scale9Enabled);
         this.loadTexture(imageView._textureFile, imageView._imageTexType);
@@ -299,7 +299,7 @@ ccs.ImageView = ccs.Widget.extend(/** @lends ccs.ImageView# */{
  * // example
  * var uiImageView = ccs.ImageView.create();
  */
-ccs.ImageView.create = function () {
+ccs.ImageView.create = function() {
     var uiImageView = new ccs.ImageView();
     if (uiImageView && uiImageView.init()) {
         return uiImageView;

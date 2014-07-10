@@ -37,7 +37,7 @@ ccs.ActionNode = ccs.Class.extend({
     _action: null,
     _frameArray: null,
     _frameArrayNum: 0,
-    ctor: function () {
+    ctor: function() {
         this._currentFrameIndex = 0;
         this._destFrameIndex = 0;
         this._unitTime = 0.1;
@@ -57,15 +57,15 @@ ccs.ActionNode = ccs.Class.extend({
      * @param {Object} dic
      * @param {Object} root
      */
-    initWithDictionary: function (dic, root) {
-        this.setActionTag(dic["ActionTag"]);
-        var actionframelist = dic["actionframelist"];
+    initWithDictionary: function(dic, root) {
+        this.setActionTag(dic['ActionTag']);
+        var actionframelist = dic['actionframelist'];
         for (var i = 0; i < actionframelist.length; i++) {
             var actionFrameDic = actionframelist[i];
-            var frameInex = actionFrameDic["frameid"];
-            if (actionFrameDic.hasOwnProperty("positionx")) {
-                var positionX = actionFrameDic["positionx"];
-                var positionY = actionFrameDic["positiony"];
+            var frameInex = actionFrameDic['frameid'];
+            if (actionFrameDic.hasOwnProperty('positionx')) {
+                var positionX = actionFrameDic['positionx'];
+                var positionY = actionFrameDic['positiony'];
                 var actionFrame = new ccs.ActionMoveFrame();
                 actionFrame.setFrameIndex(frameInex);
                 actionFrame.setPosition(cc.p(positionX, positionY));
@@ -73,9 +73,9 @@ ccs.ActionNode = ccs.Class.extend({
                 actionArray.push(actionFrame);
             }
 
-            if (actionFrameDic.hasOwnProperty("scalex")) {
-                var scaleX = actionFrameDic["scalex"];
-                var scaleY = actionFrameDic["scaley"];
+            if (actionFrameDic.hasOwnProperty('scalex')) {
+                var scaleX = actionFrameDic['scalex'];
+                var scaleY = actionFrameDic['scaley'];
                 var actionFrame = new ccs.ActionScaleFrame();
                 actionFrame.setFrameIndex(frameInex);
                 actionFrame.setScaleX(scaleX);
@@ -84,8 +84,8 @@ ccs.ActionNode = ccs.Class.extend({
                 actionArray.push(actionFrame);
             }
 
-            if (actionFrameDic.hasOwnProperty("rotation")) {
-                var rotation = actionFrameDic["rotation"];
+            if (actionFrameDic.hasOwnProperty('rotation')) {
+                var rotation = actionFrameDic['rotation'];
                 var actionFrame = new ccs.ActionRotationFrame();
                 actionFrame.setFrameIndex(frameInex);
                 actionFrame.setRotation(rotation);
@@ -93,8 +93,8 @@ ccs.ActionNode = ccs.Class.extend({
                 actionArray.push(actionFrame);
             }
 
-            if (actionFrameDic.hasOwnProperty("opacity")) {
-                var opacity = actionFrameDic["opacity"];
+            if (actionFrameDic.hasOwnProperty('opacity')) {
+                var opacity = actionFrameDic['opacity'];
                 var actionFrame = new ccs.ActionFadeFrame();
                 actionFrame.setFrameIndex(frameInex);
                 actionFrame.setOpacity(opacity);
@@ -102,10 +102,10 @@ ccs.ActionNode = ccs.Class.extend({
                 actionArray.push(actionFrame);
             }
 
-            if (actionFrameDic.hasOwnProperty("colorr")) {
-                var colorR = actionFrameDic["colorr"];
-                var colorG = actionFrameDic["colorg"];
-                var colorB = actionFrameDic["colorb"];
+            if (actionFrameDic.hasOwnProperty('colorr')) {
+                var colorR = actionFrameDic['colorr'];
+                var colorG = actionFrameDic['colorg'];
+                var colorB = actionFrameDic['colorb'];
                 var actionFrame = new ccs.ActionTintFrame();
                 actionFrame.setFrameIndex(frameInex);
                 actionFrame.setColor(cc.c3b(colorR, colorG, colorB));
@@ -117,7 +117,7 @@ ccs.ActionNode = ccs.Class.extend({
         this.initActionNodeFromRoot(root);
     },
 
-    initActionNodeFromRoot: function (root) {
+    initActionNodeFromRoot: function(root) {
         if (root instanceof ccs.Widget) {
             var widget = ccs.UIHelper.seekActionWidgetByActionTag(root, this.getActionTag());
             if (widget) {
@@ -130,16 +130,16 @@ ccs.ActionNode = ccs.Class.extend({
      * Sets the time interval of frame.
      * @param {number} time
      */
-    setUnitTime: function (time) {
+    setUnitTime: function(time) {
         this._unitTime = time;
         this.refreshActionProperty();
     },
 
     /**
      * Gets the time interval of frame.
-     * @returns {number}
+     * @return {number}
      */
-    getUnitTime: function () {
+    getUnitTime: function() {
         return this._unitTime;
     },
 
@@ -147,15 +147,15 @@ ccs.ActionNode = ccs.Class.extend({
      * Sets tag for ActionNode
      * @param tag
      */
-    setActionTag: function (tag) {
+    setActionTag: function(tag) {
         this._actionTag = tag;
     },
 
     /**
      * Gets tag for ActionNode
-     * @returns {number}
+     * @return {number}
      */
-    getActionTag: function () {
+    getActionTag: function() {
         return this._actionTag;
     },
 
@@ -163,23 +163,23 @@ ccs.ActionNode = ccs.Class.extend({
      * Sets node which will run a action.
      * @param {Object} node
      */
-    setObject: function (node) {
+    setObject: function(node) {
         this._object = node;
     },
 
     /**
      * Gets node which will run a action.
-     * @returns {*}
+     * @return {*}
      */
-    getObject: function () {
+    getObject: function() {
         return this._object;
     },
 
     /**
      * get actionNode
-     * @returns {cc.Node}
+     * @return {cc.Node}
      */
-    getActionNode: function () {
+    getActionNode: function() {
         if (this._object instanceof cc.Node) {
             return this._object;
         }
@@ -194,7 +194,7 @@ ccs.ActionNode = ccs.Class.extend({
      * @param {number} index
      * @param {ccs.ActionFrame} frame
      */
-    insertFrame: function (index, frame) {
+    insertFrame: function(index, frame) {
         if (frame == null) {
             return;
         }
@@ -207,7 +207,7 @@ ccs.ActionNode = ccs.Class.extend({
      * Pushs back a ActionFrame to ActionNode.
      * @param {ccs.ActionFrame} frame
      */
-    addFrame: function (frame) {
+    addFrame: function(frame) {
         if (!frame) {
             return;
         }
@@ -220,7 +220,7 @@ ccs.ActionNode = ccs.Class.extend({
      * Remove a ActionFrame from ActionNode.
      * @param {ccs.ActionFrame} frame
      */
-    deleteFrame: function (frame) {
+    deleteFrame: function(frame) {
         if (frame == null) {
             return;
         }
@@ -232,7 +232,7 @@ ccs.ActionNode = ccs.Class.extend({
     /**
      * Remove all ActionFrames from ActionNode.
      */
-    clearAllFrame: function () {
+    clearAllFrame: function() {
         for (var i = 0; i < this._frameArrayNum; i++) {
             this._frameArray[i] = [];
         }
@@ -240,9 +240,9 @@ ccs.ActionNode = ccs.Class.extend({
 
     /**
      * Refresh  property of action
-     * @returns {null}
+     * @return {null}
      */
-    refreshActionProperty: function () {
+    refreshActionProperty: function() {
         if (this._object == null) {
             return null;
         }
@@ -278,13 +278,13 @@ ccs.ActionNode = ccs.Class.extend({
      * @param {Boolean} loop
      * @param {cc.CallFunc} fun
      */
-    playAction: function (fun) {
+    playAction: function(fun) {
         if (this._object == null || this._actionSpawn == null) {
             return;
         }
-        if(fun){
-            this._action = cc.Sequence.create(this._actionSpawn,fun);
-        }else{
+        if (fun) {
+            this._action = cc.Sequence.create(this._actionSpawn, fun);
+        }else {
             this._action = cc.Sequence.create(this._actionSpawn);
         }
         this.runAction();
@@ -293,7 +293,7 @@ ccs.ActionNode = ccs.Class.extend({
     /**
      * Run action.
      */
-    runAction: function () {
+    runAction: function() {
         var node = this.getActionNode();
         if (node != null && this._action != null) {
             node.runAction(this._action);
@@ -303,19 +303,19 @@ ccs.ActionNode = ccs.Class.extend({
     /**
      * Stop action.
      */
-    stopAction: function () {
+    stopAction: function() {
         var node = this.getActionNode();
         if (node != null && this._action != null) {
-            if(!this._action.isDone())
+            if (!this._action.isDone())
                 node.stopAction(this._action);
         }
     },
 
     /**
      * Gets index of first ActionFrame.
-     * @returns {number}
+     * @return {number}
      */
-    getFirstFrameIndex: function () {
+    getFirstFrameIndex: function() {
         var locFrameindex = 99999;
         var locIsFindFrame = false;
         for (var i = 0; i < this._frameArrayNum; i++) {
@@ -336,9 +336,9 @@ ccs.ActionNode = ccs.Class.extend({
 
     /**
      * Gets index of last ActionFrame.
-     * @returns {number}
+     * @return {number}
      */
-    getLastFrameIndex: function () {
+    getLastFrameIndex: function() {
         var locFrameindex = -1;
         var locIsFindFrame = false;
         for (var i = 0; i < this._frameArrayNum; i++) {
@@ -360,9 +360,9 @@ ccs.ActionNode = ccs.Class.extend({
     /**
      * Updates action states to some time.
      * @param time
-     * @returns {boolean}
+     * @return {boolean}
      */
-    updateActionToTimeLine: function (time) {
+    updateActionToTimeLine: function(time) {
         var locIsFindFrame = false;
         var locUnitTime = this.getUnitTime();
         for (var i = 0; i < this._frameArrayNum; i++) {
@@ -404,7 +404,7 @@ ccs.ActionNode = ccs.Class.extend({
      * @param {number} delayTime
      * @param {ccs.ActionFrame} destFrame
      */
-    easingToFrame: function (duration, delayTime, destFrame) {
+    easingToFrame: function(duration, delayTime, destFrame) {
         var action = destFrame.getAction(duration);
         var node = this.getActionNode();
         if (action == null || node == null) {
@@ -414,7 +414,7 @@ ccs.ActionNode = ccs.Class.extend({
         action.update(delayTime);
     },
 
-    isActionDoneOnce: function () {
+    isActionDoneOnce: function() {
         if (this._action == null) {
             return true;
         }

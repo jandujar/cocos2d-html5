@@ -26,11 +26,11 @@
  * RelativeData
  * @constructor
  */
-ccs.RelativeData = function(){
-    this.plistFiles=[];
-    this.armatures=[];
-    this.animations=[];
-    this.textures=[];
+ccs.RelativeData = function() {
+    this.plistFiles = [];
+    this.armatures = [];
+    this.animations = [];
+    this.textures = [];
 };
 
 /**
@@ -39,19 +39,19 @@ ccs.RelativeData = function(){
  * @extends ccs.Class
  */
 ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# */{
-    _animationDatas:null,
-    _armarureDatas:null,
-    _textureDatas:null,
-    _autoLoadSpriteFile:null,
-    _relativeDatas:null,
-    ctor:function () {
+    _animationDatas: null,
+    _armarureDatas: null,
+    _textureDatas: null,
+    _autoLoadSpriteFile: null,
+    _relativeDatas: null,
+    ctor: function() {
         this._animationDatas = {};
         this._armarureDatas = {};
         this._textureDatas = {};
         this._autoLoadSpriteFile = false;
         this._relativeDatas = {};
     },
-    init:function () {
+    init: function() {
 
     },
 
@@ -59,7 +59,7 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
      * remove armature cache data by configFilePath
      * @param {String} configFilePath
      */
-    removeArmatureFileInfo:function(configFilePath){
+    removeArmatureFileInfo: function(configFilePath) {
         var data = this.getRelativeData(configFilePath);
         for (var i = 0; i < data.armatures.length; i++) {
             var obj = data.armatures[i];
@@ -86,7 +86,7 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
      * @param {string} id The id of the armature data
      * @param {ccs.ArmatureData} armatureData
      */
-    addArmatureData:function (id, armatureData, configFilePath) {
+    addArmatureData: function(id, armatureData, configFilePath) {
         if (this._armarureDatas) {
             var data = this.getRelativeData(configFilePath);
             data.armatures.push(id);
@@ -98,7 +98,7 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
      * remove armature data
      * @param {string} id
      */
-    removeArmatureData:function(id){
+    removeArmatureData: function(id) {
         if (this._armarureDatas.hasOwnProperty(id))
            delete this._armarureDatas[id];
     },
@@ -108,7 +108,7 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
      * @param {String} id
      * @return {ccs.ArmatureData}
      */
-    getArmatureData:function (id) {
+    getArmatureData: function(id) {
         var armatureData = null;
         if (this._armarureDatas) {
             armatureData = this._armarureDatas[id];
@@ -120,7 +120,7 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
      * get armatureDatas
      * @return {Object}
      */
-    getArmatureDatas:function () {
+    getArmatureDatas: function() {
         return this._armarureDatas;
     },
 
@@ -129,7 +129,7 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
      * @param {String} id
      * @param {ccs.AnimationData} animationData
      */
-    addAnimationData:function (id, animationData, configFilePath) {
+    addAnimationData: function(id, animationData, configFilePath) {
         if (this._animationDatas) {
             var data = this.getRelativeData(configFilePath);
             data.animations.push(id);
@@ -141,7 +141,7 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
      * remove animation data
      * @param {string} id
      */
-    removeAnimationData:function(id){
+    removeAnimationData: function(id) {
         if (this._animationDatas.hasOwnProperty(id))
             delete this._animationDatas[id];
     },
@@ -151,7 +151,7 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
      * @param {String} id
      * @return {ccs.AnimationData}
      */
-    getAnimationData:function (id) {
+    getAnimationData: function(id) {
         var animationData = null;
         if (this._animationDatas[id]) {
             animationData = this._animationDatas[id];
@@ -163,7 +163,7 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
      * get animationDatas
      * @return {Object}
      */
-    getAnimationDatas:function () {
+    getAnimationDatas: function() {
         return this._animationDatas;
     },
 
@@ -172,7 +172,7 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
      * @param {String} id
      * @param {ccs.TextureData} textureData
      */
-    addTextureData:function (id, textureData, configFilePath) {
+    addTextureData: function(id, textureData, configFilePath) {
         if (this._textureDatas) {
             var data = this.getRelativeData(configFilePath);
             data.textures.push(id);
@@ -184,7 +184,7 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
      * remove texture data
      * @param {string} id
      */
-    removeTextureData:function(id){
+    removeTextureData: function(id) {
         if (this._textureDatas.hasOwnProperty(id))
             delete this._textureDatas[id];
     },
@@ -194,7 +194,7 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
      * @param {String} id
      * @return {ccs.TextureData}
      */
-    getTextureData:function (id) {
+    getTextureData: function(id) {
         var textureData = null;
         if (this._textureDatas) {
             textureData = this._textureDatas[id];
@@ -206,7 +206,7 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
      * get textureDatas
      * @return {Object}
      */
-    getTextureDatas:function () {
+    getTextureDatas: function() {
         return this._textureDatas;
     },
 
@@ -221,21 +221,21 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
      * //example2
      * ccs.ArmatureDataManager.getInstance().addArmatureFileInfo("res/test.png","res/test.plist","res/test.json");
      */
-    addArmatureFileInfo:function (/*imagePath,plistPath,configFilePath*/) {
-        var imagePath,plistPath,configFilePath;
+    addArmatureFileInfo: function(/*imagePath, plistPath, configFilePath*/) {
+        var imagePath, plistPath, configFilePath;
         var isLoadSpriteFrame = false;
         if (arguments.length == 1) {
             configFilePath = arguments[0];
             isLoadSpriteFrame = true;
             this.addRelativeData(configFilePath);
-        } else if (arguments.length == 3){
+        } else if (arguments.length == 3) {
             imagePath = arguments[0];
             plistPath = arguments[1];
             configFilePath = arguments[2];
             this.addRelativeData(configFilePath);
             this.addSpriteFrameFromFile(plistPath, imagePath, configFilePath);
         }
-        ccs.DataReaderHelper.addDataFromFile(configFilePath,isLoadSpriteFrame);
+        ccs.DataReaderHelper.addDataFromFile(configFilePath, isLoadSpriteFrame);
     },
 
     /**
@@ -246,8 +246,8 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
      * @param {Object} target
      * @param {Function} configFilePath
      */
-    addArmatureFileInfoAsync:function (/*imagePath, plistPath, configFilePath,target,selector*/) {
-        var imagePath, plistPath, configFilePath,target,selector;
+    addArmatureFileInfoAsync: function(/*imagePath, plistPath, configFilePath, target, selector*/) {
+        var imagePath, plistPath, configFilePath, target, selector;
         var isLoadSpriteFrame = false;
         if (arguments.length == 3) {
             configFilePath = arguments[0];
@@ -255,7 +255,7 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
             target = arguments[2];
             isLoadSpriteFrame = true;
             this.addRelativeData(configFilePath);
-        } else if (arguments.length == 5){
+        } else if (arguments.length == 5) {
             imagePath = arguments[0];
             plistPath = arguments[1];
             configFilePath = arguments[2];
@@ -264,7 +264,7 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
             this.addRelativeData(configFilePath);
             this.addSpriteFrameFromFile(plistPath, imagePath, configFilePath);
         }
-        ccs.DataReaderHelper.addDataFromFileAsync(configFilePath,target,selector,isLoadSpriteFrame);
+        ccs.DataReaderHelper.addDataFromFileAsync(configFilePath, target, selector, isLoadSpriteFrame);
 
     },
 
@@ -273,13 +273,13 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
      * @param {String} plistPath
      * @param {String} imagePath
      */
-    addSpriteFrameFromFile:function (plistPath, imagePath, configFilePath) {
+    addSpriteFrameFromFile: function(plistPath, imagePath, configFilePath) {
         var data = this.getRelativeData(configFilePath);
         data.plistFiles.push(plistPath);
         ccs.SpriteFrameCacheHelper.getInstance().addSpriteFrameFromFile(plistPath, imagePath);
     },
 
-    isAutoLoadSpriteFile:function(){
+    isAutoLoadSpriteFile: function() {
         return this._autoLoadSpriteFile;
     },
 
@@ -287,7 +287,7 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
      * add RelativeData
      * @param {String} configFilePath
      */
-    addRelativeData: function (configFilePath) {
+    addRelativeData: function(configFilePath) {
         if (!this._relativeDatas.hasOwnProperty(configFilePath))
             this._relativeDatas[configFilePath] = new ccs.RelativeData();
     },
@@ -295,13 +295,13 @@ ccs.ArmatureDataManager = ccs.Class.extend(/** @lends ccs.ArmatureDataManager# *
     /**
      * get RelativeData
      * @param {String} configFilePath
-     * @returns {ccs.RelativeData}
+     * @return {ccs.RelativeData}
      */
-    getRelativeData: function (configFilePath) {
+    getRelativeData: function(configFilePath) {
         return this._relativeDatas[configFilePath];
     },
 
-    removeAll:function () {
+    removeAll: function() {
         this._animationDatas = null;
         this._armarureDatas = null;
         this._textureDatas = null;
@@ -315,14 +315,14 @@ ccs.ArmatureDataManager._instance = null;
  * @function
  * @return {ccs.ArmatureDataManager}
  */
-ccs.ArmatureDataManager.getInstance = function () {
+ccs.ArmatureDataManager.getInstance = function() {
     if (!this._instance) {
         this._instance = new ccs.ArmatureDataManager();
         this._instance.init();
     }
     return this._instance;
 };
-ccs.ArmatureDataManager.purge = function () {
+ccs.ArmatureDataManager.purge = function() {
     ccs.SpriteFrameCacheHelper.purge();
     ccs.DataReaderHelper.purge();
     this._instance = null;

@@ -44,7 +44,7 @@ cc.FMT_WEBP = 4;
  */
 cc.FMT_UNKNOWN = 5;
 
-cc.getImageFormatByData = function (imgData) {
+cc.getImageFormatByData = function(imgData) {
     // if it is a png file buffer.
     if (imgData.length > 8) {
         if (imgData[0] == 0x89

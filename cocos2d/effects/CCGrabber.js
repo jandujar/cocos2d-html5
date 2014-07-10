@@ -26,13 +26,13 @@
 
 /** FBO class that grabs the the contents of the screen */
 cc.Grabber = cc.Class.extend({
-    _FBO:null,
-    _oldFBO:null,
-    _oldClearColor:null,
+    _FBO: null,
+    _oldFBO: null,
+    _oldClearColor: null,
 
-    _gl:null,
+    _gl: null,
 
-    ctor:function () {
+    ctor: function() {
         this._gl = cc.renderContext;
         this._oldClearColor = [0, 0, 0, 0];
         this._oldFBO = null;
@@ -40,7 +40,7 @@ cc.Grabber = cc.Class.extend({
         this._FBO = this._gl.createFramebuffer();
     },
 
-    grab:function (texture) {
+    grab: function(texture) {
         var locGL = this._gl;
         this._oldFBO = locGL.getParameter(locGL.FRAMEBUFFER_BINDING);
         // bind
@@ -51,11 +51,11 @@ cc.Grabber = cc.Class.extend({
         // check if it worked (probably worth doing :) )
         var status = locGL.checkFramebufferStatus(locGL.FRAMEBUFFER);
         if (status != locGL.FRAMEBUFFER_COMPLETE)
-            cc.log("Frame Grabber: could not attach texture to frmaebuffer");
+            cc.log('Frame Grabber: could not attach texture to frmaebuffer');
         locGL.bindFramebuffer(locGL.FRAMEBUFFER, this._oldFBO);
     },
 
-    beforeRender:function (texture) {
+    beforeRender: function(texture) {
         var locGL = this._gl;
         this._oldFBO = locGL.getParameter(locGL.FRAMEBUFFER_BINDING);
         locGL.bindFramebuffer(locGL.FRAMEBUFFER, this._FBO);
@@ -75,13 +75,13 @@ cc.Grabber = cc.Class.extend({
         //  glColorMask(true, true, true, false);    // #631
     },
 
-    afterRender:function (texture) {
+    afterRender: function(texture) {
         var locGL = this._gl;
         locGL.bindFramebuffer(locGL.FRAMEBUFFER, this._oldFBO);
         locGL.colorMask(true, true, true, true);      // #631
     },
 
-    destroy:function(){
+    destroy: function() {
         this._gl.deleteFramebuffer(this._FBO);
     }
 });

@@ -23,24 +23,24 @@
  ****************************************************************************/
 
 cc.BatchNode = cc.Node.extend({
-    _atlas:null,
-    ctor:function () {
+    _atlas: null,
+    ctor: function() {
         this._atlas = null;
     },
-    init:function () {
+    init: function() {
         var ret = cc.Node.prototype.init.call(this);
         this.setShaderProgram(cc.ShaderCache.getInstance().programForKey(cc.SHADER_POSITION_TEXTURE_UCOLOR));
         return ret;
     },
 
-    addChild:function (child, zOrder, tag) {
+    addChild: function(child, zOrder, tag) {
         cc.Node.prototype.addChild.call(this, child, zOrder, tag);
         if (child instanceof cc.Armature) {
             child.setBatchNode(this);
         }
     },
 
-    visit:function () {
+    visit: function() {
         // quick return if not visible. children won't be drawn.
         if (!this._visible) {
             return;
@@ -60,7 +60,7 @@ cc.BatchNode = cc.Node.extend({
         this.kmGLPopMatrix();
     },
 
-    draw:function (ctx) {
+    draw: function(ctx) {
         cc.NODE_DRAW_SETUP(this);
         var child = null;
         for (var i = 0; i < this._children.length; i++) {
@@ -76,7 +76,7 @@ cc.BatchNode = cc.Node.extend({
         }
     }
 });
-cc.BatchNode.create = function () {
+cc.BatchNode.create = function() {
     var batchNode = new cc.BatchNode();
     if (batchNode && batchNode.init()) {
         return batchNode;

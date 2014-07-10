@@ -40,7 +40,7 @@ cc.PageTurn3D = cc.Grid3DAction.extend(/** @lends cc.PageTurn3D# */{
      * Update each tick                                         <br/>
      * Time is the percentage of the way through the duration
      */
-    update:function (time) {
+    update: function(time) {
         var tt = Math.max(0, time - 0.25);
         var deltaAy = (tt * tt * 500);
         var ay = -100 - deltaAy;
@@ -69,15 +69,15 @@ cc.PageTurn3D = cc.Grid3DAction.extend(/** @lends cc.PageTurn3D# */{
                 // If beta > PI then we've wrapped around the cone
                 // Reduce the radius to stop these points interfering with others
                 if (beta <= Math.PI)
-                    p.x = ( r * Math.sin(beta));
+                    p.x = (r * Math.sin(beta));
                 else
                     p.x = 0;     //Force X = 0 to stop wrapped points
 
-                p.y = ( R + ay - ( r * (1 - cosBeta) * sinTheta));
+                p.y = (R + ay - (r * (1 - cosBeta) * sinTheta));
 
                 // We scale z here to avoid the animation being
                 // too much bigger than the screen due to perspectve transform
-                p.z = (r * ( 1 - cosBeta ) * cosTheta) / 7;// "100" didn't work for
+                p.z = (r * (1 - cosBeta) * cosTheta) / 7;// "100" didn't work for
 
                 //	Stop z coord from dropping beneath underlying page in a transition
                 // issue #751
@@ -98,7 +98,7 @@ cc.PageTurn3D = cc.Grid3DAction.extend(/** @lends cc.PageTurn3D# */{
  * @param {cc.Size} gridSize
  * @return {cc.PageTurn3D}
  */
-cc.PageTurn3D.create = function (duration, gridSize) {
+cc.PageTurn3D.create = function(duration, gridSize) {
     var action = new cc.PageTurn3D();
     action.initWithDuration(duration, gridSize);
     return action;

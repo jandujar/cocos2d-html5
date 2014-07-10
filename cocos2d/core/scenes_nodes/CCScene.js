@@ -41,7 +41,7 @@ cc.Scene = cc.Node.extend(/** @lends cc.Scene# */{
     /**
      * Constructor
      */
-    ctor:function () {
+    ctor: function() {
         cc.Node.prototype.ctor.call(this);
         this._ignoreAnchorPointForPosition = true;
         this.setAnchorPoint(0.5, 0.5);
@@ -58,6 +58,6 @@ cc.Scene = cc.Node.extend(/** @lends cc.Scene# */{
  * //OR
  * var aScene = new cc.Scene();
  */
-cc.Scene.create = function () {
+cc.Scene.create = function() {
     return new cc.Scene();
 };

@@ -7,34 +7,34 @@
 /**
  * mixin cc.Codec
  */
-cc.Codec = {name:'Jacob__Codec'};
+cc.Codec = {name: 'Jacob__Codec'};
 
 /**
  * Unpack a gzipped byte array
  * @param {Array} input Byte array
- * @returns {String} Unpacked byte string
+ * @return {String} Unpacked byte string
  */
-cc.unzip = function () {
+cc.unzip = function() {
     return cc.Codec.GZip.gunzip.apply(cc.Codec.GZip, arguments);
 };
 
 /**
  * Unpack a gzipped byte string encoded as base64
  * @param {String} input Byte string encoded as base64
- * @returns {String} Unpacked byte string
+ * @return {String} Unpacked byte string
  */
-cc.unzipBase64 = function () {
+cc.unzipBase64 = function() {
     var tmpInput = cc.Codec.Base64.decode.apply(cc.Codec.Base64, arguments);
-    return   cc.Codec.GZip.gunzip.apply(cc.Codec.GZip, [tmpInput]);
+    return cc.Codec.GZip.gunzip.apply(cc.Codec.GZip, [tmpInput]);
 };
 
 /**
  * Unpack a gzipped byte string encoded as base64
  * @param {String} input Byte string encoded as base64
  * @param {Number} bytes Bytes per array item
- * @returns {Array} Unpacked byte array
+ * @return {Array} Unpacked byte array
  */
-cc.unzipBase64AsArray = function (input, bytes) {
+cc.unzipBase64AsArray = function(input, bytes) {
     bytes = bytes || 1;
 
     var dec = this.unzipBase64(input),
@@ -52,9 +52,9 @@ cc.unzipBase64AsArray = function (input, bytes) {
  * Unpack a gzipped byte array
  * @param {Array} input Byte array
  * @param {Number} bytes Bytes per array item
- * @returns {Array} Unpacked byte array
+ * @return {Array} Unpacked byte array
  */
-cc.unzipAsArray = function (input, bytes) {
+cc.unzipAsArray = function(input, bytes) {
     bytes = bytes || 1;
 
     var dec = this.unzip(input),
@@ -71,10 +71,10 @@ cc.unzipAsArray = function (input, bytes) {
 /**
  * string to array
  * @param {String} input
- * @returns {Array} array
+ * @return {Array} array
  */
-cc.StringToArray = function (input) {
-    var tmp = input.split(","), ar = [], i;
+cc.StringToArray = function(input) {
+    var tmp = input.split(','), ar = [], i;
     for (i = 0; i < tmp.length; i++) {
         ar.push(parseInt(tmp[i]));
     }

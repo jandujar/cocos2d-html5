@@ -30,21 +30,21 @@
  * @extends cc.ActionInterval
  */
 cc.GridAction = cc.ActionInterval.extend(/** @lends cc.GridAction# */{
-    _gridSize:null,
+    _gridSize: null,
 
-    ctor:function(){
+    ctor: function() {
         cc.ActionInterval.prototype.ctor.call(this);
-        this._gridSize = cc.size(0,0);
+        this._gridSize = cc.size(0, 0);
     },
 
-    clone:function(){
+    clone: function() {
         var action = new cc.GridAction();
         var locGridSize = this._gridSize;
         action.initWithDuration(this._duration, cc.size(locGridSize.width, locGridSize.height));
         return action;
     },
 
-    startWithTarget:function (target) {
+    startWithTarget: function(target) {
         cc.ActionInterval.prototype.startWithTarget.call(this, target);
         var newGrid = this.getGrid();
         var t = this._target;
@@ -61,7 +61,7 @@ cc.GridAction = cc.ActionInterval.extend(/** @lends cc.GridAction# */{
         }
     },
 
-    reverse:function () {
+    reverse: function() {
         return cc.ReverseTime.create(this);
     },
 
@@ -71,7 +71,7 @@ cc.GridAction = cc.ActionInterval.extend(/** @lends cc.GridAction# */{
      * @param {cc.Size} gridSize
      * @return {Boolean}
      */
-    initWithDuration:function (duration, gridSize) {
+    initWithDuration: function(duration, gridSize) {
         if (cc.ActionInterval.prototype.initWithDuration.call(this, duration)) {
             this._gridSize.width = gridSize.width;
             this._gridSize.height = gridSize.height;
@@ -84,9 +84,9 @@ cc.GridAction = cc.ActionInterval.extend(/** @lends cc.GridAction# */{
      * returns the grid
      * @return {cc.GridBase}
      */
-    getGrid:function () {
+    getGrid: function() {
         // Abstract class needs implementation
-        cc.log("cc.GridAction.getGrid(): it should be overridden in subclass.");
+        cc.log('cc.GridAction.getGrid(): it should be overridden in subclass.');
     }
 });
 
@@ -96,7 +96,7 @@ cc.GridAction = cc.ActionInterval.extend(/** @lends cc.GridAction# */{
  * @param {cc.Size} gridSize
  * @return {cc.GridAction}
  */
-cc.GridAction.create = function (duration, gridSize) {
+cc.GridAction.create = function(duration, gridSize) {
     var action = new cc.GridAction();
     action.initWithDuration(duration, gridSize);
     return action;
@@ -113,7 +113,7 @@ cc.Grid3DAction = cc.GridAction.extend(/** @lends cc.GridAction# */{
      * returns the grid
      * @return {cc.GridBase}
      */
-    getGrid:function () {
+    getGrid: function() {
         return cc.Grid3D.create(this._gridSize);
     },
 
@@ -122,7 +122,7 @@ cc.Grid3DAction = cc.GridAction.extend(/** @lends cc.GridAction# */{
      * @param {cc.Point} position
      * @return {cc.Vertex3F}
      */
-    vertex:function (position) {
+    vertex: function(position) {
         return this._target.getGrid().vertex(position);
     },
 
@@ -131,7 +131,7 @@ cc.Grid3DAction = cc.GridAction.extend(/** @lends cc.GridAction# */{
      * @param {cc.Point} position
      * @return {*}
      */
-    originalVertex:function (position) {
+    originalVertex: function(position) {
         return this._target.getGrid().originalVertex(position);
     },
 
@@ -140,7 +140,7 @@ cc.Grid3DAction = cc.GridAction.extend(/** @lends cc.GridAction# */{
      * @param {cc.Point} position
      * @param {cc.Vertex3F} vertex
      */
-    setVertex:function (position, vertex) {
+    setVertex: function(position, vertex) {
         this._target.getGrid().setVertex(position, vertex);
     }
 });
@@ -151,9 +151,9 @@ cc.Grid3DAction = cc.GridAction.extend(/** @lends cc.GridAction# */{
  * @param {cc.Size} gridSize
  * @return {cc.Grid3DAction}
  */
-cc.Grid3DAction.create = function (duration,gridSize) {
+cc.Grid3DAction.create = function(duration, gridSize) {
     var action = new cc.Grid3DAction();
-    action.initWithDuration(duration,gridSize);
+    action.initWithDuration(duration, gridSize);
     return action;
 };
 
@@ -168,7 +168,7 @@ cc.TiledGrid3DAction = cc.GridAction.extend(/** @lends cc.TiledGrid3DAction# */{
      * @param {cc.Point} position
      * @return {cc.Quad3}
      */
-    tile:function (position) {
+    tile: function(position) {
         return this._target.getGrid().tile(position);
     },
 
@@ -177,7 +177,7 @@ cc.TiledGrid3DAction = cc.GridAction.extend(/** @lends cc.TiledGrid3DAction# */{
      * @param {cc.Point} position
      * @return {cc.Quad3}
      */
-    originalTile:function (position) {
+    originalTile: function(position) {
         return this._target.getGrid().originalTile(position);
     },
 
@@ -186,7 +186,7 @@ cc.TiledGrid3DAction = cc.GridAction.extend(/** @lends cc.TiledGrid3DAction# */{
      * @param {cc.Point} position
      * @param {cc.Quad3} coords
      */
-    setTile:function (position, coords) {
+    setTile: function(position, coords) {
         this._target.getGrid().setTile(position, coords);
     },
 
@@ -194,7 +194,7 @@ cc.TiledGrid3DAction = cc.GridAction.extend(/** @lends cc.TiledGrid3DAction# */{
      * returns the grid
      * @return {cc.GridBase}
      */
-    getGrid:function () {
+    getGrid: function() {
         return cc.TiledGrid3D.create(this._gridSize);
     }
 });
@@ -205,7 +205,7 @@ cc.TiledGrid3DAction = cc.GridAction.extend(/** @lends cc.TiledGrid3DAction# */{
  * @param {cc.Size} gridSize
  * @return {cc.TiledGrid3DAction}
  */
-cc.TiledGrid3DAction.create = function (duration, gridSize) {
+cc.TiledGrid3DAction.create = function(duration, gridSize) {
      var ret = new cc.TiledGrid3DAction();
     ret.initWithDuration(duration, gridSize);
     return ret;
@@ -222,7 +222,7 @@ cc.TiledGrid3DAction.create = function (duration, gridSize) {
  * @extends cc.ActionInstant
  */
 cc.StopGrid = cc.ActionInstant.extend(/** @lends cc.StopGrid# */{
-    startWithTarget:function (target) {
+    startWithTarget: function(target) {
         cc.ActionInstant.prototype.startWithTarget.call(this, target);
         var grid = this._target.getGrid();
         if (grid && grid.isActive())
@@ -234,7 +234,7 @@ cc.StopGrid = cc.ActionInstant.extend(/** @lends cc.StopGrid# */{
  * Allocates and initializes the action
  * @return {cc.StopGrid}
  */
-cc.StopGrid.create = function () {
+cc.StopGrid.create = function() {
     return new cc.StopGrid();
 };
 
@@ -244,19 +244,19 @@ cc.StopGrid.create = function () {
  * @extends cc.ActionInstant
  */
 cc.ReuseGrid = cc.ActionInstant.extend(/** @lends cc.ReuseGrid# */{
-    _times:null,
+    _times: null,
 
     /**
      * initializes an action with the number of times that the current grid will be reused
      * @param {Number} times
      * @return {Boolean}
      */
-    initWithTimes:function (times) {
+    initWithTimes: function(times) {
         this._times = times;
         return true;
     },
 
-    startWithTarget:function (target) {
+    startWithTarget: function(target) {
         cc.ActionInstant.prototype.startWithTarget.call(this, target);
         if (this._target.getGrid() && this._target.getGrid().isActive())
             this._target.getGrid().setReuseGrid(this._target.getGrid().getReuseGrid() + this._times);
@@ -268,6 +268,6 @@ cc.ReuseGrid = cc.ActionInstant.extend(/** @lends cc.ReuseGrid# */{
  * @param {Number} times
  * @return {cc.ReuseGrid}
  */
-cc.ReuseGrid.create = function (times) {
+cc.ReuseGrid.create = function(times) {
     return new cc.ReuseGrid();
 };

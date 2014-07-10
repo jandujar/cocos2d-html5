@@ -95,7 +95,7 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
     _inertiaScrollEnabled: false,
     _scrollViewEventListener: null,
     _scrollViewEventSelector: null,
-    ctor: function () {
+    ctor: function() {
         ccs.Layout.prototype.ctor.call(this);
         this._innerContainer = null;
         this._direction = ccs.ScrollViewDir.none;
@@ -136,7 +136,7 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         this._scrollViewEventSelector = null;
     },
 
-    init: function () {
+    init: function() {
         if (ccs.Layout.prototype.init.call(this)) {
             this.setUpdateEnabled(true);
             this.setTouchEnabled(true);
@@ -147,13 +147,13 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         return false;
     },
 
-    initRenderer: function () {
+    initRenderer: function() {
         ccs.Layout.prototype.initRenderer.call(this);
         this._innerContainer = ccs.Layout.create();
         ccs.Layout.prototype.addChild.call(this, this._innerContainer);
     },
 
-    onSizeChanged: function () {
+    onSizeChanged: function() {
         ccs.Layout.prototype.onSizeChanged.call(this);
         var locSize = this._size;
         this._topBoundary = locSize.height;
@@ -173,19 +173,19 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         this._innerContainer.setPosition(cc.p(0, locSize.height - this._innerContainer.getSize().height));
     },
 
-    setInnerContainerSize: function (size) {
+    setInnerContainerSize: function(size) {
         var locSize = this._size;
         var innerSizeWidth = locSize.width;
         var innerSizeHeight = locSize.height;
         var originalInnerSize = this._innerContainer.getSize();
         if (size.width < locSize.width) {
-            cc.log("Inner width <= scrollview width, it will be force sized!");
+            cc.log('Inner width <= scrollview width, it will be force sized!');
         }
         else {
             innerSizeWidth = size.width;
         }
         if (size.height < locSize.height) {
-            cc.log("Inner height <= scrollview height, it will be force sized!");
+            cc.log('Inner height <= scrollview height, it will be force sized!');
         }
         else {
             innerSizeHeight = size.height;
@@ -234,7 +234,7 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         }
     },
 
-    getInnerContainerSize: function () {
+    getInnerContainerSize: function() {
         return this._innerContainer.getSize();
     },
 
@@ -243,67 +243,67 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
      * @param {ccs.Widget} widget
      * @param {Number} zOrder
      * @param {Number} tag
-     * @returns {boolean}
+     * @return {boolean}
      */
-    addChild: function (widget, zOrder, tag) {
+    addChild: function(widget, zOrder, tag) {
         return this._innerContainer.addChild(widget, zOrder, tag);
     },
 
-    removeAllChildren: function () {
+    removeAllChildren: function() {
         this._innerContainer.removeAllChildren();
     },
 
     /**
      *  remove widget child override
      * @param {ccs.Widget} child
-     * @returns {boolean}
+     * @return {boolean}
      */
-    removeChild: function (child) {
+    removeChild: function(child) {
         return this._innerContainer.removeChild(child);
     },
 
     /**
      * get inner children
-     * @returns {Array}
+     * @return {Array}
      */
-    getChildren: function () {
+    getChildren: function() {
         return this._innerContainer.getChildren();
     },
 
     /**
      * get the count of inner children
-     * @returns {Number}
+     * @return {Number}
      */
-    getChildrenCount: function () {
+    getChildrenCount: function() {
         return this._innerContainer.getChildrenCount();
     },
 
     /**
      * Gets a child from the container given its tag
      * @param {Number} tag
-     * @returns {ccs.Widget}
+     * @return {ccs.Widget}
      */
-    getChildByTag: function (tag) {
+    getChildByTag: function(tag) {
         return this._innerContainer.getChildByTag(tag);
     },
 
     /**
      * Gets a child from the container given its name
      * @param {String} name
-     * @returns {ccs.Widget}
+     * @return {ccs.Widget}
      */
-    getChildByName: function (name) {
+    getChildByName: function(name) {
         return this._innerContainer.getChildByName(name);
     },
 
-    moveChildren: function (offsetX, offsetY) {
+    moveChildren: function(offsetX, offsetY) {
         var pos = this._innerContainer.getPosition();
         this._moveChildPoint.x = pos.x + offsetX;
         this._moveChildPoint.y = pos.y + offsetY;
         this._innerContainer.setPosition(this._moveChildPoint);
     },
 
-    autoScrollChildren: function (dt) {
+    autoScrollChildren: function(dt) {
         var lastTime = this._autoScrollAddUpTime;
         this._autoScrollAddUpTime += dt;
         if (this._isAutoScrollSpeedAttenuated) {
@@ -342,7 +342,7 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         }
     },
 
-    bounceChildren: function (dt) {
+    bounceChildren: function(dt) {
         var locSpeed = this._bounceOriginalSpeed;
         var locBounceDir = this._bounceDir;
         if (locSpeed <= 0.0) {
@@ -353,7 +353,7 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         }
     },
 
-    checkNeedBounce: function () {
+    checkNeedBounce: function() {
         if (!this._bounceEnabled) {
             return false;
         }
@@ -412,7 +412,7 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         return false;
     },
 
-    checkBounceBoundary: function () {
+    checkBounceBoundary: function() {
         var icBottomPos = this._innerContainer.getBottomInParent();
         if (icBottomPos > this._bottomBoundary) {
             this.scrollToBottomEvent();
@@ -447,12 +447,12 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         }
     },
 
-    startBounceChildren: function (v) {
+    startBounceChildren: function(v) {
         this._bounceOriginalSpeed = v;
         this._bouncing = true;
     },
 
-    stopBounceChildren: function () {
+    stopBounceChildren: function() {
         this._bouncing = false;
         this._bounceOriginalSpeed = 0.0;
         this._leftBounceNeeded = false;
@@ -461,7 +461,7 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         this._bottomBounceNeeded = false;
     },
 
-    startAutoScrollChildrenWithOriginalSpeed: function (dir, v, attenuated, acceleration) {
+    startAutoScrollChildrenWithOriginalSpeed: function(dir, v, attenuated, acceleration) {
         this.stopAutoScrollChildren();
         this._autoScrollDir = dir;
         this._isAutoScrollSpeedAttenuated = attenuated;
@@ -470,7 +470,7 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         this._autoScrollAcceleration = acceleration;
     },
 
-    startAutoScrollChildrenWithDestination: function (des, time, attenuated) {
+    startAutoScrollChildrenWithDestination: function(des, time, attenuated) {
         this._needCheckAutoScrollDestination = false;
         this._autoScrollDestination = des;
         var dis = cc.pSub(des, this._innerContainer.getPosition());
@@ -489,7 +489,7 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         this.startAutoScrollChildrenWithOriginalSpeed(dir, orSpeed, attenuated, acceleration);
     },
 
-    jumpToDestination: function (des) {
+    jumpToDestination: function(des) {
         var finalOffsetX = des.x;
         var finalOffsetY = des.y;
         switch (this._direction) {
@@ -518,13 +518,13 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
     },
 
 
-    stopAutoScrollChildren: function () {
+    stopAutoScrollChildren: function() {
         this._autoScroll = false;
         this._autoScrollOriginalSpeed = 0;
         this._autoScrollAddUpTime = 0;
     },
 
-    bounceScrollChildren: function (touchOffsetX, touchOffsetY) {
+    bounceScrollChildren: function(touchOffsetX, touchOffsetY) {
         var scrollEnabled = true;
         if (touchOffsetX > 0.0 && touchOffsetY > 0.0) //first quadrant //bounce to top-right
         {
@@ -645,7 +645,7 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         return scrollEnabled;
     },
 
-    checkCustomScrollDestination: function (touchOffsetX, touchOffsetY) {
+    checkCustomScrollDestination: function(touchOffsetX, touchOffsetY) {
         var scrollEnabled = true;
         switch (this._direction) {
             case ccs.ScrollViewDir.vertical: // vertical
@@ -773,12 +773,12 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
     },
 
 
-    getCurAutoScrollDistance: function (dt) {
+    getCurAutoScrollDistance: function(dt) {
         this._autoScrollOriginalSpeed -= this._autoScrollAcceleration * dt;
         return this._autoScrollOriginalSpeed * dt;
     },
 
-    scrollChildren: function (touchOffsetX, touchOffsetY) {
+    scrollChildren: function(touchOffsetX, touchOffsetY) {
         var scrollEnabled = true;
         this.scrollingEvent();
         switch (this._direction) {
@@ -1053,66 +1053,66 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         return scrollEnabled;
     },
 
-    scrollToBottom: function (time, attenuated) {
+    scrollToBottom: function(time, attenuated) {
         this.startAutoScrollChildrenWithDestination(cc.p(this._innerContainer.getPosition().x, 0), time, attenuated);
     },
 
-    scrollToTop: function (time, attenuated) {
+    scrollToTop: function(time, attenuated) {
         this.startAutoScrollChildrenWithDestination(cc.p(this._innerContainer.getPosition().x, this._size.height - this._innerContainer.getSize().height), time, attenuated);
     },
 
-    scrollToLeft: function (time, attenuated) {
+    scrollToLeft: function(time, attenuated) {
         this.startAutoScrollChildrenWithDestination(cc.p(0, this._innerContainer.getPosition().y), time, attenuated);
     },
 
-    scrollToRight: function (time, attenuated) {
+    scrollToRight: function(time, attenuated) {
         this.startAutoScrollChildrenWithDestination(cc.p(this._size.width - this._innerContainer.getSize().width, this._innerContainer.getPosition().y), time, attenuated);
     },
 
-    scrollToTopLeft: function (time, attenuated) {
+    scrollToTopLeft: function(time, attenuated) {
         if (this._direction != ccs.ScrollViewDir.both) {
-            cc.log("Scroll diretion is not both!");
+            cc.log('Scroll diretion is not both!');
             return;
         }
         this.startAutoScrollChildrenWithDestination(cc.p(0, this._size.height - this._innerContainer.getSize().height), time, attenuated);
     },
 
-    scrollToTopRight: function (time, attenuated) {
+    scrollToTopRight: function(time, attenuated) {
         if (this._direction != ccs.ScrollViewDir.both) {
-            cc.log("Scroll diretion is not both!");
+            cc.log('Scroll diretion is not both!');
             return;
         }
         this.startAutoScrollChildrenWithDestination(cc.p(this._size.width - this._innerContainer.getSize().width, this._size.height - this._innerContainer.getSize().height), time, attenuated);
     },
 
-    scrollToBottomLeft: function (time, attenuated) {
+    scrollToBottomLeft: function(time, attenuated) {
         if (this._direction != ccs.ScrollViewDir.both) {
-            cc.log("Scroll diretion is not both!");
+            cc.log('Scroll diretion is not both!');
             return;
         }
         this.startAutoScrollChildrenWithDestination(cc.p(0, 0), time, attenuated);
     },
 
-    scrollToBottomRight: function (time, attenuated) {
+    scrollToBottomRight: function(time, attenuated) {
         if (this._direction != ccs.ScrollViewDir.both) {
-            cc.log("Scroll diretion is not both!");
+            cc.log('Scroll diretion is not both!');
             return;
         }
         this.startAutoScrollChildrenWithDestination(cc.p(this._size.width - this._innerContainer.getSize().width, 0), time, attenuated);
     },
 
-    scrollToPercentVertical: function (percent, time, attenuated) {
+    scrollToPercentVertical: function(percent, time, attenuated) {
         var minY = this._size.height - this._innerContainer.getSize().height;
         var h = -minY;
         this.startAutoScrollChildrenWithDestination(cc.p(this._innerContainer.getPosition().x, minY + percent * h / 100), time, attenuated);
     },
 
-    scrollToPercentHorizontal: function (percent, time, attenuated) {
+    scrollToPercentHorizontal: function(percent, time, attenuated) {
         var w = this._innerContainer.getSize().width - this._size.width;
         this.startAutoScrollChildrenWithDestination(cc.p(-(percent * w / 100), this._innerContainer.getPosition().y), time, attenuated);
     },
 
-    scrollToPercentBothDirection: function (percent, time, attenuated) {
+    scrollToPercentBothDirection: function(percent, time, attenuated) {
         if (this._direction != ccs.ScrollViewDir.both) {
             return;
         }
@@ -1122,66 +1122,66 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         this.startAutoScrollChildrenWithDestination(cc.p(-(percent.x * w / 100), minY + percent.y * h / 100), time, attenuated);
     },
 
-    jumpToBottom: function () {
+    jumpToBottom: function() {
         this.jumpToDestination(cc.p(this._innerContainer.getPosition().x, 0));
     },
 
-    jumpToTop: function () {
+    jumpToTop: function() {
         this.jumpToDestination(cc.p(this._innerContainer.getPosition().x, this._size.height - this._innerContainer.getSize().height));
     },
 
-    jumpToLeft: function () {
+    jumpToLeft: function() {
         this.jumpToDestination(cc.p(0, this._innerContainer.getPosition().y));
     },
 
-    jumpToRight: function () {
+    jumpToRight: function() {
         this.jumpToDestination(cc.p(this._size.width - this._innerContainer.getSize().width, this._innerContainer.getPosition().y));
     },
 
-    jumpToTopLeft: function () {
+    jumpToTopLeft: function() {
         if (this._direction != ccs.ScrollViewDir.both) {
-            cc.log("Scroll diretion is not both!");
+            cc.log('Scroll diretion is not both!');
             return;
         }
         this.jumpToDestination(cc.p(0, this._size.height - this._innerContainer.getSize().height));
     },
 
-    jumpToTopRight: function () {
+    jumpToTopRight: function() {
         if (this._direction != ccs.ScrollViewDir.both) {
-            cc.log("Scroll diretion is not both!");
+            cc.log('Scroll diretion is not both!');
             return;
         }
         this.jumpToDestination(cc.p(this._size.width - this._innerContainer.getSize().width, this._size.height - this._innerContainer.getSize().height));
     },
 
-    jumpToBottomLeft: function () {
+    jumpToBottomLeft: function() {
         if (this._direction != ccs.ScrollViewDir.both) {
-            cc.log("Scroll diretion is not both!");
+            cc.log('Scroll diretion is not both!');
             return;
         }
         this.jumpToDestination(cc.p(0, 0));
     },
 
-    jumpToBottomRight: function () {
+    jumpToBottomRight: function() {
         if (this._direction != ccs.ScrollViewDir.both) {
-            cc.log("Scroll diretion is not both!");
+            cc.log('Scroll diretion is not both!');
             return;
         }
         this.jumpToDestination(cc.p(this._size.width - this._innerContainer.getSize().width, 0));
     },
 
-    jumpToPercentVertical: function (percent) {
+    jumpToPercentVertical: function(percent) {
         var minY = this._size.height - this._innerContainer.getSize().height;
         var h = -minY;
         this.jumpToDestination(cc.p(this._innerContainer.getPosition().x, minY + percent * h / 100));
     },
 
-    jumpToPercentHorizontal: function (percent) {
+    jumpToPercentHorizontal: function(percent) {
         var w = this._innerContainer.getSize().width - this._size.width;
         this.jumpToDestination(cc.p(-(percent * w / 100), this._innerContainer.getPosition().y));
     },
 
-    jumpToPercentBothDirection: function (percent) {
+    jumpToPercentBothDirection: function(percent) {
         if (this._direction != ccs.ScrollViewDir.both) {
             return;
         }
@@ -1191,7 +1191,7 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         this.jumpToDestination(cc.p(-(percent.x * w / 100), minY + percent.y * h / 100));
     },
 
-    startRecordSlidAction: function () {
+    startRecordSlidAction: function() {
         if (this._autoScroll) {
             this.stopAutoScrollChildren();
         }
@@ -1201,7 +1201,7 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         this._slidTime = 0.0;
     },
 
-    endRecordSlidAction: function () {
+    endRecordSlidAction: function() {
         if (!this.checkNeedBounce() && this._inertiaScrollEnabled) {
             if (this._slidTime <= 0.016) {
                 return;
@@ -1209,7 +1209,7 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
             var totalDis = 0;
             var dir;
             switch (this._direction) {
-                case ccs.ScrollViewDir.vertical :
+                case ccs.ScrollViewDir.vertical:
                     totalDis = this._touchEndedPoint.y - this._touchBeganPoint.y;
                     if (totalDis < 0) {
                         dir = ccs.SCROLLDIR_DOWN;
@@ -1227,7 +1227,7 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
                         dir = ccs.SCROLLDIR_RIGHT;
                     }
                     break;
-                case ccs.ScrollViewDir.both :
+                case ccs.ScrollViewDir.both:
                     var subVector = cc.pSub(this._touchEndedPoint, this._touchBeganPoint);
                     totalDis = cc.pLength(subVector);
                     dir = cc.pNormalize(subVector);
@@ -1241,14 +1241,14 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         }
     },
 
-    handlePressLogic: function (touchPoint) {
+    handlePressLogic: function(touchPoint) {
         this._touchBeganPoint = this.convertToNodeSpace(touchPoint);
         this._touchMovingPoint = this._touchBeganPoint;
         this.startRecordSlidAction();
         this._bePressed = true;
     },
 
-    handleMoveLogic: function (touchPoint) {
+    handleMoveLogic: function(touchPoint) {
         this._touchMovedPoint = this.convertToNodeSpace(touchPoint);
         var delta = cc.pSub(this._touchMovedPoint, this._touchMovingPoint);
         this._touchMovingPoint = this._touchMovedPoint;
@@ -1267,42 +1267,42 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         }
     },
 
-    handleReleaseLogic: function (touchPoint) {
+    handleReleaseLogic: function(touchPoint) {
         this._touchEndedPoint = this.convertToNodeSpace(touchPoint);
         this.endRecordSlidAction();
         this._bePressed = false;
     },
 
-    onTouchBegan: function (touch , event) {
-        if(!this.isVisible()){
+    onTouchBegan: function(touch , event) {
+        if (!this.isVisible()) {
             return false;
         }
-        var pass = ccs.Layout.prototype.onTouchBegan.call(this, touch , event);
-        if (this._hitted)        {
+        var pass = ccs.Layout.prototype.onTouchBegan.call(this, touch, event);
+        if (this._hitted) {
             this.handlePressLogic(this._touchStartPos);
         }
         return pass;
     },
 
-    onTouchMoved: function (touch , event) {
-        ccs.Layout.prototype.onTouchMoved.call(this, touch , event);
+    onTouchMoved: function(touch , event) {
+        ccs.Layout.prototype.onTouchMoved.call(this, touch, event);
         this.handleMoveLogic(this._touchMovePos);
     },
 
-    onTouchEnded: function (touch , event) {
-        ccs.Layout.prototype.onTouchEnded.call(this, touch , event);
+    onTouchEnded: function(touch , event) {
+        ccs.Layout.prototype.onTouchEnded.call(this, touch, event);
         this.handleReleaseLogic(this._touchEndPos);
     },
 
-    onTouchCancelled: function (touch , event) {
-        ccs.Layout.prototype.onTouchCancelled.call(this, touch , event);
+    onTouchCancelled: function(touch , event) {
+        ccs.Layout.prototype.onTouchCancelled.call(this, touch, event);
     },
 
-    onTouchLongClicked: function (touchPoint) {
+    onTouchLongClicked: function(touchPoint) {
 
     },
 
-    update: function (dt) {
+    update: function(dt) {
         if (this._autoScroll) {
             this.autoScrollChildren(dt);
         }
@@ -1312,7 +1312,7 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         this.recordSlidTime(dt);
     },
 
-    recordSlidTime: function (dt) {
+    recordSlidTime: function(dt) {
         if (this._bePressed) {
             this._slidTime += dt;
         }
@@ -1324,7 +1324,7 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
      * @param {ccs.Widget} sender
      * @param {cc.Point} touchPoint
      */
-    interceptTouchEvent: function (handleState, sender, touchPoint) {
+    interceptTouchEvent: function(handleState, sender, touchPoint) {
         switch (handleState) {
             case 0:
                 this.handlePressLogic(touchPoint);
@@ -1351,60 +1351,60 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
      * @param {ccs.Widget} sender
      * @param {cc.Point} touchPoint
      */
-    checkChildInfo: function (handleState, sender, touchPoint) {
-        if(this._enabled && this._touchEnabled)
+    checkChildInfo: function(handleState, sender, touchPoint) {
+        if (this._enabled && this._touchEnabled)
             this.interceptTouchEvent(handleState, sender, touchPoint);
     },
 
-    scrollToTopEvent: function () {
+    scrollToTopEvent: function() {
         if (this._scrollViewEventListener && this._scrollViewEventSelector) {
             this._scrollViewEventSelector.call(this._scrollViewEventListener, this, ccs.ScrollViewEventType.scrollToTop);
         }
     },
 
-    scrollToBottomEvent: function () {
+    scrollToBottomEvent: function() {
         if (this._scrollViewEventListener && this._scrollViewEventSelector) {
             this._scrollViewEventSelector.call(this._scrollViewEventListener, this, ccs.ScrollViewEventType.scrollToBottom);
         }
     },
 
-    scrollToLeftEvent: function () {
+    scrollToLeftEvent: function() {
         if (this._scrollViewEventListener && this._scrollViewEventSelector) {
             this._scrollViewEventSelector.call(this._scrollViewEventListener, this, ccs.ScrollViewEventType.scrollToLeft);
         }
     },
 
-    scrollToRightEvent: function () {
+    scrollToRightEvent: function() {
         if (this._scrollViewEventListener && this._scrollViewEventSelector) {
             this._scrollViewEventSelector.call(this._scrollViewEventListener, this, ccs.ScrollViewEventType.scrollToRight);
         }
     },
 
-    scrollingEvent: function () {
+    scrollingEvent: function() {
         if (this._scrollViewEventListener && this._scrollViewEventSelector) {
             this._scrollViewEventSelector.call(this._scrollViewEventListener, this, ccs.ScrollViewEventType.scrolling);
         }
     },
 
-    bounceTopEvent: function () {
+    bounceTopEvent: function() {
         if (this._scrollViewEventListener && this._scrollViewEventSelector) {
             this._scrollViewEventSelector.call(this._scrollViewEventListener, this, ccs.ScrollViewEventType.bounceTop);
         }
     },
 
-    bounceBottomEvent: function () {
+    bounceBottomEvent: function() {
         if (this._scrollViewEventListener && this._scrollViewEventSelector) {
             this._scrollViewEventSelector.call(this._scrollViewEventListener, this, ccs.ScrollViewEventType.bounceBottom);
         }
     },
 
-    bounceLeftEvent: function () {
+    bounceLeftEvent: function() {
         if (this._scrollViewEventListener && this._scrollViewEventSelector) {
             this._scrollViewEventSelector.call(this._scrollViewEventListener, this, ccs.ScrollViewEventType.bounceLeft);
         }
     },
 
-    bounceRightEvent: function () {
+    bounceRightEvent: function() {
         if (this._scrollViewEventListener && this._scrollViewEventSelector) {
             this._scrollViewEventSelector.call(this._scrollViewEventListener, this, ccs.ScrollViewEventType.bounceRight);
         }
@@ -1414,7 +1414,7 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
      * @param {Function} selector
      * @param {Object} target
      */
-    addEventListenerScrollView: function (selector, target) {
+    addEventListenerScrollView: function(selector, target) {
         this._scrollViewEventSelector = selector;
         this._scrollViewEventListener = target;
     },
@@ -1423,15 +1423,15 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
      * set direction
      * @param {ccs.ScrollViewDir} dir
      */
-    setDirection: function (dir) {
+    setDirection: function(dir) {
         this._direction = dir;
     },
 
     /**
      * get direction
-     * @returns {ccs.ScrollViewDir}
+     * @return {ccs.ScrollViewDir}
      */
-    getDirection: function () {
+    getDirection: function() {
         return this._direction;
     },
 
@@ -1439,15 +1439,15 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
      * set bounce enabled
      * @param {Boolean} enabled
      */
-    setBounceEnabled: function (enabled) {
+    setBounceEnabled: function(enabled) {
         this._bounceEnabled = enabled;
     },
 
     /**
      * get whether bounce id enabled
-     * @returns {boolean}
+     * @return {boolean}
      */
-    isBounceEnabled: function () {
+    isBounceEnabled: function() {
         return this._bounceEnabled;
     },
 
@@ -1455,23 +1455,23 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
      * set inertiaScroll enabled
      * @param {boolean} enabled
      */
-    setInertiaScrollEnabled: function (enabled) {
+    setInertiaScrollEnabled: function(enabled) {
         this._inertiaScrollEnabled = enabled;
     },
 
     /**
      * get whether inertiaScroll id enabled
-     * @returns {boolean}
+     * @return {boolean}
      */
-    isInertiaScrollEnabled: function () {
+    isInertiaScrollEnabled: function() {
         return this._inertiaScrollEnabled;
     },
 
     /**
      * get inner container
-     * @returns {ccs.Layout}
+     * @return {ccs.Layout}
      */
-    getInnerContainer: function () {
+    getInnerContainer: function() {
         return this._innerContainer;
     },
 
@@ -1479,19 +1479,19 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
      * Sets LayoutType.
      * @param {ccs.LayoutType} type
      */
-    setLayoutType: function (type) {
+    setLayoutType: function(type) {
         this._innerContainer.setLayoutType(type);
     },
 
     /**
      * Gets LayoutType.
-     * @returns {ccs.LayoutType}
+     * @return {ccs.LayoutType}
      */
-    getLayoutType: function () {
+    getLayoutType: function() {
         return this._innerContainer.getLayoutType();
     },
 
-    doLayout: function () {
+    doLayout: function() {
         if (!this._doLayoutDirty)
             return;
         this._doLayoutDirty = false;
@@ -1499,17 +1499,17 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
 
     /**
      * Returns the "class name" of widget.
-     * @returns {string}
+     * @return {string}
      */
-    getDescription: function () {
-        return "ScrollView";
+    getDescription: function() {
+        return 'ScrollView';
     },
 
-    copyClonedWidgetChildren: function (model) {
+    copyClonedWidgetChildren: function(model) {
         ccs.Layout.prototype.copyClonedWidgetChildren.call(this, model);
     },
 
-    copySpecialProperties: function (scrollView) {
+    copySpecialProperties: function(scrollView) {
         ccs.Layout.prototype.copySpecialProperties.call(this, scrollView);
         this.setInnerContainerSize(scrollView.getInnerContainerSize());
         this.setDirection(scrollView._direction);
@@ -1525,7 +1525,7 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
  * // example
  * var uiScrollView = ccs.ScrollView.create();
  */
-ccs.ScrollView.create = function () {
+ccs.ScrollView.create = function() {
     var uiScrollView = new ccs.ScrollView();
     if (uiScrollView && uiScrollView.init()) {
         return uiScrollView;

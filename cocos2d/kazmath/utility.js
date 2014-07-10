@@ -46,26 +46,26 @@ cc.kmEpsilon = 1.0 / 64.0;
  * Returns the square of s (e.g. s*s)
  * @param {Number} s
  */
-cc.kmSQR = function(s){
-    return s*s;
+cc.kmSQR = function(s) {
+    return s * s;
 };
 
-cc.kmDegreesToRadians = function(degrees){
+cc.kmDegreesToRadians = function(degrees) {
     return degrees * cc.kmPIOver180;
 };
 
-cc.kmRadiansToDegrees = function(radians){
+cc.kmRadiansToDegrees = function(radians) {
     return radians * cc.kmPIUnder180;
 };
 
-cc.kmMin = function(lhs,rhs){
-    return (lhs < rhs)? lhs : rhs;
+cc.kmMin = function(lhs, rhs) {
+    return (lhs < rhs) ? lhs : rhs;
 };
 
-cc.kmMax = function(lhs,rhs){
-    return (lhs > rhs)? lhs : rhs;
+cc.kmMax = function(lhs, rhs) {
+    return (lhs > rhs) ? lhs : rhs;
 };
 
-cc.kmAlmostEqual = function(lhs,rhs){
+cc.kmAlmostEqual = function(lhs, rhs) {
     return (lhs + cc.kmEpsilon > rhs && lhs - cc.kmEpsilon < rhs);
 };

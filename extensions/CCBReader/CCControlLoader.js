@@ -24,13 +24,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var PROPERTY_CCBFILE = "ccbFile";
+var PROPERTY_CCBFILE = 'ccbFile';
 
 cc.BuilderFileLoader = cc.NodeLoader.extend({
-    _createCCNode:function (parent, ccbReader) {
+    _createCCNode: function(parent, ccbReader) {
         return cc.BuilderFile.create();
     },
-    onHandlePropTypeCCBFile:function (node, parent, propertyName, ccbFileNode, ccbReader) {
+    onHandlePropTypeCCBFile: function(node, parent, propertyName, ccbFileNode, ccbReader) {
         if (propertyName == PROPERTY_CCBFILE) {
             node.setCCBFileNode(ccbFileNode);
         } else {
@@ -39,25 +39,25 @@ cc.BuilderFileLoader = cc.NodeLoader.extend({
     }
 });
 
-cc.BuilderFileLoader.loader = function () {
+cc.BuilderFileLoader.loader = function() {
     return new cc.BuilderFileLoader();
 };
 
-var PROPERTY_ENABLED = "enabled";
-var PROPERTY_SELECTED = "selected";
-var PROPERTY_CCCONTROL = "ccControl";
+var PROPERTY_ENABLED = 'enabled';
+var PROPERTY_SELECTED = 'selected';
+var PROPERTY_CCCONTROL = 'ccControl';
 
 cc.ControlLoader = cc.NodeLoader.extend({
-    _createCCNode:function (parent, ccbReander) {
+    _createCCNode: function(parent, ccbReander) {
     },
-    onHandlePropTypeBlockCCControl:function (node, parent, propertyName, blockCCControlData, ccbReader) {
+    onHandlePropTypeBlockCCControl: function(node, parent, propertyName, blockCCControlData, ccbReader) {
         if (propertyName == PROPERTY_CCCONTROL) {
             node.addTargetWithActionForControlEvents(blockCCControlData.target, blockCCControlData.selCCControlHandler, blockCCControlData.controlEvents);
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeBlockCCControl.call(this, node, parent, propertyName, blockCCControlData, ccbReader);
         }
     },
-    onHandlePropTypeCheck:function (node, parent, propertyName, check, ccbReader) {
+    onHandlePropTypeCheck: function(node, parent, propertyName, check, ccbReader) {
         if (propertyName == PROPERTY_ENABLED) {
             node.setEnabled(check);
         } else if (propertyName == PROPERTY_SELECTED) {
@@ -68,38 +68,38 @@ cc.ControlLoader = cc.NodeLoader.extend({
     }
 });
 
-var PROPERTY_ZOOMONTOUCHDOWN = "zoomOnTouchDown";
-var PROPERTY_TITLE_NORMAL = "title|1";
-var PROPERTY_TITLE_HIGHLIGHTED = "title|2";
-var PROPERTY_TITLE_DISABLED = "title|3";
-var PROPERTY_TITLECOLOR_NORMAL = "titleColor|1";
-var PROPERTY_TITLECOLOR_HIGHLIGHTED = "titleColor|2";
-var PROPERTY_TITLECOLOR_DISABLED = "titleColor|3";
-var PROPERTY_TITLETTF_NORMAL = "titleTTF|1";
-var PROPERTY_TITLETTF_HIGHLIGHTED = "titleTTF|2";
-var PROPERTY_TITLETTF_DISABLED = "titleTTF|3";
-var PROPERTY_TITLETTFSIZE_NORMAL = "titleTTFSize|1";
-var PROPERTY_TITLETTFSIZE_HIGHLIGHTED = "titleTTFSize|2";
-var PROPERTY_TITLETTFSIZE_DISABLED = "titleTTFSize|4";
-var PROPERTY_LABELANCHORPOINT = "labelAnchorPoint";
-var PROPERTY_PREFEREDSIZE = "preferedSize";         // TODO Should be = "preferredSize". This is a typo in cocos2d-iphone, cocos2d-x and CocosBuilder!
-var PROPERTY_BACKGROUNDSPRITEFRAME_NORMAL = "backgroundSpriteFrame|1";
-var PROPERTY_BACKGROUNDSPRITEFRAME_HIGHLIGHTED = "backgroundSpriteFrame|2";
-var PROPERTY_BACKGROUNDSPRITEFRAME_DISABLED = "backgroundSpriteFrame|3";
+var PROPERTY_ZOOMONTOUCHDOWN = 'zoomOnTouchDown';
+var PROPERTY_TITLE_NORMAL = 'title|1';
+var PROPERTY_TITLE_HIGHLIGHTED = 'title|2';
+var PROPERTY_TITLE_DISABLED = 'title|3';
+var PROPERTY_TITLECOLOR_NORMAL = 'titleColor|1';
+var PROPERTY_TITLECOLOR_HIGHLIGHTED = 'titleColor|2';
+var PROPERTY_TITLECOLOR_DISABLED = 'titleColor|3';
+var PROPERTY_TITLETTF_NORMAL = 'titleTTF|1';
+var PROPERTY_TITLETTF_HIGHLIGHTED = 'titleTTF|2';
+var PROPERTY_TITLETTF_DISABLED = 'titleTTF|3';
+var PROPERTY_TITLETTFSIZE_NORMAL = 'titleTTFSize|1';
+var PROPERTY_TITLETTFSIZE_HIGHLIGHTED = 'titleTTFSize|2';
+var PROPERTY_TITLETTFSIZE_DISABLED = 'titleTTFSize|4';
+var PROPERTY_LABELANCHORPOINT = 'labelAnchorPoint';
+var PROPERTY_PREFEREDSIZE = 'preferedSize';         // TODO Should be = "preferredSize". This is a typo in cocos2d-iphone, cocos2d-x and CocosBuilder!
+var PROPERTY_BACKGROUNDSPRITEFRAME_NORMAL = 'backgroundSpriteFrame|1';
+var PROPERTY_BACKGROUNDSPRITEFRAME_HIGHLIGHTED = 'backgroundSpriteFrame|2';
+var PROPERTY_BACKGROUNDSPRITEFRAME_DISABLED = 'backgroundSpriteFrame|3';
 
 cc.ControlButtonLoader = cc.ControlLoader.extend({
-    _createCCNode:function (parent, ccbReader) {
+    _createCCNode: function(parent, ccbReader) {
         return cc.ControlButton.create();
     },
 
-    onHandlePropTypeCheck:function (node, parent, propertyName, check, ccbReader) {
+    onHandlePropTypeCheck: function(node, parent, propertyName, check, ccbReader) {
         if (propertyName == PROPERTY_ZOOMONTOUCHDOWN) {
             node.setZoomOnTouchDown(check);
         } else {
             cc.ControlLoader.prototype.onHandlePropTypeCheck.call(this, node, parent, propertyName, check, ccbReader);
         }
     },
-    onHandlePropTypeString:function (node, parent, propertyName, stringValue, ccbReader) {
+    onHandlePropTypeString: function(node, parent, propertyName, stringValue, ccbReader) {
         if (propertyName == PROPERTY_TITLE_NORMAL) {
             node.setTitleForState(stringValue, cc.CONTROL_STATE_NORMAL);
         } else if (propertyName == PROPERTY_TITLE_HIGHLIGHTED) {
@@ -110,7 +110,7 @@ cc.ControlButtonLoader = cc.ControlLoader.extend({
             cc.ControlLoader.prototype.onHandlePropTypeString.call(this, node, parent, propertyName, stringValue, ccbReader);
         }
     },
-    onHandlePropTypeFontTTF:function (node, parent, propertyName, fontTTF, ccbReader) {
+    onHandlePropTypeFontTTF: function(node, parent, propertyName, fontTTF, ccbReader) {
         if (propertyName == PROPERTY_TITLETTF_NORMAL) {
             node.setTitleTTFForState(fontTTF, cc.CONTROL_STATE_NORMAL);
         } else if (propertyName == PROPERTY_TITLETTF_HIGHLIGHTED) {
@@ -121,7 +121,7 @@ cc.ControlButtonLoader = cc.ControlLoader.extend({
             cc.ControlLoader.prototype.onHandlePropTypeFontTTF.call(this, node, parent, propertyName, fontTTF, ccbReader);
         }
     },
-    onHandlePropTypeFloatScale:function (node, parent, propertyName, floatScale, ccbReader) {
+    onHandlePropTypeFloatScale: function(node, parent, propertyName, floatScale, ccbReader) {
         if (propertyName == PROPERTY_TITLETTFSIZE_NORMAL) {
             node.setTitleTTFSizeForState(floatScale, cc.CONTROL_STATE_NORMAL);
         } else if (propertyName == PROPERTY_TITLETTFSIZE_HIGHLIGHTED) {
@@ -132,21 +132,21 @@ cc.ControlButtonLoader = cc.ControlLoader.extend({
             cc.ControlLoader.prototype.onHandlePropTypeFloatScale.call(this, node, parent, propertyName, floatScale, ccbReader);
         }
     },
-    onHandlePropTypePoint:function (node, parent, propertyName, point, ccbReader) {
+    onHandlePropTypePoint: function(node, parent, propertyName, point, ccbReader) {
         if (propertyName == PROPERTY_LABELANCHORPOINT) {
             node.setLabelAnchorPoint(point);
         } else {
             cc.ControlLoader.prototype.onHandlePropTypePoint.call(this, node, parent, propertyName, point, ccbReader);
         }
     },
-    onHandlePropTypeSize:function (node, parent, propertyName, size, ccbReader) {
+    onHandlePropTypeSize: function(node, parent, propertyName, size, ccbReader) {
         if (propertyName == PROPERTY_PREFEREDSIZE) {
             node.setPreferredSize(size);
         } else {
             cc.ControlLoader.prototype.onHandlePropTypeSize.call(this, node, parent, propertyName, size, ccbReader);
         }
     },
-    onHandlePropTypeSpriteFrame:function (node, parent, propertyName, spriteFrame, ccbReader) {
+    onHandlePropTypeSpriteFrame: function(node, parent, propertyName, spriteFrame, ccbReader) {
         if (propertyName == PROPERTY_BACKGROUNDSPRITEFRAME_NORMAL) {
             if (spriteFrame != null) {
                 node.setBackgroundSpriteFrameForState(spriteFrame, cc.CONTROL_STATE_NORMAL);
@@ -163,7 +163,7 @@ cc.ControlButtonLoader = cc.ControlLoader.extend({
             cc.ControlLoader.prototype.onHandlePropTypeSpriteFrame.call(this, node, parent, propertyName, spriteFrame, ccbReader);
         }
     },
-    onHandlePropTypeColor3:function (node, parent, propertyName, ccColor3B, ccbReader) {
+    onHandlePropTypeColor3: function(node, parent, propertyName, ccColor3B, ccbReader) {
         if (propertyName == PROPERTY_TITLECOLOR_NORMAL) {
             node.setTitleColorForState(ccColor3B, cc.CONTROL_STATE_NORMAL);
         } else if (propertyName == PROPERTY_TITLECOLOR_HIGHLIGHTED) {
@@ -176,30 +176,30 @@ cc.ControlButtonLoader = cc.ControlLoader.extend({
     }
 });
 
-cc.ControlButtonLoader.loader = function () {
+cc.ControlButtonLoader.loader = function() {
     return new cc.ControlButtonLoader();
 };
 
-var PROPERTY_CONTAINER = "container";
-var PROPERTY_DIRECTION = "direction";
-var PROPERTY_CLIPSTOBOUNDS = "clipsToBounds";
-var PROPERTY_BOUNCES = "bounces";
-var PROPERTY_SCALE = "scale";
+var PROPERTY_CONTAINER = 'container';
+var PROPERTY_DIRECTION = 'direction';
+var PROPERTY_CLIPSTOBOUNDS = 'clipsToBounds';
+var PROPERTY_BOUNCES = 'bounces';
+var PROPERTY_SCALE = 'scale';
 
 cc.ScrollViewLoader = cc.NodeLoader.extend({
-    _createCCNode:function (parent, ccbReader) {
+    _createCCNode: function(parent, ccbReader) {
         return cc.ScrollView.create();
     },
 
-    onHandlePropTypeSize:function(node,parent,propertyName,size,ccbReader){
-        if(propertyName == PROPERTY_CONTENTSIZE){
+    onHandlePropTypeSize: function(node, parent, propertyName, size, ccbReader) {
+        if (propertyName == PROPERTY_CONTENTSIZE) {
             node.setViewSize(size);
-        }else{
-            cc.NodeLoader.prototype.onHandlePropTypeSize.call(this, node,parent,propertyName,size,ccbReader);
+        }else {
+            cc.NodeLoader.prototype.onHandlePropTypeSize.call(this, node, parent, propertyName, size, ccbReader);
         }
     },
 
-    onHandlePropTypeCCBFile:function (node, parent, propertyName, ccbFileNode, ccbReader) {
+    onHandlePropTypeCCBFile: function(node, parent, propertyName, ccbFileNode, ccbReader) {
         if (propertyName == PROPERTY_CONTAINER) {
             node.setContainer(ccbFileNode);
             node.updateInset();
@@ -207,7 +207,7 @@ cc.ScrollViewLoader = cc.NodeLoader.extend({
             cc.NodeLoader.prototype.onHandlePropTypeCCBFile.call(this, node, parent, propertyName, ccbFileNode, ccbReader);
         }
     },
-    onHandlePropTypeCheck:function (node, parent, propertyName, check, ccbReader) {
+    onHandlePropTypeCheck: function(node, parent, propertyName, check, ccbReader) {
         if (propertyName == PROPERTY_CLIPSTOBOUNDS) {
             node.setClippingToBounds(check);
         } else if (propertyName == PROPERTY_BOUNCES) {
@@ -216,14 +216,14 @@ cc.ScrollViewLoader = cc.NodeLoader.extend({
             cc.NodeLoader.prototype.onHandlePropTypeCheck.call(this, node, parent, propertyName, check, ccbReader);
         }
     },
-    onHandlePropTypeFloat:function (node, parent, propertyName, floatValue, ccbReader) {
+    onHandlePropTypeFloat: function(node, parent, propertyName, floatValue, ccbReader) {
         if (propertyName == PROPERTY_SCALE) {
             node.setScale(floatValue);
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeFloat.call(this, node, parent, propertyName, floatValue, ccbReader);
         }
     },
-    onHandlePropTypeIntegerLabeled:function (node, parent, propertyName, integerLabeled, ccbReader) {
+    onHandlePropTypeIntegerLabeled: function(node, parent, propertyName, integerLabeled, ccbReader) {
         if (propertyName == PROPERTY_DIRECTION) {
             node.setDirection(integerLabeled);
         } else {
@@ -232,22 +232,22 @@ cc.ScrollViewLoader = cc.NodeLoader.extend({
     }
 });
 
-cc.ScrollViewLoader.loader = function () {
+cc.ScrollViewLoader.loader = function() {
     return new cc.ScrollViewLoader();
 };
 
-var PROPERTY_CONTENTSIZE = "contentSize";
-var PROPERTY_SPRITEFRAME = "spriteFrame";
-var PROPERTY_COLOR = "color";
-var PROPERTY_OPACITY = "opacity";
-var PROPERTY_BLENDFUNC = "blendFunc";
-var PROPERTY_INSETLEFT = "insetLeft";
-var PROPERTY_INSETTOP = "insetTop" ;
-var PROPERTY_INSETRIGHT = "insetRight";
-var PROPERTY_INSETBOTTOM = "insetBottom";
+var PROPERTY_CONTENTSIZE = 'contentSize';
+var PROPERTY_SPRITEFRAME = 'spriteFrame';
+var PROPERTY_COLOR = 'color';
+var PROPERTY_OPACITY = 'opacity';
+var PROPERTY_BLENDFUNC = 'blendFunc';
+var PROPERTY_INSETLEFT = 'insetLeft';
+var PROPERTY_INSETTOP = 'insetTop';
+var PROPERTY_INSETRIGHT = 'insetRight';
+var PROPERTY_INSETBOTTOM = 'insetBottom';
 
 cc.Scale9SpriteLoader = cc.NodeLoader.extend({
-    _createCCNode:function(parent,ccbReader){
+    _createCCNode: function(parent, ccbReader) {
         var sprite = cc.Scale9Sprite.create();
 
         sprite.setAnchorPoint(0, 0);
@@ -255,62 +255,62 @@ cc.Scale9SpriteLoader = cc.NodeLoader.extend({
         return sprite;
     },
 
-    onHandlePropTypeColor3:function(node, parent, propertyName, ccColor3B,ccbReader){
-        if(propertyName == PROPERTY_COLOR) {
-            if(ccColor3B.r !== 255 || ccColor3B.g !== 255 || ccColor3B.b !== 255){
+    onHandlePropTypeColor3: function(node, parent, propertyName, ccColor3B, ccbReader) {
+        if (propertyName == PROPERTY_COLOR) {
+            if (ccColor3B.r !== 255 || ccColor3B.g !== 255 || ccColor3B.b !== 255) {
                 node.setColor(ccColor3B);
             }
         } else {
-            cc.NodeLoader.prototype.onHandlePropTypeColor3.call(this, node, parent, propertyName, ccColor3B,ccbReader);
+            cc.NodeLoader.prototype.onHandlePropTypeColor3.call(this, node, parent, propertyName, ccColor3B, ccbReader);
         }
     },
-    onHandlePropTypeByte:function(node, parent, propertyName, byteValue,ccbReader){
-        if(propertyName == PROPERTY_OPACITY) {
+    onHandlePropTypeByte: function(node, parent, propertyName, byteValue, ccbReader) {
+        if (propertyName == PROPERTY_OPACITY) {
             node.setOpacity(byteValue);
         } else {
-            cc.NodeLoader.prototype.onHandlePropTypeByte.call(this, node, parent, propertyName, byteValue,ccbReader);
+            cc.NodeLoader.prototype.onHandlePropTypeByte.call(this, node, parent, propertyName, byteValue, ccbReader);
         }
     },
-    onHandlePropTypeBlendFunc:function(node, parent, propertyName, ccBlendFunc,ccbReader){
-        if(propertyName == PROPERTY_BLENDFUNC) {
+    onHandlePropTypeBlendFunc: function(node, parent, propertyName, ccBlendFunc, ccbReader) {
+        if (propertyName == PROPERTY_BLENDFUNC) {
             // TODO Not exported by CocosBuilder yet!
             // node.setBlendFunc(ccBlendFunc);
         } else {
-            cc.NodeLoader.prototype.onHandlePropTypeBlendFunc.call(this, node, parent, propertyName, ccBlendFunc,ccbReader);
+            cc.NodeLoader.prototype.onHandlePropTypeBlendFunc.call(this, node, parent, propertyName, ccBlendFunc, ccbReader);
         }
     },
-    onHandlePropTypeSpriteFrame:function(node, parent, propertyName, spriteFrame,ccbReader){
-        if(propertyName == PROPERTY_SPRITEFRAME) {
+    onHandlePropTypeSpriteFrame: function(node, parent, propertyName, spriteFrame, ccbReader) {
+        if (propertyName == PROPERTY_SPRITEFRAME) {
             node.setSpriteFrame(spriteFrame);
         } else {
-            cc.NodeLoader.prototype.onHandlePropTypeSpriteFrame.call(this, node, parent, propertyName, spriteFrame,ccbReader);
+            cc.NodeLoader.prototype.onHandlePropTypeSpriteFrame.call(this, node, parent, propertyName, spriteFrame, ccbReader);
         }
     },
-    onHandlePropTypeSize:function(node, parent, propertyName, size,ccbReader){
-        if(propertyName == PROPERTY_CONTENTSIZE) {
+    onHandlePropTypeSize: function(node, parent, propertyName, size, ccbReader) {
+        if (propertyName == PROPERTY_CONTENTSIZE) {
             //node.setContentSize(size);
-        } else if(propertyName == PROPERTY_PREFEREDSIZE) {
+        } else if (propertyName == PROPERTY_PREFEREDSIZE) {
             node.setPreferredSize(size);
         } else {
-            cc.NodeLoader.prototype.onHandlePropTypeSize.call(this, node, parent, propertyName, size,ccbReader);
+            cc.NodeLoader.prototype.onHandlePropTypeSize.call(this, node, parent, propertyName, size, ccbReader);
         }
     },
-    onHandlePropTypeFloat:function(node, parent, propertyName, floatValue,ccbReader){
-        if(propertyName == PROPERTY_INSETLEFT) {
+    onHandlePropTypeFloat: function(node, parent, propertyName, floatValue, ccbReader) {
+        if (propertyName == PROPERTY_INSETLEFT) {
             node.setInsetLeft(floatValue);
-        } else if(propertyName == PROPERTY_INSETTOP) {
+        } else if (propertyName == PROPERTY_INSETTOP) {
             node.setInsetTop(floatValue);
-        } else if(propertyName == PROPERTY_INSETRIGHT) {
+        } else if (propertyName == PROPERTY_INSETRIGHT) {
             node.setInsetRight(floatValue);
-        } else if(propertyName == PROPERTY_INSETBOTTOM) {
+        } else if (propertyName == PROPERTY_INSETBOTTOM) {
             node.setInsetBottom(floatValue);
         } else {
-            cc.NodeLoader.prototype.onHandlePropTypeFloat.call(this, node, parent, propertyName, floatValue,ccbReader);
+            cc.NodeLoader.prototype.onHandlePropTypeFloat.call(this, node, parent, propertyName, floatValue, ccbReader);
         }
     }
 });
 
-cc.Scale9SpriteLoader.loader = function(){
+cc.Scale9SpriteLoader.loader = function() {
    return new cc.Scale9SpriteLoader();
 };
 

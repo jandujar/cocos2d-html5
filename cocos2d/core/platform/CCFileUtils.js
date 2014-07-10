@@ -71,42 +71,42 @@ var Uint8Array = Uint8Array || Array;
 
 if (/msie/i.test(navigator.userAgent) && !/opera/i.test(navigator.userAgent)) {
     var IEBinaryToArray_ByteStr_Script =
-        "<!-- IEBinaryToArray_ByteStr -->\r\n" +
+        '<!-- IEBinaryToArray_ByteStr -->\r\n' +
             //"<script type='text/vbscript'>\r\n" +
-            "Function IEBinaryToArray_ByteStr(Binary)\r\n" +
-            "   IEBinaryToArray_ByteStr = CStr(Binary)\r\n" +
-            "End Function\r\n" +
-            "Function IEBinaryToArray_ByteStr_Last(Binary)\r\n" +
-            "   Dim lastIndex\r\n" +
-            "   lastIndex = LenB(Binary)\r\n" +
-            "   if lastIndex mod 2 Then\r\n" +
-            "       IEBinaryToArray_ByteStr_Last = Chr( AscB( MidB( Binary, lastIndex, 1 ) ) )\r\n" +
-            "   Else\r\n" +
-            "       IEBinaryToArray_ByteStr_Last = " + '""' + "\r\n" +
-            "   End If\r\n" +
-            "End Function\r\n";// +
+            'Function IEBinaryToArray_ByteStr(Binary)\r\n' +
+            '   IEBinaryToArray_ByteStr = CStr(Binary)\r\n' +
+            'End Function\r\n' +
+            'Function IEBinaryToArray_ByteStr_Last(Binary)\r\n' +
+            '   Dim lastIndex\r\n' +
+            '   lastIndex = LenB(Binary)\r\n' +
+            '   if lastIndex mod 2 Then\r\n' +
+            '       IEBinaryToArray_ByteStr_Last = Chr( AscB( MidB( Binary, lastIndex, 1 ) ) )\r\n' +
+            '   Else\r\n' +
+            '       IEBinaryToArray_ByteStr_Last = ' + '""' + '\r\n' +
+            '   End If\r\n' +
+            'End Function\r\n';// +
     //"</script>\r\n";
 
     // inject VBScript
     //document.write(IEBinaryToArray_ByteStr_Script);
     var myVBScript = document.createElement('script');
-    myVBScript.type = "text/vbscript";
+    myVBScript.type = 'text/vbscript';
     myVBScript.textContent = IEBinaryToArray_ByteStr_Script;
     document.body.appendChild(myVBScript);
 
     // helper to convert from responseBody to a "responseText" like thing
-    cc._convertResponseBodyToText = function (binary) {
+    cc._convertResponseBodyToText = function(binary) {
         var byteMapping = {};
         for (var i = 0; i < 256; i++) {
             for (var j = 0; j < 256; j++) {
-                byteMapping[ String.fromCharCode(i + j * 256) ] =
+                byteMapping[String.fromCharCode(i + j * 256)] =
                     String.fromCharCode(i) + String.fromCharCode(j);
             }
         }
         var rawBytes = IEBinaryToArray_ByteStr(binary);
         var lastChr = IEBinaryToArray_ByteStr_Last(binary);
         return rawBytes.replace(/[\s\S]/g,
-            function (match) {
+            function(match) {
                 return byteMapping[match];
             }) + lastChr;
     };
@@ -116,16 +116,16 @@ if (/msie/i.test(navigator.userAgent) && !/opera/i.test(navigator.userAgent)) {
  * @namespace
  */
 cc.FileUtils = cc.Class.extend({
-    _fileDataCache:null,
-    _textFileCache:null,
+    _fileDataCache: null,
+    _textFileCache: null,
 
-    _directory:null,
-    _filenameLookupDict:null,
-    _searchResolutionsOrderArray:null,
-    _searchPathArray:null,
-    _defaultResRootPath:"",
+    _directory: null,
+    _filenameLookupDict: null,
+    _searchResolutionsOrderArray: null,
+    _searchPathArray: null,
+    _defaultResRootPath: '',
 
-    ctor:function () {
+    ctor: function() {
         this._fileDataCache = {};
         this._textFileCache = {};
 
@@ -133,7 +133,7 @@ cc.FileUtils = cc.Class.extend({
         this._searchPathArray.push(this._defaultResRootPath);
 
         this._searchResolutionsOrderArray = [];
-        this._searchResolutionsOrderArray.push("");
+        this._searchResolutionsOrderArray.push('');
     },
 
     /**
@@ -146,7 +146,7 @@ cc.FileUtils = cc.Class.extend({
      *           this method should be invoked to clean the file search cache.
      * </p>
      */
-    purgeCachedEntries:function(){
+    purgeCachedEntries: function() {
         this._searchPathArray = [];
     },
     /**
@@ -157,39 +157,39 @@ cc.FileUtils = cc.Class.extend({
      * @param {Number} size If get the file data succeed the it will be the data size,or it will be 0
      * @warning If you get the file data succeed,you must delete it after used.
      */
-    getByteArrayFromFile:function (fileName, mode, size) {
+    getByteArrayFromFile: function(fileName, mode, size) {
         fileName = this.fullPathForFilename(fileName);
         if (this._fileDataCache.hasOwnProperty(fileName))
             return this._fileDataCache[fileName];
         return this._loadBinaryFileData(fileName);
     },
 
-    _getXMLHttpRequest:function () {
+    _getXMLHttpRequest: function() {
         if (window.XMLHttpRequest) {
             return new window.XMLHttpRequest();
         } else {
-            return new ActiveXObject("MSXML2.XMLHTTP");
+            return new ActiveXObject('MSXML2.XMLHTTP');
         }
     },
 
-    unloadBinaryFileData:function (fileUrl) {
+    unloadBinaryFileData: function(fileUrl) {
         if (this._fileDataCache.hasOwnProperty(fileUrl))
             delete this._fileDataCache[fileUrl];
     },
 
-    preloadBinaryFileData:function (fileUrl) {
+    preloadBinaryFileData: function(fileUrl) {
         fileUrl = this.fullPathForFilename(fileUrl);
         var selfPointer = this;
 
         var xhr = this._getXMLHttpRequest();
-        xhr.open("GET", fileUrl, true);
+        xhr.open('GET', fileUrl, true);
         if (/msie/i.test(navigator.userAgent) && !/opera/i.test(navigator.userAgent)) {
             // IE-specific logic here
-            xhr.setRequestHeader("Accept-Charset", "x-user-defined");
-            xhr.onreadystatechange = function (event) {
+            xhr.setRequestHeader('Accept-Charset', 'x-user-defined');
+            xhr.onreadystatechange = function(event) {
                 if (xhr.readyState == 4) {
                     if (xhr.status == 200) {
-                        var fileContents = cc._convertResponseBodyToText(xhr["responseBody"]);
+                        var fileContents = cc._convertResponseBodyToText(xhr['responseBody']);
                         if (fileContents)
                             selfPointer._fileDataCache[fileUrl] = selfPointer._stringConvertToArray(fileContents);
                     } else {
@@ -200,9 +200,9 @@ cc.FileUtils = cc.Class.extend({
             };
         } else {
             if (xhr.overrideMimeType)
-                xhr.overrideMimeType("text\/plain; charset=x-user-defined");
+                xhr.overrideMimeType('text\/plain; charset=x-user-defined');
 
-            xhr.onload = function (e) {
+            xhr.onload = function(e) {
                 var fileContents = xhr.responseText;
                 if (fileContents) {
                     selfPointer._fileDataCache[fileUrl] = selfPointer._stringConvertToArray(fileContents);
@@ -215,17 +215,17 @@ cc.FileUtils = cc.Class.extend({
         xhr.send(null);
     },
 
-    _loadBinaryFileData:function (fileUrl) {
+    _loadBinaryFileData: function(fileUrl) {
         var req = this._getXMLHttpRequest();
         req.open('GET', fileUrl, false);
         var arrayInfo = null;
         if (/msie/i.test(navigator.userAgent) && !/opera/i.test(navigator.userAgent)) {
-            req.setRequestHeader("Accept-Charset", "x-user-defined");
+            req.setRequestHeader('Accept-Charset', 'x-user-defined');
             req.send(null);
             if (req.status != 200)
                 return null;
 
-            var fileContents = cc._convertResponseBodyToText(req["responseBody"]);
+            var fileContents = cc._convertResponseBodyToText(req['responseBody']);
             if (fileContents) {
                 arrayInfo = this._stringConvertToArray(fileContents);
                 this._fileDataCache[fileUrl] = arrayInfo;
@@ -243,7 +243,7 @@ cc.FileUtils = cc.Class.extend({
         return arrayInfo;
     },
 
-    _stringConvertToArray:function (strData) {
+    _stringConvertToArray: function(strData) {
         if (!strData)
             return null;
 
@@ -254,22 +254,22 @@ cc.FileUtils = cc.Class.extend({
         return arrData;
     },
 
-    unloadTextFileData:function (fileUrl) {
+    unloadTextFileData: function(fileUrl) {
         fileUrl = this.fullPathForFilename(fileUrl);
         if (this._textFileCache.hasOwnProperty(fileUrl))
             delete this._textFileCache[fileUrl];
     },
 
-    preloadTextFileData:function (fileUrl) {
+    preloadTextFileData: function(fileUrl) {
         fileUrl = this.fullPathForFilename(fileUrl);
         var selfPointer = this;
 
         var xhr = this._getXMLHttpRequest();
-        xhr.open("GET", fileUrl, true);
+        xhr.open('GET', fileUrl, true);
         if (/msie/i.test(navigator.userAgent) && !/opera/i.test(navigator.userAgent)) {
             // IE-specific logic here
-            xhr.setRequestHeader("Accept-Charset", "utf-8");
-            xhr.onreadystatechange = function (event) {
+            xhr.setRequestHeader('Accept-Charset', 'utf-8');
+            xhr.onreadystatechange = function(event) {
                 if (xhr.readyState == 4) {
                     if (xhr.status == 200) {
                         var fileContents = xhr.responseText;
@@ -283,8 +283,8 @@ cc.FileUtils = cc.Class.extend({
             };
         } else {
             if (xhr.overrideMimeType)
-                xhr.overrideMimeType("text\/plain; charset=utf-8");
-            xhr.onload = function (e) {
+                xhr.overrideMimeType('text\/plain; charset=utf-8');
+            xhr.onload = function(e) {
                 if (xhr.responseText) {
                     selfPointer._textFileCache[fileUrl] = xhr.responseText;
                 } else {
@@ -296,12 +296,12 @@ cc.FileUtils = cc.Class.extend({
         xhr.send(null);
     },
 
-    _loadTextFileData:function (fileUrl) {
+    _loadTextFileData: function(fileUrl) {
         var req = this._getXMLHttpRequest();
         req.open('GET', fileUrl, false);
         var fileContents = null;
         if (/msie/i.test(navigator.userAgent) && !/opera/i.test(navigator.userAgent)) {
-            req.setRequestHeader("Accept-Charset", "utf-8");
+            req.setRequestHeader('Accept-Charset', 'utf-8');
         } else {
             if (req.overrideMimeType)
                 req.overrideMimeType('text\/plain; charset=utf-8');
@@ -320,9 +320,9 @@ cc.FileUtils = cc.Class.extend({
     /**
      *  Gets resource file data
      * @param {String} fileUrl The resource file name which contains the path.
-     * @returns {String}
+     * @return {String}
      */
-    getTextFileData:function (fileUrl) {
+    getTextFileData: function(fileUrl) {
         fileUrl = this.fullPathForFilename(fileUrl);
         if (this._textFileCache.hasOwnProperty(fileUrl))
             return this._textFileCache[fileUrl];
@@ -338,7 +338,7 @@ cc.FileUtils = cc.Class.extend({
      * @warning If you get the file data succeed,you must delete it after used.
      * @deprecated
      */
-    getFileDataFromZip:function (pszZipFilePath, fileName, size) {
+    getFileDataFromZip: function(pszZipFilePath, fileName, size) {
     },
 
     /**
@@ -347,7 +347,7 @@ cc.FileUtils = cc.Class.extend({
      * @param {String} path
      * @deprecated
      */
-    removeSuffixFromFile:function (path) {
+    removeSuffixFromFile: function(path) {
     },
 
     //////////////////////////////////////////////////////////////////////////
@@ -358,7 +358,7 @@ cc.FileUtils = cc.Class.extend({
      * @function
      * @type {Boolean}
      */
-    popupNotify:true,
+    popupNotify: true,
 
     /**
      * Generate the absolute path of the file.
@@ -369,7 +369,7 @@ cc.FileUtils = cc.Class.extend({
      * If you have not set the ResourcePath,the function add "/NEWPLUS/TDA_DATA/UserData/" as default.<br/>
      * You can set ResourcePath by function void setResourcePath(const char *resourcePath);
      */
-    fullPathFromRelativePath:function (pszRelativePath) {
+    fullPathFromRelativePath: function(pszRelativePath) {
         return pszRelativePath;
     },
 
@@ -418,7 +418,7 @@ cc.FileUtils = cc.Class.extend({
      * @param {String} filename
      * @return {String} full path for a given filename.
      */
-    fullPathForFilename:function (filename) {
+    fullPathForFilename: function(filename) {
         var found = false;
 
         var newFileName = this._getNewFilename(filename);
@@ -472,17 +472,17 @@ cc.FileUtils = cc.Class.extend({
      * </p>
      * @param {String} filename  The plist file name.
      */
-    loadFilenameLookup:function (filename) {
+    loadFilenameLookup: function(filename) {
         var fullPath = this.fullPathForFilename(filename);
         if (fullPath.length > 0) {
             var dict = cc.SAXParser.getInstance().parse(fullPath);
-            var metadataDict = dict["metadata"];
-            var version = parseInt(metadataDict["version"]);
+            var metadataDict = dict['metadata'];
+            var version = parseInt(metadataDict['version']);
             if (version != 1) {
-                cc.log("cocos2d: ERROR: Invalid filenameLookup dictionary version: " + version + ". Filename: " + filename);
+                cc.log('cocos2d: ERROR: Invalid filenameLookup dictionary version: ' + version + '. Filename: ' + filename);
                 return;
             }
-            this.setFilenameLookupDictionary(dict["filenames"]);
+            this.setFilenameLookupDictionary(dict['filenames']);
         }
     },
 
@@ -490,7 +490,7 @@ cc.FileUtils = cc.Class.extend({
      * Sets the filenameLookup dictionary.
      * @param {Object} filenameLookupDict The dictionary for replacing filename.
      */
-    setFilenameLookupDictionary:function (filenameLookupDict) {
+    setFilenameLookupDictionary: function(filenameLookupDict) {
         this._filenameLookupDict = filenameLookupDict;
     },
 
@@ -500,15 +500,15 @@ cc.FileUtils = cc.Class.extend({
      * @param {String} relativeFile The path of the relative file.
      * @return {String} The full path.
      */
-    fullPathFromRelativeFile:function (filename, relativeFile) {
+    fullPathFromRelativeFile: function(filename, relativeFile) {
         var tmpPath;
         if (filename) {
-            tmpPath = relativeFile.substring(0, relativeFile.lastIndexOf("/") + 1);
+            tmpPath = relativeFile.substring(0, relativeFile.lastIndexOf('/') + 1);
             return tmpPath + filename;
         }
         else {
-            tmpPath = relativeFile.substring(0, relativeFile.lastIndexOf("."));
-            tmpPath = tmpPath + ".png";
+            tmpPath = relativeFile.substring(0, relativeFile.lastIndexOf('.'));
+            tmpPath = tmpPath + '.png';
             return tmpPath;
         }
     },
@@ -520,7 +520,7 @@ cc.FileUtils = cc.Class.extend({
      * @see getSearchResolutionsOrder(void), fullPathForFilename(const char*).
      * @param {Array} searchResolutionsOrder
      */
-    setSearchResolutionsOrder:function (searchResolutionsOrder) {
+    setSearchResolutionsOrder: function(searchResolutionsOrder) {
         this._searchResolutionsOrderArray = searchResolutionsOrder;
     },
 
@@ -529,7 +529,7 @@ cc.FileUtils = cc.Class.extend({
      * @see setSearchResolutionsOrder(), fullPathForFilename(const char*).
      * @return {Array}
      */
-    getSearchResolutionsOrder:function () {
+    getSearchResolutionsOrder: function() {
         return this._searchResolutionsOrderArray;
     },
 
@@ -543,7 +543,7 @@ cc.FileUtils = cc.Class.extend({
      * </p>
      * @param {Array} searchPaths
      */
-    setSearchPath:function (searchPaths) {
+    setSearchPath: function(searchPaths) {
         this._searchPathArray = searchPaths;
     },
 
@@ -551,11 +551,11 @@ cc.FileUtils = cc.Class.extend({
      * return Array of search paths.
      * @return {Array}
      */
-    getSearchPath:function () {
+    getSearchPath: function() {
         return this._searchPathArray;
     },
 
-    getResourceDirectory:function () {
+    getResourceDirectory: function() {
         return this._directory;
     },
 
@@ -569,7 +569,7 @@ cc.FileUtils = cc.Class.extend({
      * absolute path.
      * @deprecated
      */
-    setResourcePath:function (resourcePath) {
+    setResourcePath: function(resourcePath) {
     },
 
     /**
@@ -578,8 +578,8 @@ cc.FileUtils = cc.Class.extend({
      * @param fileName The file name of *.plist file
      * @return {object} The Dictionary of object generated from the file
      */
-    dictionaryWithContentsOfFile:function (fileName) {
-        cc.log("dictionaryWithContentsOfFile is deprecated. Use createDictionaryWithContentsOfFile instead");
+    dictionaryWithContentsOfFile: function(fileName) {
+        cc.log('dictionaryWithContentsOfFile is deprecated. Use createDictionaryWithContentsOfFile instead');
         return this.createDictionaryWithContentsOfFile(fileName);
     },
 
@@ -588,8 +588,8 @@ cc.FileUtils = cc.Class.extend({
      * @param filename The file name of *.plist file
      * @return {object} The Dictionary of object generated from the file
      */
-    createDictionaryWithContentsOfFile: function(filename){
-        return  cc.SAXParser.getInstance().parse(filename);
+    createDictionaryWithContentsOfFile: function(filename) {
+        return cc.SAXParser.getInstance().parse(filename);
     },
 
     /**
@@ -598,7 +598,7 @@ cc.FileUtils = cc.Class.extend({
      * @param {String} fileName
      * @return {String}
      */
-    getStringFromFile:function (fileName) {
+    getStringFromFile: function(fileName) {
         return this.getTextFileData(fileName); //cc.SAXParser.getInstance().getList(fileName);
     },
 
@@ -608,7 +608,7 @@ cc.FileUtils = cc.Class.extend({
      * @param {String} fileName
      * @return {object} The Dictionary of object generated from the file
      */
-    dictionaryWithContentsOfFileThreadSafe:function (fileName) {
+    dictionaryWithContentsOfFileThreadSafe: function(fileName) {
         return cc.SAXParser.getInstance().parse(fileName);
     },
 
@@ -617,15 +617,15 @@ cc.FileUtils = cc.Class.extend({
      * @return {String}  The path that can write/read file
      * @deprecated
      */
-    getWritablePath:function () {
-        return "";
+    getWritablePath: function() {
+        return '';
     },
 
     /**
      * Set whether pop-up a message box when the image load failed
      * @param {Boolean} notify
      */
-    setPopupNotify:function (notify) {
+    setPopupNotify: function(notify) {
         cc.popupNotify = notify;
     },
 
@@ -633,33 +633,33 @@ cc.FileUtils = cc.Class.extend({
      * Get whether pop-up a message box when the image load failed
      * @return {Boolean}
      */
-    isPopupNotify:function () {
+    isPopupNotify: function() {
         return cc.popupNotify;
     },
 
-    _resourceRootPath:"",
-    getResourceRootPath:function () {
+    _resourceRootPath: '',
+    getResourceRootPath: function() {
         return this._resourceRootPath;
     },
 
-    setResourceRootPath:function (resourceRootPath) {
+    setResourceRootPath: function(resourceRootPath) {
         this._resourceRootPath = resourceRootPath;
     },
 
     /**
      * Gets the new filename from the filename lookup dictionary.
      * @param {String} filename
-     * @return {String|null}  The new filename after searching in the filename lookup dictionary. If the original filename wasn't in the dictionary, it will return the original filename.
+     * @return {?String}  The new filename after searching in the filename lookup dictionary. If the original filename wasn't in the dictionary, it will return the original filename.
      * @private
      */
-    _getNewFilename:function (filename) {
+    _getNewFilename: function(filename) {
         var newFileName = null;
         var fileNameFound = this._filenameLookupDict ? this._filenameLookupDict[filename] : null;
         if (!fileNameFound || fileNameFound.length === 0)
             newFileName = filename;
         else {
             newFileName = fileNameFound;
-            cc.log("FOUND NEW FILE NAME: " + newFileName);
+            cc.log('FOUND NEW FILE NAME: ' + newFileName);
         }
         return newFileName;
     },
@@ -672,27 +672,27 @@ cc.FileUtils = cc.Class.extend({
      * @return {String} The full path of the file. It will return an empty string if the full path of the file doesn't exist.
      * @private
      */
-    _getPathForFilename:function (filename, resourceDirectory, searchPath) {
+    _getPathForFilename: function(filename, resourceDirectory, searchPath) {
 
-        if ((filename.substring(0, 7) == "http://") || (filename.substring(0, 8) == "https://")){
-            return "";
+        if ((filename.substring(0, 7) == 'http://') || (filename.substring(0, 8) == 'https://')) {
+            return '';
         }
 
         var ret;
         var resourceRootPath = this.getResourceRootPath(); //cc.Application.getInstance().getResourceRootPath();
 
-        if (filename && (filename.length > 0) && (filename.indexOf('/') === 0 || filename.indexOf("\\") === 0)) {
-            ret = "";
+        if (filename && (filename.length > 0) && (filename.indexOf('/') === 0 || filename.indexOf('\\') === 0)) {
+            ret = '';
         } else if (resourceRootPath.length > 0) {
             ret = resourceRootPath;
             if (ret[ret.length - 1] != '\\' && ret[ret.length - 1] != '/')
-                ret += "/";
+                ret += '/';
         } else {
             ret = resourceRootPath;
         }
 
         var file = filename;
-        var file_path = "";
+        var file_path = '';
         var pos = filename.lastIndexOf('/');
         if (pos != -1) {
             file_path = filename.substr(0, pos + 1);
@@ -703,7 +703,7 @@ cc.FileUtils = cc.Class.extend({
             path += '/';
         path += file_path;
         path += resourceDirectory;
-        if (path.length > 0 && path.lastIndexOf("/") !== path.length - 1)
+        if (path.length > 0 && path.lastIndexOf('/') !== path.length - 1)
             path += '/';
         path += file;
         ret += path;
@@ -717,7 +717,7 @@ cc.FileUtils = cc.Class.extend({
      * @return {Boolean} The full path of the file, if the file can't be found, it will return an empty string.
      * @private
      */
-    _getFullPathForDirectoryAndFilename:function(directory, fileName){
+    _getFullPathForDirectoryAndFilename: function(directory, fileName) {
 
     },
 
@@ -738,7 +738,7 @@ cc.FileUtils = cc.Class.extend({
      * @see fullPathForFilename(const char*)
      * @param {Array} searchPaths The array contains search paths.
      */
-    setSearchPaths:function (searchPaths) {
+    setSearchPaths: function(searchPaths) {
         var existDefaultRootPath = false;
 
         this._searchPathArray = [];
@@ -752,7 +752,7 @@ cc.FileUtils = cc.Class.extend({
             }
             path = strPrefix + iter;
             if (path.length > 0 && path[path.length - 1] != '/') {
-                path += "/";
+                path += '/';
             }
             if (!existDefaultRootPath && path == this._defaultResRootPath) {
                 existDefaultRootPath = true;
@@ -771,14 +771,14 @@ cc.FileUtils = cc.Class.extend({
      * Add search path.
      * @param {String} path
      */
-    addSearchPath:function (path) {
+    addSearchPath: function(path) {
         var strPrefix;
         if (!this.isAbsolutePath(path)) { // Not an absolute path
             strPrefix = this._defaultResRootPath;
         }
         path = strPrefix + path;
         if (path.length > 0 && path[path.length - 1] != '/') {
-            path += "/";
+            path += '/';
         }
         this._searchPathArray.push(path);
     },
@@ -788,16 +788,16 @@ cc.FileUtils = cc.Class.extend({
      *  @see fullPathForFilename(const char*).
      *  @return {Array} The array of search paths.
      */
-    getSearchPaths:function(){
+    getSearchPaths: function() {
 
     },
 
     /**
      * Checks whether the path is an absolute path.
      * @param {String} strPath The path that needs to be checked.
-     * @returns {boolean} true if it's an absolute path, otherwise it will return false.
+     * @return {boolean} true if it's an absolute path, otherwise it will return false.
      */
-    isAbsolutePath:function (strPath) {
+    isAbsolutePath: function(strPath) {
         return (strPath[0] == '/');
     }
 });
@@ -805,9 +805,9 @@ cc.FileUtils = cc.Class.extend({
 cc.s_SharedFileUtils = null;
 /**
  * Gets the instance of CCFileUtils.
- * @returns {cc.FileUtils}
+ * @return {cc.FileUtils}
  */
-cc.FileUtils.getInstance = function () {
+cc.FileUtils.getInstance = function() {
     if (cc.s_SharedFileUtils == null) {
         cc.s_SharedFileUtils = new cc.FileUtils();
     }

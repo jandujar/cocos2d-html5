@@ -29,27 +29,27 @@
  */
 ccs.ComRender = ccs.Component.extend(/** @lends ccs.ComRender# */{
     _render: null,
-    ctor: function (node, comName) {
+    ctor: function(node, comName) {
         cc.Component.prototype.ctor.call(this);
         this._render = node;
         this._name = comName;
     },
 
-    onEnter: function () {
+    onEnter: function() {
         if (this._owner != null) {
             this._owner.addChild(this._render);
         }
     },
 
-    onExit: function () {
+    onExit: function() {
         this._render = null;
     },
 
     /**
      * Node getter
-     * @returns {cc.Node}
+     * @return {cc.Node}
      */
-    getNode: function () {
+    getNode: function() {
         return this._render;
     },
 
@@ -57,7 +57,7 @@ ccs.ComRender = ccs.Component.extend(/** @lends ccs.ComRender# */{
      * Node setter
      * @param {cc.Node} node
      */
-    setNode: function (node) {
+    setNode: function(node) {
         this._render = node;
     }
 });
@@ -69,7 +69,7 @@ ccs.ComRender = ccs.Component.extend(/** @lends ccs.ComRender# */{
  * // example
  * var com = ccs.ComRender.create();
  */
-ccs.ComRender.create = function (node, comName) {
+ccs.ComRender.create = function(node, comName) {
     var com = new ccs.ComRender(node, comName);
     if (com && com.init()) {
         return com;

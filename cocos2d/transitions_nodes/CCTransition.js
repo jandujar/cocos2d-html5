@@ -39,7 +39,7 @@ cc.TransitionEaseScene = cc.Class.extend(/** @lends cc.TransitionEaseScene# */{
     /**
      * returns the Ease action that will be performed on a linear action.
      */
-    easeActionWithAction:function () {
+    easeActionWithAction: function() {
     }
 });
 
@@ -73,14 +73,14 @@ cc.TRANSITION_ORIENTATION_DOWN_OVER = 1;
  * @extends cc.Scene
  */
 cc.TransitionScene = cc.Scene.extend(/** @lends cc.TransitionScene# */{
-    _inScene:null,
-    _outScene:null,
-    _duration:null,
-    _isInSceneOnTop:false,
-    _isSendCleanupToScene:false,
+    _inScene: null,
+    _outScene: null,
+    _duration: null,
+    _isInSceneOnTop: false,
+    _isSendCleanupToScene: false,
 
     //private
-    _setNewScene:function (dt) {
+    _setNewScene: function(dt) {
         this.unschedule(this._setNewScene);
         // Before replacing, save the "send cleanup to scene"
         var director = cc.Director.getInstance();
@@ -88,21 +88,21 @@ cc.TransitionScene = cc.Scene.extend(/** @lends cc.TransitionScene# */{
         director.replaceScene(this._inScene);
 
         // enable events while transitions
-        if(cc.TouchDispatcher)
+        if (cc.TouchDispatcher)
             director.getTouchDispatcher().setDispatchEvents(true);
         // issue #267
         this._outScene.setVisible(true);
     },
 
     //protected
-    _sceneOrder:function () {
+    _sceneOrder: function() {
         this._isInSceneOnTop = true;
     },
 
     /**
      * stuff gets drawn here
      */
-    draw:function () {
+    draw: function() {
         if (this._isInSceneOnTop) {
             this._outScene.visit();
             this._inScene.visit();
@@ -115,11 +115,11 @@ cc.TransitionScene = cc.Scene.extend(/** @lends cc.TransitionScene# */{
     /**
      * custom onEnter
      */
-    onEnter:function () {
+    onEnter: function() {
         cc.Node.prototype.onEnter.call(this);
 
         // disable events while transitions
-        if(cc.TouchDispatcher)
+        if (cc.TouchDispatcher)
             cc.Director.getInstance().getTouchDispatcher().setDispatchEvents(false);
 
         // outScene should not receive the onEnter callback
@@ -132,11 +132,11 @@ cc.TransitionScene = cc.Scene.extend(/** @lends cc.TransitionScene# */{
     /**
      * custom onExit
      */
-    onExit:function () {
+    onExit: function() {
         cc.Node.prototype.onExit.call(this);
 
         // enable events while transitions
-        if(cc.TouchDispatcher)
+        if (cc.TouchDispatcher)
             cc.Director.getInstance().getTouchDispatcher().setDispatchEvents(true);
 
         this._outScene.onExit();
@@ -149,7 +149,7 @@ cc.TransitionScene = cc.Scene.extend(/** @lends cc.TransitionScene# */{
     /**
      * custom cleanup
      */
-    cleanup:function () {
+    cleanup: function() {
         cc.Node.prototype.cleanup.call(this);
 
         if (this._isSendCleanupToScene)
@@ -162,9 +162,9 @@ cc.TransitionScene = cc.Scene.extend(/** @lends cc.TransitionScene# */{
      * @param {cc.Scene} scene a scene to transit to
      * @return {Boolean} return false if error
      */
-    initWithDuration:function (t, scene) {
-        if(!scene)
-            throw "cc.TransitionScene.initWithDuration(): Argument scene must be non-nil";
+    initWithDuration: function(t, scene) {
+        if (!scene)
+            throw 'cc.TransitionScene.initWithDuration(): Argument scene must be non-nil';
 
         if (this.init()) {
             this._duration = t;
@@ -178,8 +178,8 @@ cc.TransitionScene = cc.Scene.extend(/** @lends cc.TransitionScene# */{
                 this._outScene.init();
             }
 
-            if(this._inScene == this._outScene)
-                throw "cc.TransitionScene.initWithDuration(): Incoming scene must be different from the outgoing scene";
+            if (this._inScene == this._outScene)
+                throw 'cc.TransitionScene.initWithDuration(): Incoming scene must be different from the outgoing scene';
 
             this._sceneOrder();
             return true;
@@ -191,20 +191,20 @@ cc.TransitionScene = cc.Scene.extend(/** @lends cc.TransitionScene# */{
     /**
      * called after the transition finishes
      */
-    finish:function () {
+    finish: function() {
         // clean up
         this._inScene.setVisible(true);
         this._inScene.setPosition(0, 0);
         this._inScene.setScale(1.0);
         this._inScene.setRotation(0.0);
-        if(cc.renderContextType === cc.WEBGL)
+        if (cc.renderContextType === cc.WEBGL)
             this._inScene.getCamera().restore();
 
         this._outScene.setVisible(false);
         this._outScene.setPosition(0, 0);
         this._outScene.setScale(1.0);
         this._outScene.setRotation(0.0);
-        if(cc.renderContextType === cc.WEBGL)
+        if (cc.renderContextType === cc.WEBGL)
             this._outScene.getCamera().restore();
 
         //[self schedule:@selector(setNewScene:) interval:0];
@@ -214,7 +214,7 @@ cc.TransitionScene = cc.Scene.extend(/** @lends cc.TransitionScene# */{
     /**
      * set hide the out scene and show in scene
      */
-    hideOutShowIn:function () {
+    hideOutShowIn: function() {
         this._inScene.setVisible(true);
         this._outScene.setVisible(false);
     }
@@ -225,7 +225,7 @@ cc.TransitionScene = cc.Scene.extend(/** @lends cc.TransitionScene# */{
  * @param {cc.Scene} scene the scene to transit with
  * @return {cc.TransitionScene|Null}
  */
-cc.TransitionScene.create = function (t, scene) {
+cc.TransitionScene.create = function(t, scene) {
     var tempScene = new cc.TransitionScene();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene))) {
         return tempScene;
@@ -241,7 +241,7 @@ cc.TransitionScene.create = function (t, scene) {
  * @extends cc.TransitionScene
  */
 cc.TransitionSceneOriented = cc.TransitionScene.extend(/** @lends cc.TransitionSceneOriented# */{
-    _orientation:0,
+    _orientation: 0,
 
     /**
      * initialize the transition
@@ -250,7 +250,7 @@ cc.TransitionSceneOriented = cc.TransitionScene.extend(/** @lends cc.TransitionS
      * @param {cc.TRANSITION_ORIENTATION_LEFT_OVER|cc.TRANSITION_ORIENTATION_RIGHT_OVER|cc.TRANSITION_ORIENTATION_UP_OVER|cc.TRANSITION_ORIENTATION_DOWN_OVER} orientation
      * @return {Boolean}
      */
-    initWithDuration:function (t, scene, orientation) {
+    initWithDuration: function(t, scene, orientation) {
         if (cc.TransitionScene.prototype.initWithDuration.call(this, t, scene)) {
             this._orientation = orientation;
         }
@@ -268,7 +268,7 @@ cc.TransitionSceneOriented = cc.TransitionScene.extend(/** @lends cc.TransitionS
  * // Example
  * var goHorizontal = cc.TransitionSceneOriented.create(0.5, thisScene, cc.TRANSITION_ORIENTATION_LEFT_OVER)
  */
-cc.TransitionSceneOriented.create = function (t, scene, orientation) {
+cc.TransitionSceneOriented.create = function(t, scene, orientation) {
     var tempScene = new cc.TransitionSceneOriented();
     tempScene.initWithDuration(t, scene, orientation);
 
@@ -285,7 +285,7 @@ cc.TransitionRotoZoom = cc.TransitionScene.extend(/** @lends cc.TransitionRotoZo
      * Custom On Enter callback
      * @override
      */
-    onEnter:function () {
+    onEnter: function() {
         cc.TransitionScene.prototype.onEnter.call(this);
 
         this._inScene.setScale(0.001);
@@ -315,7 +315,7 @@ cc.TransitionRotoZoom = cc.TransitionScene.extend(/** @lends cc.TransitionRotoZo
  * // Example
  * var RotoZoomTrans = cc.TransitionRotoZoom.create(2, nextScene);
  */
-cc.TransitionRotoZoom.create = function (t, scene) {
+cc.TransitionRotoZoom.create = function(t, scene) {
     var tempScene = new cc.TransitionRotoZoom();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene))) {
         return tempScene;
@@ -332,7 +332,7 @@ cc.TransitionJumpZoom = cc.TransitionScene.extend(/** @lends cc.TransitionJumpZo
     /**
      * Custom on enter
      */
-    onEnter:function () {
+    onEnter: function() {
         cc.TransitionScene.prototype.onEnter.call(this);
         var winSize = cc.Director.getInstance().getWinSize();
 
@@ -360,7 +360,7 @@ cc.TransitionJumpZoom = cc.TransitionScene.extend(/** @lends cc.TransitionJumpZo
  * @param {cc.Scene} scene
  * @return {cc.TransitionJumpZoom}
  */
-cc.TransitionJumpZoom.create = function (t, scene) {
+cc.TransitionJumpZoom.create = function(t, scene) {
     var tempScene = new cc.TransitionJumpZoom();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene))) {
         return tempScene;
@@ -378,7 +378,7 @@ cc.TransitionMoveInL = cc.TransitionScene.extend(/** @lends cc.TransitionMoveInL
     /**
      * Custom on enter
      */
-    onEnter:function () {
+    onEnter: function() {
         cc.TransitionScene.prototype.onEnter.call(this);
         this.initScenes();
 
@@ -391,14 +391,14 @@ cc.TransitionMoveInL = cc.TransitionScene.extend(/** @lends cc.TransitionMoveInL
     /**
      * initializes the scenes
      */
-    initScenes:function () {
+    initScenes: function() {
         this._inScene.setPosition(-cc.Director.getInstance().getWinSize().width, 0);
     },
 
     /**
      * returns the action that will be performed
      */
-    action:function () {
+    action: function() {
         return cc.MoveTo.create(this._duration, cc.p(0, 0));
     },
 
@@ -407,7 +407,7 @@ cc.TransitionMoveInL = cc.TransitionScene.extend(/** @lends cc.TransitionMoveInL
      * @param {cc.ActionInterval} action
      * @return {cc.EaseOut}
      */
-    easeActionWithAction:function (action) {
+    easeActionWithAction: function(action) {
         return cc.EaseOut.create(action, 2.0);
     }
 });
@@ -421,7 +421,7 @@ cc.TransitionMoveInL = cc.TransitionScene.extend(/** @lends cc.TransitionMoveInL
  * // Example
  * var MoveInLeft = cc.TransitionMoveInL.create(1, nextScene)
  */
-cc.TransitionMoveInL.create = function (t, scene) {
+cc.TransitionMoveInL.create = function(t, scene) {
     var tempScene = new cc.TransitionMoveInL();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene))) {
         return tempScene;
@@ -438,7 +438,7 @@ cc.TransitionMoveInR = cc.TransitionMoveInL.extend(/** @lends cc.TransitionMoveI
     /**
      * Init
      */
-    initScenes:function () {
+    initScenes: function() {
         this._inScene.setPosition(cc.Director.getInstance().getWinSize().width, 0);
     }
 });
@@ -452,7 +452,7 @@ cc.TransitionMoveInR = cc.TransitionMoveInL.extend(/** @lends cc.TransitionMoveI
  * // Example
  * var MoveInRight = cc.TransitionMoveInR.create(1, nextScene)
  */
-cc.TransitionMoveInR.create = function (t, scene) {
+cc.TransitionMoveInR.create = function(t, scene) {
     var tempScene = new cc.TransitionMoveInR();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene))) {
         return tempScene;
@@ -470,7 +470,7 @@ cc.TransitionMoveInT = cc.TransitionMoveInL.extend(/** @lends cc.TransitionMoveI
     /**
      * init
      */
-    initScenes:function () {
+    initScenes: function() {
         this._inScene.setPosition(0, cc.Director.getInstance().getWinSize().height);
     }
 });
@@ -484,7 +484,7 @@ cc.TransitionMoveInT = cc.TransitionMoveInL.extend(/** @lends cc.TransitionMoveI
  * // Example
  * var MoveInTop = cc.TransitionMoveInT.create(1, nextScene)
  */
-cc.TransitionMoveInT.create = function (t, scene) {
+cc.TransitionMoveInT.create = function(t, scene) {
     var tempScene = new cc.TransitionMoveInT();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene))) {
         return tempScene;
@@ -502,7 +502,7 @@ cc.TransitionMoveInB = cc.TransitionMoveInL.extend(/** @lends cc.TransitionMoveI
     /**
      * init
      */
-    initScenes:function () {
+    initScenes: function() {
         this._inScene.setPosition(0, -cc.Director.getInstance().getWinSize().height);
     }
 });
@@ -516,7 +516,7 @@ cc.TransitionMoveInB = cc.TransitionMoveInL.extend(/** @lends cc.TransitionMoveI
  * // Example
  * var MoveinB = cc.TransitionMoveInB.create(1, nextScene)
  */
-cc.TransitionMoveInB.create = function (t, scene) {
+cc.TransitionMoveInB.create = function(t, scene) {
     var tempScene = new cc.TransitionMoveInB();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene))) {
         return tempScene;
@@ -540,14 +540,14 @@ cc.ADJUST_FACTOR = 0.5;
  * @extends cc.TransitionScene
  */
 cc.TransitionSlideInL = cc.TransitionScene.extend(/** @lends cc.TransitionSlideInL# */{
-    _sceneOrder:function () {
+    _sceneOrder: function() {
         this._isInSceneOnTop = false;
     },
 
     /**
      * custom on enter
      */
-    onEnter:function () {
+    onEnter: function() {
         cc.TransitionScene.prototype.onEnter.call(this);
         this.initScenes();
 
@@ -563,14 +563,14 @@ cc.TransitionSlideInL = cc.TransitionScene.extend(/** @lends cc.TransitionSlideI
     /**
      * initializes the scenes
      */
-    initScenes:function () {
+    initScenes: function() {
         this._inScene.setPosition(-(cc.Director.getInstance().getWinSize().width - cc.ADJUST_FACTOR), 0);
     },
     /**
      * returns the action that will be performed by the incomming and outgoing scene
      * @return {cc.MoveBy}
      */
-    action:function () {
+    action: function() {
         return cc.MoveBy.create(this._duration, cc.p(cc.Director.getInstance().getWinSize().width - cc.ADJUST_FACTOR, 0));
     },
 
@@ -578,7 +578,7 @@ cc.TransitionSlideInL = cc.TransitionScene.extend(/** @lends cc.TransitionSlideI
      * @param {cc.ActionInterval} action
      * @return {*}
      */
-    easeActionWithAction:function (action) {
+    easeActionWithAction: function(action) {
         return cc.EaseOut.create(action, 2.0);
     }
 });
@@ -592,7 +592,7 @@ cc.TransitionSlideInL = cc.TransitionScene.extend(/** @lends cc.TransitionSlideI
  * // Example
  * var myTransition = cc.TransitionSlideInL.create(1.5, nextScene)
  */
-cc.TransitionSlideInL.create = function (t, scene) {
+cc.TransitionSlideInL.create = function(t, scene) {
     var tempScene = new cc.TransitionSlideInL();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene))) {
         return tempScene;
@@ -606,20 +606,20 @@ cc.TransitionSlideInL.create = function (t, scene) {
  * @extends cc.TransitionSlideInL
  */
 cc.TransitionSlideInR = cc.TransitionSlideInL.extend(/** @lends cc.TransitionSlideInR# */{
-    _sceneOrder:function () {
+    _sceneOrder: function() {
         this._isInSceneOnTop = true;
     },
     /**
      * initializes the scenes
      */
-    initScenes:function () {
+    initScenes: function() {
         this._inScene.setPosition(cc.Director.getInstance().getWinSize().width - cc.ADJUST_FACTOR, 0);
     },
     /**
      *  returns the action that will be performed by the incomming and outgoing scene
      * @return {cc.MoveBy}
      */
-    action:function () {
+    action: function() {
         return cc.MoveBy.create(this._duration, cc.p(-(cc.Director.getInstance().getWinSize().width - cc.ADJUST_FACTOR), 0));
     }
 });
@@ -633,7 +633,7 @@ cc.TransitionSlideInR = cc.TransitionSlideInL.extend(/** @lends cc.TransitionSli
  * // Example
  * var myTransition = cc.TransitionSlideInR.create(1.5, nextScene)
  */
-cc.TransitionSlideInR.create = function (t, scene) {
+cc.TransitionSlideInR.create = function(t, scene) {
     var tempScene = new cc.TransitionSlideInR();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene))) {
         return tempScene;
@@ -647,14 +647,14 @@ cc.TransitionSlideInR.create = function (t, scene) {
  * @extends cc.TransitionSlideInL
  */
 cc.TransitionSlideInB = cc.TransitionSlideInL.extend(/** @lends cc.TransitionSlideInB# */{
-    _sceneOrder:function () {
+    _sceneOrder: function() {
         this._isInSceneOnTop = false;
     },
 
     /**
      * initializes the scenes
      */
-    initScenes:function () {
+    initScenes: function() {
         this._inScene.setPosition(0, cc.Director.getInstance().getWinSize().height - cc.ADJUST_FACTOR);
     },
 
@@ -662,7 +662,7 @@ cc.TransitionSlideInB = cc.TransitionSlideInL.extend(/** @lends cc.TransitionSli
      * returns the action that will be performed by the incomming and outgoing scene
      * @return {cc.MoveBy}
      */
-    action:function () {
+    action: function() {
         return cc.MoveBy.create(this._duration, cc.p(0, -(cc.Director.getInstance().getWinSize().height - cc.ADJUST_FACTOR)));
     }
 });
@@ -676,7 +676,7 @@ cc.TransitionSlideInB = cc.TransitionSlideInL.extend(/** @lends cc.TransitionSli
  * // Example
  * var myTransition = cc.TransitionSlideInB.create(1.5, nextScene)
  */
-cc.TransitionSlideInB.create = function (t, scene) {
+cc.TransitionSlideInB.create = function(t, scene) {
     var tempScene = new cc.TransitionSlideInB();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene))) {
         return tempScene;
@@ -690,14 +690,14 @@ cc.TransitionSlideInB.create = function (t, scene) {
  *  @extends cc.TransitionSlideInL
  */
 cc.TransitionSlideInT = cc.TransitionSlideInL.extend(/** @lends cc.TransitionSlideInT# */{
-    _sceneOrder:function () {
+    _sceneOrder: function() {
         this._isInSceneOnTop = true;
     },
 
     /**
      * initializes the scenes
      */
-    initScenes:function () {
+    initScenes: function() {
         this._inScene.setPosition(0, -(cc.Director.getInstance().getWinSize().height - cc.ADJUST_FACTOR));
     },
 
@@ -705,7 +705,7 @@ cc.TransitionSlideInT = cc.TransitionSlideInL.extend(/** @lends cc.TransitionSli
      * returns the action that will be performed by the incomming and outgoing scene
      * @return {cc.MoveBy}
      */
-    action:function () {
+    action: function() {
         return cc.MoveBy.create(this._duration, cc.p(0, cc.Director.getInstance().getWinSize().height - cc.ADJUST_FACTOR));
     }
 });
@@ -719,7 +719,7 @@ cc.TransitionSlideInT = cc.TransitionSlideInL.extend(/** @lends cc.TransitionSli
  * // Example
  * var myTransition = cc.TransitionSlideInT.create(1.5, nextScene)
  */
-cc.TransitionSlideInT.create = function (t, scene) {
+cc.TransitionSlideInT.create = function(t, scene) {
     var tempScene = new cc.TransitionSlideInT();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene))) {
         return tempScene;
@@ -737,7 +737,7 @@ cc.TransitionShrinkGrow = cc.TransitionScene.extend(/** @lends cc.TransitionShri
     /**
      * Custom on enter
      */
-    onEnter:function () {
+    onEnter: function() {
         cc.TransitionScene.prototype.onEnter.call(this);
 
         this._inScene.setScale(0.001);
@@ -759,7 +759,7 @@ cc.TransitionShrinkGrow = cc.TransitionScene.extend(/** @lends cc.TransitionShri
      * @param action
      * @return {cc.EaseOut}
      */
-    easeActionWithAction:function (action) {
+    easeActionWithAction: function(action) {
         return cc.EaseOut.create(action, 2.0);
     }
 });
@@ -773,7 +773,7 @@ cc.TransitionShrinkGrow = cc.TransitionScene.extend(/** @lends cc.TransitionShri
  * // Example
  * var myTransition = cc.TransitionShrinkGrow.create(1.5, nextScene)
  */
-cc.TransitionShrinkGrow.create = function (t, scene) {
+cc.TransitionShrinkGrow.create = function(t, scene) {
     var tempScene = new cc.TransitionShrinkGrow();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene))) {
         return tempScene;
@@ -792,7 +792,7 @@ cc.TransitionFlipX = cc.TransitionSceneOriented.extend(/** @lends cc.TransitionF
     /**
      * custom on enter
      */
-    onEnter:function () {
+    onEnter: function() {
         cc.TransitionScene.prototype.onEnter.call(this);
 
         var inA, outA;
@@ -842,7 +842,7 @@ cc.TransitionFlipX = cc.TransitionSceneOriented.extend(/** @lends cc.TransitionF
  * //OR
  * var myTransition = cc.TransitionFlipX.create(1.5, nextScene, cc.TRANSITION_ORIENTATION_UP_OVER)
  */
-cc.TransitionFlipX.create = function (t, scene, o) {
+cc.TransitionFlipX.create = function(t, scene, o) {
     if (o == null)
         o = cc.TRANSITION_ORIENTATION_RIGHT_OVER;
 
@@ -862,7 +862,7 @@ cc.TransitionFlipY = cc.TransitionSceneOriented.extend(/** @lends cc.TransitionF
     /**
      * custom on enter
      */
-    onEnter:function () {
+    onEnter: function() {
         cc.TransitionScene.prototype.onEnter.call(this);
 
         var inA, outA;
@@ -911,7 +911,7 @@ cc.TransitionFlipY = cc.TransitionSceneOriented.extend(/** @lends cc.TransitionF
  * //OR
  * var myTransition = cc.TransitionFlipY.create(1.5, nextScene, cc.TRANSITION_ORIENTATION_RIGHT_OVER)
  */
-cc.TransitionFlipY.create = function (t, scene, o) {
+cc.TransitionFlipY.create = function(t, scene, o) {
     if (o == null)
         o = cc.TRANSITION_ORIENTATION_UP_OVER;
 
@@ -931,7 +931,7 @@ cc.TransitionFlipAngular = cc.TransitionSceneOriented.extend(/** @lends cc.Trans
     /**
      * custom on enter
      */
-    onEnter:function () {
+    onEnter: function() {
         cc.TransitionScene.prototype.onEnter.call(this);
 
         var inA, outA;
@@ -980,7 +980,7 @@ cc.TransitionFlipAngular = cc.TransitionSceneOriented.extend(/** @lends cc.Trans
  * //or
  * var myTransition = cc.TransitionFlipAngular.create(1.5, nextScene, cc.TRANSITION_ORIENTATION_DOWN_OVER)
  */
-cc.TransitionFlipAngular.create = function (t, scene, o) {
+cc.TransitionFlipAngular.create = function(t, scene, o) {
     if (o == null)
         o = cc.TRANSITION_ORIENTATION_RIGHT_OVER;
 
@@ -1001,7 +1001,7 @@ cc.TransitionZoomFlipX = cc.TransitionSceneOriented.extend(/** @lends cc.Transit
     /**
      * custom on enter
      */
-    onEnter:function () {
+    onEnter: function() {
         cc.TransitionScene.prototype.onEnter.call(this);
 
         var inA, outA;
@@ -1056,7 +1056,7 @@ cc.TransitionZoomFlipX = cc.TransitionSceneOriented.extend(/** @lends cc.Transit
  * //OR
  * var myTransition = cc.TransitionZoomFlipX.create(1.5, nextScene, cc.TRANSITION_ORIENTATION_DOWN_OVER)
  */
-cc.TransitionZoomFlipX.create = function (t, scene, o) {
+cc.TransitionZoomFlipX.create = function(t, scene, o) {
     if (o == null)
         o = cc.TRANSITION_ORIENTATION_RIGHT_OVER;
 
@@ -1077,7 +1077,7 @@ cc.TransitionZoomFlipY = cc.TransitionSceneOriented.extend(/** @lends cc.Transit
     /**
      * custom on enter
      */
-    onEnter:function () {
+    onEnter: function() {
         cc.TransitionScene.prototype.onEnter.call(this);
 
         var inA, outA;
@@ -1130,7 +1130,7 @@ cc.TransitionZoomFlipY = cc.TransitionSceneOriented.extend(/** @lends cc.Transit
  * //OR
  * var myTransition = cc.TransitionZoomFlipY.create(1.5, nextScene, cc.TRANSITION_ORIENTATION_DOWN_OVER)
  */
-cc.TransitionZoomFlipY.create = function (t, scene, o) {
+cc.TransitionZoomFlipY.create = function(t, scene, o) {
     if (o == null)
         o = cc.TRANSITION_ORIENTATION_UP_OVER;
 
@@ -1151,7 +1151,7 @@ cc.TransitionZoomFlipAngular = cc.TransitionSceneOriented.extend(/** @lends cc.T
     /**
      * custom on enter
      */
-    onEnter:function () {
+    onEnter: function() {
         cc.TransitionScene.prototype.onEnter.call(this);
 
         var inA, outA;
@@ -1203,7 +1203,7 @@ cc.TransitionZoomFlipAngular = cc.TransitionSceneOriented.extend(/** @lends cc.T
  * //OR
  * var myTransition = cc.TransitionZoomFlipAngular.create(1.5, nextScene, cc.TRANSITION_ORIENTATION_DOWN_OVER)
  */
-cc.TransitionZoomFlipAngular.create = function (t, scene, o) {
+cc.TransitionZoomFlipAngular.create = function(t, scene, o) {
     if (o == null)
         o = cc.TRANSITION_ORIENTATION_RIGHT_OVER;
 
@@ -1219,20 +1219,20 @@ cc.TransitionZoomFlipAngular.create = function (t, scene, o) {
  * @extends cc.TransitionScene
  */
 cc.TransitionFade = cc.TransitionScene.extend(/** @lends cc.TransitionFade# */{
-    _color:null,
+    _color: null,
 
     /**
      * Constructor
      */
-    ctor:function () {
+    ctor: function() {
         cc.TransitionScene.prototype.ctor.call(this);
-        this._color = new cc.Color4B()
+        this._color = new cc.Color4B();
     },
 
     /**
      * custom on enter
      */
-    onEnter:function () {
+    onEnter: function() {
         cc.TransitionScene.prototype.onEnter.call(this);
 
         var l = cc.LayerColor.create(this._color);
@@ -1253,7 +1253,7 @@ cc.TransitionFade = cc.TransitionScene.extend(/** @lends cc.TransitionFade# */{
     /**
      * custom on exit
      */
-    onExit:function () {
+    onExit: function() {
         cc.TransitionScene.prototype.onExit.call(this);
         this.removeChildByTag(cc.SCENE_FADE, false);
     },
@@ -1265,7 +1265,7 @@ cc.TransitionFade = cc.TransitionScene.extend(/** @lends cc.TransitionFade# */{
      * @param {cc.Color3B} color
      * @return {Boolean}
      */
-    initWithDuration:function (t, scene, color) {
+    initWithDuration: function(t, scene, color) {
         color = color || cc.black();
         if (cc.TransitionScene.prototype.initWithDuration.call(this, t, scene)) {
             this._color.r = color.r;
@@ -1288,7 +1288,7 @@ cc.TransitionFade = cc.TransitionScene.extend(/** @lends cc.TransitionFade# */{
  * // Example
  * var myTransition = cc.TransitionFade.create(1.5, nextScene, cc.c3b(255,0,0))//fade to red
  */
-cc.TransitionFade.create = function (t, scene, color) {
+cc.TransitionFade.create = function(t, scene, color) {
     var transition = new cc.TransitionFade();
     transition.initWithDuration(t, scene, color);
     return transition;
@@ -1303,7 +1303,7 @@ cc.TransitionCrossFade = cc.TransitionScene.extend(/** @lends cc.TransitionCross
     /**
      * custom on enter
      */
-    onEnter:function () {
+    onEnter: function() {
         cc.TransitionScene.prototype.onEnter.call(this);
 
         // create a transparent color layer
@@ -1365,7 +1365,7 @@ cc.TransitionCrossFade = cc.TransitionScene.extend(/** @lends cc.TransitionCross
     /**
      * custom on exit
      */
-    onExit:function () {
+    onExit: function() {
         this.removeChildByTag(cc.SCENE_FADE, false);
         cc.TransitionScene.prototype.onExit.call(this);
     },
@@ -1373,7 +1373,7 @@ cc.TransitionCrossFade = cc.TransitionScene.extend(/** @lends cc.TransitionCross
     /**
      * overide draw
      */
-    draw:function () {
+    draw: function() {
         // override draw since both scenes (textures) are rendered in 1 scene
     }
 });
@@ -1387,7 +1387,7 @@ cc.TransitionCrossFade = cc.TransitionScene.extend(/** @lends cc.TransitionCross
  * // Example
  * var myTransition = cc.TransitionCrossFade.create(1.5, nextScene)
  */
-cc.TransitionCrossFade.create = function (t, scene) {
+cc.TransitionCrossFade.create = function(t, scene) {
     var Transition = new cc.TransitionCrossFade();
     Transition.initWithDuration(t, scene);
     return Transition;
@@ -1399,14 +1399,14 @@ cc.TransitionCrossFade.create = function (t, scene) {
  * @extends cc.TransitionScene
  */
 cc.TransitionTurnOffTiles = cc.TransitionScene.extend(/** @lends cc.TransitionTurnOffTiles# */{
-    _sceneOrder:function () {
+    _sceneOrder: function() {
         this._isInSceneOnTop = false;
     },
 
     /**
      * custom on enter
      */
-    onEnter:function () {
+    onEnter: function() {
         cc.TransitionScene.prototype.onEnter.call(this);
         var winSize = cc.Director.getInstance().getWinSize();
         var aspect = winSize.width / winSize.height;
@@ -1421,7 +1421,7 @@ cc.TransitionTurnOffTiles = cc.TransitionScene.extend(/** @lends cc.TransitionTu
      * @param {cc.ActionInterval} action
      * @return {cc.ActionInterval}
      */
-    easeActionWithAction:function (action) {
+    easeActionWithAction: function(action) {
         return action;
     }
 });
@@ -1435,7 +1435,7 @@ cc.TransitionTurnOffTiles = cc.TransitionScene.extend(/** @lends cc.TransitionTu
  * // Example
  * var myTransition = cc.TransitionTurnOffTiles.create(1.5, nextScene)
  */
-cc.TransitionTurnOffTiles.create = function (t, scene) {
+cc.TransitionTurnOffTiles.create = function(t, scene) {
     var tempScene = new cc.TransitionTurnOffTiles();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene))) {
         return tempScene;
@@ -1453,7 +1453,7 @@ cc.TransitionSplitCols = cc.TransitionScene.extend(/** @lends cc.TransitionSplit
     /**
      * custom on enter
      */
-    onEnter:function () {
+    onEnter: function() {
         cc.TransitionScene.prototype.onEnter.call(this);
         this._inScene.setVisible(false);
 
@@ -1470,14 +1470,14 @@ cc.TransitionSplitCols = cc.TransitionScene.extend(/** @lends cc.TransitionSplit
      * @param {cc.ActionInterval} action
      * @return {cc.EaseInOut}
      */
-    easeActionWithAction:function (action) {
+    easeActionWithAction: function(action) {
         return cc.EaseInOut.create(action, 3.0);
     },
 
     /**
      * @return {*}
      */
-    action:function () {
+    action: function() {
         return cc.SplitCols.create(this._duration / 2.0, 3);
     }
 });
@@ -1491,7 +1491,7 @@ cc.TransitionSplitCols = cc.TransitionScene.extend(/** @lends cc.TransitionSplit
  * // Example
  * var myTransition = cc.TransitionSplitCols.create(1.5, nextScene)
  */
-cc.TransitionSplitCols.create = function (t, scene) {
+cc.TransitionSplitCols.create = function(t, scene) {
     var tempScene = new cc.TransitionSplitCols();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene))) {
         return tempScene;
@@ -1508,7 +1508,7 @@ cc.TransitionSplitRows = cc.TransitionSplitCols.extend(/** @lends cc.TransitionS
     /**
      * @return {*}
      */
-    action:function () {
+    action: function() {
         return cc.SplitRows.create(this._duration / 2.0, 3);
     }
 });
@@ -1522,7 +1522,7 @@ cc.TransitionSplitRows = cc.TransitionSplitCols.extend(/** @lends cc.TransitionS
  * // Example
  * var myTransition = cc.TransitionSplitRows.create(1.5, nextScene)
  */
-cc.TransitionSplitRows.create = function (t, scene) {
+cc.TransitionSplitRows.create = function(t, scene) {
     var tempScene = new cc.TransitionSplitRows();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene))) {
         return tempScene;
@@ -1536,14 +1536,14 @@ cc.TransitionSplitRows.create = function (t, scene) {
  * @extends cc.TransitionScene
  */
 cc.TransitionFadeTR = cc.TransitionScene.extend(/** @lends cc.TransitionFadeTR# */{
-    _sceneOrder:function () {
+    _sceneOrder: function() {
         this._isInSceneOnTop = false;
     },
 
     /**
      * Custom on enter
      */
-    onEnter:function () {
+    onEnter: function() {
         cc.TransitionScene.prototype.onEnter.call(this);
 
         var winSize = cc.Director.getInstance().getWinSize();
@@ -1562,7 +1562,7 @@ cc.TransitionFadeTR = cc.TransitionScene.extend(/** @lends cc.TransitionFadeTR# 
      * @param {cc.ActionInterval} action
      * @return {cc.ActionInterval}
      */
-    easeActionWithAction:function (action) {
+    easeActionWithAction: function(action) {
         return action;
     },
 
@@ -1570,7 +1570,7 @@ cc.TransitionFadeTR = cc.TransitionScene.extend(/** @lends cc.TransitionFadeTR# 
      * @param {cc.Size} size
      * @return {*}
      */
-    actionWithSize:function (size) {
+    actionWithSize: function(size) {
         return cc.FadeOutTRTiles.create(this._duration, size);
     }
 });
@@ -1584,7 +1584,7 @@ cc.TransitionFadeTR = cc.TransitionScene.extend(/** @lends cc.TransitionFadeTR# 
  * // Example
  * var myTransition = cc.TransitionFadeTR.create(1.5, nextScene)
  */
-cc.TransitionFadeTR.create = function (t, scene) {
+cc.TransitionFadeTR.create = function(t, scene) {
     var tempScene = new cc.TransitionFadeTR();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene)))
         return tempScene;
@@ -1602,7 +1602,7 @@ cc.TransitionFadeBL = cc.TransitionFadeTR.extend(/** @lends cc.TransitionFadeBL#
      * @param {cc.Size} size
      * @return {*}
      */
-    actionWithSize:function (size) {
+    actionWithSize: function(size) {
         return cc.FadeOutBLTiles.create(this._duration, size);
     }
 });
@@ -1616,7 +1616,7 @@ cc.TransitionFadeBL = cc.TransitionFadeTR.extend(/** @lends cc.TransitionFadeBL#
  * // Example
  * var myTransition = cc.TransitionFadeBL.create(1.5, nextScene)
  */
-cc.TransitionFadeBL.create = function (t, scene) {
+cc.TransitionFadeBL.create = function(t, scene) {
     var tempScene = new cc.TransitionFadeBL();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene)))
         return tempScene;
@@ -1634,7 +1634,7 @@ cc.TransitionFadeUp = cc.TransitionFadeTR.extend(/** @lends cc.TransitionFadeUp#
      * @param {cc.Size} size
      * @return {*}
      */
-    actionWithSize:function (size) {
+    actionWithSize: function(size) {
         return cc.FadeOutUpTiles.create(this._duration, size);
     }
 });
@@ -1648,7 +1648,7 @@ cc.TransitionFadeUp = cc.TransitionFadeTR.extend(/** @lends cc.TransitionFadeUp#
  * // Example
  * var myTransition = cc.TransitionFadeUp.create(1.5, nextScene)
  */
-cc.TransitionFadeUp.create = function (t, scene) {
+cc.TransitionFadeUp.create = function(t, scene) {
     var tempScene = new cc.TransitionFadeUp();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene))) {
         return tempScene;
@@ -1667,8 +1667,8 @@ cc.TransitionFadeDown = cc.TransitionFadeTR.extend(/** @lends cc.TransitionFadeD
      * @param {cc.Size} size
      * @return {*}
      */
-    actionWithSize:function (size) {
-        return cc.FadeOutDownTiles.create( this._duration, size);
+    actionWithSize: function(size) {
+        return cc.FadeOutDownTiles.create(this._duration, size);
     }
 });
 
@@ -1681,7 +1681,7 @@ cc.TransitionFadeDown = cc.TransitionFadeTR.extend(/** @lends cc.TransitionFadeD
  * // Example
  * var myTransition = cc.TransitionFadeDown.create(1.5, nextScene)
  */
-cc.TransitionFadeDown.create = function (t, scene) {
+cc.TransitionFadeDown.create = function(t, scene) {
     var tempScene = new cc.TransitionFadeDown();
     if ((tempScene != null) && (tempScene.initWithDuration(t, scene))) {
         return tempScene;

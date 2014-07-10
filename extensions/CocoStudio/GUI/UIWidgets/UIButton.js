@@ -37,9 +37,9 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
     _buttonClickedRenderer: null,
     _buttonDisableRenderer: null,
     _titleRenderer: null,
-    _normalFileName: "",
-    _clickedFileName: "",
-    _disabledFileName: "",
+    _normalFileName: '',
+    _clickedFileName: '',
+    _disabledFileName: '',
     _prevIgnoreSize: true,
     _scale9Enabled: false,
 //    CCRect _capInsets:null,
@@ -61,15 +61,15 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
     _normalTextureLoaded: false,
     _pressedTextureLoaded: false,
     _disabledTextureLoaded: false,
-    ctor: function () {
+    ctor: function() {
         ccs.Widget.prototype.ctor.call(this);
         this._buttonNormalRenderer = null;
         this._buttonClickedRenderer = null;
         this._buttonDisableRenderer = null;
         this._titleRenderer = null;
-        this._normalFileName = "";
-        this._clickedFileName = "";
-        this._disabledFileName = "";
+        this._normalFileName = '';
+        this._clickedFileName = '';
+        this._disabledFileName = '';
         this._prevIgnoreSize = true;
         this._scale9Enabled = false;
         this._capInsetsNormal = cc.RectZero();
@@ -93,17 +93,17 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
         this._disabledTextureLoaded = false;
     },
 
-    init: function () {
+    init: function() {
         if (ccs.Widget.prototype.init.call(this))
             return true;
         return false;
     },
 
-    initRenderer: function () {
+    initRenderer: function() {
         this._buttonNormalRenderer = cc.Sprite.create();
         this._buttonClickedRenderer = cc.Sprite.create();
         this._buttonDisableRenderer = cc.Sprite.create();
-        this._titleRenderer = cc.LabelTTF.create("");
+        this._titleRenderer = cc.LabelTTF.create('');
         cc.NodeRGBA.prototype.addChild.call(this, this._buttonNormalRenderer, NORMAL_RENDERER_ZORDER);
         cc.NodeRGBA.prototype.addChild.call(this, this._buttonClickedRenderer, PRESSED_RENDERER_ZORDER);
         cc.NodeRGBA.prototype.addChild.call(this, this._buttonDisableRenderer, DISABLED_RENDERER_ZORDER);
@@ -114,7 +114,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * Sets if button is using scale9 renderer.
      * @param {Boolean} able
      */
-    setScale9Enabled: function (able) {
+    setScale9Enabled: function(able) {
         if (this._scale9Enabled == able) {
             return;
         }
@@ -160,7 +160,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * ignoreContentAdaptWithSize
      * @param {Boolean} ignore
      */
-    ignoreContentAdaptWithSize: function (ignore) {
+    ignoreContentAdaptWithSize: function(ignore) {
         if (!this._scale9Enabled || (this._scale9Enabled && !ignore)) {
             ccs.Widget.prototype.ignoreContentAdaptWithSize.call(this, ignore);
             this._prevIgnoreSize = ignore;
@@ -174,7 +174,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * @param {String} disabled
      * @param {ccs.TextureResType} texType
      */
-    loadTextures: function (normal, selected, disabled, texType) {
+    loadTextures: function(normal, selected, disabled, texType) {
         this.loadTextureNormal(normal, texType);
         this.loadTexturePressed(selected, texType);
         this.loadTextureDisabled(disabled, texType);
@@ -185,11 +185,11 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * @param {String} normal
      * @param {ccs.TextureResType} texType
      */
-    loadTextureNormal: function (normal, texType) {
+    loadTextureNormal: function(normal, texType) {
         if (!normal) {
             return;
         }
-        texType = texType||ccs.TextureResType.local;
+        texType = texType || ccs.TextureResType.local;
         this._normalFileName = normal;
         this._normalTexType = texType;
         var buttonNormalRenderer = this._buttonNormalRenderer;
@@ -205,11 +205,11 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
         }
 
         var buttonRenderSize = buttonNormalRenderer.getContentSize();
-        if(buttonNormalRenderer.textureLoaded()){
+        if (buttonNormalRenderer.textureLoaded()) {
             this._normalTextureSize.width = buttonRenderSize.width;
             this._normalTextureSize.height = buttonRenderSize.height;
-        }else{
-            buttonNormalRenderer.addLoadedEventListener(function(){
+        }else {
+            buttonNormalRenderer.addLoadedEventListener(function() {
                 this._normalTextureSize = buttonNormalRenderer.getContentSize();
                 if (buttonNormalRenderer.setCapInsets) {
                     buttonNormalRenderer.setCapInsets(this._capInsetsNormal);
@@ -233,7 +233,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * @param {String} selected
      * @param {ccs.TextureResType} texType
      */
-    loadTexturePressed: function (selected, texType) {
+    loadTexturePressed: function(selected, texType) {
         if (!selected) {
             return;
         }
@@ -252,10 +252,10 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
                 break;
         }
 
-        if(clickedRenderer.textureLoaded()){
+        if (clickedRenderer.textureLoaded()) {
             this._pressedTextureSize = clickedRenderer.getContentSize();
-        }else{
-            clickedRenderer.addLoadedEventListener(function(){
+        }else {
+            clickedRenderer.addLoadedEventListener(function() {
                 this._pressedTextureSize = clickedRenderer.getContentSize();
                 if (clickedRenderer.setCapInsets) {
                     clickedRenderer.setCapInsets(this._capInsetsNormal);
@@ -279,7 +279,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * @param {String} disabled
      * @param {ccs.TextureResType} texType
      */
-    loadTextureDisabled: function (disabled, texType) {
+    loadTextureDisabled: function(disabled, texType) {
         if (!disabled) {
             return;
         }
@@ -298,10 +298,10 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
                 break;
         }
 
-        if(disableRenderer.textureLoaded()){
+        if (disableRenderer.textureLoaded()) {
             this._disabledTextureSize = disableRenderer.getContentSize();
-        }else{
-            disableRenderer.addLoadedEventListener(function(){
+        }else {
+            disableRenderer.addLoadedEventListener(function() {
                 this._disabledTextureSize = disableRenderer.getContentSize();
                 if (disableRenderer.setCapInsets) {
                     disableRenderer.setCapInsets(this._capInsetsNormal);
@@ -320,7 +320,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
         this._disabledTextureLoaded = true;
     },
 
-    _updateDisplay:function(){
+    _updateDisplay: function() {
         this.updateDisplayedColor(this.getColor());
         this.updateDisplayedOpacity(this.getOpacity());
         this.updateAnchorPoint();
@@ -330,7 +330,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * Sets capinsets for button, if button is using scale9 renderer.
      * @param {cc.Rect} capInsets
      */
-    setCapInsets: function (capInsets) {
+    setCapInsets: function(capInsets) {
         this.setCapInsetsNormalRenderer(capInsets);
         this.setCapInsetsPressedRenderer(capInsets);
         this.setCapInsetsDisabledRenderer(capInsets);
@@ -340,7 +340,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * Sets capinsets for button, if button is using scale9 renderer.
      * @param {cc.Rect} capInsets
      */
-    setCapInsetsNormalRenderer: function (capInsets) {
+    setCapInsetsNormalRenderer: function(capInsets) {
         this._capInsetsNormal = capInsets;
         if (!this._scale9Enabled) {
             return;
@@ -352,7 +352,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * Sets capinsets for button, if button is using scale9 renderer.
      * @param {cc.Rect} capInsets
      */
-    setCapInsetsPressedRenderer: function (capInsets) {
+    setCapInsetsPressedRenderer: function(capInsets) {
         this._capInsetsPressed = capInsets;
         if (!this._scale9Enabled) {
             return;
@@ -364,7 +364,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * Sets capinsets for button, if button is using scale9 renderer.
      * @param {cc.Rect} capInsets
      */
-    setCapInsetsDisabledRenderer: function (capInsets) {
+    setCapInsetsDisabledRenderer: function(capInsets) {
         this._capInsetsDisabled = capInsets;
         if (!this._scale9Enabled) {
             return;
@@ -372,7 +372,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
         this._buttonDisableRenderer.setCapInsets(capInsets);
     },
 
-    onPressStateChangedToNormal: function () {
+    onPressStateChangedToNormal: function() {
         this._buttonNormalRenderer.setVisible(true);
         this._buttonClickedRenderer.setVisible(false);
         this._buttonDisableRenderer.setVisible(false);
@@ -395,7 +395,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
         }
     },
 
-    onPressStateChangedToPressed: function () {
+    onPressStateChangedToPressed: function() {
         if (this._pressedTextureLoaded) {
             this._buttonNormalRenderer.setVisible(false);
             this._buttonClickedRenderer.setVisible(true);
@@ -421,7 +421,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
         }
     },
 
-    onPressStateChangedToDisabled: function () {
+    onPressStateChangedToDisabled: function() {
         this._buttonNormalRenderer.setVisible(false);
         this._buttonClickedRenderer.setVisible(false);
         this._buttonDisableRenderer.setVisible(true);
@@ -433,7 +433,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * override "setFlippedX" of widget.
      * @param {Boolean} flipX
      */
-    setFlippedX: function (flipX) {
+    setFlippedX: function(flipX) {
         this._titleRenderer.setFlippedX(flipX);
         if (this._scale9Enabled) {
             return;
@@ -447,7 +447,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * override "setFlippedY" of widget.
      * @param {Boolean} flipY
      */
-    setFlippedY: function (flipY) {
+    setFlippedY: function(flipY) {
         this._titleRenderer.setFlippedY(flipY);
         if (this._scale9Enabled) {
             return;
@@ -459,9 +459,9 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
 
     /**
      * override "isFlippedX" of widget.
-     * @returns {Boolean}
+     * @return {Boolean}
      */
-    isFlippedX: function () {
+    isFlippedX: function() {
         if (this._scale9Enabled) {
             return false;
         }
@@ -470,9 +470,9 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
 
     /**
      * override "isFlippedY" of widget.
-     * @returns {Boolean}
+     * @return {Boolean}
      */
-    isFlippedY: function () {
+    isFlippedY: function() {
         if (this._scale9Enabled) {
             return false;
         }
@@ -484,15 +484,15 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * @param {cc.Point|Number} point The anchor point of UIButton or The anchor point.x of UIButton.
      * @param {Number} [y] The anchor point.y of UIButton.
      */
-    setAnchorPoint: function (point, y) {
-        if(arguments.length === 2){
-            ccs.Widget.prototype.setAnchorPoint.call(this,point, y);
+    setAnchorPoint: function(point, y) {
+        if (arguments.length === 2) {
+            ccs.Widget.prototype.setAnchorPoint.call(this, point, y);
             this._buttonNormalRenderer.setAnchorPoint(point, y);
             this._buttonClickedRenderer.setAnchorPoint(point, y);
             this._buttonDisableRenderer.setAnchorPoint(point, y);
             this._titleRenderer.setPosition(this._size.width * (0.5 - this._anchorPoint._x), this._size.height * (0.5 - this._anchorPoint._y));
         } else {
-            ccs.Widget.prototype.setAnchorPoint.call(this,point);
+            ccs.Widget.prototype.setAnchorPoint.call(this, point);
             this._buttonNormalRenderer.setAnchorPoint(point);
             this._buttonClickedRenderer.setAnchorPoint(point);
             this._buttonDisableRenderer.setAnchorPoint(point);
@@ -500,7 +500,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
         }
     },
 
-    onSizeChanged: function () {
+    onSizeChanged: function() {
         ccs.Widget.prototype.onSizeChanged.call(this);
         this.normalTextureScaleChangedWithSize();
         this.pressedTextureScaleChangedWithSize();
@@ -509,17 +509,17 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
 
     /**
      * override "getContentSize" method of widget.
-     * @returns {cc.Size}
+     * @return {cc.Size}
      */
-    getContentSize: function () {
+    getContentSize: function() {
         return this._normalTextureSize;
     },
 
     /**
      * Gets the Virtual Renderer of widget.
-     * @returns {cc.Node}
+     * @return {cc.Node}
      */
-    getVirtualRenderer: function () {
+    getVirtualRenderer: function() {
         if (this._bright) {
             switch (this._brightStyle) {
                 case ccs.BrightStyle.normal:
@@ -535,7 +535,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
         }
     },
 
-    normalTextureScaleChangedWithSize: function () {
+    normalTextureScaleChangedWithSize: function() {
         if (this._ignoreSize) {
             if (!this._scale9Enabled) {
                 this._buttonNormalRenderer.setScale(1.0);
@@ -565,7 +565,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
         }
     },
 
-    pressedTextureScaleChangedWithSize: function () {
+    pressedTextureScaleChangedWithSize: function() {
         if (this._ignoreSize) {
             if (!this._scale9Enabled) {
                 this._buttonClickedRenderer.setScale(1.0);
@@ -593,7 +593,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
         }
     },
 
-    disabledTextureScaleChangedWithSize: function () {
+    disabledTextureScaleChangedWithSize: function() {
         if (this._ignoreSize) {
             if (!this._scale9Enabled) {
                 this._buttonDisableRenderer.setScale(1.0);
@@ -621,7 +621,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * Changes if button can be clicked zoom effect.
      * @param {Boolean} enabled
      */
-    setPressedActionEnabled: function (enabled) {
+    setPressedActionEnabled: function(enabled) {
         this._pressedActionEnabled = enabled;
     },
 
@@ -629,15 +629,15 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * set title text
      * @param {String} text
      */
-    setTitleText: function (text) {
+    setTitleText: function(text) {
         this._titleRenderer.setString(text);
     },
 
     /**
      * get title text
-     * @returns {String} text
+     * @return {String} text
      */
-    getTitleText: function () {
+    getTitleText: function() {
         return this._titleRenderer.getString();
     },
 
@@ -645,16 +645,16 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * set title color
      * @param {cc.c3b} color
      */
-    setTitleColor: function (color) {
+    setTitleColor: function(color) {
         this._titleColor = color;
         this._titleRenderer.updateDisplayedColor(color);
     },
 
     /**
      * get title color
-     * @returns {cc.c3b}
+     * @return {cc.c3b}
      */
-    getTitleColor: function () {
+    getTitleColor: function() {
         return this._titleRenderer.getColor();
     },
 
@@ -662,15 +662,15 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * set title fontSize
      * @param {cc.Size} size
      */
-    setTitleFontSize: function (size) {
+    setTitleFontSize: function(size) {
         this._titleRenderer.setFontSize(size);
     },
 
     /**
      * get title fontSize
-     * @returns {cc.Size}
+     * @return {cc.Size}
      */
-    getTitleFontSize: function () {
+    getTitleFontSize: function() {
         return this._titleRenderer.getFontSize();
     },
 
@@ -678,15 +678,15 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * set title fontName
      * @param {String} fontName
      */
-    setTitleFontName: function (fontName) {
+    setTitleFontName: function(fontName) {
         this._titleRenderer.setFontName(fontName);
     },
 
     /**
      * get title fontName
-     * @returns {String}
+     * @return {String}
      */
-    getTitleFontName: function () {
+    getTitleFontName: function() {
         return this._titleRenderer.getFontName();
     },
 
@@ -695,24 +695,24 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
      * It default change the color of widget's children.
      * @param color
      */
-    setColor: function (color) {
-        ccs.Widget.prototype.setColor.call(this,color);
+    setColor: function(color) {
+        ccs.Widget.prototype.setColor.call(this, color);
         this.setTitleColor(this._titleColor);
     },
 
     /**
      * Returns the "class name" of widget.
-     * @returns {string}
+     * @return {string}
      */
-    getDescription: function () {
-        return "Button";
+    getDescription: function() {
+        return 'Button';
     },
 
-    createCloneInstance:function(){
+    createCloneInstance: function() {
         return ccs.Button.create();
     },
 
-    copySpecialProperties:function(uiButton){
+    copySpecialProperties: function(uiButton) {
         this._prevIgnoreSize = uiButton._prevIgnoreSize;
         this.setScale9Enabled(uiButton._scale9Enabled);
         this.loadTextureNormal(uiButton._normalFileName, uiButton._normalTexType);
@@ -737,7 +737,7 @@ ccs.Button = ccs.Widget.extend(/** @lends ccs.Button# */{
  * // example
  * var uiButton = ccs.Button.create();
  */
-ccs.Button.create = function () {
+ccs.Button.create = function() {
     var uiButton = new ccs.Button();
     if (uiButton && uiButton.init()) {
         return uiButton;

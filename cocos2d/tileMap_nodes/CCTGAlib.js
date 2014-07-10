@@ -69,7 +69,7 @@ cc.TGA_ERROR_COMPRESSED_FILE = 5;
  * @param {Number} flipped
  * @constructor
  */
-cc.ImageTGA = function (status, type, pixelDepth, width, height, imageData, flipped) {
+cc.ImageTGA = function(status, type, pixelDepth, width, height, imageData, flipped) {
     this.status = status || 0;
     this.type = type || 0;
     this.pixelDepth = pixelDepth || 0;
@@ -86,7 +86,7 @@ cc.ImageTGA = function (status, type, pixelDepth, width, height, imageData, flip
  * @param {cc.ImageTGA} psInfo
  * @return {Boolean}
  */
-cc.tgaLoadHeader = function (buffer, bufSize, psInfo) {
+cc.tgaLoadHeader = function(buffer, bufSize, psInfo) {
     var step = 2;
     if (step + 1 > bufSize)
         return false;
@@ -122,7 +122,7 @@ cc.tgaLoadHeader = function (buffer, bufSize, psInfo) {
  * @param {cc.ImageTGA} psInfo
  * @return {Boolean}
  */
-cc.tgaLoadImageData = function (buffer, bufSize, psInfo) {
+cc.tgaLoadImageData = function(buffer, bufSize, psInfo) {
     var mode, total, i, aux;
     var step = 18;              // .size_t step = (sizeof(unsigned char) + sizeof(signed short)) * 6;
 
@@ -153,8 +153,8 @@ cc.tgaLoadImageData = function (buffer, bufSize, psInfo) {
  * @param filename
  * @return {cc.ImageTGA}
  */
-cc.tgaLoad = function (filename) {
-    var buffer = cc.FileUtils.getInstance().getFileData(filename, "rb");
+cc.tgaLoad = function(filename) {
+    var buffer = cc.FileUtils.getInstance().getFileData(filename, 'rb');
     var size = buffer.length;
 
     if (buffer == null)
@@ -206,7 +206,7 @@ cc.tgaLoad = function (filename) {
  * converts RGB to grayscale
  * @param {cc.ImageTGA} psInfo
  */
-cc.tgaRGBtogreyscale = function (psInfo) {
+cc.tgaRGBtogreyscale = function(psInfo) {
     var i, j;
 
     // if the image is already grayscale do nothing
@@ -236,7 +236,7 @@ cc.tgaRGBtogreyscale = function (psInfo) {
  * releases the memory used for the image
  * @param {cc.ImageTGA} psInfo
  */
-cc.tgaDestroy = function (psInfo) {
+cc.tgaDestroy = function(psInfo) {
     if (!psInfo)
         return;
 
@@ -244,7 +244,7 @@ cc.tgaDestroy = function (psInfo) {
     psInfo = null;
 };
 
-cc.tgaLoadRLEImageData = function (buffer, bufSize, psInfo) {
+cc.tgaLoadRLEImageData = function(buffer, bufSize, psInfo) {
     var mode, total, i, index = 0 , skip = 0, flag = 0;
     var aux = [], runlength = 0;
 
@@ -302,7 +302,7 @@ cc.tgaLoadRLEImageData = function (buffer, bufSize, psInfo) {
     return true;
 };
 
-cc.tgaFlipImage = function (psInfo) {
+cc.tgaFlipImage = function(psInfo) {
     // mode equal the number of components for each pixel
     var mode = psInfo.pixelDepth / 8;
     var rowbytes = psInfo.width * mode;
@@ -315,42 +315,42 @@ cc.tgaFlipImage = function (psInfo) {
     psInfo.flipped = 0;
 };
 
-cc.__getSubArray = function (array, start, end) {
-    if (array instanceof  Array)
+cc.__getSubArray = function(array, start, end) {
+    if (array instanceof Array)
         return array.slice(start, end);
     else
         return array.subarray(start, end);
 };
 
-cc.__setDataToArray = function (sourceData, destArray, startIndex) {
+cc.__setDataToArray = function(sourceData, destArray, startIndex) {
     for (var i = 0; i < sourceData.length; i++)
         destArray[startIndex + i] = sourceData[i];
 };
 
 
 cc.BinaryStreamReader = cc.Class.extend({
-    _binaryData:null,
-    _offset:0,
+    _binaryData: null,
+    _offset: 0,
 
-    ctor:function (binaryData) {
+    ctor: function(binaryData) {
         this._binaryData = binaryData;
     },
 
-    setBinaryData:function (binaryData) {
+    setBinaryData: function(binaryData) {
         this._binaryData = binaryData;
         this._offset = 0;
     },
 
-    getBinaryData:function () {
+    getBinaryData: function() {
         return this._binaryData;
     },
 
-    _checkSize:function (neededBits) {
+    _checkSize: function(neededBits) {
         if (!(this._offset + Math.ceil(neededBits / 8) < this._data.length))
-            throw new Error("Index out of bound");
+            throw new Error('Index out of bound');
     },
 
-    _decodeFloat:function (precisionBits, exponentBits) {
+    _decodeFloat: function(precisionBits, exponentBits) {
         var length = precisionBits + exponentBits + 1;
         var size = length >> 3;
         this._checkSize(length);
@@ -379,11 +379,11 @@ cc.BinaryStreamReader = cc.Class.extend({
             : Math.pow(2, exponent - bias) * (1 + significand) : 0);
     },
 
-    _readByte:function (i, size) {
+    _readByte: function(i, size) {
         return this._data[this._offset + size - i - 1];
     },
 
-    _decodeInt:function (bits, signed) {
+    _decodeInt: function(bits, signed) {
         var x = this._readBits(0, bits, bits / 8), max = Math.pow(2, bits);
         var result = signed && x >= max / 2 ? x - max : x;
 
@@ -391,12 +391,12 @@ cc.BinaryStreamReader = cc.Class.extend({
         return result;
     },
 
-    _shl:function (a, b) {
-        for (++b; --b; a = ((a %= 0x7fffffff + 1) & 0x40000000) == 0x40000000 ? a * 2 : (a - 0x40000000) * 2 + 0x7fffffff + 1){};
+    _shl: function(a, b) {
+        for (++b; --b; a = ((a %= 0x7fffffff + 1) & 0x40000000) == 0x40000000 ? a * 2 : (a - 0x40000000) * 2 + 0x7fffffff + 1) {}
         return a;
     },
 
-    _readBits:function (start, length, size) {
+    _readBits: function(start, length, size) {
         var offsetLeft = (start + length) % 8;
         var offsetRight = start % 8;
         var curByte = size - (start >> 3) - 1;
@@ -414,33 +414,33 @@ cc.BinaryStreamReader = cc.Class.extend({
         return sum;
     },
 
-    readInteger:function () {
+    readInteger: function() {
         return this._decodeInt(32, true);
     },
 
-    readUnsignedInteger:function () {
+    readUnsignedInteger: function() {
         return this._decodeInt(32, false);
     },
 
-    readSingle:function () {
+    readSingle: function() {
         return this._decodeFloat(23, 8);
     },
 
-    readShort:function () {
+    readShort: function() {
         return this._decodeInt(16, true);
     },
 
-    readUnsignedShort:function () {
+    readUnsignedShort: function() {
         return this._decodeInt(16, false);
     },
 
-    readByte:function () {
+    readByte: function() {
         var readByte = this._data[this._offset];
         this._offset += 1;
         return readByte;
     },
 
-    readData:function (start, end) {
+    readData: function(start, end) {
         if (this._binaryData instanceof Array) {
             return this._binaryData.slice(start, end);
         } else {
@@ -449,11 +449,11 @@ cc.BinaryStreamReader = cc.Class.extend({
         }
     },
 
-    setOffset:function (offset) {
+    setOffset: function(offset) {
         this._offset = offset;
     },
 
-    getOffset:function () {
+    getOffset: function() {
         return this._offset;
     }
 });

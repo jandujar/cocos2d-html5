@@ -29,7 +29,7 @@
  */
 ccs.ActionManager = ccs.Class.extend(/** @lends ccs.ActionManager# */{
     _actionDic: null,
-    ctor: function () {
+    ctor: function() {
         this._actionDic = {};
     },
 
@@ -39,11 +39,11 @@ ccs.ActionManager = ccs.Class.extend(/** @lends ccs.ActionManager# */{
      * @param {Object} dic
      * @param {Object} root
      */
-    initWithDictionary: function (jsonName, dic, root) {
+    initWithDictionary: function(jsonName, dic, root) {
         var path = jsonName;
-        var pos = path.lastIndexOf("/");
+        var pos = path.lastIndexOf('/');
         var fileName = path.substr(pos + 1, path.length);
-        var actionList = dic["actionlist"];
+        var actionList = dic['actionlist'];
         var locActionList = [];
         for (var i = 0; i < actionList.length; i++) {
             var locAction = new ccs.ActionObject();
@@ -58,9 +58,9 @@ ccs.ActionManager = ccs.Class.extend(/** @lends ccs.ActionManager# */{
      * Gets an actionObject with a name.
      * @param {String} jsonName
      * @param {String} actionName
-     * @returns {ccs.ActionObject}
+     * @return {ccs.ActionObject}
      */
-    getActionByName: function (jsonName, actionName) {
+    getActionByName: function(jsonName, actionName) {
         var actionList = this._actionDic[jsonName];
         if (!actionList) {
             return null;
@@ -80,7 +80,7 @@ ccs.ActionManager = ccs.Class.extend(/** @lends ccs.ActionManager# */{
      * @param {String} actionName
      * @param {cc.CallFunc} fun
      */
-    playActionByName: function (jsonName, actionName, fun) {
+    playActionByName: function(jsonName, actionName, fun) {
         var action = this.getActionByName(jsonName, actionName);
         if (action) {
             action.play(fun);
@@ -90,7 +90,7 @@ ccs.ActionManager = ccs.Class.extend(/** @lends ccs.ActionManager# */{
     /**
      * Release all actions.
      */
-    releaseActions: function () {
+    releaseActions: function() {
         this._actionDic = {};
 
     }
@@ -102,7 +102,7 @@ ccs.ActionManager._instance = null;
  * @function
  * @return {ccs.ActionManager}
  */
-ccs.ActionManager.getInstance = function () {
+ccs.ActionManager.getInstance = function() {
     if (!this._instance) {
         this._instance = new ccs.ActionManager();
     }
@@ -112,6 +112,6 @@ ccs.ActionManager.getInstance = function () {
 /**
  * Purges ActionManager point.
  */
-ccs.ActionManager.purge = function(){
+ccs.ActionManager.purge = function() {
     this._instance = null;
 };

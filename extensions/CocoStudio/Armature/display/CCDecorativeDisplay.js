@@ -28,17 +28,17 @@
  * @extends ccs.Class
  */
 ccs.DecotativeDisplay = ccs.Class.extend({
-    _display:null,
-    _colliderDetector:null,
-    _displayData:null,
+    _display: null,
+    _colliderDetector: null,
+    _displayData: null,
 
-    ctor:function () {
+    ctor: function() {
         this._display = null;
         this._colliderDetector = null;
         this._displayData = null;
     },
 
-    init:function () {
+    init: function() {
         return true;
     },
 
@@ -46,15 +46,15 @@ ccs.DecotativeDisplay = ccs.Class.extend({
      * display setter
      * @param {cc.Node} display
      */
-    setDisplay:function (display) {
+    setDisplay: function(display) {
         this._display = display;
     },
 
     /**
      * display getter
-     * @returns {cc.Node}
+     * @return {cc.Node}
      */
-    getDisplay:function () {
+    getDisplay: function() {
         return this._display;
     },
 
@@ -62,15 +62,15 @@ ccs.DecotativeDisplay = ccs.Class.extend({
      * colliderDetector setter
      * @param {ccs.ColliderDetector} colliderDetector
      */
-    setColliderDetector:function (colliderDetector) {
+    setColliderDetector: function(colliderDetector) {
         this._colliderDetector = colliderDetector;
     },
 
     /**
      * colliderDetector getter
-     * @returns {ccs.ColliderDetector}
+     * @return {ccs.ColliderDetector}
      */
-    getColliderDetector:function () {
+    getColliderDetector: function() {
         return this._colliderDetector;
     },
 
@@ -78,18 +78,18 @@ ccs.DecotativeDisplay = ccs.Class.extend({
      * display data setter
      * @param {ccs.DisplayData} displayData
      */
-    setDisplayData:function (displayData) {
+    setDisplayData: function(displayData) {
         this._displayData = displayData;
     },
 
     /**
      * display data getter
-     * @returns {ccs.DisplayData}
+     * @return {ccs.DisplayData}
      */
-    getDisplayData:function () {
+    getDisplayData: function() {
         return this._displayData;
     },
-    release:function () {
+    release: function() {
         CC_SAFE_RELEASE(this._display);
         this._display = null;
         CC_SAFE_RELEASE(this._displayData);
@@ -108,7 +108,7 @@ ccs.DecotativeDisplay = ccs.Class.extend({
  * // example
  * var display = ccs.DecotativeDisplay.create();
  */
-ccs.DecotativeDisplay.create = function () {
+ccs.DecotativeDisplay.create = function() {
     var decotativeDisplay = new ccs.DecotativeDisplay();
     if (decotativeDisplay && decotativeDisplay.init()) {
         return decotativeDisplay;

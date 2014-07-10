@@ -101,11 +101,11 @@ cc.DirectorDelegate = cc.Class.extend(/** @lends cc.DirectorDelegate# */{
     /**
      * Called by CCDirector when the projection is updated, and "custom" projection is used
      */
-    updateProjection:function () {
+    updateProjection: function() {
     }
 });
 
-cc.GLToClipTransform = function (transformOut) {
+cc.GLToClipTransform = function(transformOut) {
     var projection = new cc.kmMat4();
     cc.kmGLGetMatrix(cc.KM_GL_PROJECTION, projection);
 
@@ -143,64 +143,64 @@ cc.GLToClipTransform = function (transformOut) {
  */
 cc.Director = cc.Class.extend(/** @lends cc.Director# */{
     //Variables
-    _landscape:false,
-    _nextDeltaTimeZero:false,
-    _paused:false,
-    _purgeDirecotorInNextLoop:false,
-    _sendCleanupToScene:false,
-    _animationInterval:0.0,
-    _oldAnimationInterval:0.0,
-    _projection:0,
-    _accumDt:0.0,
-    _contentScaleFactor:1.0,
+    _landscape: false,
+    _nextDeltaTimeZero: false,
+    _paused: false,
+    _purgeDirecotorInNextLoop: false,
+    _sendCleanupToScene: false,
+    _animationInterval: 0.0,
+    _oldAnimationInterval: 0.0,
+    _projection: 0,
+    _accumDt: 0.0,
+    _contentScaleFactor: 1.0,
 
-    _displayStats:false,
-    _deltaTime:0.0,
-    _frameRate:0.0,
+    _displayStats: false,
+    _deltaTime: 0.0,
+    _frameRate: 0.0,
 
-    _FPSLabel:null,
-    _SPFLabel:null,
-    _drawsLabel:null,
+    _FPSLabel: null,
+    _SPFLabel: null,
+    _drawsLabel: null,
 
-    _winSizeInPoints:null,
+    _winSizeInPoints: null,
 
-    _lastUpdate:null,
-    _nextScene:null,
-    _notificationNode:null,
-    _openGLView:null,
-    _scenesStack:null,
-    _projectionDelegate:null,
-    _runningScene:null,
+    _lastUpdate: null,
+    _nextScene: null,
+    _notificationNode: null,
+    _openGLView: null,
+    _scenesStack: null,
+    _projectionDelegate: null,
+    _runningScene: null,
 
-    _frames:0,
-    _totalFrames:0,
-    _secondsPerFrame:0,
+    _frames: 0,
+    _totalFrames: 0,
+    _secondsPerFrame: 0,
 
-    _dirtyRegion:null,
+    _dirtyRegion: null,
 
-    _scheduler:null,
-    _actionManager:null,
-    _touchDispatcher:null,
-    _keyboardDispatcher:null,
-    _accelerometer:null,
-    _mouseDispatcher:null,
+    _scheduler: null,
+    _actionManager: null,
+    _touchDispatcher: null,
+    _keyboardDispatcher: null,
+    _accelerometer: null,
+    _mouseDispatcher: null,
 
-    _isBlur:false,
+    _isBlur: false,
 
     /**
      * Constructor
      */
-    ctor:function () {
+    ctor: function() {
         this._lastUpdate = Date.now();
         if (!cc.isAddedHiddenEvent) {
             var selfPointer = this;
-            window.addEventListener("focus", function () {
+            window.addEventListener('focus', function() {
                 selfPointer._lastUpdate = Date.now();
             }, false);
         }
     },
 
-    _resetLastUpdate:function () {
+    _resetLastUpdate: function() {
         this._lastUpdate = Date.now();
     },
 
@@ -208,7 +208,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * initializes cc.Director
      * @return {Boolean}
      */
-    init:function () {
+    init: function() {
         // scenes
         this._oldAnimationInterval = this._animationInterval = 1.0 / cc.defaultFPS;
         this._scenesStack = [];
@@ -241,21 +241,21 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
         this._actionManager = new cc.ActionManager();
         this._scheduler.scheduleUpdateForTarget(this._actionManager, cc.PRIORITY_SYSTEM, false);
         //touchDispatcher
-        if(cc.TouchDispatcher){
+        if (cc.TouchDispatcher) {
             this._touchDispatcher = new cc.TouchDispatcher();
             this._touchDispatcher.init();
         }
 
         //KeyboardDispatcher
-        if(cc.KeyboardDispatcher)
+        if (cc.KeyboardDispatcher)
             this._keyboardDispatcher = cc.KeyboardDispatcher.getInstance();
 
         //accelerometer
-        if(cc.Accelerometer)
+        if (cc.Accelerometer)
             this._accelerometer = new cc.Accelerometer();
 
         //MouseDispatcher
-        if(cc.MouseDispatcher){
+        if (cc.MouseDispatcher) {
             this._mouseDispatcher = new cc.MouseDispatcher();
             this._mouseDispatcher.init();
         }
@@ -266,7 +266,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
     /**
      * calculates delta time since last time it was called
      */
-    calculateDeltaTime:function () {
+    calculateDeltaTime: function() {
         var now = Date.now();
 
         // new delta time.
@@ -291,7 +291,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * @param {cc.Point} uiPoint
      * @return {cc.Point}
      */
-    convertToGL:function (uiPoint) {
+    convertToGL: function(uiPoint) {
         var transform = new cc.kmMat4();
         cc.GLToClipTransform(transform);
 
@@ -316,7 +316,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * @param {cc.Point} glPoint
      * @return {cc.Point}
      */
-    convertToUI:function (glPoint) {
+    convertToUI: function(glPoint) {
         var transform = new cc.kmMat4();
         cc.GLToClipTransform(transform);
 
@@ -393,7 +393,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
     /**
      * end director
      */
-    end:function () {
+    end: function() {
         this._purgeDirecotorInNextLoop = true;
     },
 
@@ -404,7 +404,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * </p>
      * @return {Number}
      */
-    getContentScaleFactor:function () {
+    getContentScaleFactor: function() {
         return this._contentScaleFactor;
     },
 
@@ -416,7 +416,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * </p>
      * @return {cc.Node}
      */
-    getNotificationNode:function () {
+    getNotificationNode: function() {
         return this._notificationNode;
     },
 
@@ -427,7 +427,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * </p>
      * @return {cc.Size}
      */
-    getWinSize:function () {
+    getWinSize: function() {
         return this._winSizeInPoints;
     },
 
@@ -439,11 +439,11 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * </p>
      * @return {cc.Size}
      */
-    getWinSizeInPixels:function () {
+    getWinSizeInPixels: function() {
         return cc.size(this._winSizeInPoints.width * this._contentScaleFactor, this._winSizeInPoints.height * this._contentScaleFactor);
     },
 
-    getVisibleSize:function () {
+    getVisibleSize: function() {
         if (this._openGLView) {
             return this._openGLView.getVisibleSize();
         } else {
@@ -451,7 +451,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
         }
     },
 
-    getVisibleOrigin:function () {
+    getVisibleOrigin: function() {
         if (this._openGLView) {
             return this._openGLView.getVisibleOrigin();
         } else {
@@ -459,14 +459,14 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
         }
     },
 
-    getZEye:function () {
-        return (this._winSizeInPoints.height / 1.1566 );
+    getZEye: function() {
+        return (this._winSizeInPoints.height / 1.1566);
     },
 
     /**
      * pause director
      */
-    pause:function () {
+    pause: function() {
         if (this._paused)
             return;
 
@@ -484,9 +484,9 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      *     ONLY call it if there is a running scene.
      * </p>
      */
-    popScene:function () {
-        if(!this._runningScene)
-            throw "running scene should not null";
+    popScene: function() {
+        if (!this._runningScene)
+            throw 'running scene should not null';
 
         //this.addRegionToDirtyRegion(cc.rect(0, 0, cc.canvas.width, cc.canvas.height));
 
@@ -504,7 +504,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
     /**
      * Removes cached all cocos2d cached data. It will purge the CCTextureCache, CCSpriteFrameCache, CCLabelBMFont cache
      */
-    purgeCachedData:function () {
+    purgeCachedData: function() {
         cc.LabelBMFont.purgeCachedData();
         //cc.TextureCache.getInstance().removeUnusedTextures();
     },
@@ -512,13 +512,13 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
     /**
      * purge Director
      */
-    purgeDirector:function () {
+    purgeDirector: function() {
         //cleanup scheduler
         this.getScheduler().unscheduleAllCallbacks();
 
         // don't release the event handlers
         // They are needed in case the director is run again
-        if(this._touchDispatcher)this._touchDispatcher.removeAllDelegates();
+        if (this._touchDispatcher)this._touchDispatcher.removeAllDelegates();
 
         if (this._runningScene) {
             this._runningScene.onExitTransitionDidStart();
@@ -568,9 +568,9 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * </p>
      * @param {cc.Scene} scene
      */
-    pushScene:function (scene) {
-        if(!scene)
-            throw "the scene should not null";
+    pushScene: function(scene) {
+        if (!scene)
+            throw 'the scene should not null';
 
         this._sendCleanupToScene = false;
 
@@ -582,14 +582,14 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * Replaces the running scene with a new one. The running scene is terminated. ONLY call it if there is a running scene.
      * @param {cc.Scene} scene
      */
-    replaceScene:function (scene) {
-        if(!this._runningScene)
-            throw "Use runWithScene: instead to start the director";
-        if(!scene)
-            throw "the scene should not be null";
+    replaceScene: function(scene) {
+        if (!this._runningScene)
+            throw 'Use runWithScene: instead to start the director';
+        if (!scene)
+            throw 'the scene should not be null';
 
         var i = this._scenesStack.length;
-        if(i === 0){
+        if (i === 0) {
             this._sendCleanupToScene = true;
             this._scenesStack[i] = scene;
             this._nextScene = scene;
@@ -603,7 +603,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
     /**
      * resume director
      */
-    resume:function () {
+    resume: function() {
         if (!this._paused) {
             return;
         }
@@ -611,7 +611,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
         this.setAnimationInterval(this._oldAnimationInterval);
         this._lastUpdate = Date.now();
         if (!this._lastUpdate) {
-            cc.log("cocos2d: Director: Error in gettimeofday");
+            cc.log('cocos2d: Director: Error in gettimeofday');
         }
 
         this._paused = false;
@@ -626,11 +626,11 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * </p>
      * @param {cc.Scene} scene
      */
-    runWithScene:function (scene) {
-        if(!scene)
-            throw "This command can only be used to start the CCDirector. There is already a scene present.";
-        if(this._runningScene)
-            throw "_runningScene should be null";
+    runWithScene: function(scene) {
+        if (!scene)
+            throw 'This command can only be used to start the CCDirector. There is already a scene present.';
+        if (this._runningScene)
+            throw '_runningScene should be null';
 
         this.pushScene(scene);
         this.startAnimation();
@@ -640,7 +640,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * enables/disables OpenGL alpha blending
      * @param {Boolean} on
      */
-    setAlphaBlending:function (on) {
+    setAlphaBlending: function(on) {
         if (on)
             cc.glBlendFunc(cc.BLEND_SRC, cc.BLEND_DST);
         else
@@ -656,7 +656,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * </p>
      * @param {Number} scaleFactor
      */
-    setContentScaleFactor:function (scaleFactor) {
+    setContentScaleFactor: function(scaleFactor) {
         if (scaleFactor != this._contentScaleFactor) {
             this._contentScaleFactor = scaleFactor;
             this._createStatsLabel();
@@ -667,11 +667,11 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * enables/disables OpenGL depth test
      * @param {Boolean} on
      */
-    setDepthTest:function (on) {
-        if(cc.renderContextType === cc.CANVAS)
+    setDepthTest: function(on) {
+        if (cc.renderContextType === cc.CANVAS)
             return;
 
-        var loc_gl= cc.renderContext;
+        var loc_gl = cc.renderContext;
         if (on) {
             loc_gl.clearDepth(1.0);
             loc_gl.enable(loc_gl.DEPTH_TEST);
@@ -686,14 +686,14 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
     /**
      * sets the default values based on the CCConfiguration info
      */
-    setDefaultValues:function(){
+    setDefaultValues: function() {
 
     },
 
     /**
      * sets the OpenGL default values
      */
-    setGLDefaultValues:function () {
+    setGLDefaultValues: function() {
         this.setAlphaBlending(true);
         // XXX: Fix me, should enable/disable depth test according the depth format as cocos2d-iphone did
         // [self setDepthTest: view_.depthFormat];
@@ -708,16 +708,16 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * set next delta time is zero
      * @param {Boolean} nextDeltaTimeZero
      */
-    setNextDeltaTimeZero:function (nextDeltaTimeZero) {
+    setNextDeltaTimeZero: function(nextDeltaTimeZero) {
         this._nextDeltaTimeZero = nextDeltaTimeZero;
     },
 
     /**
      * set next scene
      */
-    setNextScene:function () {
+    setNextScene: function() {
         var runningIsTransition = false, newIsTransition = false;
-        if(cc.TransitionScene){
+        if (cc.TransitionScene) {
             runningIsTransition = this._runningScene ? this._runningScene instanceof cc.TransitionScene : false;
             newIsTransition = this._nextScene ? this._nextScene instanceof cc.TransitionScene : false;
         }
@@ -749,7 +749,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * set Notification Node
      * @param {cc.Node} node
      */
-    setNotificationNode:function (node) {
+    setNotificationNode: function(node) {
         this._notificationNode = node;
     },
 
@@ -757,11 +757,11 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      *  CCDirector delegate. It shall implemente the CCDirectorDelegate protocol
      *  @return {cc.DirectorDelegate}
      */
-    getDelegate:function () {
+    getDelegate: function() {
         return this._projectionDelegate;
     },
 
-    setDelegate:function (delegate) {
+    setDelegate: function(delegate) {
         this._projectionDelegate = delegate;
     },
 
@@ -769,7 +769,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * Set the CCEGLView, where everything is rendered
      * @param {*} openGLView
      */
-    setOpenGLView:function (openGLView) {
+    setOpenGLView: function(openGLView) {
         // set size
         this._winSizeInPoints.setWidth(cc.canvas.width);      //this._openGLView.getDesignResolutionSize();
         this._winSizeInPoints.setHeight(cc.canvas.height);
@@ -799,17 +799,17 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
          this.updateContentScaleFactor();
          }*/
 
-        if(this._touchDispatcher)this._touchDispatcher.setDispatchEvents(true);
+        if (this._touchDispatcher)this._touchDispatcher.setDispatchEvents(true);
         //}
     },
 
     /**
      * Sets the glViewport
      */
-    setViewport:function(){
-        if(this._openGLView) {
+    setViewport: function() {
+        if (this._openGLView) {
             var locWinSizeInPoints = this._winSizeInPoints;
-            this._openGLView.setViewPortInPoints(0,0, locWinSizeInPoints.width, locWinSizeInPoints.height);
+            this._openGLView.setViewPortInPoints(0, 0, locWinSizeInPoints.width, locWinSizeInPoints.height);
         }
     },
 
@@ -817,10 +817,10 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * Sets an OpenGL projection
      * @param {Number} projection
      */
-    setProjection:function (projection) {
+    setProjection: function(projection) {
         var size = this._winSizeInPoints;
 
-        if(cc.renderContextType === cc.WEBGL){
+        if (cc.renderContextType === cc.WEBGL) {
             this.setViewport();
 
             switch (projection) {
@@ -858,7 +858,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
                         this._projectionDelegate.updateProjection();
                     break;
                 default:
-                    cc.log("cocos2d: Director: unrecognized projection");
+                    cc.log('cocos2d: Director: unrecognized projection');
                     break;
             }
             this._projection = projection;
@@ -871,7 +871,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
     /**
      * shows the FPS in the screen
      */
-    _showStats: function () {
+    _showStats: function() {
         this._frames++;
         this._accumDt += this._deltaTime;
         if (this._FPSLabel && this._SPFLabel && this._drawsLabel) {
@@ -901,7 +901,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * </p>
      * @return {Boolean}
      */
-    isSendCleanupToScene:function () {
+    isSendCleanupToScene: function() {
         return this._sendCleanupToScene;
     },
 
@@ -909,7 +909,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * Get current running Scene. Director can only run one Scene at the time
      * @return {cc.Scene}
      */
-    getRunningScene:function () {
+    getRunningScene: function() {
         return this._runningScene;
     },
 
@@ -917,7 +917,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * Get the FPS value
      * @return {Number}
      */
-    getAnimationInterval:function () {
+    getAnimationInterval: function() {
         return this._animationInterval;
     },
 
@@ -925,7 +925,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * Whether or not to display the FPS on the bottom-left corner
      * @return {Boolean}
      */
-    isDisplayStats:function () {
+    isDisplayStats: function() {
         return this._displayStats;
     },
 
@@ -933,7 +933,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * Display the FPS on the bottom-left corner
      * @param {Boolean} displayStats
      */
-    setDisplayStats:function (displayStats) {
+    setDisplayStats: function(displayStats) {
         this._displayStats = displayStats;
     },
 
@@ -941,7 +941,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * seconds per frame
      * @return {Number}
      */
-    getSecondsPerFrame:function () {
+    getSecondsPerFrame: function() {
         return this._secondsPerFrame;
     },
 
@@ -949,7 +949,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      *  Get the CCEGLView, where everything is rendered
      * @return {*}
      */
-    getOpenGLView:function () {
+    getOpenGLView: function() {
         return this._openGLView;
     },
 
@@ -957,7 +957,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * is next delta time zero
      * @return {Boolean}
      */
-    isNextDeltaTimeZero:function () {
+    isNextDeltaTimeZero: function() {
         return this._nextDeltaTimeZero;
     },
 
@@ -965,7 +965,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * Whether or not the Director is paused
      * @return {Boolean}
      */
-    isPaused:function () {
+    isPaused: function() {
         return this._paused;
     },
 
@@ -973,7 +973,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * How many frames were called since the director started
      * @return {Number}
      */
-    getTotalFrames:function () {
+    getTotalFrames: function() {
         return this._totalFrames;
     },
 
@@ -981,7 +981,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * Sets an OpenGL projection
      * @return {Number}
      */
-    getProjection:function () {
+    getProjection: function() {
         return this._projection;
     },
 
@@ -992,7 +992,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      *     Internally it will call `popToSceneStackLevel(1)`
      * </p>
      */
-    popToRootScene:function () {
+    popToRootScene: function() {
         this.popToSceneStackLevel(1);
     },
 
@@ -1005,9 +1005,9 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
      * </p>
      * @param {Number} level
      */
-    popToSceneStackLevel: function (level) {
-        if(!this._runningScene)
-            throw "A running Scene is needed";
+    popToSceneStackLevel: function(level) {
+        if (!this._runningScene)
+            throw 'A running Scene is needed';
 
         var locScenesStack = this._scenesStack;
         var c = locScenesStack.length;
@@ -1037,81 +1037,81 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
     /**
      * (cc.Scheduler associated with this director)
      */
-    getScheduler:function () {
+    getScheduler: function() {
         return this._scheduler;
     },
 
-    setScheduler:function (scheduler) {
+    setScheduler: function(scheduler) {
         if (this._scheduler != scheduler) {
             this._scheduler = scheduler;
         }
     },
 
-    getActionManager:function () {
+    getActionManager: function() {
         return this._actionManager;
     },
-    setActionManager:function (actionManager) {
+    setActionManager: function(actionManager) {
         if (this._actionManager != actionManager) {
             this._actionManager = actionManager;
         }
     },
 
-    getTouchDispatcher:function () {
+    getTouchDispatcher: function() {
         return this._touchDispatcher;
     },
-    setTouchDispatcher:function (touchDispatcher) {
+    setTouchDispatcher: function(touchDispatcher) {
         if (this._touchDispatcher != touchDispatcher) {
             this._touchDispatcher = touchDispatcher;
         }
     },
 
-    getKeyboardDispatcher:function () {
-        if(!cc.KeyboardDispatcher)
-            throw "cc.KeyboardDispatcher is undefined, maybe it has been removed from js loading list.";
+    getKeyboardDispatcher: function() {
+        if (!cc.KeyboardDispatcher)
+            throw 'cc.KeyboardDispatcher is undefined, maybe it has been removed from js loading list.';
         return this._keyboardDispatcher;
     },
-    setKeyboardDispatcher:function (keyboardDispatcher) {
-        if(!cc.KeyboardDispatcher)
-            throw "cc.KeyboardDispatcher is undefined, maybe it has been removed from js loading list.";
+    setKeyboardDispatcher: function(keyboardDispatcher) {
+        if (!cc.KeyboardDispatcher)
+            throw 'cc.KeyboardDispatcher is undefined, maybe it has been removed from js loading list.';
         this._keyboardDispatcher = keyboardDispatcher;
     },
 
-    getAccelerometer:function () {
-        if(!cc.Accelerometer)
-            throw "cc.Accelerometer is undefined, maybe it has been removed from js loading list.";
+    getAccelerometer: function() {
+        if (!cc.Accelerometer)
+            throw 'cc.Accelerometer is undefined, maybe it has been removed from js loading list.';
         return this._accelerometer;
     },
-    setAccelerometer:function (accelerometer) {
-        if(!cc.Accelerometer)
-            throw "cc.Accelerometer is undefined, maybe it has been removed from js loading list.";
+    setAccelerometer: function(accelerometer) {
+        if (!cc.Accelerometer)
+            throw 'cc.Accelerometer is undefined, maybe it has been removed from js loading list.';
         if (this._accelerometer != accelerometer)
             this._accelerometer = accelerometer;
     },
 
-    getDeltaTime:function(){
+    getDeltaTime: function() {
         return this._deltaTime;
     },
 
-    getMouseDispatcher:function () {
-        if(!cc.MouseDispatcher)
-            throw "cc.MouseDispatcher is undefined, maybe it has been removed from js loading list.";
+    getMouseDispatcher: function() {
+        if (!cc.MouseDispatcher)
+            throw 'cc.MouseDispatcher is undefined, maybe it has been removed from js loading list.';
         return this._mouseDispatcher;
     },
 
-    setMouseDispatcher:function (mouseDispatcher) {
-        if(!cc.MouseDispatcher)
-            throw "cc.MouseDispatcher is undefined, maybe it has been removed from js loading list.";
+    setMouseDispatcher: function(mouseDispatcher) {
+        if (!cc.MouseDispatcher)
+            throw 'cc.MouseDispatcher is undefined, maybe it has been removed from js loading list.';
         if (this._mouseDispatcher != mouseDispatcher)
             this._mouseDispatcher = mouseDispatcher;
     },
 
     _createStatsLabel: null,
 
-    _createStatsLabelForWebGL:function(){
-        if(!cc.LabelAtlas)
+    _createStatsLabelForWebGL: function() {
+        if (!cc.LabelAtlas)
             return this._createStatsLabelForCanvas();
 
-        if((cc.Director._fpsImageLoaded == null) || (cc.Director._fpsImageLoaded == false))
+        if ((cc.Director._fpsImageLoaded == null) || (cc.Director._fpsImageLoaded == false))
             return;
 
         var texture = new cc.Texture2D();
@@ -1132,24 +1132,24 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
          a factor of design resolution ratio of 480x320 is also needed.
          */
         var factor = cc.EGLView.getInstance().getDesignResolutionSize().height / 320.0;
-        if(factor === 0)
+        if (factor === 0)
             factor = this._winSizeInPoints.height / 320.0;
 
         var tmpLabel = new cc.LabelAtlas();
         tmpLabel._setIgnoreContentScaleFactor(true);
-        tmpLabel.initWithString("00.0", texture, 12, 32 , '.');
+        tmpLabel.initWithString('00.0', texture, 12, 32 , '.');
         tmpLabel.setScale(factor);
         this._FPSLabel = tmpLabel;
 
         tmpLabel = new cc.LabelAtlas();
         tmpLabel._setIgnoreContentScaleFactor(true);
-        tmpLabel.initWithString("0.000", texture, 12, 32, '.');
+        tmpLabel.initWithString('0.000', texture, 12, 32, '.');
         tmpLabel.setScale(factor);
         this._SPFLabel = tmpLabel;
 
         tmpLabel = new cc.LabelAtlas();
         tmpLabel._setIgnoreContentScaleFactor(true);
-        tmpLabel.initWithString("000", texture, 12, 32, '.');
+        tmpLabel.initWithString('000', texture, 12, 32, '.');
         tmpLabel.setScale(factor);
         this._drawsLabel = tmpLabel;
 
@@ -1159,16 +1159,16 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
         this._FPSLabel.setPosition(locStatsPosition);
     },
 
-    _createStatsLabelForCanvas:function(){
+    _createStatsLabelForCanvas: function() {
         var fontSize = 0;
         if (this._winSizeInPoints.width > this._winSizeInPoints.height)
             fontSize = 0 | (this._winSizeInPoints.height / 320 * 24);
         else
             fontSize = 0 | (this._winSizeInPoints.width / 320 * 24);
 
-        this._FPSLabel = cc.LabelTTF.create("000.0", "Arial", fontSize);
-        this._SPFLabel = cc.LabelTTF.create("0.000", "Arial", fontSize);
-        this._drawsLabel = cc.LabelTTF.create("0000", "Arial", fontSize);
+        this._FPSLabel = cc.LabelTTF.create('000.0', 'Arial', fontSize);
+        this._SPFLabel = cc.LabelTTF.create('0.000', 'Arial', fontSize);
+        this._drawsLabel = cc.LabelTTF.create('0000', 'Arial', fontSize);
 
         var locStatsPosition = cc.DIRECTOR_STATS_POSITION;
         var contentSize = this._drawsLabel.getContentSize();
@@ -1179,7 +1179,7 @@ cc.Director = cc.Class.extend(/** @lends cc.Director# */{
         this._FPSLabel.setPosition(cc.pAdd(cc.p(contentSize.width / 2, contentSize.height / 2), locStatsPosition));
     },
 
-    _calculateMPF: function () {
+    _calculateMPF: function() {
         var now = Date.now();
         this._secondsPerFrame = (now - this._lastUpdate) / 1000;
     }
@@ -1212,12 +1212,12 @@ if (cc.Browser.supportWebGL) {
  * @extends cc.Director
  */
 cc.DisplayLinkDirector = cc.Director.extend(/** @lends cc.DisplayLinkDirector# */{
-    invalid:false,
+    invalid: false,
 
     /**
      * start Animation
      */
-    startAnimation:function () {
+    startAnimation: function() {
         this._nextDeltaTimeZero = true;
         this.invalid = false;
         cc.Application.getInstance().setAnimationInterval(this._animationInterval);
@@ -1226,7 +1226,7 @@ cc.DisplayLinkDirector = cc.Director.extend(/** @lends cc.DisplayLinkDirector# *
     /**
      * main loop of director
      */
-    mainLoop:function () {
+    mainLoop: function() {
         if (this._purgeDirecotorInNextLoop) {
             this._purgeDirecotorInNextLoop = false;
             this.purgeDirector();
@@ -1239,7 +1239,7 @@ cc.DisplayLinkDirector = cc.Director.extend(/** @lends cc.DisplayLinkDirector# *
     /**
      * stop animation
      */
-    stopAnimation:function () {
+    stopAnimation: function() {
         this.invalid = true;
     },
 
@@ -1247,7 +1247,7 @@ cc.DisplayLinkDirector = cc.Director.extend(/** @lends cc.DisplayLinkDirector# *
      * set Animation Interval
      * @param {Number} value
      */
-    setAnimationInterval:function (value) {
+    setAnimationInterval: function(value) {
         this._animationInterval = value;
         if (!this.invalid) {
             this.stopAnimation();
@@ -1265,7 +1265,7 @@ cc.firstUseDirector = true;
  * @function
  * @return {cc.Director}
  */
-cc.Director.getInstance = function () {
+cc.Director.getInstance = function() {
     if (cc.firstUseDirector) {
         cc.firstUseDirector = false;
         cc.s_SharedDirector = new cc.DisplayLinkDirector();
@@ -1277,8 +1277,8 @@ cc.Director.getInstance = function () {
 
 Object.defineProperties(cc, {
     windowSize: {
-        get: function () {
-            return  cc.director.getWinSize();
+        get: function() {
+            return cc.director.getWinSize();
         },
         enumerable: true
     }
@@ -1304,10 +1304,10 @@ cc.defaultFPS = 60;
  };
  */
 cc.Director._fpsImage = new Image();
-cc.Director._fpsImage.addEventListener("load", function () {
+cc.Director._fpsImage.addEventListener('load', function() {
     cc.Director._fpsImageLoaded = true;
     this.removeEventListener('load', arguments.callee, false);
 });
-cc.Director._fpsImage.src = "data:image/png;base64,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";
+cc.Director._fpsImage.src = 'data:image/png;base64,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';
 
 

@@ -23,35 +23,35 @@
  ****************************************************************************/
 
 cc.ComponentContainer = cc.Class.extend({
-    _components:null,
-    _owner:null,
+    _components: null,
+    _owner: null,
 
-    ctor:function(node){
+    ctor: function(node) {
         this._components = null;
         this._owner = node;
     },
 
-    getComponent:function(name){
-        if(!name)
-            throw "cc.ComponentContainer.getComponent(): name should be non-null";
+    getComponent: function(name) {
+        if (!name)
+            throw 'cc.ComponentContainer.getComponent(): name should be non-null';
         name = name.trim();
         return this._components[name];
     },
 
-    add:function(component){
-        if(!component)
-             throw "cc.ComponentContainer.add(): component should be non-null";
-        if(component.getOwner()){
+    add: function(component) {
+        if (!component)
+             throw 'cc.ComponentContainer.add(): component should be non-null';
+        if (component.getOwner()) {
             cc.log("cc.ComponentContainer.add(): Component already added. It can't be added again");
             return false;
         }
 
-        if(this._components == null){
+        if (this._components == null) {
             this._components = {};
             this._owner.scheduleUpdate();
         }
         var oldComponent = this._components[component.getName()];
-        if(oldComponent){
+        if (oldComponent) {
             cc.log("cc.ComponentContainer.add(): Component already added. It can't be added again");
             return false;
         }
@@ -61,15 +61,15 @@ cc.ComponentContainer = cc.Class.extend({
         return true;
     },
 
-    remove:function(name){
-        if(!name)
-            throw "cc.ComponentContainer.remove(): name should be non-null";
-        if(!this._components)
+    remove: function(name) {
+        if (!name)
+            throw 'cc.ComponentContainer.remove(): name should be non-null';
+        if (!this._components)
             return false;
         var locComponents = this._components;
         name = name.trim();
         var component = locComponents[name];
-        if(component)
+        if (component)
             return false;
         component.onExit();
         component.setOwner(null);
@@ -77,12 +77,12 @@ cc.ComponentContainer = cc.Class.extend({
         return true;
     },
 
-    removeAll:function(){
-        if(!this._components)
+    removeAll: function() {
+        if (!this._components)
             return;
 
         var locComponents = this._components;
-        for(var selKey in locComponents){
+        for (var selKey in locComponents) {
             var selComponent = locComponents[selKey];
             selComponent.onExit();
             selComponent.setOwner(null);
@@ -92,25 +92,25 @@ cc.ComponentContainer = cc.Class.extend({
         this._components = null;
     },
 
-    _alloc:function(){
+    _alloc: function() {
         this._components = {};
     },
 
-    visit:function(delta){
-        if(!this._components)
+    visit: function(delta) {
+        if (!this._components)
             return;
 
         var locComponents = this._components;
-        for(var selKey in locComponents){
+        for (var selKey in locComponents) {
              locComponents[selKey].update(delta);
         }
     },
 
-    isEmpty:function(){
-         if(!this._components)
+    isEmpty: function() {
+         if (!this._components)
             return true;
 
-        for(var selkey in this._components){
+        for (var selkey in this._components) {
             return false;
         }
         return true;

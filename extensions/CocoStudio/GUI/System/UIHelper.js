@@ -29,9 +29,9 @@ ccs.UIHelper = ccs.UIHelper || ccs.Class.extend({});
  * Finds a widget whose tag equals to param tag from root widget.
  * @param {ccs.Widget} root
  * @param {number} tag
- * @returns {ccs.Widget}
+ * @return {ccs.Widget}
  */
-ccs.UIHelper.seekWidgetByTag = function (root, tag) {
+ccs.UIHelper.seekWidgetByTag = function(root, tag) {
     if (!root) {
         return null;
     }
@@ -54,9 +54,9 @@ ccs.UIHelper.seekWidgetByTag = function (root, tag) {
  * Finds a widget whose name equals to param name from root widget.
  * @param {ccs.Widget} root
  * @param {String} name
- * @returns {ccs.Widget}
+ * @return {ccs.Widget}
  */
-ccs.UIHelper.seekWidgetByName = function (root, name) {
+ccs.UIHelper.seekWidgetByName = function(root, name) {
     if (!root) {
         return null;
     }
@@ -80,9 +80,9 @@ ccs.UIHelper.seekWidgetByName = function (root, name) {
  * RelativeLayout will call this method to find the widget witch is needed.
  * @param {ccs.Widget} root
  * @param {String} name
- * @returns {ccs.Widget}
+ * @return {ccs.Widget}
  */
-ccs.UIHelper.seekWidgetByRelativeName = function (root, name) {
+ccs.UIHelper.seekWidgetByRelativeName = function(root, name) {
     if (!root) {
         return null;
     }
@@ -99,7 +99,7 @@ ccs.UIHelper.seekWidgetByRelativeName = function (root, name) {
 };
 
 /*temp action*/
-ccs.UIHelper.seekActionWidgetByActionTag = function (root, tag) {
+ccs.UIHelper.seekActionWidgetByActionTag = function(root, tag) {
     if (!root) {
         return null;
     }

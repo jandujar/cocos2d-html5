@@ -25,90 +25,90 @@
  ****************************************************************************/
 
 cc.BuilderSequence = cc.Class.extend({
-    _duration:0,
-    _name:"",
-    _sequenceId:0,
-    _chainedSequenceId:0,
-    _callbackChannel:null,
-    _soundChannel:null,
+    _duration: 0,
+    _name: '',
+    _sequenceId: 0,
+    _chainedSequenceId: 0,
+    _callbackChannel: null,
+    _soundChannel: null,
 
-    ctor:function(){
-        this._name = "";
+    ctor: function() {
+        this._name = '';
     },
 
-    getDuration:function(){
+    getDuration: function() {
         return this._duration;
     },
-    setDuration:function(duration){
+    setDuration: function(duration) {
         this._duration = duration;
     },
 
-    getName:function(){
+    getName: function() {
         return this._name;
     },
-    setName:function(name){
+    setName: function(name) {
         this._name = name;
     },
 
-    getSequenceId:function(){
+    getSequenceId: function() {
         return this._sequenceId;
     },
-    setSequenceId:function(sequenceId){
+    setSequenceId: function(sequenceId) {
         this._sequenceId = sequenceId;
     },
 
-    getChainedSequenceId:function(){
+    getChainedSequenceId: function() {
         return this._chainedSequenceId;
     },
-    setChainedSequenceId:function(chainedSequenceId){
+    setChainedSequenceId: function(chainedSequenceId) {
         this._chainedSequenceId = chainedSequenceId;
     },
 
-    getCallbackChannel:function() {
+    getCallbackChannel: function() {
         return this._callbackChannel;
     },
-    setCallbackChannel:function(channel) {
+    setCallbackChannel: function(channel) {
         this._callbackChannel = channel;
     },
 
-    getSoundChannel:function() {
+    getSoundChannel: function() {
         return this._soundChannel;
     },
-    setSoundChannel:function(channel) {
+    setSoundChannel: function(channel) {
         this._soundChannel = channel;
     }
 });
 
 cc.BuilderSequenceProperty = cc.Class.extend({
-    _name : null,
-    _type:0,
-    _keyFrames:null,
+    _name: null,
+    _type: 0,
+    _keyFrames: null,
 
-    ctor:function(){
+    ctor: function() {
         this.init();
     },
 
-    init:function(){
+    init: function() {
         this._keyFrames = [];
-        this._name = "";
+        this._name = '';
     },
 
-    getName:function(){
+    getName: function() {
         return this._name;
     },
 
-    setName :function(name){
+    setName: function(name) {
         this._name = name;
     },
 
-    getType:function(){
+    getType: function() {
         return this._type;
     },
-    setType :function(type){
+    setType: function(type) {
         this._type = type;
     },
 
-    getKeyframes:function(){
+    getKeyframes: function() {
         return this._keyFrames;
     }
 });

@@ -25,8 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 var cocos2dApp = cc.Application.extend({
-    config:document['ccConfig'],
-    ctor:function (scene) {
+    config: document['ccConfig'],
+    ctor: function(scene) {
         this._super();
         this.startScene = scene;
         cc.COCOS2D_DEBUG = this.config['COCOS2D_DEBUG'];
@@ -34,7 +34,7 @@ var cocos2dApp = cc.Application.extend({
         cc.setup(this.config['tag']);
         cc.AppController.shareAppController().didFinishLaunchingWithOptions();
     },
-    applicationDidFinishLaunching:function () {
+    applicationDidFinishLaunching: function() {
         // initialize director
         var director = cc.Director.getInstance();
         var designSize = cc.size(800, 450);
@@ -48,7 +48,7 @@ var cocos2dApp = cc.Application.extend({
         director.setAnimationInterval(1.0 / this.config['frameRate']);
 
         //load resources
-        cc.LoaderScene.preload(g_ressources, function () {
+        cc.LoaderScene.preload(g_ressources, function() {
             director.replaceScene(new this.startScene());
         }, this);
 

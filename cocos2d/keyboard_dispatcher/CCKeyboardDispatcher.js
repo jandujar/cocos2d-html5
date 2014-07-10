@@ -49,7 +49,7 @@ cc.KeyboardDispatcher = cc.Class.extend(/** @lends cc.KeyboardDispatcher# */{
      * add delegate to concern keyboard msg
      * @param {cc.KeyboardDelegate} delegate keyboard delegate object
      */
-    addDelegate:function (delegate) {
+    addDelegate: function(delegate) {
         if (!delegate)
             return;
 
@@ -65,7 +65,7 @@ cc.KeyboardDispatcher = cc.Class.extend(/** @lends cc.KeyboardDispatcher# */{
      * remove the delegate from the delegates who concern keyboard msg
      * @param {cc.KeyboardDelegate} delegate
      */
-    removeDelegate:function (delegate) {
+    removeDelegate: function(delegate) {
         if (!delegate) {
             return;
         }
@@ -82,14 +82,14 @@ cc.KeyboardDispatcher = cc.Class.extend(/** @lends cc.KeyboardDispatcher# */{
      * force add the delegate
      * @param {cc.KeyboardDelegate} delegate
      */
-    forceAddDelegate:function (delegate) {
+    forceAddDelegate: function(delegate) {
         var handler = cc.KeyboardHandler.create(delegate);
         if (handler) {
             //if handler already exist
             var locDelegates = this._delegates;
             for (var i = 0, len = locDelegates.length; i < len; i++) {
                 if (locDelegates[i].getDelegate() == handler.getDelegate()) {
-                    cc.log("cc.KeyboardDispatcher.forceAddDelegate(): the delegate has been added.");
+                    cc.log('cc.KeyboardDispatcher.forceAddDelegate(): the delegate has been added.');
                     return;
                 }
             }
@@ -101,7 +101,7 @@ cc.KeyboardDispatcher = cc.Class.extend(/** @lends cc.KeyboardDispatcher# */{
      * force remove the delegate
      * @param {cc.KeyboardDelegate} delegate
      */
-    forceRemoveDelegate:function (delegate) {
+    forceRemoveDelegate: function(delegate) {
         var locDelegates = this._delegates;
         for (var i = 0, len = locDelegates.length; i < len; i++) {
             if (locDelegates[i].getDelegate() == delegate) {
@@ -117,7 +117,7 @@ cc.KeyboardDispatcher = cc.Class.extend(/** @lends cc.KeyboardDispatcher# */{
      * @param {Boolean} keydown whether this is a keydown or keyup
      * @return {Boolean}
      */
-    dispatchKeyboardMSG:function (e, keydown) {
+    dispatchKeyboardMSG: function(e, keydown) {
         this._locked = true;
         e.stopPropagation();
         e.preventDefault();
@@ -127,12 +127,12 @@ cc.KeyboardDispatcher = cc.Class.extend(/** @lends cc.KeyboardDispatcher# */{
         if (keydown && e) {     //if keydown and our keymap doesnt have it
             //execute all deletegate that registered a keyboard event
             for (i = 0; i < this._delegates.length; i++) {
-                if(this._delegates[i].getDelegate() && this._delegates[i].getDelegate().onKeyDown)
+                if (this._delegates[i].getDelegate() && this._delegates[i].getDelegate().onKeyDown)
                     this._delegates[i].getDelegate().onKeyDown(e.keyCode);
             }
-        }  else if (!keydown && e) {//if keyup and our keymap have that key in it
+        } else if (!keydown && e) {//if keyup and our keymap have that key in it
             for (i = 0; i < this._delegates.length; i++) {
-                if(this._delegates[i].getDelegate() && this._delegates[i].getDelegate().onKeyUp)
+                if (this._delegates[i].getDelegate() && this._delegates[i].getDelegate().onKeyUp)
                     this._delegates[i].getDelegate().onKeyUp(e.keyCode);
             }
         }
@@ -157,29 +157,29 @@ cc.KeyboardDispatcher = cc.Class.extend(/** @lends cc.KeyboardDispatcher# */{
     },
 
     //private
-    _delegates:[],
-    _locked:false,
-    _toAdd:false,
-    _toRemove:false,
-    _handlersToAdd:[],
-    _handlersToRemove:[]
+    _delegates: [],
+    _locked: false,
+    _toAdd: false,
+    _toRemove: false,
+    _handlersToAdd: [],
+    _handlersToRemove: []
 });
 
 /**
  * Returns the shared cc.KeyboardDispatcher object for the system.
  * @return {cc.keyboardDispatcher}
  */
-cc.KeyboardDispatcher.getInstance = function () {
+cc.KeyboardDispatcher.getInstance = function() {
     if (!cc.keyboardDispatcher) {
         cc.keyboardDispatcher = new cc.KeyboardDispatcher();
         //make canvas focusable
         cc.canvas.setAttribute('tabindex', 1);
         cc.canvas.style.outline = 'none';
         cc.canvas.style.cursor = 'default';
-        cc.canvas.addEventListener("keydown", function (e) {
+        cc.canvas.addEventListener('keydown', function(e) {
             cc.keyboardDispatcher.dispatchKeyboardMSG(e, true);
         });
-        cc.canvas.addEventListener("keyup", function (e) {
+        cc.canvas.addEventListener('keyup', function(e) {
             cc.keyboardDispatcher.dispatchKeyboardMSG(e, false);
         });
     }
@@ -189,7 +189,7 @@ cc.KeyboardDispatcher.getInstance = function () {
 /**
  * Release the shared cc.KeyboardDispatcher object from the system.
  */
-cc.KeyboardDispatcher.purgeSharedDispatcher = function () {
+cc.KeyboardDispatcher.purgeSharedDispatcher = function() {
     if (cc.keyboardDispatcher) {
         delete cc.keyboardDispatcher;
         cc.keyboardDispatcher = null;

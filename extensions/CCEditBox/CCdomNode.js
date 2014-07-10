@@ -35,7 +35,7 @@ cc.DOM = {};
  * @private
  * @param x
  */
-cc.DOM.addMethods = function (x) {
+cc.DOM.addMethods = function(x) {
     for (var funcs in cc.DOM.methods) {
         x[funcs] = cc.DOM.methods[funcs];
     }
@@ -46,7 +46,7 @@ cc.DOM.methods = /** @lends cc.DOM# */{
      * @param {object|Number} x
      * @param {Number} y
      */
-    setPosition:function (x, y) {
+    setPosition: function(x, y) {
         if (arguments.length == 2) {
             this._position._x = x;
             this._position._y = y;
@@ -61,7 +61,7 @@ cc.DOM.methods = /** @lends cc.DOM# */{
      * replace set Position Y of ccNode
      * @param {Number} y
      */
-    setPositionY:function (y) {
+    setPositionY: function(y) {
         this._position._y = y;
         this.setNodeDirty();
         this.dom.translates(this._position._x, -this._position._y);
@@ -71,7 +71,7 @@ cc.DOM.methods = /** @lends cc.DOM# */{
      * replace set Position X of ccNode
      * @param {Number} x
      */
-    setPositionX:function (x) {
+    setPositionX: function(x) {
         this._position._x = x;
         this.setNodeDirty();
         this.dom.translates(this._position._x, -this._position._y);
@@ -82,7 +82,7 @@ cc.DOM.methods = /** @lends cc.DOM# */{
      * @param {object|Number} scale
      * @param {Number} scaleY
      */
-    setScale:function (scale, scaleY) {
+    setScale: function(scale, scaleY) {
         //save dirty region when before change
         //this._addDirtyRegionToDirector(this.getBoundingBoxToWorld());
 
@@ -99,7 +99,7 @@ cc.DOM.methods = /** @lends cc.DOM# */{
      * replace set Scale X of ccNode
      * @param {Number} x
      */
-    setScaleX:function (x) {
+    setScaleX: function(x) {
         this._scaleX = x;
         this.setNodeDirty();
         this.dom.resize(this._scaleX, this._scaleY);
@@ -109,7 +109,7 @@ cc.DOM.methods = /** @lends cc.DOM# */{
      * replace set Scale Y of ccNode
      * @param {Number} y
      */
-    setScaleY:function (y) {
+    setScaleY: function(y) {
         this._scaleY = y;
         this.setNodeDirty();
         this.dom.resize(this._scaleX, this._scaleY);
@@ -120,7 +120,7 @@ cc.DOM.methods = /** @lends cc.DOM# */{
      * @param {cc.Point|Number} point The anchor point of node or The anchor point.x of node.
      * @param {Number} [y] The anchor point.y of node.
      */
-    setAnchorPoint:function (point, y) {
+    setAnchorPoint: function(point, y) {
         var locAnchorPoint = this._anchorPoint;
         if (arguments.length === 2) {
             if ((point === locAnchorPoint._x) && (y === locAnchorPoint._y))
@@ -153,7 +153,7 @@ cc.DOM.methods = /** @lends cc.DOM# */{
      * @param {cc.Size|Number} size The untransformed size of the node or The untransformed size's width of the node.
      * @param {Number} [height] The untransformed size's height of the node.
      */
-    setContentSize:function (size, height) {
+    setContentSize: function(size, height) {
         var locContentSize = this._contentSize;
         if (arguments.length === 2) {
             if ((size === locContentSize._width) && (height === locContentSize._height))
@@ -184,7 +184,7 @@ cc.DOM.methods = /** @lends cc.DOM# */{
      * replace set Rotation of ccNode
      * @param {Number} newRotation
      */
-    setRotation:function (newRotation) {
+    setRotation: function(newRotation) {
         if (this._rotation == newRotation)
             return;
         //save dirty region when before change
@@ -202,7 +202,7 @@ cc.DOM.methods = /** @lends cc.DOM# */{
      * replace set SkewX of ccNode
      * @param {Number} x
      */
-    setSkewX:function (x) {
+    setSkewX: function(x) {
         this._skewX = x;
         this.setNodeDirty();
         this.dom.setSkew(this._skewX, this._skewY);
@@ -212,7 +212,7 @@ cc.DOM.methods = /** @lends cc.DOM# */{
      * replace set SkewY of ccNode
      * @param {Number} y
      */
-    setSkewY:function (y) {
+    setSkewY: function(y) {
         this._skewY = y;
         this.setNodeDirty();
         this.dom.setSkew(this._skewX, this._skewY);
@@ -222,14 +222,14 @@ cc.DOM.methods = /** @lends cc.DOM# */{
      * replace set Visible of ccNode
      * @param {Boolean} x
      */
-    setVisible:function (x) {
+    setVisible: function(x) {
         this._visible = x;
         this.setNodeDirty();
         if (this.dom)
             this.dom.style.display = (x) ? 'block' : 'none';
     },
-    _setZOrder:function (z) {
-        this._zOrder = z
+    _setZOrder: function(z) {
+        this._zOrder = z;
         this.setNodeDirty();
         if (this.dom)
             this.dom.zIndex = z;
@@ -239,7 +239,7 @@ cc.DOM.methods = /** @lends cc.DOM# */{
      * replace set Parent of ccNode
      * @param {cc.Node} p
      */
-    setParent:function (p) {
+    setParent: function(p) {
         this._parent = p;
 
         if (p !== null) {
@@ -252,7 +252,7 @@ cc.DOM.methods = /** @lends cc.DOM# */{
     /**
      * replace resume Schedule and actions of ccNode
      */
-    resumeSchedulerAndActions:function () {
+    resumeSchedulerAndActions: function() {
         this.getScheduler().resumeTarget(this);
         this.getActionManager().resumeTarget(this);
         //if dom does not have parent, but node has no parent and its running
@@ -265,13 +265,13 @@ cc.DOM.methods = /** @lends cc.DOM# */{
             }
         }
         if (this.dom)
-            this.dom.style.visibility = "visible";
+            this.dom.style.visibility = 'visible';
     },
 
     /**
      * replace pause Schedule and Actions of ccNode
      */
-    pauseSchedulerAndActions:function () {
+    pauseSchedulerAndActions: function() {
         this.getScheduler().pauseTarget(this);
         this.getActionManager().pauseTarget(this);
         if (this.dom) {
@@ -282,7 +282,7 @@ cc.DOM.methods = /** @lends cc.DOM# */{
     /**
      * replace clean up of ccNode
      */
-    cleanup:function () {
+    cleanup: function() {
         // actions
         this.stopAllActions();
         this.unscheduleAllCallbacks();
@@ -296,17 +296,17 @@ cc.DOM.methods = /** @lends cc.DOM# */{
     /**
      * replace remove from parent and clean up of ccNode
      */
-    removeFromParentAndCleanup:function () {
+    removeFromParentAndCleanup: function() {
         this.dom.remove();
     },
-    setOpacity:function (o) {
+    setOpacity: function(o) {
         this._opacity = o;
         this.dom.style.opacity = o / 255;
     },
     /**
      * refresh/updates the DOM element
      */
-    redraw:function () {
+    redraw: function() {
         if (this.isSprite) {
             var tmp = this._children;
             this._children = [];
@@ -319,44 +319,44 @@ cc.DOM.methods = /** @lends cc.DOM# */{
     }
 };
 
-cc.DOM._resetEGLViewDiv = function(){
-    var eglViewDiv = cc.$("#EGLViewDiv");
-    if(eglViewDiv){
+cc.DOM._resetEGLViewDiv = function() {
+    var eglViewDiv = cc.$('#EGLViewDiv');
+    if (eglViewDiv) {
         var eglViewer = cc.EGLView.getInstance();
         var designSize = eglViewer.getDesignResolutionSize();
         var viewPortRect = eglViewer.getViewPortRect();
         var screenSize = eglViewer.getFrameSize();
         var designSizeWidth = designSize.width, designSizeHeight = designSize.height;
-        if((designSize.width === 0) && (designSize.height === 0)){
+        if ((designSize.width === 0) && (designSize.height === 0)) {
             designSizeWidth = screenSize.width;
             designSizeHeight = screenSize.height;
         }
 
         var viewPortWidth = viewPortRect._size.width, viewPortHeight = viewPortRect._size.height;
-        if((viewPortRect._size.width === 0) && (viewPortRect._size.height === 0)){
+        if ((viewPortRect._size.width === 0) && (viewPortRect._size.height === 0)) {
             viewPortWidth = screenSize.width;
             viewPortHeight = screenSize.height;
         }
 
         eglViewDiv.style.position = 'absolute';
         //x.dom.style.display='block';
-        eglViewDiv.style.width = designSizeWidth + "px";
-        eglViewDiv.style.maxHeight = designSizeHeight + "px";
+        eglViewDiv.style.width = designSizeWidth + 'px';
+        eglViewDiv.style.maxHeight = designSizeHeight + 'px';
         eglViewDiv.style.margin = 0;
 
         eglViewDiv.resize(eglViewer.getScaleX(), eglViewer.getScaleY());
 
         if (viewPortWidth < screenSize.width) {
             eglViewDiv.style.left = ((viewPortWidth - designSizeWidth) / 2
-                + (screenSize.width - viewPortWidth ) / 2) + "px";
+                + (screenSize.width - viewPortWidth) / 2) + 'px';
         } else {
-            eglViewDiv.style.left = (viewPortWidth - designSizeWidth) / 2 + "px";
+            eglViewDiv.style.left = (viewPortWidth - designSizeWidth) / 2 + 'px';
         }
 
         if (viewPortHeight < screenSize.height) {
-            eglViewDiv.style.bottom = ((screenSize.height - viewPortHeight ) / 2) + "px";
+            eglViewDiv.style.bottom = ((screenSize.height - viewPortHeight) / 2) + 'px';
         } else {
-            eglViewDiv.style.bottom = "0px";
+            eglViewDiv.style.bottom = '0px';
         }
     }
 };
@@ -367,7 +367,7 @@ cc.DOM._resetEGLViewDiv = function(){
  * @param x
  * @return {Boolean}
  */
-cc.DOM.parentDOM = function (x) {
+cc.DOM.parentDOM = function(x) {
     var p = x.getParent();
     //if has parent, parent need to have dom too
     if (!p || !x.dom)
@@ -386,12 +386,12 @@ cc.DOM.parentDOM = function (x) {
         //parent has no more parent, if its running, then add it to the container
         if (p.isRunning()) {
             //find EGLView div
-            var eglViewDiv = cc.$("#EGLViewDiv");
+            var eglViewDiv = cc.$('#EGLViewDiv');
             if (eglViewDiv) {
                 p.dom.appendTo(eglViewDiv);
             } else {
-                eglViewDiv = cc.$new("div");
-                eglViewDiv.id = "EGLViewDiv";
+                eglViewDiv = cc.$new('div');
+                eglViewDiv.id = 'EGLViewDiv';
 
                 var eglViewer = cc.EGLView.getInstance();
                 var designSize = eglViewer.getDesignResolutionSize();
@@ -411,23 +411,23 @@ cc.DOM.parentDOM = function (x) {
 
                 eglViewDiv.style.position = 'absolute';
                 //x.dom.style.display='block';
-                eglViewDiv.style.width = designSizeWidth + "px";
-                eglViewDiv.style.maxHeight = designSizeHeight + "px";
+                eglViewDiv.style.width = designSizeWidth + 'px';
+                eglViewDiv.style.maxHeight = designSizeHeight + 'px';
                 eglViewDiv.style.margin = 0;
 
                 eglViewDiv.resize(eglViewer.getScaleX(), eglViewer.getScaleY());
 
                 if (viewPortWidth < screenSize.width) {
                     eglViewDiv.style.left = ((viewPortWidth - designSizeWidth) / 2
-                        + (screenSize.width - viewPortWidth ) / 2) + "px";
+                        + (screenSize.width - viewPortWidth) / 2) + 'px';
                 } else {
-                    eglViewDiv.style.left = (viewPortWidth - designSizeWidth) / 2 + "px";
+                    eglViewDiv.style.left = (viewPortWidth - designSizeWidth) / 2 + 'px';
                 }
 
                 if (viewPortHeight < screenSize.height) {
-                    eglViewDiv.style.bottom = ((screenSize.height - viewPortHeight ) / 2) + "px";
+                    eglViewDiv.style.bottom = ((screenSize.height - viewPortHeight) / 2) + 'px';
                 } else {
-                    eglViewDiv.style.bottom = "0px";
+                    eglViewDiv.style.bottom = '0px';
                 }
 
                 p.dom.appendTo(eglViewDiv);
@@ -443,7 +443,7 @@ cc.DOM.parentDOM = function (x) {
  * @private
  * @param x
  */
-cc.DOM.setTransform = function (x) {
+cc.DOM.setTransform = function(x) {
     if (x.ctx) {
         /*        x.ctx.save();
          x.ctx.setTransform(1,0,0,1,0,0);
@@ -464,8 +464,8 @@ cc.DOM.setTransform = function (x) {
         x.dom.position.x = x.getPosition().x;
         x.dom.position.y = -x.getPosition().y;
         x.dom.rotation = x.getRotation();
-        x.dom.scale = {x:x.getScaleX(), y:x.getScaleY()};
-        x.dom.skew = {x:x.getSkewX(), y:x.getSkewY()};
+        x.dom.scale = {x: x.getScaleX(), y: x.getScaleY()};
+        x.dom.skew = {x: x.getSkewX(), y: x.getSkewY()};
         if (x.setAnchorPoint)
             x.setAnchorPoint(x.getAnchorPoint());
         x.dom.transforms();
@@ -478,7 +478,7 @@ cc.DOM.setTransform = function (x) {
  * @private
  * @param x
  */
-cc.DOM.forSprite = function (x) {
+cc.DOM.forSprite = function(x) {
     x.dom = cc.$new('div');
     x.canvas = cc.$new('canvas');
     var locContentSize = x.getContentSize();
@@ -500,15 +500,15 @@ cc.DOM.forSprite = function (x) {
  * @private
  * @param x
  */
-cc.DOM.placeHolder = function (x) {
+cc.DOM.placeHolder = function(x) {
     //creating a placeholder dom to simulate other ccNode in the hierachy
     x.dom = cc.$new('div');
     x.placeholder = true;
     x.dom.style.position = 'absolute';
     x.dom.style.bottom = 0;
     //x.dom.style.display='block';
-    x.dom.style.width = (x.getContentSize().width || cc.Director.getInstance().getWinSize().width) + "px";
-    x.dom.style.maxHeight = (x.getContentSize().height || cc.Director.getInstance().getWinSize().height) + "px";
+    x.dom.style.width = (x.getContentSize().width || cc.Director.getInstance().getWinSize().width) + 'px';
+    x.dom.style.maxHeight = (x.getContentSize().height || cc.Director.getInstance().getWinSize().height) + 'px';
     x.dom.style.margin = 0;
     cc.DOM.setTransform(x);
     x.dom.transforms();
@@ -528,7 +528,7 @@ cc.DOM.placeHolder = function (x) {
  * var myDOMElements = [Sprite1, Sprite2, MenuItem];
  * cc.DOM.convert(myDOMElements);
  */
-cc.DOM.convert = function (nodeObject) {
+cc.DOM.convert = function(nodeObject) {
     //if passing by list, make it an array
     if (arguments.length > 1) {
         cc.DOM.convert(arguments);
@@ -548,9 +548,9 @@ cc.DOM.convert = function (nodeObject) {
             cc.log('DOM converter only supports sprite and menuitems yet');
         }
         cc.DOM.addMethods(args[i]);
-        args[i].visit = function () {
+        args[i].visit = function() {
         };
-        args[i].transform = function () {
+        args[i].transform = function() {
         };
         cc.DOM.setTransform(args[i]);
         args[i].setVisible(args[i].isVisible());

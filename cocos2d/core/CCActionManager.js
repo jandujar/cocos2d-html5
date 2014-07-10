@@ -29,17 +29,17 @@
  * @extends cc.Class
  */
 cc.HashElement = cc.Class.extend(/** @lends cc.HashElement# */{
-    actions:null,
-    target:null, //ccobject
-    actionIndex:0,
-    currentAction:null, //CCAction
-    currentActionSalvaged:false,
-    paused:false,
-    hh:null, //ut hash handle
+    actions: null,
+    target: null, //ccobject
+    actionIndex: 0,
+    currentAction: null, //CCAction
+    currentActionSalvaged: false,
+    paused: false,
+    hh: null, //ut hash handle
     /**
      * Constructor
      */
-    ctor:function () {
+    ctor: function() {
         this.actions = [];
         this._target = null;
         this.actionIndex = 0;
@@ -62,12 +62,12 @@ cc.HashElement = cc.Class.extend(/** @lends cc.HashElement# */{
  * @extends cc.Class
  */
 cc.ActionManager = cc.Class.extend({
-    _hashTargets:null,
-    _arrayTargets:null,
-    _currentTarget:null,
-    _currentTargetSalvaged:false,
+    _hashTargets: null,
+    _arrayTargets: null,
+    _currentTarget: null,
+    _currentTargetSalvaged: false,
 
-    _searchElementByTarget:function (arr, target) {
+    _searchElementByTarget: function(arr, target) {
         for (var k = 0; k < arr.length; k++) {
             if (target == arr[k].target)
                 return arr[k];
@@ -78,7 +78,7 @@ cc.ActionManager = cc.Class.extend({
     /**
      * Constructor
      */
-    ctor:function () {
+    ctor: function() {
         this._hashTargets = {};
         this._arrayTargets = [];
         this._currentTarget = null;
@@ -93,11 +93,11 @@ cc.ActionManager = cc.Class.extend({
      * @param {cc.Node} target
      * @param {Boolean} paused
      */
-    addAction:function (action, target, paused) {
-        if(!action)
-            throw "cc.ActionManager.addAction(): action must be non-null";
-        if(!target)
-            throw "cc.ActionManager.addAction(): action must be non-null";
+    addAction: function(action, target, paused) {
+        if (!action)
+            throw 'cc.ActionManager.addAction(): action must be non-null';
+        if (!target)
+            throw 'cc.ActionManager.addAction(): action must be non-null';
 
         //check if the action target already exists
         var element = this._hashTargets[target.__instanceId];
@@ -119,7 +119,7 @@ cc.ActionManager = cc.Class.extend({
     /**
      * Removes all actions from all the targets.
      */
-    removeAllActions:function () {
+    removeAllActions: function() {
         var locTargets = this._arrayTargets;
         for (var i = 0; i < locTargets.length; i++) {
             var element = locTargets[i];
@@ -132,7 +132,7 @@ cc.ActionManager = cc.Class.extend({
      * @param {object} target
      * @param {boolean} forceDelete
      */
-    removeAllActionsFromTarget:function (target, forceDelete) {
+    removeAllActionsFromTarget: function(target, forceDelete) {
         // explicit null handling
         if (target == null)
             return;
@@ -152,7 +152,7 @@ cc.ActionManager = cc.Class.extend({
     /** Removes an action given an action reference.
      * @param {cc.Action} action
      */
-    removeAction:function (action) {
+    removeAction: function(action) {
         // explicit null handling
         if (action == null)
             return;
@@ -167,7 +167,7 @@ cc.ActionManager = cc.Class.extend({
                 }
             }
         } else {
-            cc.log("cocos2d: removeAction: Target not found");
+            cc.log('cocos2d: removeAction: Target not found');
         }
     },
 
@@ -175,11 +175,11 @@ cc.ActionManager = cc.Class.extend({
      * @param {Number} tag
      * @param {object} target
      */
-    removeActionByTag:function (tag, target) {
-        if(tag == cc.ACTION_TAG_INVALID)
-            cc.log("cc.ActionManager.removeActionByTag(): an invalid tag");
-        if(!target)
-            throw "cc.ActionManager.removeActionByTag(): target must be non-null";
+    removeActionByTag: function(tag, target) {
+        if (tag == cc.ACTION_TAG_INVALID)
+            cc.log('cc.ActionManager.removeActionByTag(): an invalid tag');
+        if (!target)
+            throw 'cc.ActionManager.removeActionByTag(): target must be non-null';
 
         var element = this._hashTargets[target.__instanceId];
 
@@ -200,9 +200,9 @@ cc.ActionManager = cc.Class.extend({
      * @param {object} target
      * @return {cc.Action|Null}  return the Action with the given tag on success
      */
-    getActionByTag:function (tag, target) {
-        if(tag == cc.ACTION_TAG_INVALID)
-            cc.log("cc.ActionManager.getActionByTag(): an invalid tag");
+    getActionByTag: function(tag, target) {
+        if (tag == cc.ACTION_TAG_INVALID)
+            cc.log('cc.ActionManager.getActionByTag(): an invalid tag');
 
         var element = this._hashTargets[target.__instanceId];
         if (element) {
@@ -213,7 +213,7 @@ cc.ActionManager = cc.Class.extend({
                         return action;
                 }
             }
-            cc.log("cocos2d : getActionByTag(tag =" + tag + "): Action not found");
+            cc.log('cocos2d : getActionByTag(tag =' + tag + '): Action not found');
         }
         return null;
     },
@@ -227,7 +227,7 @@ cc.ActionManager = cc.Class.extend({
      * @param {object} target
      * @return {Number}
      */
-    numberOfRunningActionsInTarget:function (target) {
+    numberOfRunningActionsInTarget: function(target) {
         var element = this._hashTargets[target.__instanceId];
         if (element)
             return (element.actions) ? element.actions.length : 0;
@@ -237,7 +237,7 @@ cc.ActionManager = cc.Class.extend({
     /** Pauses the target: all running actions and newly added actions will be paused.
      * @param {object} target
      */
-    pauseTarget:function (target) {
+    pauseTarget: function(target) {
         var element = this._hashTargets[target.__instanceId];
         if (element)
             element.paused = true;
@@ -245,7 +245,7 @@ cc.ActionManager = cc.Class.extend({
     /** Resumes the target. All queued actions will be resumed.
      * @param {object} target
      */
-    resumeTarget:function (target) {
+    resumeTarget: function(target) {
         var element = this._hashTargets[target.__instanceId];
         if (element)
             element.paused = false;
@@ -254,12 +254,12 @@ cc.ActionManager = cc.Class.extend({
     /**
      * Pauses all running actions, returning a list of targets whose actions were paused.
      */
-    pauseAllRunningActions:function(){
+    pauseAllRunningActions: function() {
         var idsWithActions = [];
         var locTargets = this._arrayTargets;
-        for(var i = 0; i< locTargets.length; i++){
+        for (var i = 0; i < locTargets.length; i++) {
             var element = locTargets[i];
-            if(element && !element.paused){
+            if (element && !element.paused) {
                 element.paused = true;
                 idsWithActions.push(element.target);
             }
@@ -271,12 +271,12 @@ cc.ActionManager = cc.Class.extend({
      * Resume a set of targets (convenience function to reverse a pauseAllRunningActions call)
      * @param {Array} targetsToResume
      */
-    resumeTargets:function(targetsToResume){
-        if(!targetsToResume)
+    resumeTargets: function(targetsToResume) {
+        if (!targetsToResume)
             return;
 
-        for(var i = 0 ; i< targetsToResume.length; i++){
-            if(targetsToResume[i])
+        for (var i = 0; i < targetsToResume.length; i++) {
+            if (targetsToResume[i])
                 this.resumeTarget(targetsToResume[i]);
         }
     },
@@ -284,18 +284,18 @@ cc.ActionManager = cc.Class.extend({
     /** purges the shared action manager. It releases the retained instance. <br/>
      * because it uses this, so it can not be static
      */
-    purgeSharedManager:function () {
+    purgeSharedManager: function() {
         cc.Director.getInstance().getScheduler().unscheduleUpdateForTarget(this);
     },
 
     //protected
-    _removeActionAtIndex:function (index, element) {
+    _removeActionAtIndex: function(index, element) {
         var action = element.actions[index];
 
         if ((action == element.currentAction) && (!element.currentActionSalvaged))
             element.currentActionSalvaged = true;
 
-        cc.ArrayRemoveObjectAtIndex(element.actions,index);
+        cc.ArrayRemoveObjectAtIndex(element.actions, index);
 
         // update actionIndex in case we are in tick. looping over the actions
         if (element.actionIndex >= index)
@@ -310,7 +310,7 @@ cc.ActionManager = cc.Class.extend({
         }
     },
 
-    _deleteHashElement:function (element) {
+    _deleteHashElement: function(element) {
         if (element) {
             delete this._hashTargets[element.target.__instanceId];
             cc.ArrayRemoveObject(this._arrayTargets, element);
@@ -319,7 +319,7 @@ cc.ActionManager = cc.Class.extend({
         }
     },
 
-    _actionAllocWithHashElement:function (element) {
+    _actionAllocWithHashElement: function(element) {
         // 4 actions per Node by default
         if (element.actions == null) {
             element.actions = [];
@@ -329,8 +329,8 @@ cc.ActionManager = cc.Class.extend({
     /**
      * @param {Number} dt delta time in seconds
      */
-    update:function (dt) {
-        var locTargets = this._arrayTargets , locCurrTarget;
+    update: function(dt) {
+        var locTargets = this._arrayTargets, locCurrTarget;
         for (var elt = 0; elt < locTargets.length; elt++) {
             this._currentTarget = locTargets[elt];
             locCurrTarget = this._currentTarget;

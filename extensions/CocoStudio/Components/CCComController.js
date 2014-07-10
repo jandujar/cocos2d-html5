@@ -28,19 +28,19 @@
  * @extends ccs.Component
  */
 ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
-    ctor: function () {
+    ctor: function() {
         cc.Component.prototype.ctor.call(this);
-        this._name = "ComController";
+        this._name = 'ComController';
     },
-    init: function () {
+    init: function() {
         return true;
     },
 
-    onEnter: function () {
+    onEnter: function() {
 
     },
 
-    onExit: function () {
+    onExit: function() {
         var director = cc.Director.getInstance();
         if (this._isTouchEnabled)
             cc.unregisterTouchDelegate(this);
@@ -57,14 +57,14 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
             director.getMouseDispatcher().removeMouseDelegate(this);
     },
 
-    update: function (dt) {
+    update: function(dt) {
     },
 
     /**
      * Enabled getter
-     * @returns {Boolean}
+     * @return {Boolean}
      */
-    isEnabled: function () {
+    isEnabled: function() {
         return this._enabled;
     },
 
@@ -72,23 +72,23 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * Enabled setter
      * @param {Boolean} bool
      */
-    setEnabled: function (bool) {
+    setEnabled: function(bool) {
         this._enabled = b;
     },
     /**
      * If isTouchEnabled, this method is called onEnter.
      */
-    registerWithTouchDispatcher:function () {
+    registerWithTouchDispatcher: function() {
         if (this._touchMode === cc.TOUCH_ALL_AT_ONCE)
-            cc.registerStandardDelegate(this,this._touchPriority);
+            cc.registerStandardDelegate(this, this._touchPriority);
         else
             cc.registerTargetedDelegate(this._touchPriority, true, this);
     },
     /**
      * MouseEnabled getter
-     * @returns {Boolean}
+     * @return {Boolean}
      */
-    isMouseEnabled:function () {
+    isMouseEnabled: function() {
         return this._isMouseEnabled;
     },
 
@@ -96,9 +96,9 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * MouseEnabled setter
      * @param {Boolean} enabled
      */
-    setMouseEnabled:function (enabled) {
-        if(!cc.MouseDispatcher)
-            throw "cc.MouseDispatcher is undefined, maybe it has been removed from js loading list.";
+    setMouseEnabled: function(enabled) {
+        if (!cc.MouseDispatcher)
+            throw 'cc.MouseDispatcher is undefined, maybe it has been removed from js loading list.';
 
         if (this._isMouseEnabled != enabled) {
             this._isMouseEnabled = enabled;
@@ -111,9 +111,9 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
         }
     },
 
-    setMousePriority:function (priority) {
-        if(!cc.MouseDispatcher)
-            throw "cc.MouseDispatcher is undefined, maybe it has been removed from js loading list.";
+    setMousePriority: function(priority) {
+        if (!cc.MouseDispatcher)
+            throw 'cc.MouseDispatcher is undefined, maybe it has been removed from js loading list.';
 
         if (this._mousePriority !== priority) {
             this._mousePriority = priority;
@@ -125,7 +125,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
         }
     },
 
-    getMousePriority:function () {
+    getMousePriority: function() {
         return this._mousePriority;
     },
 
@@ -135,7 +135,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * Only the touches of this node will be affected. This "method" is not propagated to it's children.<br/>
      * @return {Boolean}
      */
-    isTouchEnabled:function () {
+    isTouchEnabled: function() {
         return this._isTouchEnabled;
     },
 
@@ -143,7 +143,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * Enable touch events
      * @param {Boolean} enabled
      */
-    setTouchEnabled:function (enabled) {
+    setTouchEnabled: function(enabled) {
         if (this._isTouchEnabled !== enabled) {
             this._isTouchEnabled = enabled;
             if (enabled) {
@@ -158,14 +158,14 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
     /** returns the priority of the touch event handler
      * @return {Number}
      */
-    getTouchPriority:function () {
+    getTouchPriority: function() {
         return this._touchPriority;
     },
 
     /** Sets the touch event handler priority. Default is 0.
      * @param {Number} priority
      */
-    setTouchPriority:function (priority) {
+    setTouchPriority: function(priority) {
         if (this._touchPriority !== priority) {
             this._touchPriority = priority;
             // Update touch priority with handler
@@ -179,14 +179,14 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
     /** returns the touch mode.
      * @return {Number}
      */
-    getTouchMode:function () {
+    getTouchMode: function() {
         return this._touchMode;
     },
 
     /** Sets the touch mode.
      * @param {Number} mode
      */
-    setTouchMode:function (mode) {
+    setTouchMode: function(mode) {
         if (this._touchMode !== mode) {
             this._touchMode = mode;
             // update the mode with handler
@@ -202,7 +202,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * You can enable / disable accelerometer events with this property.
      * @return {Boolean}
      */
-    isAccelerometerEnabled:function () {
+    isAccelerometerEnabled: function() {
         return this._isAccelerometerEnabled;
     },
 
@@ -210,9 +210,9 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * isAccelerometerEnabled setter
      * @param {Boolean} enabled
      */
-    setAccelerometerEnabled:function (enabled) {
-        if(!cc.Accelerometer)
-            throw "cc.Accelerometer is undefined, maybe it has been removed from js loading list.";
+    setAccelerometerEnabled: function(enabled) {
+        if (!cc.Accelerometer)
+            throw 'cc.Accelerometer is undefined, maybe it has been removed from js loading list.';
         if (enabled !== this._isAccelerometerEnabled) {
             this._isAccelerometerEnabled = enabled;
             if (this._running) {
@@ -229,13 +229,13 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * accelerometerInterval setter
      * @param {Number} interval
      */
-    setAccelerometerInterval:function (interval) {
+    setAccelerometerInterval: function(interval) {
         if (this._isAccelerometerEnabled && cc.Accelerometer)
             cc.Director.getInstance().getAccelerometer().setAccelerometerInterval(interval);
     },
 
-    onAccelerometer:function (accelerationValue) {
-        cc.log("ccs.ComController.onAccelerometer(): should override me.");
+    onAccelerometer: function(accelerationValue) {
+        cc.log('ccs.ComController.onAccelerometer(): should override me.');
     },
 
     /**
@@ -244,7 +244,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * it's new in cocos2d-x
      * @return {Boolean}
      */
-    isKeyboardEnabled:function () {
+    isKeyboardEnabled: function() {
         return this._isKeyboardEnabled;
     },
 
@@ -252,9 +252,9 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * Enable Keyboard interaction
      * @param {Boolean} enabled
      */
-    setKeyboardEnabled:function (enabled) {
-        if(!cc.KeyboardDispatcher)
-            throw "cc.KeyboardDispatcher is undefined, maybe it has been removed from js loading list.";
+    setKeyboardEnabled: function(enabled) {
+        if (!cc.KeyboardDispatcher)
+            throw 'cc.KeyboardDispatcher is undefined, maybe it has been removed from js loading list.';
 
         if (enabled !== this._isKeyboardEnabled) {
             this._isKeyboardEnabled = enabled;
@@ -278,7 +278,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param {event} event
      * @return {Boolean}
      */
-    onTouchBegan:function (touch, event) {
+    onTouchBegan: function(touch, event) {
         return true;
     },
 
@@ -287,7 +287,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param {cc.Touch} touch
      * @param {event} event
      */
-    onTouchMoved:function (touch, event) {
+    onTouchMoved: function(touch, event) {
     },
 
     /**
@@ -295,14 +295,14 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param {cc.Touch} touch
      * @param {event} event
      */
-    onTouchEnded:function (touch, event) {
+    onTouchEnded: function(touch, event) {
     },
 
     /**
      * @param {cc.Touch} touch
      * @param {event} event
      */
-    onTouchCancelled:function (touch, event) {
+    onTouchCancelled: function(touch, event) {
     },
 
     /**
@@ -310,7 +310,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param {cc.Touch} touch
      * @param {event} event
      */
-    onTouchesBegan:function (touch, event) {
+    onTouchesBegan: function(touch, event) {
     },
 
     /**
@@ -318,7 +318,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param {cc.Touch} touch
      * @param {event} event
      */
-    onTouchesMoved:function (touch, event) {
+    onTouchesMoved: function(touch, event) {
     },
 
     /**
@@ -326,14 +326,14 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param {cc.Touch} touch
      * @param {event} event
      */
-    onTouchesEnded:function (touch, event) {
+    onTouchesEnded: function(touch, event) {
     },
 
     /**
      * @param touch
      * @param event
      */
-    onTouchesCancelled:function (touch, event) {
+    onTouchesCancelled: function(touch, event) {
     },
 
     // ---------------------CCMouseEventDelegate interface------------------------------
@@ -344,7 +344,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param event
      * @return {Boolean}
      */
-    onMouseDown:function (event) {
+    onMouseDown: function(event) {
         return false;
     },
 
@@ -354,7 +354,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param event
      * @return {Boolean}
      */
-    onMouseDragged:function (event) {
+    onMouseDragged: function(event) {
         return false;
     },
 
@@ -364,7 +364,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param event
      * @return {Boolean}
      */
-    onMouseMoved:function (event) {
+    onMouseMoved: function(event) {
         return false;
     },
 
@@ -374,7 +374,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param event
      * @return {Boolean}
      */
-    onMouseUp:function (event) {
+    onMouseUp: function(event) {
         return false;
     },
 
@@ -385,7 +385,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param event
      * @return {Boolean}
      */
-    onRightMouseDown:function (event) {
+    onRightMouseDown: function(event) {
         return false;
     },
 
@@ -395,7 +395,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param event
      * @return {Boolean}
      */
-    onRightMouseDragged:function (event) {
+    onRightMouseDragged: function(event) {
         return false;
     },
 
@@ -405,7 +405,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param event
      * @return {Boolean}
      */
-    onRightMouseUp:function (event) {
+    onRightMouseUp: function(event) {
         return false;
     },
 
@@ -416,7 +416,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param event
      * @return {Boolean}
      */
-    onOtherMouseDown:function (event) {
+    onOtherMouseDown: function(event) {
         return false;
     },
 
@@ -426,7 +426,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param event
      * @return {Boolean}
      */
-    onOtherMouseDragged:function (event) {
+    onOtherMouseDragged: function(event) {
         return false;
     },
 
@@ -436,7 +436,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param event
      * @return {Boolean}
      */
-    onOtherMouseUp:function (event) {
+    onOtherMouseUp: function(event) {
         return false;
     },
 
@@ -447,7 +447,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param event
      * @return {Boolean}
      */
-    onScrollWheel:function (event) {
+    onScrollWheel: function(event) {
         return false;
     },
 
@@ -458,7 +458,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param theEvent
      * @return {Boolean}
      */
-    onMouseEntered:function (theEvent) {
+    onMouseEntered: function(theEvent) {
         return false;
     },
 
@@ -468,7 +468,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * @param theEvent
      * @return {Boolean}
      */
-    onMouseExited:function (theEvent) {
+    onMouseExited: function(theEvent) {
         return false;
     },
 
@@ -481,7 +481,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * // example
      * if(keyCode == cc.KEY.w){}
      */
-    onKeyDown:function (keyCode) {
+    onKeyDown: function(keyCode) {
     },
 
     /**
@@ -491,7 +491,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
      * // example
      * if(keyCode == cc.KEY.w){}
      */
-    onKeyUp:function (keyCode) {
+    onKeyUp: function(keyCode) {
     }
 });
 /**
@@ -502,7 +502,7 @@ ccs.ComController = ccs.Component.extend(/** @lends ccs.ComController# */{
  * // example
  * var com = ccs.ComController.create();
  */
-ccs.ComController.create = function () {
+ccs.ComController.create = function() {
     var com = new ccs.ComController();
     if (com && com.init()) {
         return com;

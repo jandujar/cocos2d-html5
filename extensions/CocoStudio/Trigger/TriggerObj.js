@@ -23,41 +23,41 @@
  ****************************************************************************/
 
 ccs.BaseTriggerCondition = ccs.Class.extend({
-    ctor:function(){
+    ctor: function() {
 
     },
 
-    init: function () {
+    init: function() {
         return true;
     },
 
-    detect: function () {
+    detect: function() {
         return true;
     },
 
-    serialize: function (jsonVal) {
+    serialize: function(jsonVal) {
     },
 
-    removeAll: function () {
+    removeAll: function() {
     }
 });
 ccs.BaseTriggerAction = ccs.Class.extend({
-    ctor:function(){
+    ctor: function() {
 
     },
 
-    init: function () {
+    init: function() {
         return true;
     },
 
-    done: function () {
+    done: function() {
 
     },
 
-    serialize: function (jsonVal) {
+    serialize: function(jsonVal) {
     },
 
-    removeAll: function () {
+    removeAll: function() {
     }
 });
 
@@ -68,19 +68,19 @@ ccs.TriggerObj = ccs.Class.extend({
     _enable: true,
     _vInt: null,
 
-    ctor: function () {
+    ctor: function() {
         this._id = 0;
         this._enable = true;
     },
 
-    init: function () {
+    init: function() {
         this._cons = [];
         this._acts = [];
         this._vInt = [];
         return true;
     },
 
-    detect: function () {
+    detect: function() {
         if (!this._enable || this._cons.length == 0) {
             return true;
         }
@@ -95,7 +95,7 @@ ccs.TriggerObj = ccs.Class.extend({
         return ret;
     },
 
-    done: function () {
+    done: function() {
         if (!this._enable || this._acts.length == 0) {
             return;
         }
@@ -108,7 +108,7 @@ ccs.TriggerObj = ccs.Class.extend({
         }
     },
 
-    removeAll: function () {
+    removeAll: function() {
         var obj = null;
         for (var i = 0; i < this._cons.length; i++) {
             obj = this._cons[i];
@@ -124,15 +124,15 @@ ccs.TriggerObj = ccs.Class.extend({
         this._acts = [];
     },
 
-    serialize: function (jsonVal) {
-        this._id = jsonVal["id"] || 0;
-        var conditions = jsonVal["conditions"] || [];
+    serialize: function(jsonVal) {
+        this._id = jsonVal['id'] || 0;
+        var conditions = jsonVal['conditions'] || [];
         for (var i = 0; i < conditions.length; i++) {
             var subDict = conditions[i];
-            var classname = subDict["classname"];
+            var classname = subDict['classname'];
             var con = ccs.ObjectFactory.getInstance().createObject(classname);
             if (!con) {
-                cc.log("class named classname(" + classname + ") can not implement!");
+                cc.log('class named classname(' + classname + ') can not implement!');
                 continue;
             }
 
@@ -141,13 +141,13 @@ ccs.TriggerObj = ccs.Class.extend({
             this._cons.push(con);
         }
 
-        var actions = jsonVal["actions"] || [];
+        var actions = jsonVal['actions'] || [];
         for (var i = 0; i < actions.length; i++) {
             var subDict = actions[i];
-            var classname = subDict["classname"];
+            var classname = subDict['classname'];
             var act = ccs.ObjectFactory.getInstance().createObject(classname);
             if (!act) {
-                cc.log("class named classname(" + classname + ") can not implement!");
+                cc.log('class named classname(' + classname + ') can not implement!');
                 continue;
             }
 
@@ -156,10 +156,10 @@ ccs.TriggerObj = ccs.Class.extend({
             this._acts.push(act);
         }
 
-        var events = jsonVal["events"] || [];
+        var events = jsonVal['events'] || [];
         for (var i = 0; i < events.length; i++) {
             var subDict = events[i];
-            var event = subDict["id"];
+            var event = subDict['id'];
             if (event < 0) {
                 continue;
             }
@@ -167,20 +167,20 @@ ccs.TriggerObj = ccs.Class.extend({
         }
     },
 
-    getId: function () {
+    getId: function() {
         return this._id;
     },
 
-    setEnable: function (enable) {
+    setEnable: function(enable) {
         this._enable = enable;
     },
 
-    getEvents: function () {
+    getEvents: function() {
         return this._vInt;
     }
 });
 
-ccs.TriggerObj.create = function () {
+ccs.TriggerObj.create = function() {
     var ret = new ccs.TriggerObj();
     if (ret.init())
         return ret;

@@ -45,11 +45,11 @@ cc.PRIORITY_NON_SYSTEM = cc.PRIORITY_SYSTEM + 1;
  * @return {Boolean}
  * @function
  */
-cc.ArrayVerifyType = function (arr, type) {
+cc.ArrayVerifyType = function(arr, type) {
     if (arr && arr.length > 0) {
         for (var i = 0; i < arr.length; i++) {
-            if (!(arr[i] instanceof  type)) {
-                cc.log("element type is wrong!");
+            if (!(arr[i] instanceof type)) {
+                cc.log('element type is wrong!');
                 return false;
             }
         }
@@ -63,7 +63,7 @@ cc.ArrayVerifyType = function (arr, type) {
  * @param {Array} arr Source Array
  * @param {Number} index index of remove object
  */
-cc.ArrayRemoveObjectAtIndex = function (arr, index) {
+cc.ArrayRemoveObjectAtIndex = function(arr, index) {
     arr.splice(index, 1);
 };
 
@@ -73,7 +73,7 @@ cc.ArrayRemoveObjectAtIndex = function (arr, index) {
  * @param {Array} arr Source Array
  * @param {*} delObj  remove object
  */
-cc.ArrayRemoveObject = function (arr, delObj) {
+cc.ArrayRemoveObject = function(arr, delObj) {
     for (var i = 0, l = arr.length; i < l; i++) {
         if (arr[i] == delObj) {
             arr.splice(i, 1);
@@ -88,7 +88,7 @@ cc.ArrayRemoveObject = function (arr, delObj) {
  * @param {Array} arr Source Array
  * @param {Array} minusArr minus Array
  */
-cc.ArrayRemoveArray = function (arr, minusArr) {
+cc.ArrayRemoveArray = function(arr, minusArr) {
     for (var i = 0, l = minusArr.length; i < l; i++) {
         cc.ArrayRemoveObject(arr, minusArr[i]);
     }
@@ -101,7 +101,7 @@ cc.ArrayRemoveArray = function (arr, minusArr) {
  * @param {*} value find value
  * @return {Number} index of first occurence of value
  */
-cc.ArrayGetIndexOfValue = function (arr, value) {
+cc.ArrayGetIndexOfValue = function(arr, value) {
     return arr.indexOf(value);
 };
 
@@ -111,7 +111,7 @@ cc.ArrayGetIndexOfValue = function (arr, value) {
  * @param {Array} arr
  * @param {*} addObj
  */
-cc.ArrayAppendObject = function (arr, addObj) {
+cc.ArrayAppendObject = function(arr, addObj) {
     arr.push(addObj);
 };
 
@@ -123,7 +123,7 @@ cc.ArrayAppendObject = function (arr, addObj) {
  * @param {Number} index
  * @return {Array}
  */
-cc.ArrayAppendObjectToIndex = function (arr, addObj, index) {
+cc.ArrayAppendObjectToIndex = function(arr, addObj, index) {
     arr.splice(index, 0, addObj);
     return arr;
 };
@@ -136,7 +136,7 @@ cc.ArrayAppendObjectToIndex = function (arr, addObj, index) {
  * @param {Number} index
  * @return {Array}
  */
-cc.ArrayAppendObjectsToIndex = function(arr, addObjs,index){
+cc.ArrayAppendObjectsToIndex = function(arr, addObjs, index) {
     arr.splice.apply(arr, [index, 0].concat(addObjs));
     return arr;
 };
@@ -148,7 +148,7 @@ cc.ArrayAppendObjectsToIndex = function(arr, addObjs,index){
  * @param {*} findObj find object
  * @return {Number} index of first occurence of value
  */
-cc.ArrayGetIndexOfObject = function (arr, findObj) {
+cc.ArrayGetIndexOfObject = function(arr, findObj) {
     for (var i = 0, l = arr.length; i < l; i++) {
         if (arr[i] == findObj)
             return i;
@@ -163,7 +163,7 @@ cc.ArrayGetIndexOfObject = function (arr, findObj) {
  * @param {*} findObj
  * @return {Boolean}
  */
-cc.ArrayContainsObject = function (arr, findObj) {
+cc.ArrayContainsObject = function(arr, findObj) {
     return arr.indexOf(findObj) != -1;
 };
 
@@ -173,7 +173,7 @@ cc.ArrayContainsObject = function (arr, findObj) {
  * @param {cc.ListEntry|cc.HashUpdateEntry} findInt find target
  * @return {cc.ListEntry|cc.HashUpdateEntry}
  */
-cc.HASH_FIND_INT = function (arr, findInt) {
+cc.HASH_FIND_INT = function(arr, findInt) {
     if (arr == null) {
         return null;
     }
@@ -197,7 +197,7 @@ cc.HASH_FIND_INT = function (arr, findInt) {
  * @param {Boolean} paused
  * @param {Boolean} markedForDeletion selector will no longer be called and entry will be removed at end of the next tick
  */
-cc.ListEntry = function (prev, next, target, priority, paused, markedForDeletion) {
+cc.ListEntry = function(prev, next, target, priority, paused, markedForDeletion) {
     this.prev = prev;
     this.next = next;
     this.target = target;
@@ -215,7 +215,7 @@ cc.ListEntry = function (prev, next, target, priority, paused, markedForDeletion
  * @param {cc.Class} target hash key (retained)
  * @param {Array} hh
  */
-cc.HashUpdateEntry = function (list, entry, target, hh) {
+cc.HashUpdateEntry = function(list, entry, target, hh) {
     this.list = list;
     this.entry = entry;
     this.target = target;
@@ -235,7 +235,7 @@ cc.HashUpdateEntry = function (list, entry, target, hh) {
  * @param {Boolean} paused
  * @param {Array} hh
  */
-cc.HashTimerEntry = function (timers, target, timerIndex, currentTimer, currentTimerSalvaged, paused, hh) {
+cc.HashTimerEntry = function(timers, target, timerIndex, currentTimer, currentTimerSalvaged, paused, hh) {
     this.timers = timers;
     this.target = target;
     this.timerIndex = timerIndex;
@@ -251,30 +251,30 @@ cc.HashTimerEntry = function (timers, target, timerIndex, currentTimer, currentT
  * @extends cc.Class
  */
 cc.Timer = cc.Class.extend(/** @lends cc.Timer# */{
-    _interval:0.0,
-    _selector:null,
+    _interval: 0.0,
+    _selector: null,
 
-    _target:null,
-    _elapsed:0.0,
+    _target: null,
+    _elapsed: 0.0,
 
-    _runForever:false,
-    _useDelay:false,
-    _timesExecuted:0,
-    _repeat:0, //0 = once, 1 is 2 x executed
-    _delay:0,
+    _runForever: false,
+    _useDelay: false,
+    _timesExecuted: 0,
+    _repeat: 0, //0 = once, 1 is 2 x executed
+    _delay: 0,
 
     /**
      * cc.Timer's Constructor
      * Constructor
      */
-    ctor:function () {
+    ctor: function() {
     },
 
     /**
      * returns interval of timer
      * @return {Number}
      */
-    getInterval:function () {
+    getInterval: function() {
         return this._interval;
     },
 
@@ -282,7 +282,7 @@ cc.Timer = cc.Class.extend(/** @lends cc.Timer# */{
      * set interval in seconds
      * @param {Number} interval
      */
-    setInterval:function(interval){
+    setInterval: function(interval) {
 
     },
 
@@ -290,7 +290,7 @@ cc.Timer = cc.Class.extend(/** @lends cc.Timer# */{
      * returns selector
      * @return {String|function}
      */
-    getSelector:function(){
+    getSelector: function() {
        return this._selector;
     },
 
@@ -303,7 +303,7 @@ cc.Timer = cc.Class.extend(/** @lends cc.Timer# */{
      * @param {Number} [delay=0] delay
      * @return {Boolean} <tt>true</tt> if initialized
      * * */
-    initWithTarget: function (target, selector, seconds, repeat, delay) {
+    initWithTarget: function(target, selector, seconds, repeat, delay) {
         this._target = target;
         this._selector = selector;
         this._elapsed = -1;
@@ -315,8 +315,8 @@ cc.Timer = cc.Class.extend(/** @lends cc.Timer# */{
         return true;
     },
 
-    _callSelector:function(){
-        if (typeof(this._selector) == "string")
+    _callSelector: function() {
+        if (typeof(this._selector) == 'string')
             this._target[this._selector](this._elapsed);
          else // if (typeof(this._selector) == "function") {
             this._selector.call(this._target, this._elapsed);
@@ -326,7 +326,7 @@ cc.Timer = cc.Class.extend(/** @lends cc.Timer# */{
      * triggers the timer
      * @param {Number} dt delta time
      */
-    update:function (dt) {
+    update: function(dt) {
         if (this._elapsed == -1) {
             this._elapsed = 0;
             this._timesExecuted = 0;
@@ -378,13 +378,13 @@ cc.Timer = cc.Class.extend(/** @lends cc.Timer# */{
  * @param {Number} seconds
  * @return {cc.Timer} a cc.Timer instance
  * */
-cc.Timer.timerWithTarget = function (target, selector, seconds) {
-    if (arguments.length < 2){
+cc.Timer.timerWithTarget = function(target, selector, seconds) {
+    if (arguments.length < 2) {
         throw new Error("timerWithTarget'argument can't is null");
     }
 
     var timer = new cc.Timer();
-    seconds = seconds||0;
+    seconds = seconds || 0;
     timer.initWithTarget(target, selector, seconds, cc.REPEAT_FOREVER, 0);
     return timer;
 };
@@ -409,24 +409,24 @@ cc._sharedScheduler = null;
  * cc.Director.getInstance().getScheduler().scheduleSelector(selector, this, interval, !this._isRunning);
  */
 cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
-    _timeScale:1.0,
-    _updatesNegList:null, // list of priority < 0
-    _updates0List:null, // list priority == 0
-    _updatesPosList:null, // list priority > 0
-    _hashForUpdates:null, // hash used to fetch quickly the list entries for pause,delete,etc
-    _arrayForUpdates:null,
+    _timeScale: 1.0,
+    _updatesNegList: null, // list of priority < 0
+    _updates0List: null, // list priority == 0
+    _updatesPosList: null, // list priority > 0
+    _hashForUpdates: null, // hash used to fetch quickly the list entries for pause,delete,etc
+    _arrayForUpdates: null,
 
-    _hashForTimers:null, //Used for "selectors with interval"
-    _arrayForTimes:null,
+    _hashForTimers: null, //Used for "selectors with interval"
+    _arrayForTimes: null,
 
-    _currentTarget:null,
-    _currentTargetSalvaged:false,
-    _updateHashLocked:false, //If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
+    _currentTarget: null,
+    _currentTargetSalvaged: false,
+    _updateHashLocked: false, //If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
 
     /**
      * Constructor
      */
-    ctor:function () {
+    ctor: function() {
         this._timeScale = 1.0;
 
         this._updatesNegList = [];
@@ -445,7 +445,7 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
     },
 
     //-----------------------private method----------------------
-    _removeHashElement:function (element) {
+    _removeHashElement: function(element) {
         delete this._hashForTimers[element.target.__instanceId];
         cc.ArrayRemoveObject(this._arrayForTimers, element);
         element.Timer = null;
@@ -460,7 +460,7 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
      * @param {cc.Class} target object
      * @return {cc.ListEntry} object if found, or return null
      */
-    _findElementFromArray:function (array, target) {
+    _findElementFromArray: function(array, target) {
         for (var i = 0; i < array.length; i++) {
             if (array[i].target == target) {
                 return array[i];
@@ -469,7 +469,7 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
         return null;
     },
 
-    _removeUpdateFromHash:function (entry) {
+    _removeUpdateFromHash: function(entry) {
 //        var element = this._findElementFromArray(this._hashForUpdates, entry.target);
         var element = this._hashForUpdates[entry.target.__instanceId];
         if (element) {
@@ -486,7 +486,7 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
         }
     },
 
-    _priorityIn:function (ppList, target, priority, paused) {
+    _priorityIn: function(ppList, target, priority, paused) {
         var listElement = new cc.ListEntry(null, null, target, priority, paused, false);
 
         // empey list ?
@@ -518,7 +518,7 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
         return ppList;
     },
 
-    _appendIn:function (ppList, target, paused) {
+    _appendIn: function(ppList, target, paused) {
         var listElement = new cc.ListEntry(null, null, target, 0, paused, false);
         ppList.push(listElement);
 
@@ -540,7 +540,7 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
      * </p>
      * @param {Number} timeScale
      */
-    setTimeScale:function (timeScale) {
+    setTimeScale: function(timeScale) {
         this._timeScale = timeScale;
     },
 
@@ -548,7 +548,7 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
      * returns time scale of scheduler
      * @return {Number}
      */
-    getTimeScale:function () {
+    getTimeScale: function() {
         return this._timeScale;
     },
 
@@ -556,7 +556,7 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
      * 'update' the scheduler. (You should NEVER call this method, unless you know what you are doing.)
      * @param {Number} dt delta time
      */
-    update:function (dt) {
+    update: function(dt) {
         this._updateHashLocked = true;
 
         if (this._timeScale != 1.0) {
@@ -657,12 +657,12 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
      * //register a schedule to scheduler
      * cc.Director.getInstance().getScheduler().scheduleCallbackForTarget(this, function, interval, repeat, delay, !this._isRunning );
      */
-    scheduleCallbackForTarget:function (target, callback_fn, interval, repeat, delay, paused) {
-        if(!callback_fn)
-            throw "cc.scheduler.scheduleCallbackForTarget(): callback_fn should be non-null.";
+    scheduleCallbackForTarget: function(target, callback_fn, interval, repeat, delay, paused) {
+        if (!callback_fn)
+            throw 'cc.scheduler.scheduleCallbackForTarget(): callback_fn should be non-null.';
 
-        if(!target)
-            throw "cc.scheduler.scheduleCallbackForTarget(): target should be non-null.";
+        if (!target)
+            throw 'cc.scheduler.scheduleCallbackForTarget(): target should be non-null.';
 
         // default arguments
         interval = interval || 0;
@@ -686,8 +686,8 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
             for (var i = 0; i < element.timers.length; i++) {
                 timer = element.timers[i];
                 if (callback_fn == timer._selector) {
-                    cc.log("CCSheduler#scheduleCallback. Callback already scheduled. Updating interval from:"
-                        + timer.getInterval().toFixed(4) + " to " + interval.toFixed(4));
+                    cc.log('CCSheduler#scheduleCallback. Callback already scheduled. Updating interval from:'
+                        + timer.getInterval().toFixed(4) + ' to ' + interval.toFixed(4));
                     timer._interval = interval;
                     return;
                 }
@@ -712,7 +712,7 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
      * //register this object to scheduler
      * cc.Director.getInstance().getScheduler().scheduleUpdateForTarget(this, priority, !this._isRunning );
      */
-    scheduleUpdateForTarget:function (target, priority, paused) {
+    scheduleUpdateForTarget: function(target, priority, paused) {
         var hashElement = this._hashForUpdates[target.__instanceId];
 
         if (hashElement) {
@@ -744,7 +744,7 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
      * //unschedule a selector of target
      * cc.Director.getInstance().getScheduler().unscheduleCallbackForTarget(function, this);
      */
-    unscheduleCallbackForTarget:function (target, callback_fn) {
+    unscheduleCallbackForTarget: function(target, callback_fn) {
         // explicity handle nil arguments when removing an object
         if ((target == null) || (callback_fn == null)) {
             return;
@@ -785,7 +785,7 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
      * //unschedules the "update" method.
      * cc.Director.getInstance().getScheduler().unscheduleUpdateForTarget(this);
      */
-    unscheduleUpdateForTarget:function (target) {
+    unscheduleUpdateForTarget: function(target) {
         if (target == null) {
             return;
         }
@@ -804,7 +804,7 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
      * Unschedules all function callbacks for a given target. This also includes the "update" callback function.
      * @param {cc.Class} target
      */
-    unscheduleAllCallbacksForTarget:function (target) {
+    unscheduleAllCallbacksForTarget: function(target) {
         //explicit NULL handling
         if (target == null) {
             return;
@@ -833,7 +833,7 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
      *      You should NEVER call this method, unless you know what you are doing.
      *  </p>
      */
-    unscheduleAllCallbacks:function () {
+    unscheduleAllCallbacks: function() {
         this.unscheduleAllCallbacksWithMinPriority(cc.PRIORITY_SYSTEM);
     },
 
@@ -844,7 +844,7 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
      * </p>
      * @param {Number} minPriority
      */
-    unscheduleAllCallbacksWithMinPriority:function (minPriority) {
+    unscheduleAllCallbacksWithMinPriority: function(minPriority) {
         // Custom Selectors
         var i;
         for (i = 0; i < this._arrayForTimers.length; i++) {
@@ -878,7 +878,7 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
      *  You should NEVER call this method, unless you know what you are doing.
      * </p>
      */
-    pauseAllTargets:function () {
+    pauseAllTargets: function() {
         return this.pauseAllTargetsWithMinPriority(cc.PRIORITY_SYSTEM);
     },
 
@@ -887,7 +887,7 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
      * You should only call this with kCCPriorityNonSystemMin or higher.
      * @param minPriority
      */
-    pauseAllTargetsWithMinPriority:function (minPriority) {
+    pauseAllTargetsWithMinPriority: function(minPriority) {
         var idsWithSelectors = [];
 
         var i, element;
@@ -937,7 +937,7 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
      * This can be useful for undoing a call to pauseAllCallbacks.
      * @param targetsToResume
      */
-    resumeTargets:function (targetsToResume) {
+    resumeTargets: function(targetsToResume) {
         if (!targetsToResume)
             return;
 
@@ -954,9 +954,9 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
      * </p>
      * @param {cc.Class} target
      */
-    pauseTarget:function (target) {
-        if(!target)
-            throw "cc.Scheduler.pauseTarget():target should be non-null";
+    pauseTarget: function(target) {
+        if (!target)
+            throw 'cc.Scheduler.pauseTarget():target should be non-null';
 
         //customer selectors
         var element = this._hashForTimers[target.__instanceId];
@@ -977,9 +977,9 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
      * If the target is not present, nothing happens.
      * @param {cc.Class} target
      */
-    resumeTarget:function (target) {
-        if(!target)
-            throw "cc.Scheduler.resumeTarget():target should be non-null";
+    resumeTarget: function(target) {
+        if (!target)
+            throw 'cc.Scheduler.resumeTarget():target should be non-null';
 
         // custom selectors
         var element = this._hashForTimers[target.__instanceId];
@@ -1001,9 +1001,9 @@ cc.Scheduler = cc.Class.extend(/** @lends cc.Scheduler# */{
      * @param {cc.Class} target
      * @return {Boolean}
      */
-    isTargetPaused:function (target) {
-        if(!target)
-            throw "cc.Scheduler.isTargetPaused():target should be non-null";
+    isTargetPaused: function(target) {
+        if (!target)
+            throw 'cc.Scheduler.isTargetPaused():target should be non-null';
 
         // Custom selectors
         var element = this._hashForTimers[target.__instanceId];

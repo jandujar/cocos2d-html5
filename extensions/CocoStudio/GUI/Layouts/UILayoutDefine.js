@@ -75,7 +75,7 @@ ccs.Margin = ccs.Class.extend(/** @lends ccs.Margin# */{
     top: 0,
     right: 0,
     bottom: 0,
-    ctor: function () {
+    ctor: function() {
         if (arguments.length == 1) {
             var uiMargin = arguments[0];
             this.left = uiMargin.left;
@@ -97,7 +97,7 @@ ccs.Margin = ccs.Class.extend(/** @lends ccs.Margin# */{
      * @param {Number} r
      * @param {Number} b
      */
-    setMargin: function (l, t, r, b) {
+    setMargin: function(l, t, r, b) {
         this.left = l;
         this.top = t;
         this.right = r;
@@ -106,13 +106,13 @@ ccs.Margin = ccs.Class.extend(/** @lends ccs.Margin# */{
     /**
      *  check is equals
      * @param {ccs.Margin} target
-     * @returns {boolean}
+     * @return {boolean}
      */
-    equals: function (target) {
+    equals: function(target) {
         return (this.left == target.left && this.top == target.top && this.right == target.right && this.bottom == target.bottom);
     }
 });
 
-ccs.MarginZero = function(){
-   return new ccs.Margin(0,0,0,0);
+ccs.MarginZero = function() {
+   return new ccs.Margin(0, 0, 0, 0);
 };

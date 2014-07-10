@@ -1,16 +1,16 @@
-(function(){
+(function() {
     /* Copyright (c) 2007 Scott Lembcke
-     * 
+     *
      * Permission is hereby granted, free of charge, to any person obtaining a copy
      * of this software and associated documentation files (the "Software"), to deal
      * in the Software without restriction, including without limitation the rights
      * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
      * copies of the Software, and to permit persons to whom the Software is
      * furnished to do so, subject to the following conditions:
-     * 
+     *
      * The above copyright notice and this permission notice shall be included in
      * all copies or substantial portions of the Software.
-     * 
+     *
      * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
      * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
      * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,11 +28,11 @@
 
 //var VERSION = CP_VERSION_MAJOR + "." + CP_VERSION_MINOR + "." + CP_VERSION_RELEASE;
     var cp;
-    if(typeof exports === 'undefined'){
+    if (typeof exports === 'undefined') {
         cp = {};
 
-        if(typeof window === 'object'){
-            window["cp"] = cp;
+        if (typeof window === 'object') {
+            window['cp'] = cp;
         }
     } else {
         cp = exports;
@@ -47,9 +47,9 @@
 
     var assertSoft = function(value, message)
     {
-        if(!value && console && console.warn) {
-            console.warn("ASSERTION FAILED: " + message);
-            if(console.trace) {
+        if (!value && console && console.warn) {
+            console.warn('ASSERTION FAILED: ' + message);
+            if (console.trace) {
                 console.trace();
             }
         }
@@ -65,7 +65,7 @@
     };
 
     var min, max;
-    if (typeof window === 'object' && window.navigator.userAgent.indexOf('Firefox') > -1){
+    if (typeof window === 'object' && window.navigator.userAgent.indexOf('Firefox') > -1) {
         // On firefox, Math.min and Math.max are really fast:
         // http://jsperf.com/math-vs-greater-than/8
         min = Math.min;
@@ -95,8 +95,8 @@
 
     var deleteObjFromList = function(arr, obj)
     {
-        for(var i=0; i<arr.length; i++){
-            if(arr[i] === obj){
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] === obj) {
                 arr[i] = arr[arr.length - 1];
                 arr.length--;
 
@@ -107,25 +107,25 @@
 
     var momentForCircle = cp.momentForCircle = function(m, r1, r2, offset)
     {
-        return m*(0.5*(r1*r1 + r2*r2) + vlengthsq(offset));
+        return m * (0.5 * (r1 * r1 + r2 * r2) + vlengthsq(offset));
     };
 
     var areaForCircle = cp.areaForCircle = function(r1, r2)
     {
-        return Math.PI*Math.abs(r1*r1 - r2*r2);
+        return Math.PI * Math.abs(r1 * r1 - r2 * r2);
     };
 
     var momentForSegment = cp.momentForSegment = function(m, a, b)
     {
         var length = vlength(vsub(b, a));
-        var offset = vmult(vadd(a, b), 1/2);
+        var offset = vmult(vadd(a, b), 1 / 2);
 
-        return m*(length*length/12 + vlengthsq(offset));
+        return m * (length * length / 12 + vlengthsq(offset));
     };
 
     var areaForSegment = cp.areaForSegment = function(a, b, r)
     {
-        return r*(Math.PI*r + 2*vdist(a, b));
+        return r * (Math.PI * r + 2 * vdist(a, b));
     };
 
     var momentForPoly = cp.momentForPoly = function(m, verts, offset)
@@ -133,62 +133,62 @@
         var sum1 = 0;
         var sum2 = 0;
         var len = verts.length;
-        for(var i=0; i<len; i+=2){
+        for (var i = 0; i < len; i += 2) {
             var v1x = verts[i] + offset.x;
-            var v1y = verts[i+1] + offset.y;
-            var v2x = verts[(i+2)%len] + offset.x;
-            var v2y = verts[(i+3)%len] + offset.y;
+            var v1y = verts[i + 1] + offset.y;
+            var v2x = verts[(i + 2) % len] + offset.x;
+            var v2y = verts[(i + 3) % len] + offset.y;
 
             var a = vcross2(v2x, v2y, v1x, v1y);
             var b = vdot2(v1x, v1y, v1x, v1y) + vdot2(v1x, v1y, v2x, v2y) + vdot2(v2x, v2y, v2x, v2y);
 
-            sum1 += a*b;
+            sum1 += a * b;
             sum2 += a;
         }
 
-        return (m*sum1)/(6*sum2);
+        return (m * sum1) / (6 * sum2);
     };
 
     var areaForPoly = cp.areaForPoly = function(verts)
     {
         var area = 0;
-        for(var i=0, len=verts.length; i<len; i+=2){
-            area += vcross(new Vect(verts[i], verts[i+1]), new Vect(verts[(i+2)%len], verts[(i+3)%len]));
+        for (var i = 0, len = verts.length; i < len; i += 2) {
+            area += vcross(new Vect(verts[i], verts[i + 1]), new Vect(verts[(i + 2) % len], verts[(i + 3) % len]));
         }
 
-        return -area/2;
+        return -area / 2;
     };
 
     var centroidForPoly = cp.centroidForPoly = function(verts)
     {
         var sum = 0;
-        var vsum = new Vect(0,0);
+        var vsum = new Vect(0, 0);
 
-        for(var i=0, len=verts.length; i<len; i+=2){
-            var v1 = new Vect(verts[i], verts[i+1]);
-            var v2 = new Vect(verts[(i+2)%len], verts[(i+3)%len]);
+        for (var i = 0, len = verts.length; i < len; i += 2) {
+            var v1 = new Vect(verts[i], verts[i + 1]);
+            var v2 = new Vect(verts[(i + 2) % len], verts[(i + 3) % len]);
             var cross = vcross(v1, v2);
 
             sum += cross;
             vsum = vadd(vsum, vmult(vadd(v1, v2), cross));
         }
 
-        return vmult(vsum, 1/(3*sum));
+        return vmult(vsum, 1 / (3 * sum));
     };
 
     var recenterPoly = cp.recenterPoly = function(verts)
     {
         var centroid = centroidForPoly(verts);
 
-        for(var i=0; i<verts.length; i+=2){
+        for (var i = 0; i < verts.length; i += 2) {
             verts[i] -= centroid.x;
-            verts[i+1] -= centroid.y;
+            verts[i + 1] -= centroid.y;
         }
     };
 
     var momentForBox = cp.momentForBox = function(m, width, height)
     {
-        return m*(width*width + height*height)/12;
+        return m * (width * width + height * height) / 12;
     };
 
     var momentForBox2 = cp.momentForBox2 = function(m, box)
@@ -197,8 +197,8 @@
         height = box.t - box.b;
         offset = vmult([box.l + box.r, box.b + box.t], 0.5);
 
-        // TODO NaN when offset is 0 and m is INFINITY	
-        return momentForBox(m, width, height) + m*vlengthsq(offset);
+        // TODO NaN when offset is 0 and m is INFINITY
+        return momentForBox(m, width, height) + m * vlengthsq(offset);
     };
 
 /// Clamp @c f to be between @c min and @c max.
@@ -216,7 +216,7 @@
 /// Linearly interpolate (or extrapolate) between @c f1 and @c f2 by @c t percent.
     var lerp = function(f1, f2, t)
     {
-        return f1*(1 - t) + f2*t;
+        return f1 * (1 - t) + f2 * t;
     };
 
 /// Linearly interpolate from @c f1 to @c f2 by no more than @c d.
@@ -226,17 +226,17 @@
     };
 
     /* Copyright (c) 2007 Scott Lembcke
-     * 
+     *
      * Permission is hereby granted, free of charge, to any person obtaining a copy
      * of this software and associated documentation files (the "Software"), to deal
      * in the Software without restriction, including without limitation the rights
      * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
      * copies of the Software, and to permit persons to whom the Software is
      * furnished to do so, subject to the following conditions:
-     * 
+     *
      * The above copyright notice and this permission notice shall be included in
      * all copies or substantial portions of the Software.
-     * 
+     *
      * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
      * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
      * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -263,9 +263,9 @@
 //	traces[s] = traces[s] ? traces[s]+1 : 1;
     };
 
-    cp.v = function (x,y) { return new Vect(x, y) };
+    cp.v = function(x, y) { return new Vect(x, y) };
 
-    var vzero = cp.vzero = new Vect(0,0);
+    var vzero = cp.vzero = new Vect(0, 0);
 
 // The functions below *could* be rewritten to be instance methods on Vect. I don't
 // know how that would effect performance. For now, I'm keeping the JS similar to
@@ -274,12 +274,12 @@
 /// Vector dot product.
     var vdot = cp.v.dot = function(v1, v2)
     {
-        return v1.x*v2.x + v1.y*v2.y;
+        return v1.x * v2.x + v1.y * v2.y;
     };
 
     var vdot2 = function(x1, y1, x2, y2)
     {
-        return x1*x2 + y1*y2;
+        return x1 * x2 + y1 * y2;
     };
 
 /// Returns the length of v.
@@ -336,7 +336,7 @@
 /// Scalar multiplication.
     var vmult = cp.v.mult = function(v, s)
     {
-        return new Vect(v.x*s, v.y*s);
+        return new Vect(v.x * s, v.y * s);
     };
 
     Vect.prototype.mult = function(s)
@@ -351,12 +351,12 @@
 /// This function returns the magnitude of the z value.
     var vcross = cp.v.cross = function(v1, v2)
     {
-        return v1.x*v2.y - v1.y*v2.x;
+        return v1.x * v2.y - v1.y * v2.x;
     };
 
     var vcross2 = function(x1, y1, x2, y2)
     {
-        return x1*y2 - y1*x2;
+        return x1 * y2 - y1 * x2;
     };
 
 /// Returns a perpendicular vector. (90 degree rotation)
@@ -374,7 +374,7 @@
 /// Returns the vector projection of v1 onto v2.
     var vproject = cp.v.project = function(v1, v2)
     {
-        return vmult(v2, vdot(v1, v2)/vlengthsq(v2));
+        return vmult(v2, vdot(v1, v2) / vlengthsq(v2));
     };
 
     Vect.prototype.project = function(v2)
@@ -386,7 +386,7 @@
 /// Uses complex number multiplication to rotate v1 by v2. Scaling will occur if v1 is not a unit vector.
     var vrotate = cp.v.rotate = function(v1, v2)
     {
-        return new Vect(v1.x*v2.x - v1.y*v2.y, v1.x*v2.y + v1.y*v2.x);
+        return new Vect(v1.x * v2.x - v1.y * v2.y, v1.x * v2.y + v1.y * v2.x);
     };
 
     Vect.prototype.rotate = function(v2)
@@ -399,7 +399,7 @@
 /// Inverse of vrotate().
     var vunrotate = cp.v.unrotate = function(v1, v2)
     {
-        return new Vect(v1.x*v2.x + v1.y*v2.y, v1.y*v2.x - v1.x*v2.y);
+        return new Vect(v1.x * v2.x + v1.y * v2.y, v1.y * v2.x - v1.x * v2.y);
     };
 
 /// Returns the squared length of v. Faster than vlength() when you only need to compare lengths.
@@ -417,7 +417,7 @@
 /// Returns a normalized copy of v.
     var vnormalize = cp.v.normalize = function(v)
     {
-        return vmult(v, 1/vlength(v));
+        return vmult(v, 1 / vlength(v));
     };
 
 /// Returns a normalized copy of v or vzero if v was already vzero. Protects against divide by zero errors.
@@ -429,7 +429,7 @@
 /// Clamp v to length len.
     var vclamp = cp.v.clamp = function(v, len)
     {
-        return (vdot(v,v) > len*len) ? vmult(vnormalize(v), len) : v;
+        return (vdot(v, v) > len * len) ? vmult(vnormalize(v), len) : v;
     };
 
 /// Linearly interpolate between v1 towards v2 by distance d.
@@ -453,7 +453,7 @@
 /// Returns true if the distance between v1 and v2 is less than dist.
     var vnear = cp.v.near = function(v1, v2, dist)
     {
-        return vdistsq(v1, v2) < dist*dist;
+        return vdistsq(v1, v2) < dist * dist;
     };
 
 /// Spherical linearly interpolate between v1 and v2.
@@ -461,9 +461,9 @@
     {
         var omega = Math.acos(vdot(v1, v2));
 
-        if(omega) {
-            var denom = 1/Math.sin(omega);
-            return vadd(vmult(v1, Math.sin((1 - t)*omega)*denom), vmult(v2, Math.sin(t*omega)*denom));
+        if (omega) {
+            var denom = 1 / Math.sin(omega);
+            return vadd(vmult(v1, Math.sin((1 - t) * omega) * denom), vmult(v2, Math.sin(t * omega) * denom));
         } else {
             return v1;
         }
@@ -473,7 +473,7 @@
     var vslerpconst = cp.v.slerpconst = function(v1, v2, a)
     {
         var angle = Math.acos(vdot(v1, v2));
-        return vslerp(v1, v2, min(a, angle)/angle);
+        return vslerp(v1, v2, min(a, angle) / angle);
     };
 
 /// Returns the unit length vector for the given angle (in radians).
@@ -491,21 +491,21 @@
 ///	Returns a string representation of v. Intended mostly for debugging purposes and not production use.
     var vstr = cp.v.str = function(v)
     {
-        return "(" + v.x.toFixed(3) + ", " + v.y.toFixed(3) + ")";
+        return '(' + v.x.toFixed(3) + ', ' + v.y.toFixed(3) + ')';
     };
 
     /* Copyright (c) 2007 Scott Lembcke
-     * 
+     *
      * Permission is hereby granted, free of charge, to any person obtaining a copy
      * of this software and associated documentation files (the "Software"), to deal
      * in the Software without restriction, including without limitation the rights
      * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
      * copies of the Software, and to permit persons to whom the Software is
      * furnished to do so, subject to the following conditions:
-     * 
+     *
      * The above copyright notice and this permission notice shall be included in
      * all copies or substantial portions of the Software.
-     * 
+     *
      * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
      * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
      * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -569,7 +569,7 @@
     };
 
 /// Returns a bounding box that holds both bounding boxes.
-    var bbMerge = function(a, b){
+    var bbMerge = function(a, b) {
         return new BB(
             min(a.l, b.l),
             min(a.b, b.b),
@@ -579,7 +579,7 @@
     };
 
 /// Returns a bounding box that holds both @c bb and @c v.
-    var bbExpand = function(bb, v){
+    var bbExpand = function(bb, v) {
         return new BB(
             min(bb.l, v.x),
             min(bb.b, v.y),
@@ -591,18 +591,18 @@
 /// Returns the area of the bounding box.
     var bbArea = function(bb)
     {
-        return (bb.r - bb.l)*(bb.t - bb.b);
+        return (bb.r - bb.l) * (bb.t - bb.b);
     };
 
 /// Merges @c a and @c b and returns the area of the merged bounding box.
     var bbMergedArea = function(a, b)
     {
-        return (max(a.r, b.r) - min(a.l, b.l))*(max(a.t, b.t) - min(a.b, b.b));
+        return (max(a.r, b.r) - min(a.l, b.l)) * (max(a.t, b.t) - min(a.b, b.b));
     };
 
     var bbMergedArea2 = function(bb, l, b, r, t)
     {
-        return (max(bb.r, r) - min(bb.l, l))*(max(bb.t, t) - min(bb.b, b));
+        return (max(bb.r, r) - min(bb.l, l)) * (max(bb.t, t) - min(bb.b, b));
     };
 
 /// Return true if the bounding box intersects the line segment with ends @c a and @c b.
@@ -634,17 +634,17 @@
         return new Vect(x + bb.l, y + bb.b);
     };
     /* Copyright (c) 2007 Scott Lembcke
-     * 
+     *
      * Permission is hereby granted, free of charge, to any person obtaining a copy
      * of this software and associated documentation files (the "Software"), to deal
      * in the Software without restriction, including without limitation the rights
      * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
      * copies of the Software, and to permit persons to whom the Software is
      * furnished to do so, subject to the following conditions:
-     * 
+     *
      * The above copyright notice and this permission notice shall be included in
      * all copies or substantial portions of the Software.
-     * 
+     *
      * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
      * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
      * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -729,7 +729,7 @@
 
     Shape.prototype.setBody = function(body)
     {
-        assert(!this.active(), "You cannot change the body on an active shape. You must remove the shape, then ");
+        assert(!this.active(), 'You cannot change the body on an active shape. You must remove the shape, then ');
         this.body = body;
     };
 
@@ -766,7 +766,7 @@
      */
 
 /// Extended point query info struct. Returned from calling pointQuery on a shape.
-    var PointQueryExtendedInfo = function(shape){
+    var PointQueryExtendedInfo = function(shape) {
         /// Shape that was hit, NULL if no collision occurred.
         this.shape = shape;
         /// Depth of the point inside the shape.
@@ -775,7 +775,7 @@
         this.n = vzero;
     };
 
-    var SegmentQueryInfo = function(shape, t, n){
+    var SegmentQueryInfo = function(shape, t, n) {
         /// The shape that was hit, NULL if no collision occured.
         this.shape = shape;
         /// The normalized distance along the query segment in the range [0, 1].
@@ -829,12 +829,12 @@
         var distsq = vlengthsq(delta);
         var r = this.r;
 
-        if(distsq < r*r){
+        if (distsq < r * r) {
             var info = new PointQueryExtendedInfo(this);
 
             var dist = Math.sqrt(distsq);
             info.d = r - dist;
-            info.n = vmult(delta, 1/dist);
+            info.n = vmult(delta, 1 / dist);
             return info;
         }
     };
@@ -845,16 +845,16 @@
         a = vsub(a, center);
         b = vsub(b, center);
 
-        var qa = vdot(a, a) - 2*vdot(a, b) + vdot(b, b);
-        var qb = -2*vdot(a, a) + 2*vdot(a, b);
-        var qc = vdot(a, a) - r*r;
+        var qa = vdot(a, a) - 2 * vdot(a, b) + vdot(b, b);
+        var qb = -2 * vdot(a, a) + 2 * vdot(a, b);
+        var qc = vdot(a, a) - r * r;
 
-        var det = qb*qb - 4*qa*qc;
+        var det = qb * qb - 4 * qa * qc;
 
-        if(det >= 0)
+        if (det >= 0)
         {
-            var t = (-qb - Math.sqrt(det))/(2*qa);
-            if(0 <= t && t <= 1){
+            var t = (-qb - Math.sqrt(det)) / (2 * qa);
+            if (0 <= t && t <= 1) {
                 return new SegmentQueryInfo(shape, t, vnormalize(vlerp(a, b, t)));
             }
         }
@@ -905,9 +905,9 @@
         this.tb = vadd(p, vrotate(this.b, rot));
         this.tn = vrotate(this.n, rot);
 
-        var l,r,b,t;
+        var l, r, b, t;
 
-        if(this.ta.x < this.tb.x){
+        if (this.ta.x < this.tb.x) {
             l = this.ta.x;
             r = this.tb.x;
         } else {
@@ -915,7 +915,7 @@
             r = this.ta.x;
         }
 
-        if(this.ta.y < this.tb.y){
+        if (this.ta.y < this.tb.y) {
             b = this.ta.y;
             t = this.tb.y;
         } else {
@@ -933,25 +933,25 @@
 
     SegmentShape.prototype.pointQuery = function(p)
     {
-        if(!bbContainsVect2(this.bb_l, this.bb_b, this.bb_r, this.bb_t, p)) return;
+        if (!bbContainsVect2(this.bb_l, this.bb_b, this.bb_r, this.bb_t, p)) return;
 
         var a = this.ta;
         var b = this.tb;
 
         var seg_delta = vsub(b, a);
-        var closest_t = clamp01(vdot(seg_delta, vsub(p, a))/vlengthsq(seg_delta));
+        var closest_t = clamp01(vdot(seg_delta, vsub(p, a)) / vlengthsq(seg_delta));
         var closest = vadd(a, vmult(seg_delta, closest_t));
 
         var delta = vsub(p, closest);
         var distsq = vlengthsq(delta);
         var r = this.r;
 
-        if (distsq < r*r){
+        if (distsq < r * r) {
             var info = new PointQueryExtendedInfo(this);
 
             var dist = Math.sqrt(distsq);
             info.d = r - dist;
-            info.n = vmult(delta, 1/dist);
+            info.n = vmult(delta, 1 / dist);
             return info;
         }
     };
@@ -969,19 +969,19 @@
         var seg_b = vadd(this.tb, n_offset);
         var delta = vsub(b, a);
 
-        if(vcross(delta, seg_a)*vcross(delta, seg_b) <= 0){
+        if (vcross(delta, seg_a) * vcross(delta, seg_b) <= 0) {
             var d_offset = d + (d > 0 ? -r : r);
             var ad = -d_offset;
             var bd = vdot(delta, n) - d_offset;
 
-            if(ad*bd < 0){
-                return new SegmentQueryInfo(this, ad/(ad - bd), flipped_n);
+            if (ad * bd < 0) {
+                return new SegmentQueryInfo(this, ad / (ad - bd), flipped_n);
             }
-        } else if(r !== 0){
+        } else if (r !== 0) {
             var info1 = circleSegmentQuery(this, this.ta, this.r, a, b);
             var info2 = circleSegmentQuery(this, this.tb, this.r, a, b);
 
-            if (info1){
+            if (info1) {
                 return info2 && info2.t < info1.t ? info2 : info1;
             } else {
                 return info2;
@@ -1016,17 +1016,17 @@
      */
 
     /* Copyright (c) 2007 Scott Lembcke
-     * 
+     *
      * Permission is hereby granted, free of charge, to any person obtaining a copy
      * of this software and associated documentation files (the "Software"), to deal
      * in the Software without restriction, including without limitation the rights
      * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
      * copies of the Software, and to permit persons to whom the Software is
      * furnished to do so, subject to the following conditions:
-     * 
+     *
      * The above copyright notice and this permission notice shall be included in
      * all copies or substantial portions of the Software.
-     * 
+     *
      * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
      * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
      * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -1040,16 +1040,16 @@
     var polyValidate = function(verts)
     {
         var len = verts.length;
-        for(var i=0; i<len; i+=2){
+        for (var i = 0; i < len; i += 2) {
             var ax = verts[i];
-            var ay = verts[i+1];
-            var bx = verts[(i+2)%len];
-            var by = verts[(i+3)%len];
-            var cx = verts[(i+4)%len];
-            var cy = verts[(i+5)%len];
+            var ay = verts[i + 1];
+            var bx = verts[(i + 2) % len];
+            var by = verts[(i + 3) % len];
+            var cx = verts[(i + 4) % len];
+            var cy = verts[(i + 5) % len];
 
             //if(vcross(vsub(b, a), vsub(c, b)) > 0){
-            if(vcross2(bx - ax, by - ay, cx - bx, cy - by) > 0){
+            if (vcross2(bx - ax, by - ay, cx - bx, cy - by) > 0) {
                 return false;
             }
         }
@@ -1061,10 +1061,10 @@
 /// The vertexes must be convex and have a clockwise winding.
     var PolyShape = cp.PolyShape = function(body, verts, offset)
     {
-        assert(verts.length >= 4, "Polygons require some verts");
+        assert(verts.length >= 4, 'Polygons require some verts');
         assert(typeof(verts[0]) === 'number', 'Polygon verticies should be specified in a flattened list');
         // Fail if the user attempts to pass a concave poly, or a bad winding.
-        assert(polyValidate(verts), "Polygon is concave or has a reversed winding.");
+        assert(polyValidate(verts), 'Polygon is concave or has a reversed winding.');
 
         this.setVerts(verts, offset);
         this.type = 'poly';
@@ -1090,29 +1090,29 @@
         this.axes = new Array(numVerts);
         this.tAxes = new Array(numVerts);
 
-        for(var i=0; i<len; i+=2){
+        for (var i = 0; i < len; i += 2) {
             //var a = vadd(offset, verts[i]);
             //var b = vadd(offset, verts[(i+1)%numVerts]);
             var ax = verts[i] + offset.x;
-            var ay = verts[i+1] + offset.y;
-            var bx = verts[(i+2)%len] + offset.x;
-            var by = verts[(i+3)%len] + offset.y;
+            var ay = verts[i + 1] + offset.y;
+            var bx = verts[(i + 2) % len] + offset.x;
+            var by = verts[(i + 3) % len] + offset.y;
 
             // Inefficient, but only called during object initialization.
-            var n = vnormalize(vperp(new Vect(bx-ax, by-ay)));
+            var n = vnormalize(vperp(new Vect(bx - ax, by - ay)));
 
-            this.verts[i  ] = ax;
-            this.verts[i+1] = ay;
-            this.axes[i>>1] = new Axis(n, vdot2(n.x, n.y, ax, ay));
-            this.tAxes[i>>1] = new Axis(new Vect(0,0), 0);
+            this.verts[i] = ax;
+            this.verts[i + 1] = ay;
+            this.axes[i >> 1] = new Axis(n, vdot2(n.x, n.y, ax, ay));
+            this.tAxes[i >> 1] = new Axis(new Vect(0, 0), 0);
         }
     };
 
 /// Initialize a box shaped polygon shape.
     var BoxShape = cp.BoxShape = function(body, width, height)
     {
-        var hw = width/2;
-        var hh = height/2;
+        var hw = width / 2;
+        var hh = height / 2;
 
         return BoxShape2(body, new BB(-hw, -hh, hw, hh));
     };
@@ -1138,18 +1138,18 @@
         var l = Infinity, r = -Infinity;
         var b = Infinity, t = -Infinity;
 
-        for(var i=0; i<src.length; i+=2){
+        for (var i = 0; i < src.length; i += 2) {
             //var v = vadd(p, vrotate(src[i], rot));
             var x = src[i];
-            var y = src[i+1];
+            var y = src[i + 1];
 
-            var vx = p.x + x*rot.x - y*rot.y;
-            var vy = p.y + x*rot.y + y*rot.x;
+            var vx = p.x + x * rot.x - y * rot.y;
+            var vy = p.y + x * rot.y + y * rot.x;
 
             //console.log('(' + x + ',' + y + ') -> (' + vx + ',' + vy + ')');
 
             dst[i] = vx;
-            dst[i+1] = vy;
+            dst[i + 1] = vy;
 
             l = min(l, vx);
             r = max(r, vx);
@@ -1168,7 +1168,7 @@
         var src = this.axes;
         var dst = this.tAxes;
 
-        for(var i=0; i<src.length; i++){
+        for (var i = 0; i < src.length; i++) {
             var n = vrotate(src[i].n, rot);
             dst[i].n = n;
             dst[i].d = vdot(p, n) + src[i].d;
@@ -1184,18 +1184,18 @@
     PolyShape.prototype.pointQuery = function(p)
     {
 //	if(!bbContainsVect(this.shape.bb, p)) return;
-        if(!bbContainsVect2(this.bb_l, this.bb_b, this.bb_r, this.bb_t, p)) return;
+        if (!bbContainsVect2(this.bb_l, this.bb_b, this.bb_r, this.bb_t, p)) return;
 
         var info = new PointQueryExtendedInfo(this);
 
         var axes = this.tAxes;
-        for(var i=0; i<axes.length; i++){
+        for (var i = 0; i < axes.length; i++) {
             var n = axes[i].n;
             var dist = axes[i].d - vdot(n, p);
 
-            if(dist < 0){
+            if (dist < 0) {
                 return;
-            } else if(dist < info.d){
+            } else if (dist < info.d) {
                 info.d = dist;
                 info.n = n;
             }
@@ -1211,21 +1211,21 @@
         var numVerts = axes.length;
         var len = numVerts * 2;
 
-        for(var i=0; i<numVerts; i++){
+        for (var i = 0; i < numVerts; i++) {
             var n = axes[i].n;
             var an = vdot(a, n);
-            if(axes[i].d > an) continue;
+            if (axes[i].d > an) continue;
 
             var bn = vdot(b, n);
-            var t = (axes[i].d - an)/(bn - an);
-            if(t < 0 || 1 < t) continue;
+            var t = (axes[i].d - an) / (bn - an);
+            if (t < 0 || 1 < t) continue;
 
             var point = vlerp(a, b, t);
             var dt = -vcross(n, point);
-            var dtMin = -vcross2(n.x, n.y, verts[i*2], verts[i*2+1]);
-            var dtMax = -vcross2(n.x, n.y, verts[(i*2+2)%len], verts[(i*2+3)%len]);
+            var dtMin = -vcross2(n.x, n.y, verts[i * 2], verts[i * 2 + 1]);
+            var dtMax = -vcross2(n.x, n.y, verts[(i * 2 + 2) % len], verts[(i * 2 + 3) % len]);
 
-            if(dtMin <= dt && dt <= dtMax){
+            if (dtMin <= dt && dt <= dtMax) {
                 // josephg: In the original C code, this function keeps
                 // looping through axes after finding a match. I *think*
                 // this code is equivalent...
@@ -1237,13 +1237,13 @@
 
     PolyShape.prototype.getNumVerts = function()
     {
-        return this.verts.length/2;
+        return this.verts.length / 2;
     };
 
 
     PolyShape.prototype.getVert = function(idx)
     {
-        return new Vect(this.verts[idx*2],this.verts[idx*2+1]);
+        return new Vect(this.verts[idx * 2], this.verts[idx * 2 + 1]);
     };
 
     PolyShape.prototype.valueOnAxis = function(n, d)
@@ -1251,8 +1251,8 @@
         var verts = this.tVerts;
         var m = vdot2(n.x, n.y, verts[0], verts[1]);
 
-        for(var i=2; i<verts.length; i+=2){
-            m = min(m, vdot2(n.x, n.y, verts[i], verts[i+1]));
+        for (var i = 2; i < verts.length; i += 2) {
+            m = min(m, vdot2(n.x, n.y, verts[i], verts[i + 1]));
         }
 
         return m - d;
@@ -1262,10 +1262,10 @@
     {
         var axes = this.tAxes;
 
-        for(var i=0; i<axes.length; i++){
+        for (var i = 0; i < axes.length; i++) {
             var n = axes[i].n;
             var dist = vdot2(n.x, n.y, vx, vy) - axes[i].d;
-            if(dist > 0) return false;
+            if (dist > 0) return false;
         }
 
         return true;
@@ -1275,11 +1275,11 @@
     {
         var axes = this.tAxes;
 
-        for(var i=0; i<axes.length; i++){
+        for (var i = 0; i < axes.length; i++) {
             var n = axes[i].n;
-            if(vdot(n, n) < 0) continue;
+            if (vdot(n, n) < 0) continue;
             var dist = vdot2(n.x, n.y, vx, vy) - axes[i].d;
-            if(dist > 0) return false;
+            if (dist > 0) return false;
         }
 
         return true;
@@ -1334,11 +1334,11 @@
         //this.i_inv;
 
         /// Position of the rigid body's center of gravity.
-        this.p = new Vect(0,0);
+        this.p = new Vect(0, 0);
         /// Velocity of the rigid body's center of gravity.
         this.vx = this.vy = 0;
         /// Force acting on the rigid body's center of gravity.
-        this.f = new Vect(0,0);
+        this.f = new Vect(0, 0);
 
         /// Rotation of the body around it's center of gravity in radians.
         /// Must agree with cpBody.rot! Use cpBodySetAngle() when changing the angle for this reason.
@@ -1379,7 +1379,7 @@
         this.setMoment(i);
 
         // Set this.a and this.rot
-        this.rot = new Vect(0,0);
+        this.rot = new Vect(0, 0);
         this.setAngle(0);
     };
 
@@ -1394,9 +1394,9 @@
     cp.StaticBody = createStaticBody;
 
     if (typeof DEBUG !== 'undefined' && DEBUG) {
-        var v_assert_nan = function(v, message){assert(v.x == v.x && v.y == v.y, message); };
-        var v_assert_infinite = function(v, message){assert(Math.abs(v.x) !== Infinity && Math.abs(v.y) !== Infinity, message);};
-        var v_assert_sane = function(v, message){v_assert_nan(v, message); v_assert_infinite(v, message);};
+        var v_assert_nan = function(v, message) {assert(v.x == v.x && v.y == v.y, message); };
+        var v_assert_infinite = function(v, message) {assert(Math.abs(v.x) !== Infinity && Math.abs(v.y) !== Infinity, message);};
+        var v_assert_sane = function(v, message) {v_assert_nan(v, message); v_assert_infinite(v, message);};
 
         Body.prototype.sanityCheck = function()
         {
@@ -1418,7 +1418,7 @@
             assert(this.w_limit === this.w_limit, "Body's angular velocity limit is invalid.");
         };
     } else {
-        Body.prototype.sanityCheck = function(){};
+        Body.prototype.sanityCheck = function() {};
     }
 
     Body.prototype.getPos = function() { return this.p; };
@@ -1447,21 +1447,21 @@
 // http://jsperf.com/defineproperty-vs-setter
     Body.prototype.setMass = function(mass)
     {
-        assert(mass > 0, "Mass must be positive and non-zero.");
+        assert(mass > 0, 'Mass must be positive and non-zero.');
 
         //activate is defined in cpSpaceComponent
         this.activate();
         this.m = mass;
-        this.m_inv = 1/mass;
+        this.m_inv = 1 / mass;
     };
 
     Body.prototype.setMoment = function(moment)
     {
-        assert(moment > 0, "Moment of Inertia must be positive and non-zero.");
+        assert(moment > 0, 'Moment of Inertia must be positive and non-zero.');
 
         this.activate();
         this.i = moment;
-        this.i_inv = 1/moment;
+        this.i_inv = 1 / moment;
     };
 
     Body.prototype.addShape = function(shape)
@@ -1480,9 +1480,9 @@
 
     var filterConstraints = function(node, body, filter)
     {
-        if(node === filter){
+        if (node === filter) {
             return node.next(body);
-        } else if(node.a === body){
+        } else if (node.a === body) {
             node.next_a = filterConstraints(node.next_a, body, filter);
         } else {
             node.next_b = filterConstraints(node.next_b, body, filter);
@@ -1544,12 +1544,12 @@
         //this.vx = v.x; this.vy = v.y;
         var v_limit = this.v_limit;
         var lensq = vx * vx + vy * vy;
-        var scale = (lensq > v_limit*v_limit) ? v_limit / Math.sqrt(len) : 1;
+        var scale = (lensq > v_limit * v_limit) ? v_limit / Math.sqrt(len) : 1;
         this.vx = vx * scale;
         this.vy = vy * scale;
 
         var w_limit = this.w_limit;
-        this.w = clamp(this.w*damping + this.t*this.i_inv*dt, -w_limit, w_limit);
+        this.w = clamp(this.w * damping + this.t * this.i_inv * dt, -w_limit, w_limit);
 
         this.sanityCheck();
     };
@@ -1562,7 +1562,7 @@
         this.p.x += (this.vx + this.v_biasx) * dt;
         this.p.y += (this.vy + this.v_biasy) * dt;
 
-        this.setAngleInternal(this.a + (this.w + this.w_bias)*dt);
+        this.setAngleInternal(this.a + (this.w + this.w_bias) * dt);
 
         this.v_biasx = this.v_biasy = 0;
         this.w_bias = 0;
@@ -1573,7 +1573,7 @@
     Body.prototype.resetForces = function()
     {
         this.activate();
-        this.f = new Vect(0,0);
+        this.f = new Vect(0, 0);
         this.t = 0;
     };
 
@@ -1609,7 +1609,7 @@
 
     Body.prototype.eachShape = function(func)
     {
-        for(var i = 0, len = this.shapeList.length; i < len; i++) {
+        for (var i = 0, len = this.shapeList.length; i < len; i++) {
             func(this.shapeList[i]);
         }
     };
@@ -1617,7 +1617,7 @@
     Body.prototype.eachConstraint = function(func)
     {
         var constraint = this.constraintList;
-        while(constraint) {
+        while (constraint) {
             var next = constraint.next(this);
             func(constraint);
             constraint = next;
@@ -1627,7 +1627,7 @@
     Body.prototype.eachArbiter = function(func)
     {
         var arb = this.arbiterList;
-        while(arb){
+        while (arb) {
             var next = arb.next(this);
 
             arb.swappedColl = (this === arb.body_b);
@@ -1653,23 +1653,23 @@
     Body.prototype.kineticEnergy = function()
     {
         // Need to do some fudging to avoid NaNs
-        var vsq = this.vx*this.vx + this.vy*this.vy;
+        var vsq = this.vx * this.vx + this.vy * this.vy;
         var wsq = this.w * this.w;
-        return (vsq ? vsq*this.m : 0) + (wsq ? wsq*this.i : 0);
+        return (vsq ? vsq * this.m : 0) + (wsq ? wsq * this.i : 0);
     };
 
     /* Copyright (c) 2010 Scott Lembcke
-     * 
+     *
      * Permission is hereby granted, free of charge, to any person obtaining a copy
      * of this software and associated documentation files (the "Software"), to deal
      * in the Software without restriction, including without limitation the rights
      * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
      * copies of the Software, and to permit persons to whom the Software is
      * furnished to do so, subject to the following conditions:
-     * 
+     *
      * The above copyright notice and this permission notice shall be included in
      * all copies or substantial portions of the Software.
-     * 
+     *
      * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
      * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
      * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -1742,8 +1742,8 @@
     {
         this.staticIndex = staticIndex;
 
-        if(staticIndex){
-            assert(!staticIndex.dynamicIndex, "This static index is already associated with a dynamic index.");
+        if (staticIndex) {
+            assert(!staticIndex.dynamicIndex, 'This static index is already associated with a dynamic index.');
             staticIndex.dynamicIndex = this;
         }
     };
@@ -1751,7 +1751,7 @@
 // Collide the objects in an index against the objects in a staticIndex using the query callback function.
     SpatialIndex.prototype.collideStatic = function(staticIndex, func)
     {
-        if(staticIndex.count > 0){
+        if (staticIndex.count > 0) {
             var query = staticIndex.query;
 
             this.each(function(obj) {
@@ -1762,17 +1762,17 @@
 
 
     /* Copyright (c) 2009 Scott Lembcke
-     * 
+     *
      * Permission is hereby granted, free of charge, to any person obtaining a copy
      * of this software and associated documentation files (the "Software"), to deal
      * in the Software without restriction, including without limitation the rights
      * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
      * copies of the Software, and to permit persons to whom the Software is
      * furnished to do so, subject to the following conditions:
-     * 
+     *
      * The above copyright notice and this permission notice shall be included in
      * all copies or substantial portions of the Software.
-     * 
+     *
      * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
      * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
      * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -1845,17 +1845,17 @@
     BBTree.prototype.getBB = function(obj, dest)
     {
         var velocityFunc = this.velocityFunc;
-        if(velocityFunc){
+        if (velocityFunc) {
             var coef = 0.1;
-            var x = (obj.bb_r - obj.bb_l)*coef;
-            var y = (obj.bb_t - obj.bb_b)*coef;
+            var x = (obj.bb_r - obj.bb_l) * coef;
+            var y = (obj.bb_t - obj.bb_b) * coef;
 
             var v = vmult(velocityFunc(obj), 0.1);
 
             dest.bb_l = obj.bb_l + min(-x, v.x);
             dest.bb_b = obj.bb_b + min(-y, v.y);
-            dest.bb_r = obj.bb_r + max( x, v.x);
-            dest.bb_t = obj.bb_t + max( y, v.y);
+            dest.bb_r = obj.bb_r + max(x, v.x);
+            dest.bb_t = obj.bb_t + max(y, v.y);
         } else {
             dest.bb_l = obj.bb_l;
             dest.bb_b = obj.bb_b;
@@ -1872,12 +1872,12 @@
 
     BBTree.prototype.incrementStamp = function()
     {
-        if(this.dynamicIndex && this.dynamicIndex.stamp){
+        if (this.dynamicIndex && this.dynamicIndex.stamp) {
             this.dynamicIndex.stamp++;
         } else {
             this.stamp++;
         }
-    }
+    };
 
 // **** Pair/Thread Functions
 
@@ -1912,12 +1912,12 @@
         var next = this.next;
         var prev = this.prev;
 
-        if(next){
-            if(next.a.leaf == this.leaf) next.a.prev = prev; else next.b.prev = prev;
+        if (next) {
+            if (next.a.leaf == this.leaf) next.a.prev = prev; else next.b.prev = prev;
         }
 
-        if(prev){
-            if(prev.a.leaf == this.leaf) prev.a.next = next; else prev.b.next = next;
+        if (prev) {
+            if (prev.a.leaf == this.leaf) prev.a.next = next; else prev.b.next = next;
         } else {
             this.leaf.pairs = next;
         }
@@ -1930,8 +1930,8 @@
 
         this.pairs = null;
 
-        while(pair){
-            if(pair.a.leaf == this){
+        while (pair) {
+            if (pair.a.leaf == this) {
                 next = pair.a.next;
                 pair.b.unlink();
                 //tree.pairRecycle(pair);
@@ -1943,7 +1943,7 @@
                 pair = next;
             }
         }
-    }
+    };
 
     var pairInsert = function(a, b, tree)
     {
@@ -1955,12 +1955,12 @@
         //Pair temp = {{null, a, nextA},{null, b, nextB}};
         //*pair = temp;
 
-        if(nextA){
-            if(nextA.a.leaf == a) nextA.a.prev = pair; else nextA.b.prev = pair;
+        if (nextA) {
+            if (nextA.a.leaf == a) nextA.a.prev = pair; else nextA.b.prev = pair;
         }
 
-        if(nextB){
-            if(nextB.a.leaf == b) nextB.a.prev = pair; else nextB.b.prev = pair;
+        if (nextB) {
+            if (nextB.a.leaf == b) nextB.a.prev = pair; else nextB.b.prev = pair;
         }
     };
 
@@ -2015,9 +2015,9 @@
 
     Node.prototype.replaceChild = function(child, value, tree)
     {
-        assertSoft(child == this.A || child == this.B, "Node is not a child of parent.");
+        assertSoft(child == this.A || child == this.B, 'Node is not a child of parent.');
 
-        if(this.A == child){
+        if (this.A == child) {
             //NodeRecycle(tree, parent.A);
             this.setA(value);
         } else {
@@ -2025,7 +2025,7 @@
             this.setB(value);
         }
 
-        for(var node=this; node; node = node.parent){
+        for (var node = this; node; node = node.parent) {
             //node.bb = bbMerge(node.A.bb, node.B.bb);
             var a = node.A;
             var b = node.B;
@@ -2038,12 +2038,12 @@
 
     Node.prototype.bbArea = Leaf.prototype.bbArea = function()
     {
-        return (this.bb_r - this.bb_l)*(this.bb_t - this.bb_b);
+        return (this.bb_r - this.bb_l) * (this.bb_t - this.bb_b);
     };
 
     var bbTreeMergedArea = function(a, b)
     {
-        return (max(a.bb_r, b.bb_r) - min(a.bb_l, b.bb_l))*(max(a.bb_t, b.bb_t) - min(a.bb_b, b.bb_b));
+        return (max(a.bb_r, b.bb_r) - min(a.bb_l, b.bb_l)) * (max(a.bb_t, b.bb_t) - min(a.bb_b, b.bb_b));
     };
 
 // **** Subtree Functions
@@ -2053,27 +2053,27 @@
     var bbProximity = function(a, b)
     {
         return Math.abs(a.bb_l + a.bb_r - b.bb_l - b.bb_r) + Math.abs(a.bb_b + b.bb_t - b.bb_b - b.bb_t);
-    }
+    };
 
     var subtreeInsert = function(subtree, leaf, tree)
     {
 //	var s = new Error().stack;
 //	traces[s] = traces[s] ? traces[s]+1 : 1;
 
-        if(subtree == null){
+        if (subtree == null) {
             return leaf;
-        } else if(subtree.isLeaf){
+        } else if (subtree.isLeaf) {
             return new Node(tree, leaf, subtree);
         } else {
             var cost_a = subtree.B.bbArea() + bbTreeMergedArea(subtree.A, leaf);
             var cost_b = subtree.A.bbArea() + bbTreeMergedArea(subtree.B, leaf);
 
-            if(cost_a === cost_b){
+            if (cost_a === cost_b) {
                 cost_a = bbProximity(subtree.A, leaf);
                 cost_b = bbProximity(subtree.B, leaf);
             }
 
-            if(cost_b < cost_a){
+            if (cost_b < cost_a) {
                 subtree.setB(subtreeInsert(subtree.B, leaf, tree));
             } else {
                 subtree.setA(subtreeInsert(subtree.A, leaf, tree));
@@ -2097,8 +2097,8 @@
     var subtreeQuery = function(subtree, bb, func)
     {
         //if(bbIntersectsBB(subtree.bb, bb)){
-        if(subtree.intersectsBB(bb)){
-            if(subtree.isLeaf){
+        if (subtree.intersectsBB(bb)) {
+            if (subtree.isLeaf) {
                 func(subtree.obj);
             } else {
                 subtreeQuery(subtree.A, bb, func);
@@ -2110,23 +2110,23 @@
 /// Returns the fraction along the segment query the node hits. Returns Infinity if it doesn't hit.
     var nodeSegmentQuery = function(node, a, b)
     {
-        var idx = 1/(b.x - a.x);
-        var tx1 = (node.bb_l == a.x ? -Infinity : (node.bb_l - a.x)*idx);
-        var tx2 = (node.bb_r == a.x ?  Infinity : (node.bb_r - a.x)*idx);
+        var idx = 1 / (b.x - a.x);
+        var tx1 = (node.bb_l == a.x ? -Infinity : (node.bb_l - a.x) * idx);
+        var tx2 = (node.bb_r == a.x ? Infinity : (node.bb_r - a.x) * idx);
         var txmin = min(tx1, tx2);
         var txmax = max(tx1, tx2);
 
-        var idy = 1/(b.y - a.y);
-        var ty1 = (node.bb_b == a.y ? -Infinity : (node.bb_b - a.y)*idy);
-        var ty2 = (node.bb_t == a.y ?  Infinity : (node.bb_t - a.y)*idy);
+        var idy = 1 / (b.y - a.y);
+        var ty1 = (node.bb_b == a.y ? -Infinity : (node.bb_b - a.y) * idy);
+        var ty2 = (node.bb_t == a.y ? Infinity : (node.bb_t - a.y) * idy);
         var tymin = min(ty1, ty2);
         var tymax = max(ty1, ty2);
 
-        if(tymin <= txmax && txmin <= tymax){
+        if (tymin <= txmax && txmin <= tymax) {
             var min_ = max(txmin, tymin);
             var max_ = min(txmax, tymax);
 
-            if(0.0 <= max_ && min_ <= 1.0) return max(min_, 0.0);
+            if (0.0 <= max_ && min_ <= 1.0) return max(min_, 0.0);
         }
 
         return Infinity;
@@ -2134,18 +2134,18 @@
 
     var subtreeSegmentQuery = function(subtree, a, b, t_exit, func)
     {
-        if(subtree.isLeaf){
+        if (subtree.isLeaf) {
             return func(subtree.obj);
         } else {
             var t_a = nodeSegmentQuery(subtree.A, a, b);
             var t_b = nodeSegmentQuery(subtree.B, a, b);
 
-            if(t_a < t_b){
-                if(t_a < t_exit) t_exit = min(t_exit, subtreeSegmentQuery(subtree.A, a, b, t_exit, func));
-                if(t_b < t_exit) t_exit = min(t_exit, subtreeSegmentQuery(subtree.B, a, b, t_exit, func));
+            if (t_a < t_b) {
+                if (t_a < t_exit) t_exit = min(t_exit, subtreeSegmentQuery(subtree.A, a, b, t_exit, func));
+                if (t_b < t_exit) t_exit = min(t_exit, subtreeSegmentQuery(subtree.B, a, b, t_exit, func));
             } else {
-                if(t_b < t_exit) t_exit = min(t_exit, subtreeSegmentQuery(subtree.B, a, b, t_exit, func));
-                if(t_a < t_exit) t_exit = min(t_exit, subtreeSegmentQuery(subtree.A, a, b, t_exit, func));
+                if (t_b < t_exit) t_exit = min(t_exit, subtreeSegmentQuery(subtree.B, a, b, t_exit, func));
+                if (t_a < t_exit) t_exit = min(t_exit, subtreeSegmentQuery(subtree.A, a, b, t_exit, func));
             }
 
             return t_exit;
@@ -2165,11 +2165,11 @@
 
     var subtreeRemove = function(subtree, leaf, tree)
     {
-        if(leaf == subtree){
+        if (leaf == subtree) {
             return null;
         } else {
             var parent = leaf.parent;
-            if(parent == subtree){
+            if (parent == subtree) {
                 var other = subtree.otherChild(leaf);
                 other.parent = subtree.parent;
                 //NodeRecycle(tree, subtree);
@@ -2198,13 +2198,13 @@
 
     var markLeafQuery = function(subtree, leaf, left, tree, func)
     {
-        if(bbTreeIntersectsNode(leaf, subtree)){
-            if(subtree.isLeaf){
-                if(left){
+        if (bbTreeIntersectsNode(leaf, subtree)) {
+            if (subtree.isLeaf) {
+                if (left) {
                     pairInsert(leaf, subtree, tree);
                 } else {
-                    if(subtree.stamp < leaf.stamp) pairInsert(subtree, leaf, tree);
-                    if(func) func(leaf.obj, subtree.obj);
+                    if (subtree.stamp < leaf.stamp) pairInsert(subtree, leaf, tree);
+                    if (func) func(leaf.obj, subtree.obj);
                 }
             } else {
                 markLeafQuery(subtree.A, leaf, left, tree, func);
@@ -2215,11 +2215,11 @@
 
     var markLeaf = function(leaf, tree, staticRoot, func)
     {
-        if(leaf.stamp == tree.getStamp()){
-            if(staticRoot) markLeafQuery(staticRoot, leaf, false, tree, func);
+        if (leaf.stamp == tree.getStamp()) {
+            if (staticRoot) markLeafQuery(staticRoot, leaf, false, tree, func);
 
-            for(var node = leaf; node.parent; node = node.parent){
-                if(node == node.parent.A){
+            for (var node = leaf; node.parent; node = node.parent) {
+                if (node == node.parent.A) {
                     markLeafQuery(node.parent.B, leaf, true, tree, func);
                 } else {
                     markLeafQuery(node.parent.A, leaf, false, tree, func);
@@ -2227,9 +2227,9 @@
             }
         } else {
             var pair = leaf.pairs;
-            while(pair){
-                if(leaf == pair.b.leaf){
-                    if(func) func(pair.a.leaf.obj, leaf.obj);
+            while (pair) {
+                if (leaf == pair.b.leaf) {
+                    if (func) func(pair.a.leaf.obj, leaf.obj);
                     pair = pair.b.next;
                 } else {
                     pair = pair.a.next;
@@ -2240,7 +2240,7 @@
 
     var markSubtree = function(subtree, tree, staticRoot, func)
     {
-        if(subtree.isLeaf){
+        if (subtree.isLeaf) {
             markLeaf(subtree, tree, staticRoot, func);
         } else {
             markSubtree(subtree.A, tree, staticRoot, func);
@@ -2261,7 +2261,7 @@
         var obj = this.obj;
 
         //if(!bbContainsBB(this.bb, bb)){
-        if(!this.containsObj(obj)){
+        if (!this.containsObj(obj)) {
             tree.getBB(this.obj, this);
 
             root = subtreeRemove(root, this, tree);
@@ -2279,9 +2279,9 @@
     Leaf.prototype.addPairs = function(tree)
     {
         var dynamicIndex = tree.dynamicIndex;
-        if(dynamicIndex){
+        if (dynamicIndex) {
             var dynamicRoot = dynamicIndex.root;
-            if(dynamicRoot){
+            if (dynamicRoot) {
                 markLeafQuery(dynamicRoot, this, true, dynamicIndex, null);
             }
         } else {
@@ -2323,11 +2323,11 @@
     };
 
 // **** Reindex
-    var voidQueryFunc = function(obj1, obj2){};
+    var voidQueryFunc = function(obj1, obj2) {};
 
     BBTree.prototype.reindexQuery = function(func)
     {
-        if(!this.root) return;
+        if (!this.root) return;
 
         // LeafUpdate() may modify this.root. Don't cache it.
         var hashid,
@@ -2341,7 +2341,7 @@
         var staticRoot = staticIndex && staticIndex.root;
 
         markSubtree(this.root, this, staticRoot, func);
-        if(staticIndex && !staticRoot) this.collideStatic(this, staticIndex, func);
+        if (staticIndex && !staticRoot) this.collideStatic(this, staticIndex, func);
 
         this.incrementStamp();
     };
@@ -2354,8 +2354,8 @@
     BBTree.prototype.reindexObject = function(obj, hashid)
     {
         var leaf = this.leaves[hashid];
-        if(leaf){
-            if(leaf.update(this)) leaf.addPairs(this);
+        if (leaf) {
+            if (leaf.update(this)) leaf.addPairs(this);
             this.incrementStamp();
         }
     };
@@ -2365,17 +2365,17 @@
     BBTree.prototype.pointQuery = function(point, func)
     {
         // The base collision object is the provided point.
-        if(this.root) subtreeQuery(this.root, new BB(point.x, point.y, point.x, point.y), func);
+        if (this.root) subtreeQuery(this.root, new BB(point.x, point.y, point.x, point.y), func);
     };
 
     BBTree.prototype.segmentQuery = function(a, b, t_exit, func)
     {
-        if(this.root) subtreeSegmentQuery(this.root, a, b, t_exit, func);
+        if (this.root) subtreeSegmentQuery(this.root, a, b, t_exit, func);
     };
 
     BBTree.prototype.query = function(bb, func)
     {
-        if(this.root) subtreeQuery(this.root, bb, func);
+        if (this.root) subtreeQuery(this.root, bb, func);
     };
 
 // **** Misc
@@ -2388,7 +2388,7 @@
     BBTree.prototype.each = function(func)
     {
         var hashid;
-        for(hashid in this.leaves)
+        for (hashid in this.leaves)
         {
             func(this.leaves[hashid].obj);
         }
@@ -2398,14 +2398,14 @@
 
     var bbTreeMergedArea2 = function(node, l, b, r, t)
     {
-        return (max(node.bb_r, r) - min(node.bb_l, l))*(max(node.bb_t, t) - min(node.bb_b, b));
+        return (max(node.bb_r, r) - min(node.bb_l, l)) * (max(node.bb_t, t) - min(node.bb_b, b));
     };
 
     var partitionNodes = function(tree, nodes, offset, count)
     {
-        if(count == 1){
+        if (count == 1) {
             return nodes[offset];
-        } else if(count == 2) {
+        } else if (count == 2) {
             return new Node(tree, nodes[offset], nodes[offset + 1]);
         }
 
@@ -2418,7 +2418,7 @@
             bb_t = node.bb_t;
 
         var end = offset + count;
-        for(var i=offset + 1; i<end; i++){
+        for (var i = offset + 1; i < end; i++) {
             //bb = bbMerge(bb, nodes[i].bb);
             node = nodes[i];
             bb_l = min(bb_l, node.bb_l);
@@ -2431,16 +2431,16 @@
         var splitWidth = (bb_r - bb_l > bb_t - bb_b);
 
         // Sort the bounds and use the median as the splitting point
-        var bounds = new Array(count*2);
-        if(splitWidth){
-            for(var i=offset; i<end; i++){
-                bounds[2*i + 0] = nodes[i].bb_l;
-                bounds[2*i + 1] = nodes[i].bb_r;
+        var bounds = new Array(count * 2);
+        if (splitWidth) {
+            for (var i = offset; i < end; i++) {
+                bounds[2 * i + 0] = nodes[i].bb_l;
+                bounds[2 * i + 1] = nodes[i].bb_r;
             }
         } else {
-            for(var i=offset; i<end; i++){
-                bounds[2*i + 0] = nodes[i].bb_b;
-                bounds[2*i + 1] = nodes[i].bb_t;
+            for (var i = offset; i < end; i++) {
+                bounds[2 * i + 0] = nodes[i].bb_b;
+                bounds[2 * i + 1] = nodes[i].bb_t;
             }
         }
 
@@ -2448,21 +2448,21 @@
             // This might run faster if the function was moved out into the global scope.
             return a - b;
         });
-        var split = (bounds[count - 1] + bounds[count])*0.5; // use the median as the split
+        var split = (bounds[count - 1] + bounds[count]) * 0.5; // use the median as the split
 
         // Generate the child BBs
         //var a = bb, b = bb;
         var a_l = bb_l, a_b = bb_b, a_r = bb_r, a_t = bb_t;
         var b_l = bb_l, b_b = bb_b, b_r = bb_r, b_t = bb_t;
 
-        if(splitWidth) a_r = b_l = split; else a_t = b_b = split;
+        if (splitWidth) a_r = b_l = split; else a_t = b_b = split;
 
         // Partition the nodes
         var right = end;
-        for(var left=offset; left < right;){
+        for (var left = offset; left < right;) {
             var node = nodes[left];
 //	if(bbMergedArea(node.bb, b) < bbMergedArea(node.bb, a)){
-            if(bbTreeMergedArea2(node, b_l, b_b, b_r, b_t) < bbTreeMergedArea2(node, a_l, a_b, a_r, a_t)){
+            if (bbTreeMergedArea2(node, b_l, b_b, b_r, b_t) < bbTreeMergedArea2(node, a_l, a_b, a_r, a_t)) {
                 right--;
                 nodes[left] = nodes[right];
                 nodes[right] = node;
@@ -2471,9 +2471,9 @@
             }
         }
 
-        if(right == count){
+        if (right == count) {
             var node = null;
-            for(var i=offset; i<end; i++) node = subtreeInsert(node, nodes[i], tree);
+            for (var i = offset; i < end; i++) node = subtreeInsert(node, nodes[i], tree);
             return node;
         }
 
@@ -2492,12 +2492,12 @@
 //		Node *node = root;
 //		int bit = 0;
 //		unsigned int path = tree.opath;
-//		
+//
 //		while(!NodeIsLeaf(node)){
 //			node = (path&(1<<bit) ? node.a : node.b);
 //			bit = (bit + 1)&(sizeof(unsigned int)*8 - 1);
 //		}
-//		
+//
 //		root = subtreeRemove(root, node, tree);
 //		tree.root = subtreeInsert(root, node, tree);
 //	}
@@ -2521,7 +2521,7 @@
 
     var nodeRender = function(node, depth)
     {
-        if(!node.isLeaf && depth <= 10){
+        if (!node.isLeaf && depth <= 10) {
             nodeRender(node.a, depth + 1);
             nodeRender(node.b, depth + 1);
         }
@@ -2529,15 +2529,15 @@
 //	var bb = node.bb;
 
         var str = '';
-        for(var i = 0; i < depth; i++) {
+        for (var i = 0; i < depth; i++) {
             str += ' ';
         }
 
 //	console.log(str + bb.b + ' ' + bb.t);
     };
 
-    BBTree.prototype.log = function(){
-        if(this.root) nodeRender(this.root, 0);
+    BBTree.prototype.log = function() {
+        if (this.root) nodeRender(this.root, 0);
     };
 
     /*
@@ -2551,7 +2551,7 @@
 
      bb bb = node.bb;
 
-     //	GLfloat v = depth/2.0f;	
+     //	GLfloat v = depth/2.0f;
      //	glColor3f(1.0f - v, v, 0.0f);
      glLineWidth(max(5.0f - depth, 1.0f));
      glBegin(GL_LINES); {
@@ -2581,17 +2581,17 @@
      }
      */
     /* Copyright (c) 2007 Scott Lembcke
-     * 
+     *
      * Permission is hereby granted, free of charge, to any person obtaining a copy
      * of this software and associated documentation files (the "Software"), to deal
      * in the Software without restriction, including without limitation the rights
      * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
      * copies of the Software, and to permit persons to whom the Software is
      * furnished to do so, subject to the following conditions:
-     * 
+     *
      * The above copyright notice and this permission notice shall be included in
      * all copies or substantial portions of the Software.
-     * 
+     *
      * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
      * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
      * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -2620,16 +2620,16 @@
 /// Collision begin event callback
 /// Returning false from a begin callback causes the collision to be ignored until
 /// the the separate callback is called when the objects stop colliding.
-    CollisionHandler.prototype.begin = function(arb, space){return true;};
+    CollisionHandler.prototype.begin = function(arb, space) {return true;};
 
 /// Collision pre-solve event callback
 /// Returning false from a pre-step callback causes the collision to be ignored until the next step.
-    CollisionHandler.prototype.preSolve = function(arb, space){return true;};
+    CollisionHandler.prototype.preSolve = function(arb, space) {return true;};
 
 /// Collision post-solve event function callback type.
-    CollisionHandler.prototype.postSolve = function(arb, space){};
+    CollisionHandler.prototype.postSolve = function(arb, space) {};
 /// Collision separate event function callback type.
-    CollisionHandler.prototype.separate = function(arb, space){};
+    CollisionHandler.prototype.separate = function(arb, space) {};
 
 
     var CP_MAX_CONTACTS_PER_ARBITER = 4;
@@ -2674,21 +2674,21 @@
 
     Arbiter.prototype.getShapes = function()
     {
-        if (this.swappedColl){
+        if (this.swappedColl) {
             return [this.b, this.a];
-        }else{
+        }else {
             return [this.a, this.b];
         }
-    }
+    };
 
 /// Calculate the total impulse that was applied by this arbiter.
 /// This function should only be called from a post-solve, post-step or cpBodyEachArbiter callback.
     Arbiter.prototype.totalImpulse = function()
     {
         var contacts = this.contacts;
-        var sum = new Vect(0,0);
+        var sum = new Vect(0, 0);
 
-        for(var i=0, count=contacts.length; i<count; i++){
+        for (var i = 0, count = contacts.length; i < count; i++) {
             var con = contacts[i];
             sum.add(vmult(con.n, con.jnAcc));
         }
@@ -2701,9 +2701,9 @@
     Arbiter.prototype.totalImpulseWithFriction = function()
     {
         var contacts = this.contacts;
-        var sum = new Vect(0,0);
+        var sum = new Vect(0, 0);
 
-        for(var i=0, count=contacts.length; i<count; i++){
+        for (var i = 0, count = contacts.length; i < count; i++) {
             var con = contacts[i];
             sum.add(new Vect(con.jnAcc, con.jtAcc).rotate(con.n));
         }
@@ -2715,16 +2715,16 @@
 /// This function should only be called from a post-solve, post-step or cpBodyEachArbiter callback.
     Arbiter.prototype.totalKE = function()
     {
-        var eCoef = (1 - this.e)/(1 + this.e);
+        var eCoef = (1 - this.e) / (1 + this.e);
         var sum = 0;
 
         var contacts = this.contacts;
-        for(var i=0, count=contacts.length; i<count; i++){
+        for (var i = 0, count = contacts.length; i < count; i++) {
             var con = contacts[i];
             var jnAcc = con.jnAcc;
             var jtAcc = con.jtAcc;
 
-            sum += eCoef*jnAcc*jnAcc/con.nMass + jtAcc*jtAcc/con.tMass;
+            sum += eCoef * jnAcc * jnAcc / con.nMass + jtAcc * jtAcc / con.tMass;
         }
 
         return sum;
@@ -2771,7 +2771,7 @@
         var set = new Array(this.contacts.length);
 
         var i;
-        for(i=0; i<set.length; i++){
+        for (i = 0; i < set.length; i++) {
             set[i] = new ContactPoint(this.contacts[i].p, this.contacts[i].n, this.contacts[i].dist);
         }
 
@@ -2806,9 +2806,9 @@
     var unthreadHelper = function(arb, body, prev, next)
     {
         // thread_x_y is quite ugly, but it avoids making unnecessary js objects per arbiter.
-        if(prev){
+        if (prev) {
             // cpArbiterThreadForBody(prev, body)->next = next;
-            if(prev.body_a === body) {
+            if (prev.body_a === body) {
                 prev.thread_a_next = next;
             } else {
                 prev.thread_b_next = next;
@@ -2817,9 +2817,9 @@
             body.arbiterList = next;
         }
 
-        if(next){
+        if (next) {
             // cpArbiterThreadForBody(next, body)->prev = prev;
-            if(next.body_a === body){
+            if (next.body_a === body) {
                 next.thread_a_prev = prev;
             } else {
                 next.thread_b_prev = prev;
@@ -2840,15 +2840,15 @@
 //{
 //	cpFloat fsum = 0;
 //	cpVect vsum = vzero;
-//	
+//
 //	for(int i=0; i<numContacts; i++){
 //		cpContact *con = &contacts[i];
 //		cpVect j = vrotate(con.n, v(con.jnAcc, con.jtAcc));
-//		
+//
 //		fsum += vlength(j);
 //		vsum = vadd(vsum, j);
 //	}
-//	
+//
 //	cpFloat vmag = vlength(vsum);
 //	return (1 - vmag/fsum);
 //}
@@ -2856,16 +2856,16 @@
     Arbiter.prototype.update = function(contacts, handler, a, b)
     {
         // Arbiters without contact data may exist if a collision function rejected the collision.
-        if(this.contacts){
+        if (this.contacts) {
             // Iterate over the possible pairs to look for hash value matches.
-            for(var i=0; i<this.contacts.length; i++){
+            for (var i = 0; i < this.contacts.length; i++) {
                 var old = this.contacts[i];
 
-                for(var j=0; j<contacts.length; j++){
+                for (var j = 0; j < contacts.length; j++) {
                     var new_contact = contacts[j];
 
                     // This could trigger false positives, but is fairly unlikely nor serious if it does.
-                    if(new_contact.hash === old.hash){
+                    if (new_contact.hash === old.hash) {
                         // Copy the persistant contact information.
                         new_contact.jnAcc = old.jnAcc;
                         new_contact.jtAcc = old.jtAcc;
@@ -2888,7 +2888,7 @@
         this.b = b; this.body_b = b.body;
 
         // mark it as new if it's been cached
-        if(this.state == 'cached') this.state = 'first coll';
+        if (this.state == 'cached') this.state = 'first coll';
     };
 
     Arbiter.prototype.preStep = function(dt, slop, bias)
@@ -2896,7 +2896,7 @@
         var a = this.body_a;
         var b = this.body_b;
 
-        for(var i=0; i<this.contacts.length; i++){
+        for (var i = 0; i < this.contacts.length; i++) {
             var con = this.contacts[i];
 
             // Calculate the offsets.
@@ -2904,32 +2904,32 @@
             con.r2 = vsub(con.p, b.p);
 
             // Calculate the mass normal and mass tangent.
-            con.nMass = 1/k_scalar(a, b, con.r1, con.r2, con.n);
-            con.tMass = 1/k_scalar(a, b, con.r1, con.r2, vperp(con.n));
+            con.nMass = 1 / k_scalar(a, b, con.r1, con.r2, con.n);
+            con.tMass = 1 / k_scalar(a, b, con.r1, con.r2, vperp(con.n));
 
             // Calculate the target bias velocity.
-            con.bias = -bias*min(0, con.dist + slop)/dt;
+            con.bias = -bias * min(0, con.dist + slop) / dt;
             con.jBias = 0;
 
             // Calculate the target bounce velocity.
-            con.bounce = normal_relative_velocity(a, b, con.r1, con.r2, con.n)*this.e;
+            con.bounce = normal_relative_velocity(a, b, con.r1, con.r2, con.n) * this.e;
         }
     };
 
     Arbiter.prototype.applyCachedImpulse = function(dt_coef)
     {
-        if(this.isFirstContact()) return;
+        if (this.isFirstContact()) return;
 
         var a = this.body_a;
         var b = this.body_b;
 
-        for(var i=0; i<this.contacts.length; i++){
+        for (var i = 0; i < this.contacts.length; i++) {
             var con = this.contacts[i];
             //var j = vrotate(con.n, new Vect(con.jnAcc, con.jtAcc));
             var nx = con.n.x;
             var ny = con.n.y;
-            var jx = nx*con.jnAcc - ny*con.jtAcc;
-            var jy = nx*con.jtAcc + ny*con.jnAcc;
+            var jx = nx * con.jnAcc - ny * con.jtAcc;
+            var jy = nx * con.jtAcc + ny * con.jnAcc;
             //apply_impulses(a, b, con.r1, con.r2, vmult(j, dt_coef));
             apply_impulses(a, b, con.r1, con.r2, jx * dt_coef, jy * dt_coef);
         }
@@ -2949,7 +2949,7 @@
         var surface_vr = this.surface_vr;
         var friction = this.u;
 
-        for(var i=0; i<this.contacts.length; i++){
+        for (var i = 0; i < this.contacts.length; i++) {
             numApplyContact++;
             var con = this.contacts[i];
             var nMass = con.nMass;
@@ -2965,23 +2965,23 @@
             //var vb2 = vadd(vmult(vperp(r2), b.w_bias), b.v_bias);
             //var vbn = vdot(vsub(vb2, vb1), n);
 
-            var vbn = n.x*(b.v_biasx - r2.y * b.w_bias - a.v_biasx + r1.y * a.w_bias) +
-                n.y*(r2.x*b.w_bias + b.v_biasy - r1.x * a.w_bias - a.v_biasy);
+            var vbn = n.x * (b.v_biasx - r2.y * b.w_bias - a.v_biasx + r1.y * a.w_bias) +
+                n.y * (r2.x * b.w_bias + b.v_biasy - r1.x * a.w_bias - a.v_biasy);
 
             var vrn = vdot2(vrx, vry, n.x, n.y);
             //var vrt = vdot(vadd(vr, surface_vr), vperp(n));
             var vrt = vdot2(vrx + surface_vr.x, vry + surface_vr.y, -n.y, n.x);
 
-            var jbn = (con.bias - vbn)*nMass;
+            var jbn = (con.bias - vbn) * nMass;
             var jbnOld = con.jBias;
             con.jBias = max(jbnOld + jbn, 0);
 
-            var jn = -(con.bounce + vrn)*nMass;
+            var jn = -(con.bounce + vrn) * nMass;
             var jnOld = con.jnAcc;
             con.jnAcc = max(jnOld + jn, 0);
 
-            var jtMax = friction*con.jnAcc;
-            var jt = -vrt*con.tMass;
+            var jtMax = friction * con.jnAcc;
+            var jt = -vrt * con.tMass;
             var jtOld = con.jtAcc;
             con.jtAcc = clamp(jtOld + jt, -jtMax, jtMax);
 
@@ -2996,7 +2996,7 @@
             var rot_y = con.jtAcc - jtOld;
 
             // Inlining apply_impulses decreases speed for some reason :/
-            apply_impulses(a, b, r1, r2, n.x*rot_x - n.y*rot_y, n.x*rot_y + n.y*rot_x);
+            apply_impulses(a, b, r1, r2, n.x * rot_x - n.y * rot_y, n.x * rot_y + n.y * rot_x);
         }
     };
 
@@ -3013,17 +3013,17 @@
         return (this.body_a == body ? this.thread_a_next : this.thread_b_next);
     };
     /* Copyright (c) 2007 Scott Lembcke
-     * 
+     *
      * Permission is hereby granted, free of charge, to any person obtaining a copy
      * of this software and associated documentation files (the "Software"), to deal
      * in the Software without restriction, including without limitation the rights
      * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
      * copies of the Software, and to permit persons to whom the Software is
      * furnished to do so, subject to the following conditions:
-     * 
+     *
      * The above copyright notice and this permission notice shall be included in
      * all copies or substantial portions of the Software.
-     * 
+     *
      * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
      * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
      * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -3059,14 +3059,14 @@
         var mindist = r1 + r2;
         var delta = vsub(p2, p1);
         var distsq = vlengthsq(delta);
-        if(distsq >= mindist*mindist) return;
+        if (distsq >= mindist * mindist) return;
 
         var dist = Math.sqrt(distsq);
 
         // Allocate and initialize the contact.
         return new Contact(
-            vadd(p1, vmult(delta, 0.5 + (r1 - 0.5*mindist)/(dist ? dist : Infinity))),
-            (dist ? vmult(delta, 1/dist) : new Vect(1, 0)),
+            vadd(p1, vmult(delta, 0.5 + (r1 - 0.5 * mindist) / (dist ? dist : Infinity))),
+            (dist ? vmult(delta, 1 / dist) : new Vect(1, 0)),
             dist - mindist,
             0
         );
@@ -3086,11 +3086,11 @@
         var center = circleShape.tc;
 
         var seg_delta = vsub(seg_b, seg_a);
-        var closest_t = clamp01(vdot(seg_delta, vsub(center, seg_a))/vlengthsq(seg_delta));
+        var closest_t = clamp01(vdot(seg_delta, vsub(center, seg_a)) / vlengthsq(seg_delta));
         var closest = vadd(seg_a, vmult(seg_delta, closest_t));
 
         var contact = circle2circleQuery(center, closest, circleShape.r, segmentShape.r);
-        if(contact){
+        if (contact) {
             var n = contact.n;
 
             // Reject endcap collisions if tangents are provided.
@@ -3101,7 +3101,7 @@
         } else {
             return NONE;
         }
-    }
+    };
 
 // Find the minimum separating axis for the given poly and axis list.
 //
@@ -3115,13 +3115,13 @@
     {
         var min_index = 0;
         var min = poly.valueOnAxis(axes[0].n, axes[0].d);
-        if(min > 0) return -1;
+        if (min > 0) return -1;
 
-        for(var i=1; i<axes.length; i++){
+        for (var i = 1; i < axes.length; i++) {
             var dist = poly.valueOnAxis(axes[i].n, axes[i].d);
-            if(dist > 0) {
+            if (dist > 0) {
                 return -1;
-            } else if(dist > min){
+            } else if (dist > min) {
                 min = dist;
                 min_index = i;
             }
@@ -3139,19 +3139,19 @@
         var arr = [];
 
         var verts1 = poly1.tVerts;
-        for(var i=0; i<verts1.length; i+=2){
+        for (var i = 0; i < verts1.length; i += 2) {
             var vx = verts1[i];
-            var vy = verts1[i+1];
-            if(poly2.containsVertPartial(vx, vy, vneg(n))){
+            var vy = verts1[i + 1];
+            if (poly2.containsVertPartial(vx, vy, vneg(n))) {
                 arr.push(new Contact(new Vect(vx, vy), n, dist, hashPair(poly1.hashid, i)));
             }
         }
 
         var verts2 = poly2.tVerts;
-        for(var i=0; i<verts2.length; i+=2){
+        for (var i = 0; i < verts2.length; i += 2) {
             var vx = verts2[i];
-            var vy = verts2[i+1];
-            if(poly1.containsVertPartial(vx, vy, n)){
+            var vy = verts2[i + 1];
+            if (poly1.containsVertPartial(vx, vy, n)) {
                 arr.push(new Contact(new Vect(vx, vy), n, dist, hashPair(poly2.hashid, i)));
             }
         }
@@ -3165,20 +3165,20 @@
         var arr = [];
 
         var verts1 = poly1.tVerts;
-        for(var i=0; i<verts1.length; i+=2){
+        for (var i = 0; i < verts1.length; i += 2) {
             var vx = verts1[i];
-            var vy = verts1[i+1];
-            if(poly2.containsVert(vx, vy)){
-                arr.push(new Contact(new Vect(vx, vy), n, dist, hashPair(poly1.hashid, i>>1)));
+            var vy = verts1[i + 1];
+            if (poly2.containsVert(vx, vy)) {
+                arr.push(new Contact(new Vect(vx, vy), n, dist, hashPair(poly1.hashid, i >> 1)));
             }
         }
 
         var verts2 = poly2.tVerts;
-        for(var i=0; i<verts2.length; i+=2){
+        for (var i = 0; i < verts2.length; i += 2) {
             var vx = verts2[i];
-            var vy = verts2[i+1];
-            if(poly1.containsVert(vx, vy)){
-                arr.push(new Contact(new Vect(vx, vy), n, dist, hashPair(poly2.hashid, i>>1)));
+            var vy = verts2[i + 1];
+            if (poly1.containsVert(vx, vy)) {
+                arr.push(new Contact(new Vect(vx, vy), n, dist, hashPair(poly2.hashid, i >> 1)));
             }
         }
 
@@ -3189,15 +3189,15 @@
     var poly2poly = function(poly1, poly2)
     {
         var mini1 = findMSA(poly2, poly1.tAxes);
-        if(mini1 == -1) return NONE;
+        if (mini1 == -1) return NONE;
         var min1 = last_MSA_min;
 
         var mini2 = findMSA(poly1, poly2.tAxes);
-        if(mini2 == -1) return NONE;
+        if (mini2 == -1) return NONE;
         var min2 = last_MSA_min;
 
         // There is overlap, find the penetrating verts
-        if(min1 > min2)
+        if (min1 > min2)
             return findVerts(poly1, poly2, poly1.tAxes[mini1].n, min1);
         else
             return findVerts(poly1, poly2, vneg(poly2.tAxes[mini2].n), min2);
@@ -3219,12 +3219,12 @@
         var n = vmult(seg.tn, coef);
 
         var verts = poly.tVerts;
-        for(var i=0; i<verts.length; i+=2){
+        for (var i = 0; i < verts.length; i += 2) {
             var vx = verts[i];
-            var vy = verts[i+1];
-            if(vdot2(vx, vy, n.x, n.y) < vdot(seg.tn, seg.ta)*coef + seg.r){
+            var vy = verts[i + 1];
+            if (vdot2(vx, vy, n.x, n.y) < vdot(seg.tn, seg.ta) * coef + seg.r) {
                 var dt = vcross2(seg.tn.x, seg.tn.y, vx, vy);
-                if(dta >= dt && dt >= dtb){
+                if (dta >= dt && dt >= dtb) {
                     arr.push(new Contact(new Vect(vx, vy), n, pDist, hashPair(poly.hashid, i)));
                 }
             }
@@ -3243,16 +3243,16 @@
         var segD = vdot(seg.tn, seg.ta);
         var minNorm = poly.valueOnAxis(seg.tn, segD) - seg.r;
         var minNeg = poly.valueOnAxis(vneg(seg.tn), -segD) - seg.r;
-        if(minNeg > 0 || minNorm > 0) return NONE;
+        if (minNeg > 0 || minNorm > 0) return NONE;
 
         var mini = 0;
         var poly_min = segValueOnAxis(seg, axes[0].n, axes[0].d);
-        if(poly_min > 0) return NONE;
-        for(var i=0; i<numVerts; i++){
+        if (poly_min > 0) return NONE;
+        for (var i = 0; i < numVerts; i++) {
             var dist = segValueOnAxis(seg, axes[i].n, axes[i].d);
-            if(dist > 0){
+            if (dist > 0) {
                 return NONE;
-            } else if(dist > poly_min){
+            } else if (dist > poly_min) {
                 poly_min = dist;
                 mini = i;
             }
@@ -3262,37 +3262,37 @@
 
         var va = vadd(seg.ta, vmult(poly_n, seg.r));
         var vb = vadd(seg.tb, vmult(poly_n, seg.r));
-        if(poly.containsVert(va.x, va.y))
+        if (poly.containsVert(va.x, va.y))
             arr.push(new Contact(va, poly_n, poly_min, hashPair(seg.hashid, 0)));
-        if(poly.containsVert(vb.x, vb.y))
+        if (poly.containsVert(vb.x, vb.y))
             arr.push(new Contact(vb, poly_n, poly_min, hashPair(seg.hashid, 1)));
 
         // Floating point precision problems here.
         // This will have to do for now.
 //	poly_min -= cp_collision_slop; // TODO is this needed anymore?
 
-        if(minNorm >= poly_min || minNeg >= poly_min) {
-            if(minNorm > minNeg)
+        if (minNorm >= poly_min || minNeg >= poly_min) {
+            if (minNorm > minNeg)
                 findPointsBehindSeg(arr, seg, poly, minNorm, 1);
             else
                 findPointsBehindSeg(arr, seg, poly, minNeg, -1);
         }
 
         // If no other collision points are found, try colliding endpoints.
-        if(arr.length === 0){
+        if (arr.length === 0) {
             var mini2 = mini * 2;
             var verts = poly.tVerts;
 
-            var poly_a = new Vect(verts[mini2], verts[mini2+1]);
+            var poly_a = new Vect(verts[mini2], verts[mini2 + 1]);
 
             var con;
-            if((con = circle2circleQuery(seg.ta, poly_a, seg.r, 0, arr))) return [con];
-            if((con = circle2circleQuery(seg.tb, poly_a, seg.r, 0, arr))) return [con];
+            if ((con = circle2circleQuery(seg.ta, poly_a, seg.r, 0, arr))) return [con];
+            if ((con = circle2circleQuery(seg.tb, poly_a, seg.r, 0, arr))) return [con];
 
             var len = numVerts * 2;
-            var poly_b = new Vect(verts[(mini2+2)%len], verts[(mini2+3)%len]);
-            if((con = circle2circleQuery(seg.ta, poly_b, seg.r, 0, arr))) return [con];
-            if((con = circle2circleQuery(seg.tb, poly_b, seg.r, 0, arr))) return [con];
+            var poly_b = new Vect(verts[(mini2 + 2) % len], verts[(mini2 + 3) % len]);
+            if ((con = circle2circleQuery(seg.ta, poly_b, seg.r, 0, arr))) return [con];
+            if ((con = circle2circleQuery(seg.tb, poly_b, seg.r, 0, arr))) return [con];
         }
 
 //	console.log(poly.tVerts, poly.tAxes);
@@ -3308,11 +3308,11 @@
 
         var mini = 0;
         var min = vdot(axes[0].n, circ.tc) - axes[0].d - circ.r;
-        for(var i=0; i<axes.length; i++){
+        for (var i = 0; i < axes.length; i++) {
             var dist = vdot(axes[i].n, circ.tc) - axes[i].d - circ.r;
-            if(dist > 0){
+            if (dist > 0) {
                 return NONE;
-            } else if(dist > min) {
+            } else if (dist > min) {
                 min = dist;
                 mini = i;
             }
@@ -3322,25 +3322,25 @@
 
         var verts = poly.tVerts;
         var len = verts.length;
-        var mini2 = mini<<1;
+        var mini2 = mini << 1;
 
         //var a = poly.tVerts[mini];
         //var b = poly.tVerts[(mini + 1)%poly.tVerts.length];
         var ax = verts[mini2];
-        var ay = verts[mini2+1];
-        var bx = verts[(mini2+2)%len];
-        var by = verts[(mini2+3)%len];
+        var ay = verts[mini2 + 1];
+        var bx = verts[(mini2 + 2) % len];
+        var by = verts[(mini2 + 3) % len];
 
         var dta = vcross2(n.x, n.y, ax, ay);
         var dtb = vcross2(n.x, n.y, bx, by);
         var dt = vcross(n, circ.tc);
 
-        if(dt < dtb){
+        if (dt < dtb) {
             var con = circle2circleQuery(circ.tc, new Vect(bx, by), circ.r, 0, con);
             return con ? [con] : NONE;
-        } else if(dt < dta) {
+        } else if (dt < dta) {
             return [new Contact(
-                vsub(circ.tc, vmult(n, circ.r + min/2)),
+                vsub(circ.tc, vmult(n, circ.r + min / 2)),
                 vneg(n),
                 min,
                 0
@@ -3352,7 +3352,7 @@
     };
 
 // The javascripty way to do this would be either nested object or methods on the prototypes.
-// 
+//
 // However, the *fastest* way is the method below.
 // See: http://jsperf.com/dispatch
 
@@ -3386,17 +3386,17 @@
     };
 
     /* Copyright (c) 2007 Scott Lembcke
-     * 
+     *
      * Permission is hereby granted, free of charge, to any person obtaining a copy
      * of this software and associated documentation files (the "Software"), to deal
      * in the Software without restriction, including without limitation the rights
      * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
      * copies of the Software, and to permit persons to whom the Software is
      * furnished to do so, subject to the following conditions:
-     * 
+     *
      * The above copyright notice and this permission notice shall be included in
      * all copies or substantial portions of the Software.
-     * 
+     *
      * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
      * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
      * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -3494,8 +3494,10 @@
 
     var assertSpaceUnlocked = function(space)
     {
-        assert(!space.locked, "This addition/removal cannot be done safely during a call to cpSpaceStep() \
- or during a query. Put these calls into a post-step callback.");
+        assert(!space.locked, 'This addition/removal cannot be done safely during a call to cpSpaceStep() \
+ or during a query. Put these calls into a post-step callback.
+'
+);
     };
 
 // **** Collision handler function management
@@ -3512,10 +3514,10 @@
         var handler = new CollisionHandler();
         handler.a = a;
         handler.b = b;
-        if(begin) handler.begin = begin;
-        if(preSolve) handler.preSolve = preSolve;
-        if(postSolve) handler.postSolve = postSolve;
-        if(separate) handler.separate = separate;
+        if (begin) handler.begin = begin;
+        if (preSolve) handler.preSolve = preSolve;
+        if (postSolve) handler.postSolve = postSolve;
+        if (separate) handler.separate = separate;
 
         this.collisionHandlers[hashPair(a, b)] = handler;
     };
@@ -3537,10 +3539,10 @@
         assertSpaceUnlocked(this);
 
         var handler = new CollisionHandler();
-        if(begin) handler.begin = begin;
-        if(preSolve) handler.preSolve = preSolve;
-        if(postSolve) handler.postSolve = postSolve;
-        if(separate) handler.separate = separate;
+        if (begin) handler.begin = begin;
+        if (preSolve) handler.preSolve = preSolve;
+        if (postSolve) handler.postSolve = postSolve;
+        if (separate) handler.separate = separate;
 
         this.defaultHandler = handler;
     };
@@ -3557,9 +3559,9 @@
     Space.prototype.addShape = function(shape)
     {
         var body = shape.body;
-        if(body.isStatic()) return this.addStaticShape(shape);
+        if (body.isStatic()) return this.addStaticShape(shape);
 
-        assert(!shape.space, "This shape is already added to a space and cannot be added to another.");
+        assert(!shape.space, 'This shape is already added to a space and cannot be added to another.');
         assertSpaceUnlocked(this);
 
         body.activate();
@@ -3575,7 +3577,7 @@
 /// Explicity add a shape as a static shape to the simulation.
     Space.prototype.addStaticShape = function(shape)
     {
-        assert(!shape.space, "This shape is already added to a space and cannot be added to another.");
+        assert(!shape.space, 'This shape is already added to a space and cannot be added to another.');
         assertSpaceUnlocked(this);
 
         var body = shape.body;
@@ -3591,8 +3593,8 @@
 /// Add a rigid body to the simulation.
     Space.prototype.addBody = function(body)
     {
-        assert(!body.isStatic(), "Static bodies cannot be added to a space as they are not meant to be simulated.");
-        assert(!body.space, "This body is already added to a space and cannot be added to another.");
+        assert(!body.isStatic(), 'Static bodies cannot be added to a space as they are not meant to be simulated.');
+        assert(!body.space, 'This body is already added to a space and cannot be added to another.');
         assertSpaceUnlocked(this);
 
         this.bodies.push(body);
@@ -3604,7 +3606,7 @@
 /// Add a constraint to the simulation.
     Space.prototype.addConstraint = function(constraint)
     {
-        assert(!constraint.space, "This shape is already added to a space and cannot be added to another.");
+        assert(!constraint.space, 'This shape is already added to a space and cannot be added to another.');
         assertSpaceUnlocked(this);
 
         var a = constraint.a, b = constraint.b;
@@ -3628,12 +3630,12 @@
             var arb = this.cachedArbiters[hash];
 
             // Match on the filter shape, or if it's null the filter body
-            if(
+            if (
                 (body === arb.body_a && (filter === arb.a || filter === null)) ||
                     (body === arb.body_b && (filter === arb.b || filter === null))
-                ){
+                ) {
                 // Call separate when removing shapes.
-                if(filter && arb.state !== 'cached') arb.callSeparate(this);
+                if (filter && arb.state !== 'cached') arb.callSeparate(this);
 
                 arb.unthread();
 
@@ -3649,11 +3651,11 @@
     Space.prototype.removeShape = function(shape)
     {
         var body = shape.body;
-        if(body.isStatic()){
+        if (body.isStatic()) {
             this.removeStaticShape(shape);
         } else {
             assert(this.containsShape(shape),
-                "Cannot remove a shape that was not added to the space. (Removed twice maybe?)");
+                'Cannot remove a shape that was not added to the space. (Removed twice maybe?)');
             assertSpaceUnlocked(this);
 
             body.activate();
@@ -3668,11 +3670,11 @@
     Space.prototype.removeStaticShape = function(shape)
     {
         assert(this.containsShape(shape),
-            "Cannot remove a static or sleeping shape that was not added to the space. (Removed twice maybe?)");
+            'Cannot remove a static or sleeping shape that was not added to the space. (Removed twice maybe?)');
         assertSpaceUnlocked(this);
 
         var body = shape.body;
-        if(body.isStatic()) body.activateStatic(shape);
+        if (body.isStatic()) body.activateStatic(shape);
         body.removeShape(shape);
         this.filterArbiters(body, shape);
         this.staticShapes.remove(shape, shape.hashid);
@@ -3683,7 +3685,7 @@
     Space.prototype.removeBody = function(body)
     {
         assert(this.containsBody(body),
-            "Cannot remove a body that was not added to the space. (Removed twice maybe?)");
+            'Cannot remove a body that was not added to the space. (Removed twice maybe?)');
         assertSpaceUnlocked(this);
 
         body.activate();
@@ -3696,7 +3698,7 @@
     Space.prototype.removeConstraint = function(constraint)
     {
         assert(this.containsConstraint(constraint),
-            "Cannot remove a constraint that was not added to the space. (Removed twice maybe?)");
+            'Cannot remove a constraint that was not added to the space. (Removed twice maybe?)');
         assertSpaceUnlocked(this);
 
         constraint.a.activate();
@@ -3741,16 +3743,16 @@
         this.lock(); {
         var bodies = this.bodies;
 
-        for(var i=0; i<bodies.length; i++){
+        for (var i = 0; i < bodies.length; i++) {
             func(bodies[i]);
         }
 
         var components = this.sleepingComponents;
-        for(var i=0; i<components.length; i++){
+        for (var i = 0; i < components.length; i++) {
             var root = components[i];
 
             var body = root;
-            while(body){
+            while (body) {
                 var next = body.nodeNext;
                 func(body);
                 body = next;

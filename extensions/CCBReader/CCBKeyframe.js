@@ -25,36 +25,36 @@
  ****************************************************************************/
 
 cc.BuilderKeyframe = cc.Class.extend({
-    _value:null,
-    _time:0,
-    _easingType:0,
-    _easingOpt:0,
+    _value: null,
+    _time: 0,
+    _easingType: 0,
+    _easingOpt: 0,
 
-    getValue:function(){
+    getValue: function() {
         return this._value;
     },
-    setValue:function(value){
+    setValue: function(value) {
         this._value = value;
     },
 
-    getTime:function(){
+    getTime: function() {
         return this._time;
     },
-    setTime:function(time){
+    setTime: function(time) {
         this._time = time;
     },
 
-    getEasingType:function(){
+    getEasingType: function() {
         return this._easingType;
     },
-    setEasingType:function(easingType){
+    setEasingType: function(easingType) {
         this._easingType = easingType;
     },
 
-    getEasingOpt:function(){
+    getEasingOpt: function() {
         return this._easingOpt;
     },
-    setEasingOpt:function(easingOpt){
+    setEasingOpt: function(easingOpt) {
         this._easingOpt = easingOpt;
     }
 });

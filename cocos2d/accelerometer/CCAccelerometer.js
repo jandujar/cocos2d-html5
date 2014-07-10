@@ -35,7 +35,7 @@ cc.UIInterfaceOrientationPortrait = 0;
 /**
  * he device accelerometer reports values for each axis in units of g-force
  */
-cc.Acceleration = function (x, y, z, timestamp) {
+cc.Acceleration = function(x, y, z, timestamp) {
     this.x = x || 0;
     this.y = y || 0;
     this.z = z || 0;
@@ -47,10 +47,10 @@ cc.Acceleration = function (x, y, z, timestamp) {
  * @extends cc.Class
  */
 cc.Accelerometer = cc.Class.extend(/** @lends cc.Accelerometer# */{
-    setDelegate: function (delegate) {
+    setDelegate: function(delegate) {
         cc.AccelerometerDispatcher.getInstance().addDelegate(delegate);
     },
-    setAccelerometerInterval: function (interval) {
+    setAccelerometerInterval: function(interval) {
         cc.AccelerometerDispatcher.getInstance().setAccelerometerInterval(interval);
     }
 });
@@ -68,26 +68,26 @@ cc.AccelerometerDispatcher = cc.Class.extend(/** @lends cc.AccelerometerDispatch
     _deviceEvent: null,
     _interval: 0,
     _minus: 1,
-    init: function () {
+    init: function() {
         this._acceleration = new cc.Acceleration();
         this._deviceEvent = window.DeviceMotionEvent || window.DeviceOrientationEvent;
         var ua = navigator.userAgent;
-        if (/Android/.test(ua) || (/Adr/.test(ua) && cc.Browser.type == "ucbrowser")) {
+        if (/Android/.test(ua) || (/Adr/.test(ua) && cc.Browser.type == 'ucbrowser')) {
             this._minus = -1;
         }
 
         //TODO fix DeviceMotionEvent bug on QQ Browser version 4.1 and below.
-        if (cc.Browser.type == "mqqbrowser") {
+        if (cc.Browser.type == 'mqqbrowser') {
             this._deviceEvent = window.DeviceOrientationEvent;
         }
         return true;
     },
 
-    getDelegate: function () {
+    getDelegate: function() {
         return this._delegate;
     },
 
-    addDelegate: function (delegate) {
+    addDelegate: function(delegate) {
         this._delegate = delegate;
         var acc = this.didAccelerate.bind(this);
 
@@ -104,13 +104,13 @@ cc.AccelerometerDispatcher = cc.Class.extend(/** @lends cc.AccelerometerDispatch
         }
     },
 
-    setAccelerometerInterval: function (interval) {
+    setAccelerometerInterval: function(interval) {
         if (this._interval !== interval) {
             this._interval = interval;
         }
     },
 
-    didAccelerate: function (eventData) {
+    didAccelerate: function(eventData) {
         if (!this._delegate) {
             return;
         }
@@ -144,7 +144,7 @@ cc.AccelerometerDispatcher = cc.Class.extend(/** @lends cc.AccelerometerDispatch
                 break;
 
             case cc.UIInterfaceOrientationPortraitUpsideDown://180
-                this._acceleration.x = -this._acceleration.x
+                this._acceleration.x = -this._acceleration.x;
                 this._acceleration.y = -this._acceleration.y;
                 break;
 
@@ -157,7 +157,7 @@ cc.AccelerometerDispatcher = cc.Class.extend(/** @lends cc.AccelerometerDispatch
 });
 
 
-cc.AccelerometerDispatcher.getInstance = function () {
+cc.AccelerometerDispatcher.getInstance = function() {
     if (!this._instance) {
         this._instance = new cc.AccelerometerDispatcher();
         this._instance.init();

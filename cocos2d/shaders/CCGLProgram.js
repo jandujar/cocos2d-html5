@@ -100,108 +100,108 @@ cc.UNIFORM_MAX = 8;
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_TEXTURECOLOR = "ShaderPositionTextureColor";
+cc.SHADER_POSITION_TEXTURECOLOR = 'ShaderPositionTextureColor';
 /**
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_TEXTURECOLORALPHATEST = "ShaderPositionTextureColorAlphaTest";
+cc.SHADER_POSITION_TEXTURECOLORALPHATEST = 'ShaderPositionTextureColorAlphaTest';
 /**
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_COLOR = "ShaderPositionColor";
+cc.SHADER_POSITION_COLOR = 'ShaderPositionColor';
 /**
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_TEXTURE = "ShaderPositionTexture";
+cc.SHADER_POSITION_TEXTURE = 'ShaderPositionTexture';
 /**
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_TEXTURE_UCOLOR = "ShaderPositionTexture_uColor";
+cc.SHADER_POSITION_TEXTURE_UCOLOR = 'ShaderPositionTexture_uColor';
 /**
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_TEXTUREA8COLOR = "ShaderPositionTextureA8Color";
+cc.SHADER_POSITION_TEXTUREA8COLOR = 'ShaderPositionTextureA8Color';
 /**
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_UCOLOR = "ShaderPosition_uColor";
+cc.SHADER_POSITION_UCOLOR = 'ShaderPosition_uColor';
 /**
  * @constant
  * @type {String}
  */
-cc.SHADER_POSITION_LENGTHTEXTURECOLOR = "ShaderPositionLengthTextureColor";
+cc.SHADER_POSITION_LENGTHTEXTURECOLOR = 'ShaderPositionLengthTextureColor';
 
 //------------uniform names----------------
 /**
  * @constant
  * @type {String}
  */
-cc.UNIFORM_PMATRIX_S = "CC_PMatrix";
+cc.UNIFORM_PMATRIX_S = 'CC_PMatrix';
 /**
  * @constant
  * @type {String}
  */
-cc.UNIFORM_MVMATRIX_S = "CC_MVMatrix";
+cc.UNIFORM_MVMATRIX_S = 'CC_MVMatrix';
 /**
  * @constant
  * @type {String}
  */
-cc.UNIFORM_MVPMATRIX_S = "CC_MVPMatrix";
+cc.UNIFORM_MVPMATRIX_S = 'CC_MVPMatrix';
 /**
  * @constant
  * @type {String}
  */
-cc.UNIFORM_TIME_S = "CC_Time";
+cc.UNIFORM_TIME_S = 'CC_Time';
 /**
  * @constant
  * @type {String}
  */
-cc.UNIFORM_SINTIME_S = "CC_SinTime";
+cc.UNIFORM_SINTIME_S = 'CC_SinTime';
 /**
  * @constant
  * @type {String}
  */
-cc.UNIFORM_COSTIME_S = "CC_CosTime";
+cc.UNIFORM_COSTIME_S = 'CC_CosTime';
 /**
  * @constant
  * @type {String}
  */
-cc.UNIFORM_RANDOM01_S = "CC_Random01";
+cc.UNIFORM_RANDOM01_S = 'CC_Random01';
 /**
  * @constant
  * @type {String}
  */
-cc.UNIFORM_SAMPLER_S = "CC_Texture0";
+cc.UNIFORM_SAMPLER_S = 'CC_Texture0';
 /**
  * @constant
  * @type {String}
  */
-cc.UNIFORM_ALPHA_TEST_VALUE_S = "CC_alpha_value";
+cc.UNIFORM_ALPHA_TEST_VALUE_S = 'CC_alpha_value';
 
 //------------Attribute names--------------
 /**
  * @constant
  * @type {String}
  */
-cc.ATTRIBUTE_NAME_COLOR = "a_color";
+cc.ATTRIBUTE_NAME_COLOR = 'a_color';
 /**
  * @constant
  * @type {String}
  */
-cc.ATTRIBUTE_NAME_POSITION = "a_position";
+cc.ATTRIBUTE_NAME_POSITION = 'a_position';
 /**
  * @constant
  * @type {String}
  */
-cc.ATTRIBUTE_NAME_TEX_COORD = "a_texCoord";
+cc.ATTRIBUTE_NAME_TEX_COORD = 'a_texCoord';
 
-cc.HashUniformEntry = function (value, location, hh) {
+cc.HashUniformEntry = function(value, location, hh) {
     this.value = value;
     this.location = location;
     this.hh = hh || {};
@@ -222,7 +222,7 @@ cc.GLProgram = cc.Class.extend({
     _usesTime: false,
 
     // Uniform cache
-    _updateUniformLocation: function (location, data, bytes) {
+    _updateUniformLocation: function(location, data, bytes) {
         if (location == null)
             return false;
 
@@ -249,41 +249,41 @@ cc.GLProgram = cc.Class.extend({
         return updated;
     },
 
-    _description: function () {
-        return "<CCGLProgram = " + this.toString() + " | Program = " + this._programObj.toString() + ", VertexShader = " +
-            this._vertShader.toString() + ", FragmentShader = " + this._fragShader.toString() + ">";
+    _description: function() {
+        return '<CCGLProgram = ' + this.toString() + ' | Program = ' + this._programObj.toString() + ', VertexShader = ' +
+            this._vertShader.toString() + ', FragmentShader = ' + this._fragShader.toString() + '>';
     },
 
-    _compileShader: function (shader, type, source) {
+    _compileShader: function(shader, type, source) {
         if (!source || !shader)
             return false;
 
         //var preStr = (type == this._glContext.VERTEX_SHADER) ? "precision highp float;\n" : "precision mediump float;\n";
-        source = "precision highp float;        \n"
-            + "uniform mat4 CC_PMatrix;         \n"
-            + "uniform mat4 CC_MVMatrix;        \n"
-            + "uniform mat4 CC_MVPMatrix;       \n"
-            + "uniform vec4 CC_Time;            \n"
-            + "uniform vec4 CC_SinTime;         \n"
-            + "uniform vec4 CC_CosTime;         \n"
-            + "uniform vec4 CC_Random01;        \n"
-            + "//CC INCLUDES END                \n  \n" + source;
+        source = 'precision highp float;        \n'
+            + 'uniform mat4 CC_PMatrix;         \n'
+            + 'uniform mat4 CC_MVMatrix;        \n'
+            + 'uniform mat4 CC_MVPMatrix;       \n'
+            + 'uniform vec4 CC_Time;            \n'
+            + 'uniform vec4 CC_SinTime;         \n'
+            + 'uniform vec4 CC_CosTime;         \n'
+            + 'uniform vec4 CC_Random01;        \n'
+            + '//CC INCLUDES END                \n  \n' + source;
 
         this._glContext.shaderSource(shader, source);
         this._glContext.compileShader(shader);
         var status = this._glContext.getShaderParameter(shader, this._glContext.COMPILE_STATUS);
 
         if (!status) {
-            cc.log("cocos2d: ERROR: Failed to compile shader:\n" + this._glContext.getShaderSource(shader));
+            cc.log('cocos2d: ERROR: Failed to compile shader:\n' + this._glContext.getShaderSource(shader));
             if (type == this._glContext.VERTEX_SHADER)
-                cc.log("cocos2d: \n" + this.vertexShaderLog());
+                cc.log('cocos2d: \n' + this.vertexShaderLog());
             else
-                cc.log("cocos2d: \n" + this.fragmentShaderLog());
+                cc.log('cocos2d: \n' + this.fragmentShaderLog());
         }
-        return ( status == 1 );
+        return (status == 1);
     },
 
-    ctor: function (glContext) {
+    ctor: function(glContext) {
         this._programObj = null;
         this._vertShader = null;
         this._fragShader = null;
@@ -292,7 +292,7 @@ cc.GLProgram = cc.Class.extend({
         this._glContext = glContext || cc.renderContext;
     },
 
-    destroyProgram: function () {
+    destroyProgram: function() {
         this._vertShader = null;
         this._fragShader = null;
         this._uniforms = null;
@@ -307,7 +307,7 @@ cc.GLProgram = cc.Class.extend({
      * @param {String} fragShaderStr
      * @return {Boolean}
      */
-    initWithVertexShaderByteArray: function (vertShaderStr, fragShaderStr) {
+    initWithVertexShaderByteArray: function(vertShaderStr, fragShaderStr) {
         this._programObj = cc.renderContext.createProgram();
         //cc.CHECK_GL_ERROR_DEBUG();
 
@@ -317,7 +317,7 @@ cc.GLProgram = cc.Class.extend({
         if (vertShaderStr) {
             this._vertShader = this._glContext.createShader(this._glContext.VERTEX_SHADER);
             if (!this._compileShader(this._vertShader, this._glContext.VERTEX_SHADER, vertShaderStr)) {
-                cc.log("cocos2d: ERROR: Failed to compile vertex shader");
+                cc.log('cocos2d: ERROR: Failed to compile vertex shader');
             }
         }
 
@@ -325,7 +325,7 @@ cc.GLProgram = cc.Class.extend({
         if (fragShaderStr) {
             this._fragShader = this._glContext.createShader(this._glContext.FRAGMENT_SHADER);
             if (!this._compileShader(this._fragShader, this._glContext.FRAGMENT_SHADER, fragShaderStr)) {
-                cc.log("cocos2d: ERROR: Failed to compile fragment shader");
+                cc.log('cocos2d: ERROR: Failed to compile fragment shader');
             }
         }
 
@@ -347,7 +347,7 @@ cc.GLProgram = cc.Class.extend({
      * @param {String} fragShaderStr
      * @return {Boolean}
      */
-    initWithString: function (vertShaderStr, fragShaderStr) {
+    initWithString: function(vertShaderStr, fragShaderStr) {
         return this.initWithVertexShaderByteArray(vertShaderStr, fragShaderStr);
     },
 
@@ -357,7 +357,7 @@ cc.GLProgram = cc.Class.extend({
      * @param {String} fShaderFileName
      * @return {Boolean}
      */
-    initWithVertexShaderFilename: function (vShaderFilename, fShaderFileName) {
+    initWithVertexShaderFilename: function(vShaderFilename, fShaderFileName) {
         var fileUtils = cc.FileUtils.getInstance();
         var vertexSource = fileUtils.getTextFileData(vShaderFilename);
         var fragmentSource = fileUtils.getTextFileData(fShaderFileName);
@@ -370,7 +370,7 @@ cc.GLProgram = cc.Class.extend({
      * @param {String} fShaderFileName
      * @return {Boolean}
      */
-    init: function (vShaderFilename, fShaderFileName) {
+    init: function(vShaderFilename, fShaderFileName) {
         return this.initWithVertexShaderFilename(vShaderFilename, fShaderFileName);
     },
 
@@ -379,7 +379,7 @@ cc.GLProgram = cc.Class.extend({
      * @param {String} attributeName
      * @param {Number} index
      */
-    addAttribute: function (attributeName, index) {
+    addAttribute: function(attributeName, index) {
         this._glContext.bindAttribLocation(this._programObj, index, attributeName);
     },
 
@@ -387,9 +387,9 @@ cc.GLProgram = cc.Class.extend({
      * links the glProgram
      * @return {Boolean}
      */
-    link: function () {
-        if(!this._programObj) {
-            cc.log("cc.GLProgram.link(): Cannot link invalid program");
+    link: function() {
+        if (!this._programObj) {
+            cc.log('cc.GLProgram.link(): Cannot link invalid program');
             return false;
         }
 
@@ -406,7 +406,7 @@ cc.GLProgram = cc.Class.extend({
         if (cc.COCOS2D_DEBUG) {
             var status = this._glContext.getProgramParameter(this._programObj, this._glContext.LINK_STATUS);
             if (!status) {
-                cc.log("cocos2d: ERROR: Failed to link program: " + this._glContext.getProgramInfoLog(this._programObj));
+                cc.log('cocos2d: ERROR: Failed to link program: ' + this._glContext.getProgramInfoLog(this._programObj));
                 cc.glDeleteProgram(this._programObj);
                 this._programObj = null;
                 return false;
@@ -419,7 +419,7 @@ cc.GLProgram = cc.Class.extend({
     /**
      * it will call glUseProgram()
      */
-    use: function () {
+    use: function() {
         cc.glUseProgram(this._programObj);
     },
 
@@ -430,7 +430,7 @@ cc.GLProgram = cc.Class.extend({
      *  cc.UNIFORM_MVPMATRIX
      *  cc.UNIFORM_SAMPLER
      */
-    updateUniforms: function () {
+    updateUniforms: function() {
         this._uniforms[cc.UNIFORM_PMATRIX] = this._glContext.getUniformLocation(this._programObj, cc.UNIFORM_PMATRIX_S);
         this._uniforms[cc.UNIFORM_MVMATRIX] = this._glContext.getUniformLocation(this._programObj, cc.UNIFORM_MVMATRIX_S);
         this._uniforms[cc.UNIFORM_MVPMATRIX] = this._glContext.getUniformLocation(this._programObj, cc.UNIFORM_MVPMATRIX_S);
@@ -451,22 +451,22 @@ cc.GLProgram = cc.Class.extend({
     /**
      * calls retrieves the named uniform location for this shader program.
      * @param {String} name
-     * @returns {Number}
+     * @return {Number}
      */
-    getUniformLocationForName:function(name){
-        if(!name)
-            throw "cc.GLProgram.getUniformLocationForName(): uniform name should be non-null";
-        if(!this._programObj)
-            throw "cc.GLProgram.getUniformLocationForName(): Invalid operation. Cannot get uniform location when program is not initialized";
+    getUniformLocationForName: function(name) {
+        if (!name)
+            throw 'cc.GLProgram.getUniformLocationForName(): uniform name should be non-null';
+        if (!this._programObj)
+            throw 'cc.GLProgram.getUniformLocationForName(): Invalid operation. Cannot get uniform location when program is not initialized';
 
         return this._glContext.getUniformLocation(this._programObj, name);
     },
 
-    getUniformMVPMatrix: function () {
+    getUniformMVPMatrix: function() {
         return this._uniforms[cc.UNIFORM_MVPMATRIX];
     },
 
-    getUniformSampler: function () {
+    getUniformSampler: function() {
         return this._uniforms[cc.UNIFORM_SAMPLER];
     },
 
@@ -475,7 +475,7 @@ cc.GLProgram = cc.Class.extend({
      * @param {WebGLUniformLocation} location
      * @param {Number} i1
      */
-    setUniformLocationWith1i: function (location, i1) {
+    setUniformLocationWith1i: function(location, i1) {
         var updated = this._updateUniformLocation(location, i1);
         if (updated)
             this._glContext.uniform1i(location, i1);
@@ -487,11 +487,11 @@ cc.GLProgram = cc.Class.extend({
      * @param {Number} i1
      * @param {Number} i2
      */
-    setUniformLocationWith2i:function(location, i1,i2){
-        var intArray= [i1,i2];
-        var updated =  this._updateUniformLocation(location, intArray);
+    setUniformLocationWith2i: function(location, i1, i2) {
+        var intArray = [i1, i2];
+        var updated = this._updateUniformLocation(location, intArray);
 
-        if( updated )
+        if (updated)
             this._glContext.uniform2i(location, i1, i2);
     },
 
@@ -502,11 +502,11 @@ cc.GLProgram = cc.Class.extend({
      * @param {Number} i2
      * @param {Number} i3
      */
-    setUniformLocationWith3i:function(location, i1, i2, i3){
-        var intArray = [i1,i2,i3];
-        var updated =  this._updateUniformLocation(location, intArray);
+    setUniformLocationWith3i: function(location, i1, i2, i3) {
+        var intArray = [i1, i2, i3];
+        var updated = this._updateUniformLocation(location, intArray);
 
-        if( updated )
+        if (updated)
             this._glContext.uniform3i(location, i1, i2, i3);
     },
 
@@ -518,11 +518,11 @@ cc.GLProgram = cc.Class.extend({
      * @param {Number} i3
      * @param {Number} i4
      */
-    setUniformLocationWith4i:function(location, i1, i2, i3, i4){
-        var intArray = [i1,i2,i3,i4];
-        var updated =  this._updateUniformLocation(location, intArray);
+    setUniformLocationWith4i: function(location, i1, i2, i3, i4) {
+        var intArray = [i1, i2, i3, i4];
+        var updated = this._updateUniformLocation(location, intArray);
 
-        if( updated )
+        if (updated)
             this._glContext.uniform4i(location, i1, i2, i3, i4);
     },
 
@@ -532,10 +532,10 @@ cc.GLProgram = cc.Class.extend({
      * @param {Int32Array} intArray
      * @param {Number} numberOfArrays
      */
-    setUniformLocationWith2iv:function(location, intArray, numberOfArrays){
-        var updated =  this._updateUniformLocation(location, intArray);
+    setUniformLocationWith2iv: function(location, intArray, numberOfArrays) {
+        var updated = this._updateUniformLocation(location, intArray);
 
-        if( updated )
+        if (updated)
             this._glContext.uniform2iv(location, intArray);
     },
 
@@ -545,10 +545,10 @@ cc.GLProgram = cc.Class.extend({
      * @param {Int32Array} intArray
      * @param {Number} numberOfArrays
      */
-    setUniformLocationWith3iv:function(location, intArray, numberOfArrays){
-        var updated =  this._updateUniformLocation(location, intArray);
+    setUniformLocationWith3iv: function(location, intArray, numberOfArrays) {
+        var updated = this._updateUniformLocation(location, intArray);
 
-        if( updated )
+        if (updated)
             this._glContext.uniform3iv(location, intArray);
     },
 
@@ -558,10 +558,10 @@ cc.GLProgram = cc.Class.extend({
      * @param {Int32Array} intArray
      * @param {Number} numberOfArrays
      */
-    setUniformLocationWith4iv:function(location, intArray, numberOfArrays){
-        var updated =  this._updateUniformLocation(location, intArray);
+    setUniformLocationWith4iv: function(location, intArray, numberOfArrays) {
+        var updated = this._updateUniformLocation(location, intArray);
 
-        if( updated )
+        if (updated)
             this._glContext.uniform4iv(location, intArray);
     },
 
@@ -570,7 +570,7 @@ cc.GLProgram = cc.Class.extend({
      * @param {WebGLUniformLocation} location
      * @param {Number} i1
      */
-    setUniformLocationI32: function (location, i1) {
+    setUniformLocationI32: function(location, i1) {
         this.setUniformLocationWith1i(arguments[0], arguments[1]);
     },
 
@@ -579,7 +579,7 @@ cc.GLProgram = cc.Class.extend({
      * @param {WebGLUniformLocation} location
      * @param {Number} f1
      */
-    setUniformLocationWith1f: function (location, f1) {
+    setUniformLocationWith1f: function(location, f1) {
         var updated = this._updateUniformLocation(location, f1);
         if (updated)
             this._glContext.uniform1f(location, f1);
@@ -591,7 +591,7 @@ cc.GLProgram = cc.Class.extend({
      * @param {Number} f1
      * @param {Number} f2
      */
-    setUniformLocationWith2f: function (location, f1, f2) {
+    setUniformLocationWith2f: function(location, f1, f2) {
         var floats = [f1, f2];
         var updated = this._updateUniformLocation(location, floats);
         if (updated)
@@ -605,7 +605,7 @@ cc.GLProgram = cc.Class.extend({
      * @param {Number} f2
      * @param {Number} f3
      */
-    setUniformLocationWith3f: function (location, f1, f2, f3) {
+    setUniformLocationWith3f: function(location, f1, f2, f3) {
         var floats = [f1, f2, f3];
         var updated = this._updateUniformLocation(location, floats);
         if (updated)
@@ -620,7 +620,7 @@ cc.GLProgram = cc.Class.extend({
      * @param {Number} f3
      * @param {Number} f4
      */
-    setUniformLocationWith4f: function (location, f1, f2, f3, f4) {
+    setUniformLocationWith4f: function(location, f1, f2, f3, f4) {
         var floats = [f1, f2, f3, f4];
         var updated = this._updateUniformLocation(location, floats);
         if (updated)
@@ -633,7 +633,7 @@ cc.GLProgram = cc.Class.extend({
      * @param {Float32Array} floatArray
      * @param {Number} numberOfArrays
      */
-    setUniformLocationWith2fv: function (location, floatArray, numberOfArrays) {
+    setUniformLocationWith2fv: function(location, floatArray, numberOfArrays) {
         var updated = this._updateUniformLocation(location, floatArray);
         if (updated)
             this._glContext.uniform2fv(location, floatArray);
@@ -645,7 +645,7 @@ cc.GLProgram = cc.Class.extend({
      * @param {Float32Array} floatArray
      * @param {Number} numberOfArrays
      */
-    setUniformLocationWith3fv: function (location, floatArray, numberOfArrays) {
+    setUniformLocationWith3fv: function(location, floatArray, numberOfArrays) {
         var updated = this._updateUniformLocation(location, floatArray);
         if (updated)
             this._glContext.uniform3fv(location, floatArray);
@@ -657,7 +657,7 @@ cc.GLProgram = cc.Class.extend({
      * @param {Float32Array} floatArray
      * @param {Number} numberOfArrays
      */
-    setUniformLocationWith4fv: function (location, floatArray, numberOfArrays) {
+    setUniformLocationWith4fv: function(location, floatArray, numberOfArrays) {
         var updated = this._updateUniformLocation(location, floatArray);
         if (updated)
             this._glContext.uniform4fv(location, floatArray);
@@ -669,13 +669,13 @@ cc.GLProgram = cc.Class.extend({
      * @param {Float32Array} matrixArray
      * @param {Number} numberOfMatrices
      */
-    setUniformLocationWithMatrix4fv: function (location, matrixArray, numberOfMatrices) {
+    setUniformLocationWithMatrix4fv: function(location, matrixArray, numberOfMatrices) {
         var updated = this._updateUniformLocation(location, matrixArray);
         if (updated)
             this._glContext.uniformMatrix4fv(location, false, matrixArray);
     },
 
-    setUniformLocationF32: function () {
+    setUniformLocationF32: function() {
         if (arguments.length < 2)
             return;
 
@@ -698,7 +698,7 @@ cc.GLProgram = cc.Class.extend({
     /**
      * will update the builtin uniforms if they are different than the previous call for this same shader program.
      */
-    setUniformsForBuiltins: function () {
+    setUniformsForBuiltins: function() {
         var matrixP = new cc.kmMat4();
         var matrixMV = new cc.kmMat4();
         var matrixMVP = new cc.kmMat4();
@@ -731,17 +731,17 @@ cc.GLProgram = cc.Class.extend({
     /**
      * will update the MVP matrix on the MVP uniform if it is different than the previous call for this same shader program.
      */
-    setUniformForModelViewProjectionMatrix: function () {
+    setUniformForModelViewProjectionMatrix: function() {
         this._glContext.uniformMatrix4fv(this._uniforms[cc.UNIFORM_MVPMATRIX], false,
             cc.getMat4MultiplyValue(cc.projection_matrix_stack.top, cc.modelview_matrix_stack.top));
     },
 
-    setUniformForModelViewProjectionMatrixWithMat4: function (swapMat4) {
+    setUniformForModelViewProjectionMatrixWithMat4: function(swapMat4) {
         cc.kmMat4Multiply(swapMat4, cc.projection_matrix_stack.top, cc.modelview_matrix_stack.top);
         this._glContext.uniformMatrix4fv(this._uniforms[cc.UNIFORM_MVPMATRIX], false, swapMat4.mat);
     },
 
-    setUniformForModelViewAndProjectionMatrixWithMat4: function () {
+    setUniformForModelViewAndProjectionMatrixWithMat4: function() {
         this._glContext.uniformMatrix4fv(this._uniforms[cc.UNIFORM_MVMATRIX], false, cc.modelview_matrix_stack.top.mat);
         this._glContext.uniformMatrix4fv(this._uniforms[cc.UNIFORM_PMATRIX], false, cc.projection_matrix_stack.top.mat);
     },
@@ -751,7 +751,7 @@ cc.GLProgram = cc.Class.extend({
      * returns the vertexShader error log
      * @return {String}
      */
-    vertexShaderLog: function () {
+    vertexShaderLog: function() {
         return this._glContext.getShaderInfoLog(this._vertShader);
     },
 
@@ -759,15 +759,7 @@ cc.GLProgram = cc.Class.extend({
      * returns the vertexShader error log
      * @return {String}
      */
-    getVertexShaderLog: function () {
-        return this._glContext.getShaderInfoLog(this._vertShader);
-    },
-
-    /**
-     * returns the fragmentShader error log
-     * @returns {String}
-     */
-    getFragmentShaderLog: function () {
+    getVertexShaderLog: function() {
         return this._glContext.getShaderInfoLog(this._vertShader);
     },
 
@@ -775,7 +767,15 @@ cc.GLProgram = cc.Class.extend({
      * returns the fragmentShader error log
      * @return {String}
      */
-    fragmentShaderLog: function () {
+    getFragmentShaderLog: function() {
+        return this._glContext.getShaderInfoLog(this._vertShader);
+    },
+
+    /**
+     * returns the fragmentShader error log
+     * @return {String}
+     */
+    fragmentShaderLog: function() {
         return this._glContext.getShaderInfoLog(this._fragShader);
     },
 
@@ -783,7 +783,7 @@ cc.GLProgram = cc.Class.extend({
      * returns the program error log
      * @return {String}
      */
-    programLog: function () {
+    programLog: function() {
         return this._glContext.getProgramInfoLog(this._programObj);
     },
 
@@ -791,7 +791,7 @@ cc.GLProgram = cc.Class.extend({
      * returns the program error log
      * @return {String}
      */
-    getProgramLog: function () {
+    getProgramLog: function() {
         return this._glContext.getProgramInfoLog(this._programObj);
     },
 
@@ -799,7 +799,7 @@ cc.GLProgram = cc.Class.extend({
      *  reload all shaders, this function is designed for android  <br/>
      *  when opengl context lost, so don't call it.
      */
-    reset: function () {
+    reset: function() {
         this._vertShader = null;
         this._fragShader = null;
         this._uniforms = [];
@@ -822,7 +822,7 @@ cc.GLProgram = cc.Class.extend({
      * get WebGLProgram object
      * @return {WebGLProgram}
      */
-    getProgram: function () {
+    getProgram: function() {
         return this._programObj;
     },
 
@@ -831,9 +831,9 @@ cc.GLProgram = cc.Class.extend({
      * and the ugly workaround is to use retain/release. So, these 2 methods were added to be compatible with JSB.
      * This is a hack, and should be removed once JSB fixes the retain/release bug
      */
-    retain: function () {
+    retain: function() {
     },
-    release: function () {
+    release: function() {
     }
 });
 
@@ -841,9 +841,9 @@ cc.GLProgram = cc.Class.extend({
  * Create a cc.GLProgram object
  * @param {String} vShaderFileName
  * @param {String} fShaderFileName
- * @returns {cc.GLProgram}
+ * @return {cc.GLProgram}
  */
-cc.GLProgram.create = function (vShaderFileName, fShaderFileName) {
+cc.GLProgram.create = function(vShaderFileName, fShaderFileName) {
     var program = new cc.GLProgram();
     if (program.init(vShaderFileName, fShaderFileName))
         return program;

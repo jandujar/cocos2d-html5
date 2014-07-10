@@ -31,52 +31,52 @@
  * Renamed and added some changes for cocos2d
  *
  */
-cc.v2fzero = function () {
+cc.v2fzero = function() {
     return {x: 0, y: 0};
 };
 
-cc.v2f = function (x, y) {
+cc.v2f = function(x, y) {
     return {x: x, y: y};
 };
 
-cc.v2fadd = function (v0, v1) {
+cc.v2fadd = function(v0, v1) {
     return cc.v2f(v0.x + v1.x, v0.y + v1.y);
 };
 
-cc.v2fsub = function (v0, v1) {
+cc.v2fsub = function(v0, v1) {
     return cc.v2f(v0.x - v1.x, v0.y - v1.y);
 };
 
-cc.v2fmult = function (v, s) {
+cc.v2fmult = function(v, s) {
     return cc.v2f(v.x * s, v.y * s);
 };
 
-cc.v2fperp = function (p0) {
+cc.v2fperp = function(p0) {
     return cc.v2f(-p0.y, p0.x);
 };
 
-cc.v2fneg = function (p0) {
+cc.v2fneg = function(p0) {
     return cc.v2f(-p0.x, -p0.y);
 };
 
-cc.v2fdot = function (p0, p1) {
-    return  p0.x * p1.x + p0.y * p1.y;
+cc.v2fdot = function(p0, p1) {
+    return p0.x * p1.x + p0.y * p1.y;
 };
 
-cc.v2fforangle = function (_a_) {
+cc.v2fforangle = function(_a_) {
     return cc.v2f(Math.cos(_a_), Math.sin(_a_));
 };
 
-cc.v2fnormalize = function (p) {
+cc.v2fnormalize = function(p) {
     var r = cc.pNormalize(cc.p(p.x, p.y));
     return cc.v2f(r.x, r.y);
 };
 
-cc.__v2f = function (v) {
+cc.__v2f = function(v) {
     return cc.v2f(v.x, v.y);
 };
 
-cc.__t = function (v) {
+cc.__t = function(v) {
     return {u: v.x, v: v.y};
 };
 
@@ -88,26 +88,26 @@ cc.__t = function (v) {
  * @extends cc.Node
  */
 cc.DrawNodeCanvas = cc.Node.extend(/** @lends cc.DrawNodeCanvas# */{
-    _buffer:null,
-    _blendFunc:null,
+    _buffer: null,
+    _blendFunc: null,
 
     // ----common function start ----
-    getBlendFunc:function () {
+    getBlendFunc: function() {
         return this._blendFunc;
     },
 
-    setBlendFunc:function (blendFunc) {
+    setBlendFunc: function(blendFunc) {
         this._blendFunc = blendFunc;
     },
     // ----common function end ----
 
-    ctor:function () {
+    ctor: function() {
         cc.Node.prototype.ctor.call(this);
         this._buffer = [];
         this._blendFunc = new cc.BlendFunc(cc.BLEND_SRC, cc.BLEND_DST);
     },
 
-    draw:function (ctx) {
+    draw: function(ctx) {
         var context = ctx || cc.renderContext;
         var locEGL_ScaleX = cc.EGLView.getInstance().getScaleX();
 
@@ -117,25 +117,25 @@ cc.DrawNodeCanvas = cc.Node.extend(/** @lends cc.DrawNodeCanvas# */{
         for (var i = 0; i < this._buffer.length; i++) {
             var element = this._buffer[i];
             if (element.type === cc.DrawNode.TYPE_DOT) {
-                context.fillStyle = "rgba(" + (0 | (element.color.r * 255)) + "," + (0 | (element.color.g * 255)) + "," + (0 | (element.color.b * 255)) + "," + element.color.a + ")";
+                context.fillStyle = 'rgba(' + (0 | (element.color.r * 255)) + ',' + (0 | (element.color.g * 255)) + ',' + (0 | (element.color.b * 255)) + ',' + element.color.a + ')';
                 cc.drawingUtil.drawPoint(element.position, element.radius);
             }
 
             if (element.type === cc.DrawNode.TYPE_SEGMENT) {
-                context.strokeStyle = "rgba(" + (0 | (element.color.r * 255)) + "," + (0 | (element.color.g * 255)) + "," + (0 | (element.color.b * 255)) + "," + element.color.a + ")";
+                context.strokeStyle = 'rgba(' + (0 | (element.color.r * 255)) + ',' + (0 | (element.color.g * 255)) + ',' + (0 | (element.color.b * 255)) + ',' + element.color.a + ')';
                 context.lineWidth = element.radius * 2 * locEGL_ScaleX;
-                context.lineCap = "round";
+                context.lineCap = 'round';
                 cc.drawingUtil.drawLine(element.from, element.to);
             }
 
-            if (element.type === cc.DrawNode.TYPE_POLY ) {
-                context.fillStyle = "rgba(" + (0 | (element.fillColor.r * 255)) + "," + (0 | (element.fillColor.g * 255)) + ","
-                    + (0 | (element.fillColor.b * 255)) + "," + element.fillColor.a + ")";
+            if (element.type === cc.DrawNode.TYPE_POLY) {
+                context.fillStyle = 'rgba(' + (0 | (element.fillColor.r * 255)) + ',' + (0 | (element.fillColor.g * 255)) + ','
+                    + (0 | (element.fillColor.b * 255)) + ',' + element.fillColor.a + ')';
                 cc.drawingUtil.drawPoly(element.verts, element.count, false, true);
                 context.lineWidth = element.borderWidth * 2 * locEGL_ScaleX;
-                context.lineCap = "round";
-                context.strokeStyle = "rgba(" + (0 | (element.borderColor.r * 255)) + "," + (0 | (element.borderColor.g * 255)) + ","
-                    + (0 | (element.borderColor.b * 255)) + "," + element.borderColor.a + ")";
+                context.lineCap = 'round';
+                context.strokeStyle = 'rgba(' + (0 | (element.borderColor.r * 255)) + ',' + (0 | (element.borderColor.g * 255)) + ','
+                    + (0 | (element.borderColor.b * 255)) + ',' + element.borderColor.a + ')';
                 cc.drawingUtil.drawPoly(element.verts, element.count, true, false);
             }
         }
@@ -147,7 +147,7 @@ cc.DrawNodeCanvas = cc.Node.extend(/** @lends cc.DrawNodeCanvas# */{
      * @param {Number} radius
      * @param {cc.Color4F} color
      */
-    drawDot:function (pos, radius, color) {
+    drawDot: function(pos, radius, color) {
         var element = new cc._DrawNodeElement(cc.DrawNode.TYPE_DOT);
         element.position = pos;
         element.radius = radius;
@@ -162,7 +162,7 @@ cc.DrawNodeCanvas = cc.Node.extend(/** @lends cc.DrawNodeCanvas# */{
      * @param {Number} radius
      * @param {cc.Color4F} color
      */
-    drawSegment:function (from, to, radius, color) {
+    drawSegment: function(from, to, radius, color) {
         var element = new cc._DrawNodeElement(cc.DrawNode.TYPE_SEGMENT);
         element.from = from;
         element.to = to;
@@ -178,8 +178,8 @@ cc.DrawNodeCanvas = cc.Node.extend(/** @lends cc.DrawNodeCanvas# */{
      * @param {Number} borderWidth
      * @param {cc.Color4F} borderColor
      */
-    drawPoly:function (verts, fillColor, borderWidth, borderColor) {
-        var element = new cc._DrawNodeElement(cc.DrawNode.TYPE_POLY );
+    drawPoly: function(verts, fillColor, borderWidth, borderColor) {
+        var element = new cc._DrawNodeElement(cc.DrawNode.TYPE_POLY);
         element.verts = verts;
         element.count = verts.length;
         element.fillColor = fillColor;
@@ -191,7 +191,7 @@ cc.DrawNodeCanvas = cc.Node.extend(/** @lends cc.DrawNodeCanvas# */{
     /**
      * Clear the geometry in the node's buffer.
      */
-    clear:function () {
+    clear: function() {
         this._buffer.length = 0;
     }
 });
@@ -204,33 +204,33 @@ cc.DrawNodeCanvas = cc.Node.extend(/** @lends cc.DrawNodeCanvas# */{
  * @extends cc.Node
  */
 cc.DrawNodeWebGL = cc.Node.extend(/** @lends cc.DrawNodeWebGL# */{
-    _bufferCapacity:0,
-    _buffer:null,
+    _bufferCapacity: 0,
+    _buffer: null,
 
-    _trianglesArrayBuffer:null,
-    _trianglesWebBuffer:null,
-    _trianglesReader:null,
+    _trianglesArrayBuffer: null,
+    _trianglesWebBuffer: null,
+    _trianglesReader: null,
 
-    _blendFunc:null,
-    _dirty:false,
+    _blendFunc: null,
+    _dirty: false,
 
     // ----common function start ----
-    getBlendFunc:function () {
+    getBlendFunc: function() {
         return this._blendFunc;
     },
 
-    setBlendFunc:function (blendFunc) {
+    setBlendFunc: function(blendFunc) {
         this._blendFunc = blendFunc;
     },
     // ----common function end ----
 
-    ctor:function () {
+    ctor: function() {
         cc.Node.prototype.ctor.call(this);
         this._buffer = [];
         this._blendFunc = new cc.BlendFunc(cc.BLEND_SRC, cc.BLEND_DST);
     },
 
-    init:function () {
+    init: function() {
         if (cc.Node.prototype.init.call(this)) {
             this.setShaderProgram(cc.ShaderCache.getInstance().programForKey(cc.SHADER_POSITION_LENGTHTEXTURECOLOR));
             this._ensureCapacity(512);
@@ -241,7 +241,7 @@ cc.DrawNodeWebGL = cc.Node.extend(/** @lends cc.DrawNodeWebGL# */{
         return false;
     },
 
-    _render:function () {
+    _render: function() {
         var gl = cc.renderContext;
 
         cc.glEnableVertexAttribs(cc.VERTEX_ATTRIB_FLAG_POSCOLORTEX);
@@ -264,12 +264,12 @@ cc.DrawNodeWebGL = cc.Node.extend(/** @lends cc.DrawNodeWebGL# */{
         //cc.CHECK_GL_ERROR_DEBUG();
     },
 
-    _ensureCapacity:function(count){
-        if(this._buffer.length + count > this._bufferCapacity){
+    _ensureCapacity: function(count) {
+        if (this._buffer.length + count > this._bufferCapacity) {
             var TriangleLength = cc.V2F_C4B_T2F_Triangle.BYTES_PER_ELEMENT;
             this._bufferCapacity += Math.max(this._bufferCapacity, count);
             //re alloc
-            if((this._buffer == null) || (this._buffer.length === 0)){
+            if ((this._buffer == null) || (this._buffer.length === 0)) {
                 //init
                 this._buffer = [];
                 this._trianglesArrayBuffer = new ArrayBuffer(TriangleLength * this._bufferCapacity);
@@ -278,9 +278,9 @@ cc.DrawNodeWebGL = cc.Node.extend(/** @lends cc.DrawNodeWebGL# */{
                 var newTriangles = [];
                 var newArrayBuffer = new ArrayBuffer(TriangleLength * this._bufferCapacity);
 
-                for(var i = 0; i < this._buffer.length;i++){
-                    newTriangles[i] = new cc.V2F_C4B_T2F_Triangle(this._buffer[i].a,this._buffer[i].b,this._buffer[i].c,
-                        newArrayBuffer,i * TriangleLength);
+                for (var i = 0; i < this._buffer.length; i++) {
+                    newTriangles[i] = new cc.V2F_C4B_T2F_Triangle(this._buffer[i].a, this._buffer[i].b, this._buffer[i].c,
+                        newArrayBuffer, i * TriangleLength);
                 }
                 this._trianglesReader = new Uint8Array(newArrayBuffer);
                 this._buffer = newTriangles;
@@ -289,7 +289,7 @@ cc.DrawNodeWebGL = cc.Node.extend(/** @lends cc.DrawNodeWebGL# */{
         }
     },
 
-    draw:function () {
+    draw: function() {
         cc.glBlendFunc(this._blendFunc.src, this._blendFunc.dst);
         this._shaderProgram.use();
         this._shaderProgram.setUniformsForBuiltins();
@@ -302,7 +302,7 @@ cc.DrawNodeWebGL = cc.Node.extend(/** @lends cc.DrawNodeWebGL# */{
      * @param {Number} radius
      * @param {cc.Color4F} color
      */
-    drawDot:function (pos, radius, color) {
+    drawDot: function(pos, radius, color) {
         var c4bColor = {r: 0 | (color.r * 255), g: 0 | (color.g * 255), b: 0 | (color.b * 255), a: 0 | (color.a * 255)};
         var a = {vertices: {x: pos.x - radius, y: pos.y - radius}, colors: c4bColor, texCoords: {u: -1.0, v: -1.0}};
         var b = {vertices: {x: pos.x - radius, y: pos.y + radius}, colors: c4bColor, texCoords: {u: -1.0, v: 1.0}};
@@ -320,8 +320,8 @@ cc.DrawNodeWebGL = cc.Node.extend(/** @lends cc.DrawNodeWebGL# */{
      * @param {Number} radius
      * @param {cc.Color4F} color
      */
-    drawSegment:function (from, to, radius, color) {
-        var vertexCount = 6*3;
+    drawSegment: function(from, to, radius, color) {
+        var vertexCount = 6 * 3;
         this._ensureCapacity(vertexCount);
 
         var c4bColor = {r: 0 | (color.r * 255), g: 0 | (color.g * 255), b: 0 | (color.b * 255), a: 0 | (color.a * 255)};
@@ -376,7 +376,7 @@ cc.DrawNodeWebGL = cc.Node.extend(/** @lends cc.DrawNodeWebGL# */{
      * @param {Number} borderWidth
      * @param {cc.Color4F} borderColor
      */
-    drawPoly:function (verts, fillColor, borderWidth, borderColor) {
+    drawPoly: function(verts, fillColor, borderWidth, borderColor) {
         var c4bFillColor = {r: 0 | (fillColor.r * 255), g: 0 | (fillColor.g * 255), b: 0 | (fillColor.b * 255), a: 0 | (fillColor.a * 255)};
         var c4bBorderColor = {r: 0 | (borderColor.r * 255), g: 0 | (borderColor.g * 255), b: 0 | (borderColor.b * 255), a: 0 | (borderColor.a * 255)};
         var extrude = [], i;
@@ -393,7 +393,7 @@ cc.DrawNodeWebGL = cc.Node.extend(/** @lends cc.DrawNodeWebGL# */{
         }
         var outline = (borderWidth > 0.0);
 
-        var triangleCount = 3 * count -2;
+        var triangleCount = 3 * count - 2;
         var vertexCount = 3 * triangleCount;
         this._ensureCapacity(vertexCount);
 
@@ -445,7 +445,7 @@ cc.DrawNodeWebGL = cc.Node.extend(/** @lends cc.DrawNodeWebGL# */{
     /**
      * Clear the geometry in the node's buffer.
      */
-    clear:function () {
+    clear: function() {
         this._buffer.length = 0;
         this._dirty = true;
     }
@@ -457,14 +457,14 @@ cc.DrawNode = cc.Browser.supportWebGL ? cc.DrawNodeWebGL : cc.DrawNodeCanvas;
  * Creates a DrawNode
  * @return {cc.DrawNode}
  */
-cc.DrawNode.create = function () {
+cc.DrawNode.create = function() {
     var ret = new cc.DrawNode();
     if (ret && ret.init())
         return ret;
     return null;
 };
 
-cc._DrawNodeElement = function (type) {
+cc._DrawNodeElement = function(type) {
     this.type = type;
 };
 

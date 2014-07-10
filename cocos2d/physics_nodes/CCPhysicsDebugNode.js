@@ -35,15 +35,15 @@
  */
 
 // Helper. Converts an array of numbers into an array of vectors(x,y)
-cc.__convertVerts = function (verts) {
+cc.__convertVerts = function(verts) {
     var ret = [];
     for (var i = 0; i < verts.length / 2; i++) {
-        ret[i] = {x:verts[i * 2], y:verts[i * 2 + 1]};
+        ret[i] = {x: verts[i * 2], y: verts[i * 2 + 1]};
     }
     return ret;
 };
 
-cc.ColorForBody = function (body) {
+cc.ColorForBody = function(body) {
     if (body.isRogue() || body.isSleeping()) {
         return cc.c4f(0.5, 0.5, 0.5, 0.5);
     } else if (body.nodeIdleTime > body.space.sleepTimeThreshold) {
@@ -53,7 +53,7 @@ cc.ColorForBody = function (body) {
     }
 };
 
-cc.DrawShape = function (shape, renderer) {
+cc.DrawShape = function(shape, renderer) {
     var body = shape.body;
     var color = cc.ColorForBody(body);
     switch (shape.collisionCode) {
@@ -69,12 +69,12 @@ cc.DrawShape = function (shape, renderer) {
             this.drawPoly(cc.__convertVerts(shape.tVerts), color, 1.0, line);
             break;
         default:
-            cc.log("cc.DrawShape(): Bad assertion in DrawShape()");
+            cc.log('cc.DrawShape(): Bad assertion in DrawShape()');
             break;
     }
 };
 
-cc.DrawConstraint = function (constraint, renderer) {
+cc.DrawConstraint = function(constraint, renderer) {
     var body_a = constraint.a;
     var body_b = constraint.b;
     var a, b;
@@ -120,18 +120,18 @@ cc.CONSTRAINT_COLOR = cc.c4f(0, 1, 0, 0.5);
  - Objective-Chipmunk
  */
 cc.PhysicsDebugNode = cc.DrawNode.extend({
-    _spaceObj:null,
-    _spacePtr:null,
+    _spaceObj: null,
+    _spacePtr: null,
 
-    getSpace:function () {
+    getSpace: function() {
         return this._spacePtr;
     },
 
-    setSpace:function (space) {
+    setSpace: function(space) {
         this._spacePtr = space;
     },
 
-    draw:function (context) {
+    draw: function(context) {
         if (!this._spacePtr)
             return;
 
@@ -143,7 +143,7 @@ cc.PhysicsDebugNode = cc.DrawNode.extend({
 });
 
 /** Create a debug node for an Objective-Chipmunk space. */
-cc.PhysicsDebugNode.debugNodeForChipmunkSpace = function (space) {
+cc.PhysicsDebugNode.debugNodeForChipmunkSpace = function(space) {
     var node = new cc.PhysicsDebugNode();
     if (node.init()) {
         node._spaceObj = space;
@@ -154,7 +154,7 @@ cc.PhysicsDebugNode.debugNodeForChipmunkSpace = function (space) {
 };
 
 /** Create a debug node for a regular Chipmunk space. */
-cc.PhysicsDebugNode.debugNodeForCPSpace = function (space) {
+cc.PhysicsDebugNode.debugNodeForCPSpace = function(space) {
     var node = new cc.PhysicsDebugNode();
     if (node.init()) {
         node._spacePtr = space;

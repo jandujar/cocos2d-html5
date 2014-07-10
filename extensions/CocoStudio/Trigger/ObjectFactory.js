@@ -24,14 +24,14 @@
 
 ccs.ObjectFactory = ccs.Class.extend({
     _typeMap: null,
-    ctor: function () {
+    ctor: function() {
         this._typeMap = {};
     },
-    destroyInstance: function () {
+    destroyInstance: function() {
         this._instance = null;
     },
 
-    createObject: function (className) {
+    createObject: function(className) {
         var o = null;
         var t = this._typeMap[className];
         if (t) {
@@ -40,14 +40,14 @@ ccs.ObjectFactory = ccs.Class.extend({
         return o;
     },
 
-    registerType: function (t) {
+    registerType: function(t) {
         this._typeMap[t._className] = t;
     }
 });
 
 ccs.ObjectFactory._instance = null;
 
-ccs.ObjectFactory.getInstance = function () {
+ccs.ObjectFactory.getInstance = function() {
     if (!this._instance) {
         this._instance = new ccs.ObjectFactory();
     }
@@ -55,14 +55,14 @@ ccs.ObjectFactory.getInstance = function () {
 };
 
 ccs.TInfo = ccs.Class.extend({
-    _className: "",
+    _className: '',
     _fun: null,
     /**
      *
-     * @param {String|ccs.TInfo}c
-     * @param {Function}f
+     * @param {String|ccs.TInfo} c
+     * @param {Function} f
      */
-    ctor: function (c, f) {
+    ctor: function(c, f) {
         if (f) {
             this._className = c;
             this._fun = f;

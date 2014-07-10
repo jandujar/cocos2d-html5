@@ -26,18 +26,18 @@ ccs.TriggerMng = ccs.Class.extend({
     _eventTriggers: null,
     _triggerObjs: null,
     _movementDispatches: null,
-    ctor: function () {
+    ctor: function() {
         this._eventTriggers = {};
         this._triggerObjs = {};
         this._movementDispatches = [];
     },
 
-    destroyInstance: function () {
+    destroyInstance: function() {
         this.removeAll();
         this._instance = null;
     },
 
-    parse: function (triggers) {
+    parse: function(triggers) {
         for (var i = 0; i < triggers.length; ++i) {
             var subDict = triggers[i];
             var triggerObj = ccs.TriggerObj.create();
@@ -51,15 +51,15 @@ ccs.TriggerMng = ccs.Class.extend({
         }
     },
 
-    get: function (event) {
+    get: function(event) {
         return this._eventTriggers[event];
     },
 
-    getTriggerObj: function (id) {
+    getTriggerObj: function(id) {
         return this._triggerObjs[id];
     },
 
-    add: function (event, triggerObj) {
+    add: function(event, triggerObj) {
         var eventTriggers = this._eventTriggers[event];
         if (!eventTriggers) {
             eventTriggers = [];
@@ -70,7 +70,7 @@ ccs.TriggerMng = ccs.Class.extend({
         }
     },
 
-    removeAll: function () {
+    removeAll: function() {
         for (var key in this._eventTriggers) {
             var triObjArr = this._eventTriggers[key];
             for (var j = 0; j < triObjArr.length; j++) {
@@ -81,7 +81,7 @@ ccs.TriggerMng = ccs.Class.extend({
         this._eventTriggers = {};
     },
 
-    remove: function (event, Obj) {
+    remove: function(event, Obj) {
         if (Obj) {
             return this._removeObj(event, Obj);
         }
@@ -102,7 +102,7 @@ ccs.TriggerMng = ccs.Class.extend({
         return bRet;
     },
 
-    _removeObj: function (event, Obj) {
+    _removeObj: function(event, Obj) {
         var bRet = false;
         do
         {
@@ -121,7 +121,7 @@ ccs.TriggerMng = ccs.Class.extend({
         return bRet;
     },
 
-    removeTriggerObj: function (id) {
+    removeTriggerObj: function(id) {
         var obj = this.getTriggerObj(id);
         if (!obj) {
             return false;
@@ -133,11 +133,11 @@ ccs.TriggerMng = ccs.Class.extend({
         }
         return true;
     },
-    isEmpty: function () {
+    isEmpty: function() {
         return !this._eventTriggers || this._eventTriggers.length <= 0;
     },
 
-    addArmatureMovementCallBack: function (armature, callFunc, target) {
+    addArmatureMovementCallBack: function(armature, callFunc, target) {
         if (armature == null || target == null || callFunc == null) {
             return;
         }
@@ -157,7 +157,7 @@ ccs.TriggerMng = ccs.Class.extend({
         }
     },
 
-    removeArmatureMovementCallBack: function (armature, target, callFunc) {
+    removeArmatureMovementCallBack: function(armature, target, callFunc) {
         if (armature == null || target == null || callFunc == null) {
             return;
         }
@@ -170,7 +170,7 @@ ccs.TriggerMng = ccs.Class.extend({
         }
     },
 
-    removeArmatureAllMovementCallBack: function (armature) {
+    removeArmatureAllMovementCallBack: function(armature) {
         if (armature == null) {
             return;
         }
@@ -184,16 +184,16 @@ ccs.TriggerMng = ccs.Class.extend({
         }
     },
 
-    removeAllArmatureMovementCallBack: function () {
+    removeAllArmatureMovementCallBack: function() {
         this._movementDispatches = [];
     }
 });
 
-ccs.TriggerMng.triggerMngVersion = function () {
-    return "1.2.0.0";
+ccs.TriggerMng.triggerMngVersion = function() {
+    return '1.2.0.0';
 };
 ccs.TriggerMng._instance = null;
-ccs.TriggerMng.getInstance = function () {
+ccs.TriggerMng.getInstance = function() {
     if (null == this._instance) {
         this._instance = new ccs.TriggerMng();
     }
@@ -203,11 +203,11 @@ ccs.TriggerMng.getInstance = function () {
 
 ccs.ArmatureMovementDispatcher = ccs.Class.extend({
     _mapEventAnimation: null,
-    ctor: function () {
+    ctor: function() {
         this._mapEventAnimation = [];
     },
 
-    animationEvent: function (armature, movementType, movementID) {
+    animationEvent: function(armature, movementType, movementID) {
         var locEventAni, locTarget, locFunc;
         for (var i = 0; i < this._mapEventAnimation.length; i++) {
             locEventAni = this._mapEventAnimation[i];
@@ -218,11 +218,11 @@ ccs.ArmatureMovementDispatcher = ccs.Class.extend({
         }
     },
 
-    addAnimationEventCallBack: function (callFunc, target) {
+    addAnimationEventCallBack: function(callFunc, target) {
         this._mapEventAnimation.push([target, callFunc]);
     },
 
-    removeAnimationEventCallBack: function (callFunc, target) {
+    removeAnimationEventCallBack: function(callFunc, target) {
         var locEventAni;
         for (var i = 0; i < this._mapEventAnimation.length; i++) {
             locEventAni = this._mapEventAnimation[i];

@@ -46,22 +46,22 @@
  * @extends cc.Class
  */
 cc.Camera = cc.Class.extend(/** @lends cc.Action# */{
-    _eyeX:null,
-    _eyeY:null,
-    _eyeZ:null,
+    _eyeX: null,
+    _eyeY: null,
+    _eyeZ: null,
 
-    _centerX:null,
-    _centerY:null,
-    _centerZ:null,
+    _centerX: null,
+    _centerY: null,
+    _centerZ: null,
 
-    _upX:null,
-    _upY:null,
-    _upZ:null,
+    _upX: null,
+    _upY: null,
+    _upZ: null,
 
-    _dirty:null,
-    _lookupMatrix:null,
+    _dirty: null,
+    _lookupMatrix: null,
 
-    ctor:function () {
+    ctor: function() {
         this._lookupMatrix = new cc.kmMat4();
         this.restore();
     },
@@ -70,15 +70,15 @@ cc.Camera = cc.Class.extend(/** @lends cc.Action# */{
      * Description of cc.Camera
      * @return {String}
      */
-    description:function () {
-        return "<CCCamera | center =(" + this._centerX + "," + this._centerY + "," + this._centerZ + ")>";
+    description: function() {
+        return '<CCCamera | center =(' + this._centerX + ',' + this._centerY + ',' + this._centerZ + ')>';
     },
 
     /**
      * sets the dirty value
      * @param value
      */
-    setDirty:function (value) {
+    setDirty: function(value) {
         this._dirty = value;
     },
 
@@ -86,14 +86,14 @@ cc.Camera = cc.Class.extend(/** @lends cc.Action# */{
      * get the dirty value
      * @return {Boolean}
      */
-    isDirty:function () {
+    isDirty: function() {
         return this._dirty;
     },
 
     /**
      * sets the camera in the default position
      */
-    restore:function () {
+    restore: function() {
         this._eyeX = this._eyeY = 0.0;
         this._eyeZ = cc.Camera.getZEye();
 
@@ -103,7 +103,7 @@ cc.Camera = cc.Class.extend(/** @lends cc.Action# */{
         this._upY = 1.0;
         this._upZ = 0.0;
 
-        cc.kmMat4Identity( this._lookupMatrix );
+        cc.kmMat4Identity(this._lookupMatrix);
 
         this._dirty = false;
     },
@@ -111,19 +111,19 @@ cc.Camera = cc.Class.extend(/** @lends cc.Action# */{
     /**
      * Sets the camera using gluLookAt using its eye, center and up_vector
      */
-    locate:function () {
+    locate: function() {
         if (this._dirty) {
             var eye = new cc.kmVec3(), center = new cc.kmVec3(), up = new cc.kmVec3();
 
-            cc.kmVec3Fill( eye, this._eyeX, this._eyeY , this._eyeZ );
-            cc.kmVec3Fill( center, this._centerX, this._centerY, this._centerZ);
+            cc.kmVec3Fill(eye, this._eyeX, this._eyeY, this._eyeZ);
+            cc.kmVec3Fill(center, this._centerX, this._centerY, this._centerZ);
 
-            cc.kmVec3Fill( up, this._upX, this._upY, this._upZ);
-            cc.kmMat4LookAt( this._lookupMatrix, eye, center, up);
+            cc.kmVec3Fill(up, this._upX, this._upY, this._upZ);
+            cc.kmMat4LookAt(this._lookupMatrix, eye, center, up);
 
             this._dirty = false;
         }
-        cc.kmGLMultMatrix( this._lookupMatrix);
+        cc.kmGLMultMatrix(this._lookupMatrix);
     },
 
     /**
@@ -133,8 +133,8 @@ cc.Camera = cc.Class.extend(/** @lends cc.Action# */{
      * @param {Number} eyeZ
      * @deprecated This function will be deprecated sooner or later.
      */
-    setEyeXYZ:function (eyeX, eyeY, eyeZ) {
-        this.setEye(eyeX,eyeY,eyeZ);
+    setEyeXYZ: function(eyeX, eyeY, eyeZ) {
+        this.setEye(eyeX, eyeY, eyeZ);
     },
 
     /**
@@ -143,10 +143,10 @@ cc.Camera = cc.Class.extend(/** @lends cc.Action# */{
      * @param {Number} eyeY
      * @param {Number} eyeZ
      */
-    setEye:function (eyeX, eyeY, eyeZ) {
-        this._eyeX = eyeX ;
-        this._eyeY = eyeY ;
-        this._eyeZ = eyeZ ;
+    setEye: function(eyeX, eyeY, eyeZ) {
+        this._eyeX = eyeX;
+        this._eyeY = eyeY;
+        this._eyeZ = eyeZ;
 
         this._dirty = true;
     },
@@ -158,8 +158,8 @@ cc.Camera = cc.Class.extend(/** @lends cc.Action# */{
      * @param {Number} centerZ
      * @deprecated  This function will be deprecated sooner or later.
      */
-    setCenterXYZ:function (centerX, centerY, centerZ) {
-        this.setCenter(centerX,centerY,centerZ);
+    setCenterXYZ: function(centerX, centerY, centerZ) {
+        this.setCenter(centerX, centerY, centerZ);
     },
 
     /**
@@ -168,10 +168,10 @@ cc.Camera = cc.Class.extend(/** @lends cc.Action# */{
      * @param {Number} centerY
      * @param {Number} centerZ
      */
-    setCenter:function (centerX, centerY, centerZ) {
-        this._centerX = centerX ;
-        this._centerY = centerY ;
-        this._centerZ = centerZ ;
+    setCenter: function(centerX, centerY, centerZ) {
+        this._centerX = centerX;
+        this._centerY = centerY;
+        this._centerZ = centerZ;
 
         this._dirty = true;
     },
@@ -183,7 +183,7 @@ cc.Camera = cc.Class.extend(/** @lends cc.Action# */{
      * @param {Number} upZ
      * @deprecated This function will be deprecated sooner or later.
      */
-    setUpXYZ:function (upX, upY, upZ) {
+    setUpXYZ: function(upX, upY, upZ) {
         this.setUp(upX, upY, upZ);
     },
 
@@ -193,7 +193,7 @@ cc.Camera = cc.Class.extend(/** @lends cc.Action# */{
      * @param {Number} upY
      * @param {Number} upZ
      */
-    setUp:function (upX, upY, upZ) {
+    setUp: function(upX, upY, upZ) {
         this._upX = upX;
         this._upY = upY;
         this._upZ = upZ;
@@ -209,16 +209,16 @@ cc.Camera = cc.Class.extend(/** @lends cc.Action# */{
      * @return {Object}
      * @deprecated This function will be deprecated sooner or later.
      */
-    getEyeXYZ:function (eyeX, eyeY, eyeZ) {
-        return {x:this._eyeX , y:this._eyeY , z: this._eyeZ };
+    getEyeXYZ: function(eyeX, eyeY, eyeZ) {
+        return {x: this._eyeX, y: this._eyeY, z: this._eyeZ };
     },
 
     /**
      * get the eye vector values in points  (return an object like {x:1,y:1,z:1} in HTML5)
      * @return {Object}
      */
-    getEye:function () {
-        return {x:this._eyeX , y:this._eyeY , z: this._eyeZ };
+    getEye: function() {
+        return {x: this._eyeX, y: this._eyeY, z: this._eyeZ };
     },
 
     /**
@@ -229,16 +229,16 @@ cc.Camera = cc.Class.extend(/** @lends cc.Action# */{
      * @return {Object}
      * @deprecated This function will be deprecated sooner or later.
      */
-    getCenterXYZ:function (centerX, centerY, centerZ) {
-        return {x:this._centerX ,y:this._centerY ,z:this._centerZ };
+    getCenterXYZ: function(centerX, centerY, centerZ) {
+        return {x: this._centerX, y: this._centerY, z: this._centerZ };
     },
 
     /**
      * get the center vector values int points (return an object like {x:1,y:1,z:1} in HTML5)
      * @return {Object}
      */
-    getCenter:function () {
-        return {x:this._centerX ,y:this._centerY ,z:this._centerZ };
+    getCenter: function() {
+        return {x: this._centerX, y: this._centerY, z: this._centerZ };
     },
 
     /**
@@ -249,19 +249,19 @@ cc.Camera = cc.Class.extend(/** @lends cc.Action# */{
      * @return {Object}
      * @deprecated This function will be deprecated sooner or later.
      */
-    getUpXYZ:function (upX, upY, upZ) {
-        return {x:this._upX,y:this._upY,z:this._upZ};
+    getUpXYZ: function(upX, upY, upZ) {
+        return {x: this._upX, y: this._upY, z: this._upZ};
     },
 
     /**
      * get the up vector values (return an object like {x:1,y:1,z:1} in HTML5)
      * @return {Object}
      */
-    getUp:function () {
-        return {x:this._upX,y:this._upY,z:this._upZ};
+    getUp: function() {
+        return {x: this._upX, y: this._upY, z: this._upZ};
     },
 
-    _DISALLOW_COPY_AND_ASSIGN:function (CCCamera) {
+    _DISALLOW_COPY_AND_ASSIGN: function(CCCamera) {
 
     }
 });
@@ -270,7 +270,7 @@ cc.Camera = cc.Class.extend(/** @lends cc.Action# */{
  * returns the Z eye
  * @return {Number}
  */
-cc.Camera.getZEye = function () {
+cc.Camera.getZEye = function() {
     return cc.FLT_EPSILON;
 };
 

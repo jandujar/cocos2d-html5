@@ -44,9 +44,9 @@ ccs.LoadingBar = ccs.Widget.extend(/** @lends ccs.LoadingBar# */{
     _scale9Enabled: false,
     _prevIgnoreSize: true,
     _capInsets: null,
-    _textureFile: "",
+    _textureFile: '',
     _isTextureLoaded: false,
-    ctor: function () {
+    ctor: function() {
         ccs.Widget.prototype.ctor.call(this);
         this._barType = ccs.LoadingBarType.left;
         this._percent = 100;
@@ -57,10 +57,10 @@ ccs.LoadingBar = ccs.Widget.extend(/** @lends ccs.LoadingBar# */{
         this._scale9Enabled = false;
         this._prevIgnoreSize = true;
         this._capInsets = cc.rect(0, 0, 0, 0);
-        this._textureFile = "";
+        this._textureFile = '';
     },
 
-    initRenderer: function () {
+    initRenderer: function() {
         this._barRenderer = cc.Sprite.create();
         cc.NodeRGBA.prototype.addChild.call(this, this._barRenderer, ccs.BARRENDERERZ, -1);
         this._barRenderer.setAnchorPoint(0.0, 0.5);
@@ -71,7 +71,7 @@ ccs.LoadingBar = ccs.Widget.extend(/** @lends ccs.LoadingBar# */{
      * LoadingBarTypeLeft means progress left to right, LoadingBarTypeRight otherwise.
      * @param {ccs.LoadingBarType} dir
      */
-    setDirection: function (dir) {
+    setDirection: function(dir) {
         if (this._barType == dir) {
             return;
         }
@@ -98,9 +98,9 @@ ccs.LoadingBar = ccs.Widget.extend(/** @lends ccs.LoadingBar# */{
     /**
      * Gets the progress direction of loadingbar.
      * LoadingBarTypeLeft means progress left to right, LoadingBarTypeRight otherwise.
-     * @returns {ccs.LoadingBarType}
+     * @return {ccs.LoadingBarType}
      */
-    getDirection: function () {
+    getDirection: function() {
         return this._barType;
     },
 
@@ -109,7 +109,7 @@ ccs.LoadingBar = ccs.Widget.extend(/** @lends ccs.LoadingBar# */{
      * @param {String} texture
      * @param {ccs.TextureResType} texType
      */
-    loadTexture: function (texture, texType) {
+    loadTexture: function(texture, texType) {
         if (!texture) {
             return;
         }
@@ -127,7 +127,7 @@ ccs.LoadingBar = ccs.Widget.extend(/** @lends ccs.LoadingBar# */{
             default:
                 break;
         }
-        if (this._scale9Enabled){
+        if (this._scale9Enabled) {
             barRenderer.setCapInsets(this._capInsets);
         }
         this.updateDisplayedColor(this.getColor());
@@ -138,7 +138,7 @@ ccs.LoadingBar = ccs.Widget.extend(/** @lends ccs.LoadingBar# */{
         if (!textLoaded) {
             this._barRendererTextureSize.width = this._customSize.width;
             this._barRendererTextureSize.height = this._customSize.height;
-            barRenderer.addLoadedEventListener(function () {
+            barRenderer.addLoadedEventListener(function() {
                 this._isTextureLoaded = true;
                 if (barRenderer.setCapInsets) {
                     barRenderer.setCapInsets(this._capInsets);
@@ -176,7 +176,7 @@ ccs.LoadingBar = ccs.Widget.extend(/** @lends ccs.LoadingBar# */{
      * Sets if loadingbar is using scale9 renderer.
      * @param {Boolean} enabled
      */
-    setScale9Enabled: function (enabled) {
+    setScale9Enabled: function(enabled) {
         if (this._scale9Enabled == enabled) {
             return;
         }
@@ -206,7 +206,7 @@ ccs.LoadingBar = ccs.Widget.extend(/** @lends ccs.LoadingBar# */{
      * Sets capinsets for loadingbar, if loadingbar is using scale9 renderer.
      * @param {cc.Rect} capInsets
      */
-    setCapInsets: function (capInsets) {
+    setCapInsets: function(capInsets) {
         this._capInsets = capInsets;
         if (!this._scale9Enabled) {
             return;
@@ -218,7 +218,7 @@ ccs.LoadingBar = ccs.Widget.extend(/** @lends ccs.LoadingBar# */{
      * Changes the progress direction of loadingbar.
      * @param {number} percent
      */
-    setPercent: function (percent) {
+    setPercent: function(percent) {
         if (percent < 0 || percent > 100) {
             return;
         }
@@ -226,13 +226,13 @@ ccs.LoadingBar = ccs.Widget.extend(/** @lends ccs.LoadingBar# */{
             return;
         }
         this._percent = percent;
-        if(!this._isTextureLoaded){
+        if (!this._isTextureLoaded) {
             return;
         }
         var res = this._percent / 100.0;
 
         var x = 0, y = 0;
-        if(this._renderBarTexType==ccs.TextureResType.plist){
+        if (this._renderBarTexType == ccs.TextureResType.plist) {
             var barNode = this._barRenderer;
             if (barNode) {
                 var to = barNode.getTextureRect()._origin;
@@ -248,22 +248,22 @@ ccs.LoadingBar = ccs.Widget.extend(/** @lends ccs.LoadingBar# */{
 
     /**
      * Gets the progress direction of loadingbar.
-     * @returns {number}
+     * @return {number}
      */
-    getPercent: function () {
+    getPercent: function() {
         return this._percent;
     },
 
-    onSizeChanged: function () {
+    onSizeChanged: function() {
         ccs.Widget.prototype.onSizeChanged.call(this);
         this.barRendererScaleChangedWithSize();
     },
 
     /**
      * override "ignoreContentAdaptWithSize" method of widget.
-     * @param {Boolean}ignore
+     * @param {Boolean} ignore
      */
-    ignoreContentAdaptWithSize: function (ignore) {
+    ignoreContentAdaptWithSize: function(ignore) {
         if (!this._scale9Enabled || (this._scale9Enabled && !ignore)) {
             ccs.Widget.prototype.ignoreContentAdaptWithSize.call(this, ignore);
             this._prevIgnoreSize = ignore;
@@ -272,21 +272,21 @@ ccs.LoadingBar = ccs.Widget.extend(/** @lends ccs.LoadingBar# */{
 
     /**
      * override "getContentSize" method of widget.
-     * @returns {cc.Size}
+     * @return {cc.Size}
      */
-    getContentSize: function () {
+    getContentSize: function() {
         return this._barRendererTextureSize;
     },
 
     /**
      * override "getContentSize" method of widget.
-     * @returns {cc.Node}
+     * @return {cc.Node}
      */
-    getVirtualRenderer: function () {
+    getVirtualRenderer: function() {
         return this._barRenderer;
     },
 
-    barRendererScaleChangedWithSize: function () {
+    barRendererScaleChangedWithSize: function() {
         if (this._ignoreSize) {
             if (!this._scale9Enabled) {
                 this._totalLength = this._barRendererTextureSize.width;
@@ -324,24 +324,24 @@ ccs.LoadingBar = ccs.Widget.extend(/** @lends ccs.LoadingBar# */{
         }
     },
 
-    setScale9Scale: function () {
+    setScale9Scale: function() {
         var width = (this._percent) / 100 * this._totalLength;
         this._barRenderer.setPreferredSize(cc.size(width, this._size.height));
     },
 
     /**
      * Returns the "class name" of widget.
-     * @returns {string}
+     * @return {string}
      */
-    getDescription: function () {
-        return "LoadingBar";
+    getDescription: function() {
+        return 'LoadingBar';
     },
 
-    createCloneInstance: function () {
+    createCloneInstance: function() {
         return ccs.LoadingBar.create();
     },
 
-    copySpecialProperties: function (loadingBar) {
+    copySpecialProperties: function(loadingBar) {
         this._prevIgnoreSize = loadingBar._prevIgnoreSize;
         this.setScale9Enabled(loadingBar._scale9Enabled);
         this.loadTexture(loadingBar._textureFile, loadingBar._renderBarTexType);
@@ -357,7 +357,7 @@ ccs.LoadingBar = ccs.Widget.extend(/** @lends ccs.LoadingBar# */{
  * // example
  * var uiLoadingBar = ccs.LoadingBar.create();
  */
-ccs.LoadingBar.create = function () {
+ccs.LoadingBar.create = function() {
     var uiLoadingBar = new ccs.LoadingBar();
     if (uiLoadingBar && uiLoadingBar.init()) {
         return uiLoadingBar;

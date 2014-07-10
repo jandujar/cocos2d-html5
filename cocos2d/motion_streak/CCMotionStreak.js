@@ -37,39 +37,39 @@
  * @extends cc.NodeRGBA
  */
 cc.MotionStreak = cc.NodeRGBA.extend(/** @lends cc.MotionStreak# */{
-    _fastMode:false,
-    _startingPositionInitialized:false,
+    _fastMode: false,
+    _startingPositionInitialized: false,
 
     /** texture used for the motion streak */
-    _texture:null,
-    _blendFunc:null,
-    _positionR:null,
+    _texture: null,
+    _blendFunc: null,
+    _positionR: null,
 
-    _stroke:0,
-    _fadeDelta:0,
-    _minSeg:0,
+    _stroke: 0,
+    _fadeDelta: 0,
+    _minSeg: 0,
 
-    _maxPoints:0,
-    _nuPoints:0,
-    _previousNuPoints:0,
+    _maxPoints: 0,
+    _nuPoints: 0,
+    _previousNuPoints: 0,
 
     /** Pointers */
-    _pointVertexes:null,
-    _pointState:null,
+    _pointVertexes: null,
+    _pointState: null,
 
     // webgl
-    _vertices:null,
-    _colorPointer:null,
-    _texCoords:null,
+    _vertices: null,
+    _colorPointer: null,
+    _texCoords: null,
 
-    _verticesBuffer:null,
-    _colorPointerBuffer:null,
-    _texCoordsBuffer:null,
+    _verticesBuffer: null,
+    _colorPointerBuffer: null,
+    _texCoordsBuffer: null,
 
     /**
      * Constructor
      */
-    ctor: function () {
+    ctor: function() {
         cc.NodeRGBA.prototype.ctor.call(this);
         this._positionR = cc._pConst(0, 0);
         this._blendFunc = new cc.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
@@ -105,14 +105,14 @@ cc.MotionStreak = cc.NodeRGBA.extend(/** @lends cc.MotionStreak# */{
     /**
      * @return {cc.Texture2D}
      */
-    getTexture:function () {
+    getTexture: function() {
         return this._texture;
     },
 
     /**
      * @param {cc.Texture2D} texture
      */
-    setTexture:function (texture) {
+    setTexture: function(texture) {
         if (this._texture != texture)
             this._texture = texture;
     },
@@ -120,7 +120,7 @@ cc.MotionStreak = cc.NodeRGBA.extend(/** @lends cc.MotionStreak# */{
     /**
      * @return {cc.BlendFunc}
      */
-    getBlendFunc:function () {
+    getBlendFunc: function() {
         return this._blendFunc;
     },
 
@@ -128,7 +128,7 @@ cc.MotionStreak = cc.NodeRGBA.extend(/** @lends cc.MotionStreak# */{
      * @param {Number} src
      * @param {Number} dst
      */
-    setBlendFunc:function (src, dst) {
+    setBlendFunc: function(src, dst) {
         if (arguments.length == 1) {
             this._blendFunc = src;
         } else if (arguments.length == 2) {
@@ -137,33 +137,33 @@ cc.MotionStreak = cc.NodeRGBA.extend(/** @lends cc.MotionStreak# */{
         }
     },
 
-    getOpacity:function () {
-        cc.log("cc.MotionStreak.getOpacity has not been supported.");
+    getOpacity: function() {
+        cc.log('cc.MotionStreak.getOpacity has not been supported.');
         return 0;
     },
 
-    setOpacity:function (opacity) {
-        cc.log("cc.MotionStreak.setOpacity has not been supported.");
+    setOpacity: function(opacity) {
+        cc.log('cc.MotionStreak.setOpacity has not been supported.');
     },
 
-    setOpacityModifyRGB:function (value) {
+    setOpacityModifyRGB: function(value) {
     },
 
-    isOpacityModifyRGB:function () {
+    isOpacityModifyRGB: function() {
         return false;
     },
 
-    onExit:function(){
+    onExit: function() {
         cc.Node.prototype.onExit.call(this);
-        if(this._verticesBuffer)
+        if (this._verticesBuffer)
             cc.renderContext.deleteBuffer(this._verticesBuffer);
-        if(this._texCoordsBuffer)
+        if (this._texCoordsBuffer)
             cc.renderContext.deleteBuffer(this._texCoordsBuffer);
-        if(this._colorPointerBuffer)
+        if (this._colorPointerBuffer)
             cc.renderContext.deleteBuffer(this._colorPointerBuffer);
     },
 
-    isFastMode:function () {
+    isFastMode: function() {
         return this._fastMode;
     },
 
@@ -171,15 +171,15 @@ cc.MotionStreak = cc.NodeRGBA.extend(/** @lends cc.MotionStreak# */{
      * set fast mode
      * @param {Boolean} fastMode
      */
-    setFastMode:function (fastMode) {
+    setFastMode: function(fastMode) {
         this._fastMode = fastMode;
     },
 
-    isStartingPositionInitialized:function () {
+    isStartingPositionInitialized: function() {
         return this._startingPositionInitialized;
     },
 
-    setStartingPositionInitialized:function (startingPositionInitialized) {
+    setStartingPositionInitialized: function(startingPositionInitialized) {
         this._startingPositionInitialized = startingPositionInitialized;
     },
 
@@ -192,15 +192,15 @@ cc.MotionStreak = cc.NodeRGBA.extend(/** @lends cc.MotionStreak# */{
      * @param {string|cc.Texture2D} texture texture filename or texture
      * @return {Boolean}
      */
-    initWithFade:function (fade, minSeg, stroke, color, texture) {
-        if(!texture)
-            throw "cc.MotionStreak.initWithFade(): Invalid filename or texture";
+    initWithFade: function(fade, minSeg, stroke, color, texture) {
+        if (!texture)
+            throw 'cc.MotionStreak.initWithFade(): Invalid filename or texture';
 
-        if (typeof(texture) === "string")
+        if (typeof(texture) === 'string')
             texture = cc.TextureCache.getInstance().addImage(texture);
 
         cc.Node.prototype.setPosition.call(this, cc.PointZero());
-        this.setAnchorPoint(0,0);
+        this.setAnchorPoint(0, 0);
         this.ignoreAnchorPointForPosition(true);
         this._startingPositionInitialized = false;
 
@@ -253,7 +253,7 @@ cc.MotionStreak = cc.NodeRGBA.extend(/** @lends cc.MotionStreak# */{
      * color used for the tint
      * @param {cc.Color3B} colors
      */
-    tintWithColor:function (colors) {
+    tintWithColor: function(colors) {
         this.setColor(colors);
 
         // Fast assignation
@@ -268,7 +268,7 @@ cc.MotionStreak = cc.NodeRGBA.extend(/** @lends cc.MotionStreak# */{
     /**
      * Remove all living segments of the ribbon
      */
-    reset:function () {
+    reset: function() {
         this._nuPoints = 0;
     },
 
@@ -276,9 +276,9 @@ cc.MotionStreak = cc.NodeRGBA.extend(/** @lends cc.MotionStreak# */{
      * @override
      * @param {cc.Point} position
      */
-    setPosition:function (position, yValue) {
+    setPosition: function(position, yValue) {
         this._startingPositionInitialized = true;
-        if(arguments.length === 1){
+        if (arguments.length === 1) {
             this._positionR._x = position.x;
             this._positionR._y = position.y;
         } else {
@@ -291,11 +291,11 @@ cc.MotionStreak = cc.NodeRGBA.extend(/** @lends cc.MotionStreak# */{
      * @override
      * @param {WebGLRenderingContext} ctx
      */
-    draw:function (ctx) {
+    draw: function(ctx) {
         if (this._nuPoints <= 1)
             return;
 
-        if(this._texture && this._texture.isLoaded()){
+        if (this._texture && this._texture.isLoaded()) {
             ctx = ctx || cc.renderContext;
             cc.NODE_DRAW_SETUP(this);
             cc.glEnableVertexAttribs(cc.VERTEX_ATTRIB_FLAG_POSCOLORTEX);
@@ -319,7 +319,7 @@ cc.MotionStreak = cc.NodeRGBA.extend(/** @lends cc.MotionStreak# */{
             ctx.vertexAttribPointer(cc.VERTEX_ATTRIB_COLOR, 4, ctx.UNSIGNED_BYTE, true, 0, 0);
 
             ctx.drawArrays(ctx.TRIANGLE_STRIP, 0, this._nuPoints * 2);
-            cc.g_NumberOfDraws ++;
+            cc.g_NumberOfDraws++;
         }
     },
 
@@ -327,7 +327,7 @@ cc.MotionStreak = cc.NodeRGBA.extend(/** @lends cc.MotionStreak# */{
      * @override
      * @param {Number} delta
      */
-    update:function (delta) {
+    update: function(delta) {
         if (!this._startingPositionInitialized)
             return;
 
@@ -457,7 +457,7 @@ cc.MotionStreak = cc.NodeRGBA.extend(/** @lends cc.MotionStreak# */{
  * @param {string|cc.Texture2D} texture texture filename or texture
  * @return {cc.MotionStreak}
  */
-cc.MotionStreak.create = function (fade, minSeg, stroke, color, texture) {
+cc.MotionStreak.create = function(fade, minSeg, stroke, color, texture) {
     var ret = new cc.MotionStreak();
     if (ret && ret.initWithFade(fade, minSeg, stroke, color, texture))
         return ret;

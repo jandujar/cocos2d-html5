@@ -40,7 +40,7 @@ cc.KeyboardDelegate = cc.Class.extend(/** @lends cc.KeyboardDelegate# */{
      * // example
      * if(keyCode == cc.KEY.w){}
      */
-    onKeyDown:function (keyCode) {
+    onKeyDown: function(keyCode) {
     },
 
     /**
@@ -50,7 +50,7 @@ cc.KeyboardDelegate = cc.Class.extend(/** @lends cc.KeyboardDelegate# */{
      * // example
      * if(keyCode == cc.KEY.w){}
      */
-    onKeyUp:function (keyCode) {
+    onKeyUp: function(keyCode) {
     }
 });
 
@@ -64,7 +64,7 @@ cc.KeyboardHandler = cc.Class.extend(/** @lends cc.KeyboardHandler# */{
      * returns the keyboard delegate
      * @return {cc.KeyboardDelegate}
      */
-    getDelegate:function () {
+    getDelegate: function() {
         return this._delegate;
     },
 
@@ -72,7 +72,7 @@ cc.KeyboardHandler = cc.Class.extend(/** @lends cc.KeyboardHandler# */{
      * set the keyboard delegate
      * @param {cc.KeyboardDelegate} delegate
      */
-    setDelegate:function (delegate) {
+    setDelegate: function(delegate) {
         this._delegate = delegate;
     },
     /**
@@ -80,21 +80,21 @@ cc.KeyboardHandler = cc.Class.extend(/** @lends cc.KeyboardHandler# */{
      * @param {cc.KeyboardDelegate} delegate
      * @return {Boolean}
      */
-    initWithDelegate:function (delegate) {
-        if(!delegate)
-            throw "cc.KeyboardHandler.initWithDelegate(): delegate must be non-null";
+    initWithDelegate: function(delegate) {
+        if (!delegate)
+            throw 'cc.KeyboardHandler.initWithDelegate(): delegate must be non-null';
 
         this._delegate = delegate;
         return true;
     },
-    _delegate:null
+    _delegate: null
 });
 /**
  * Create a KeyboardHandler with KeyboardDelegate
  * @param delegate
  * @return {cc.KeyboardHandler}
  */
-cc.KeyboardHandler.create = function (delegate) {
+cc.KeyboardHandler.create = function(delegate) {
     var handler = new cc.KeyboardHandler();
     handler.initWithDelegate(delegate);
     return handler;

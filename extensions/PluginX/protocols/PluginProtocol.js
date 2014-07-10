@@ -27,19 +27,19 @@
  * @class PluginProtocol
  */
 plugin.PluginProtocol = cc.Class.extend({
-    _pluginName:null,
+    _pluginName: null,
 
-    setPluginName:function (name) {
+    setPluginName: function(name) {
        this._pluginName = name;
     },
-    getPluginName:function () {
+    getPluginName: function() {
        return this._pluginName;
     },
 
     /**
      * plug-in info methods(name, version, SDK version)
      */
-    getPluginVersion:function () {
+    getPluginVersion: function() {
         var verName;
 
         var data = plugin.PluginUtils.getPluginData(this);
@@ -47,7 +47,7 @@ plugin.PluginProtocol = cc.Class.extend({
             var obj = data.obj;
             verName = obj.getPluginVersion();
         } else {
-            throw "Plugin " + this.getPluginName() + " not right initilized";
+            throw 'Plugin ' + this.getPluginName() + ' not right initilized';
         }
 
         return verName;
@@ -57,7 +57,7 @@ plugin.PluginProtocol = cc.Class.extend({
      * @method getSDKVersion
      * @return A value converted from C/C++ "const char*"
      */
-    getSDKVersion:function () {
+    getSDKVersion: function() {
         var verName;
 
         var data = plugin.PluginUtils.getPluginData(this);
@@ -65,7 +65,7 @@ plugin.PluginProtocol = cc.Class.extend({
             var pOCObj = data.obj;
             verName = pOCObj.getSDKVersion();
         } else {
-            throw ("Plugin "+this.getPluginName()+" not right initilized");
+            throw ('Plugin '+ this.getPluginName() + ' not right initilized');
         }
 
         return verName;
@@ -75,7 +75,7 @@ plugin.PluginProtocol = cc.Class.extend({
      * switch debug plug-in on/off
      * @param {Boolean} debug
      */
-    setDebugMode:function (debug) {
+    setDebugMode: function(debug) {
         /*NSNumber* debug = [NSNumber numberWithBool:isDebugMode];
         plugin.PluginUtils.callOCFunctionWithName_oneParam(this, "setDebugMode", debug);*/
 
@@ -84,19 +84,19 @@ plugin.PluginProtocol = cc.Class.extend({
     /**
      * methods for reflections
      */
-    callFuncWithParam:function (funcName, param) {
+    callFuncWithParam: function(funcName, param) {
     },
 
-    callStringFuncWithParam:function (funcName, param) {
+    callStringFuncWithParam: function(funcName, param) {
     },
 
-    callIntFuncWithParam:function (funcName, param) {
+    callIntFuncWithParam: function(funcName, param) {
     },
 
-    callBoolFuncWithParam:function (funcName, param) {
+    callBoolFuncWithParam: function(funcName, param) {
     },
 
-    callFloatFuncWithParam:function (funcName, param) {
+    callFloatFuncWithParam: function(funcName, param) {
     }
 
 });

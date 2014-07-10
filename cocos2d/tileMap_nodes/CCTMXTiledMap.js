@@ -100,17 +100,17 @@ cc.TMX_ORIENTATION_ISO = 2;
  */
 cc.TMXTiledMap = cc.NodeRGBA.extend(/** @lends cc.TMXTiledMap# */{
     //the map's size property measured in tiles
-    _mapSize:null,
-    _tileSize:null,
-    _properties:null,
-    _objectGroups:null,
-    _mapOrientation:null,
+    _mapSize: null,
+    _tileSize: null,
+    _properties: null,
+    _objectGroups: null,
+    _mapOrientation: null,
     //tile properties
     //todo delete
-    _TMXLayers:null,
-    _tileProperties:null,
+    _TMXLayers: null,
+    _tileProperties: null,
 
-    ctor:function(){
+    ctor: function() {
         cc.Node.prototype.ctor.call(this);
         this._mapSize = cc.SizeZero();
         this._tileSize = cc.SizeZero();
@@ -125,14 +125,14 @@ cc.TMXTiledMap = cc.NodeRGBA.extend(/** @lends cc.TMXTiledMap# */{
     /**
      * @return {cc.Size}
      */
-    getMapSize:function () {
+    getMapSize: function() {
         return cc.size(this._mapSize.width, this._mapSize.height);
     },
 
     /**
      * @param {cc.Size} Var
      */
-    setMapSize:function (Var) {
+    setMapSize: function(Var) {
         this._mapSize.width = Var.width;
         this._mapSize.height = Var.height;
     },
@@ -140,14 +140,14 @@ cc.TMXTiledMap = cc.NodeRGBA.extend(/** @lends cc.TMXTiledMap# */{
     /**
      * @return {cc.Size}
      */
-    getTileSize:function () {
+    getTileSize: function() {
         return cc.size(this._tileSize.width, this._tileSize.height);
     },
 
     /**
      * @param {cc.Size} Var
      */
-    setTileSize:function (Var) {
+    setTileSize: function(Var) {
         this._tileSize.width = Var.width;
         this._tileSize.height = Var.height;
     },
@@ -156,14 +156,14 @@ cc.TMXTiledMap = cc.NodeRGBA.extend(/** @lends cc.TMXTiledMap# */{
      * map orientation
      * @return {Number}
      */
-    getMapOrientation:function () {
+    getMapOrientation: function() {
         return this._mapOrientation;
     },
 
     /**
      * @param {Number} Var
      */
-    setMapOrientation:function (Var) {
+    setMapOrientation: function(Var) {
         this._mapOrientation = Var;
     },
 
@@ -171,14 +171,14 @@ cc.TMXTiledMap = cc.NodeRGBA.extend(/** @lends cc.TMXTiledMap# */{
      * object groups
      * @return {Array}
      */
-    getObjectGroups:function () {
+    getObjectGroups: function() {
         return this._objectGroups;
     },
 
     /**
      * @param {Array} Var
      */
-    setObjectGroups:function (Var) {
+    setObjectGroups: function(Var) {
         this._objectGroups = Var;
     },
 
@@ -186,14 +186,14 @@ cc.TMXTiledMap = cc.NodeRGBA.extend(/** @lends cc.TMXTiledMap# */{
      * properties
      * @return {object}
      */
-    getProperties:function () {
+    getProperties: function() {
         return this._properties;
     },
 
     /**
      * @param {object} Var
      */
-    setProperties:function (Var) {
+    setProperties: function(Var) {
         this._properties = Var;
     },
 
@@ -206,33 +206,33 @@ cc.TMXTiledMap = cc.NodeRGBA.extend(/** @lends cc.TMXTiledMap# */{
      * var map = new cc.TMXTiledMap()
      * map.initWithTMXFile("hello.tmx");
      */
-    initWithTMXFile:function (tmxFile,resourcePath) {
-        if(!tmxFile || tmxFile.length == 0)
-            throw "cc.TMXTiledMap.initWithTMXFile(): tmxFile should be non-null or non-empty string.";
+    initWithTMXFile: function(tmxFile, resourcePath) {
+        if (!tmxFile || tmxFile.length == 0)
+            throw 'cc.TMXTiledMap.initWithTMXFile(): tmxFile should be non-null or non-empty string.';
         this.setContentSize(0, 0);
-        var mapInfo = cc.TMXMapInfo.create(tmxFile,resourcePath);
+        var mapInfo = cc.TMXMapInfo.create(tmxFile, resourcePath);
         if (!mapInfo)
             return false;
 
         var locTilesets = mapInfo.getTilesets();
-        if(!locTilesets || locTilesets.length === 0)
-            cc.log("cc.TMXTiledMap.initWithTMXFile(): Map not found. Please check the filename.");
+        if (!locTilesets || locTilesets.length === 0)
+            cc.log('cc.TMXTiledMap.initWithTMXFile(): Map not found. Please check the filename.');
         this._buildWithMapInfo(mapInfo);
         return true;
     },
 
-    initWithXML:function(tmxString, resourcePath){
+    initWithXML: function(tmxString, resourcePath) {
         this.setContentSize(0, 0);
 
         var mapInfo = cc.TMXMapInfo.createWithXML(tmxString, resourcePath);
         var locTilesets = mapInfo.getTilesets();
-        if(!locTilesets || locTilesets.length === 0)
-            cc.log("cc.TMXTiledMap.initWithXML(): Map not found. Please check the filename.");
+        if (!locTilesets || locTilesets.length === 0)
+            cc.log('cc.TMXTiledMap.initWithXML(): Map not found. Please check the filename.');
         this._buildWithMapInfo(mapInfo);
         return true;
     },
 
-    _buildWithMapInfo:function (mapInfo) {
+    _buildWithMapInfo: function(mapInfo) {
         this._mapSize = mapInfo.getMapSize();
         this._tileSize = mapInfo.getTileSize();
         this._mapOrientation = mapInfo.getOrientation();
@@ -262,9 +262,9 @@ cc.TMXTiledMap = cc.NodeRGBA.extend(/** @lends cc.TMXTiledMap# */{
      * @param {String} layerName
      * @return {cc.TMXLayer}
      */
-    getLayer:function (layerName) {
-        if(!layerName || layerName.length === 0)
-            throw "cc.TMXTiledMap.getLayer(): layerName should be non-null or non-empty string.";
+    getLayer: function(layerName) {
+        if (!layerName || layerName.length === 0)
+            throw 'cc.TMXTiledMap.getLayer(): layerName should be non-null or non-empty string.';
 
         for (var i = 0; i < this._children.length; i++) {
             var layer = this._children[i];
@@ -281,9 +281,9 @@ cc.TMXTiledMap = cc.NodeRGBA.extend(/** @lends cc.TMXTiledMap# */{
      * @param {String} groupName
      * @return {cc.TMXObjectGroup}
      */
-    getObjectGroup:function (groupName) {
-        if(!groupName || groupName.length === 0)
-            throw "cc.TMXTiledMap.getObjectGroup(): groupName should be non-null or non-empty string.";
+    getObjectGroup: function(groupName) {
+        if (!groupName || groupName.length === 0)
+            throw 'cc.TMXTiledMap.getObjectGroup(): groupName should be non-null or non-empty string.';
         if (this._objectGroups) {
             for (var i = 0; i < this._objectGroups.length; i++) {
                 var objectGroup = this._objectGroups[i];
@@ -301,7 +301,7 @@ cc.TMXTiledMap = cc.NodeRGBA.extend(/** @lends cc.TMXTiledMap# */{
      * @param {String} propertyName
      * @return {String}
      */
-    getProperty:function (propertyName) {
+    getProperty: function(propertyName) {
         return this._properties[propertyName.toString()];
     },
 
@@ -310,11 +310,11 @@ cc.TMXTiledMap = cc.NodeRGBA.extend(/** @lends cc.TMXTiledMap# */{
      * @param {Number} GID
      * @return {object}
      */
-    propertiesForGID:function (GID) {
+    propertiesForGID: function(GID) {
         return this._tileProperties[GID];
     },
 
-    _parseLayer:function (layerInfo, mapInfo) {
+    _parseLayer: function(layerInfo, mapInfo) {
         var tileset = this._tilesetForLayer(layerInfo, mapInfo);
         var layer = cc.TMXLayer.create(tileset, layerInfo, mapInfo);
         // tell the layerinfo to release the ownership of the tiles map.
@@ -323,7 +323,7 @@ cc.TMXTiledMap = cc.NodeRGBA.extend(/** @lends cc.TMXTiledMap# */{
         return layer;
     },
 
-    _tilesetForLayer:function (layerInfo, mapInfo) {
+    _tilesetForLayer: function(layerInfo, mapInfo) {
         var size = layerInfo._layerSize;
         var tilesets = mapInfo.getTilesets();
         if (tilesets) {
@@ -337,7 +337,7 @@ cc.TMXTiledMap = cc.NodeRGBA.extend(/** @lends cc.TMXTiledMap# */{
                             if (gid != 0) {
                                 // Optimization: quick return
                                 // if the layer is invalid (more than 1 tileset per layer) an cc.Assert will be thrown later
-                                if (((gid & cc.TMX_TILE_FLIPPED_MASK)>>>0) >= tileset.firstGid) {
+                                if (((gid & cc.TMX_TILE_FLIPPED_MASK) >>> 0) >= tileset.firstGid) {
                                     return tileset;
                                 }
                             }
@@ -349,7 +349,7 @@ cc.TMXTiledMap = cc.NodeRGBA.extend(/** @lends cc.TMXTiledMap# */{
         }
 
         // If all the tiles are 0, return empty tileset
-        cc.log("cocos2d: Warning: TMX Layer " + layerInfo.name + " has no tiles");
+        cc.log('cocos2d: Warning: TMX Layer ' + layerInfo.name + ' has no tiles');
         return null;
     }
 });
@@ -364,9 +364,9 @@ cc.TMXTiledMap = cc.NodeRGBA.extend(/** @lends cc.TMXTiledMap# */{
  * //example
  * var map = cc.TMXTiledMap.create("hello.tmx");
  */
-cc.TMXTiledMap.create = function (tmxFile, resourcePath) {
+cc.TMXTiledMap.create = function(tmxFile, resourcePath) {
     var ret = new cc.TMXTiledMap();
-    if (ret.initWithTMXFile(tmxFile,resourcePath)) {
+    if (ret.initWithTMXFile(tmxFile, resourcePath)) {
         return ret;
     }
     return null;
@@ -378,9 +378,9 @@ cc.TMXTiledMap.create = function (tmxFile, resourcePath) {
  * @param {String} resourcePath
  * @return {cc.TMXTiledMap|undefined}
  */
-cc.TMXTiledMap.createWithXML = function(tmxString, resourcePath){
+cc.TMXTiledMap.createWithXML = function(tmxString, resourcePath) {
     var tileMap = new cc.TMXTiledMap();
-    if(tileMap.initWithXML(tmxString,resourcePath))
+    if (tileMap.initWithXML(tmxString, resourcePath))
         return tileMap;
     return null;
 };

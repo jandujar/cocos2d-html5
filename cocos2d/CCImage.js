@@ -97,9 +97,9 @@ cc.ALIGN_TOP_LEFT = 0x11;
  * @return {Number}
  * @constructor
  */
-cc.RGB_PREMULTIPLY_APLHA = function (vr, vg, vb, va) {
-    return ((vr * (va + 1)) >> 8) | ((vg * (va + 1) >> 8) << 8) | ((vb * (va + 1) >> 8) << 16) | ((va) << 24)
-}
+cc.RGB_PREMULTIPLY_APLHA = function(vr, vg, vb, va) {
+    return ((vr * (va + 1)) >> 8) | ((vg * (va + 1) >> 8) << 8) | ((vb * (va + 1) >> 8) << 16) | ((va) << 24);
+};
 
 /**
  * image source
@@ -109,13 +109,13 @@ cc.RGB_PREMULTIPLY_APLHA = function (vr, vg, vb, va) {
  * @param {Number} size
  * @param {Number} offset
  */
-cc.tImageSource = function (data, size, offset) {
+cc.tImageSource = function(data, size, offset) {
     this.data = data;
     this.size = size || 0;
     this.offset = offset || 0;
 };
 
-cc.pngReadCallback = function (png_ptr, data, length) {
+cc.pngReadCallback = function(png_ptr, data, length) {
     var isource = new cc.tImageSource();
     isource = cc.png_get_io_ptr(png_ptr);
 
@@ -124,7 +124,7 @@ cc.pngReadCallback = function (png_ptr, data, length) {
         isource.offset += length;
     }
     else {
-        cc.png_error(png_ptr, "pngReaderCallback failed");
+        cc.png_error(png_ptr, 'pngReaderCallback failed');
     }
 };
 
@@ -147,8 +147,8 @@ cc.Image = cc.Class.extend(/** @lends cc.Image# */{
      * @param {Number} imageType the type of image, now only support tow types.
      * @return {Boolean} true if load correctly
      */
-    initWithImageFile: function (strPath, imageType) {
-        var data = cc.FileUtils.getInstance().getFileData(strPath, "rb");
+    initWithImageFile: function(strPath, imageType) {
+        var data = cc.FileUtils.getInstance().getFileData(strPath, 'rb');
         var size = data.length;
         if (data != null && data.length > 0)
             return this.initWithImageData(data, data.length, imageType);
@@ -161,7 +161,7 @@ cc.Image = cc.Class.extend(/** @lends cc.Image# */{
      * @param {Number} imageType the type of image, now only support tow types.
      * @return {Boolean} true if load correctly
      */
-    initWithImageFileThreadSafe: function (fullpath, imageType) {
+    initWithImageFileThreadSafe: function(fullpath, imageType) {
         return this.initWithImageFile(fullpath, imageType);
     },
 
@@ -176,7 +176,7 @@ cc.Image = cc.Class.extend(/** @lends cc.Image# */{
      * @param {Number} bitsPerComponent
      * @return {Boolean} true if load correctly
      */
-    initWithImageData: function (data, dataLen, eFmt, width, height, bitsPerComponent) {
+    initWithImageData: function(data, dataLen, eFmt, width, height, bitsPerComponent) {
         bitsPerComponent = bitsPerComponent || 8;
         width = width || 0;
         height = height || 0;
@@ -221,31 +221,31 @@ cc.Image = cc.Class.extend(/** @lends cc.Image# */{
         return false;
     },
 
-    getData: function () {
+    getData: function() {
         return this._data;
     },
 
-    getDataLen: function () {
+    getDataLen: function() {
         return this._width * this._height;
     },
 
-    hasAlpha: function () {
+    hasAlpha: function() {
         return this._hasAlpha;
     },
 
-    isPremultipliedAlpha: function () {
+    isPremultipliedAlpha: function() {
         return this._preMulti;
     },
 
-    getWidth: function () {
+    getWidth: function() {
         return this._width;
     },
 
-    getHeight: function () {
+    getHeight: function() {
         return this._height;
     },
 
-    getBitsPerComponent: function () {
+    getBitsPerComponent: function() {
         return this._bitsPerComponent;
     },
 
@@ -255,35 +255,35 @@ cc.Image = cc.Class.extend(/** @lends cc.Image# */{
      * @param {Boolean} isToRGB  if the image is saved as RGB format
      * @return {Boolean}
      */
-    saveToFile: function (filePath, isToRGB) {
+    saveToFile: function(filePath, isToRGB) {
         //
         cc.log("doesn't support saveToFile on Cocos2d-Html5");
         return false;
     },
 
     /*protected:*/
-    _initWithJpgData: function (data, dataLen) {
+    _initWithJpgData: function(data, dataLen) {
         return false;
     },
 
-    _initWithPngData: function (data, datalen) {
+    _initWithPngData: function(data, datalen) {
         return false;
     },
 
-    _initWithTiffData: function (data, dataLen) {
+    _initWithTiffData: function(data, dataLen) {
         return false;
     },
 
     // @warning FMT_RAWDATA only support RGBA8888
-    _initWithRawData: function (data, datalen, width, height, bitsPerComponent) {
+    _initWithRawData: function(data, datalen, width, height, bitsPerComponent) {
         return false;
     },
 
-    _saveImageToPNG: function (filePath, isToRGB) {
+    _saveImageToPNG: function(filePath, isToRGB) {
         return false;
     },
 
-    _saveImageToJPG: function (filePath) {
+    _saveImageToJPG: function(filePath) {
         return false;
     },
 
@@ -297,7 +297,7 @@ cc.Image = cc.Class.extend(/** @lends cc.Image# */{
      * @param {Number} size the font size, if 0, use the system default size.
      * @return {Boolean}
      */
-    initWithString: function (text, width, height, eAlignMask, fontName, size) {
+    initWithString: function(text, width, height, eAlignMask, fontName, size) {
         return false;
     }
 });

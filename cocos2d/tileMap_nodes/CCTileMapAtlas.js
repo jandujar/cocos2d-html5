@@ -43,24 +43,24 @@
  * @extends cc.AtlasNode
  */
 cc.TileMapAtlas = cc.AtlasNode.extend(/** @lends cc.TileMapAtlas# */{
-    _TGAInfo:null,
-    indices:null,
+    _TGAInfo: null,
+    indices: null,
     //numbers of tiles to render
-    _itemsToRender:0,
+    _itemsToRender: 0,
     //x,y to altas dictionary
-    _posToAtlasIndex:null,
+    _posToAtlasIndex: null,
 
     /**
      * @return {cc.ImageTGA}
      */
-    getTGAInfo:function () {
+    getTGAInfo: function() {
         return this._TGAInfo;
     },
 
     /**
      * @param  {cc.ImageTGA} Var
      */
-    setTGAInfo:function (Var) {
+    setTGAInfo: function(Var) {
         this._TGAInfo = Var;
     },
 
@@ -77,7 +77,7 @@ cc.TileMapAtlas = cc.AtlasNode.extend(/** @lends cc.TileMapAtlas# */{
      * var tmpAtlas = new cc.TileMapAtlas();
      * tmpAtlas.initWithTileFile("hello.png", "hello.tga", 16, 16);
      */
-    initWithTileFile:function (tile, mapFile, tileWidth, tileHeight) {
+    initWithTileFile: function(tile, mapFile, tileWidth, tileHeight) {
         this._loadTGAfile(mapFile);
         this._calculateItemsToRender();
         if (cc.AtlasNode.prototype.initWithTileFile.call(this, tile, tileWidth, tileHeight, this._itemsToRender)) {
@@ -97,15 +97,15 @@ cc.TileMapAtlas = cc.AtlasNode.extend(/** @lends cc.TileMapAtlas# */{
      * @param {cc.Point} position
      * @return {cc.Color3B}
      */
-    getTileAt:function (position) {
-        if(!this._TGAInfo){
-            cc.log("cc.TileMapAtlas.getTileAt(): tgaInfo must not be null");
+    getTileAt: function(position) {
+        if (!this._TGAInfo) {
+            cc.log('cc.TileMapAtlas.getTileAt(): tgaInfo must not be null');
             return null;
         }
-        if(position.x >= this._TGAInfo.width || position.y >= this._TGAInfo.height)
-            throw "cc.TileMapAtlas.getTileAt(): Invalid position";
+        if (position.x >= this._TGAInfo.width || position.y >= this._TGAInfo.height)
+            throw 'cc.TileMapAtlas.getTileAt(): Invalid position';
 
-        var colorPos = 0|(position.x * 3 + position.y * this._TGAInfo.width * 3);
+        var colorPos = 0 | (position.x * 3 + position.y * this._TGAInfo.width * 3);
         var locTGAImageData = this._TGAInfo.imageData;
         return new cc.Color3B(locTGAImageData[colorPos], locTGAImageData[colorPos + 1], locTGAImageData[colorPos + 2]);
     },
@@ -116,29 +116,29 @@ cc.TileMapAtlas = cc.AtlasNode.extend(/** @lends cc.TileMapAtlas# */{
      * @param {cc.Color3B} tile
      * @param {cc.Point} position
      */
-    setTile:function (tile, position) {
-        if(!this._TGAInfo){
-            cc.log("cc.TileMapAtlas.setTile(): tgaInfo must not be null");
+    setTile: function(tile, position) {
+        if (!this._TGAInfo) {
+            cc.log('cc.TileMapAtlas.setTile(): tgaInfo must not be null');
             return;
         }
-        if(!this._posToAtlasIndex){
-            cc.log("cc.TileMapAtlas.setTile(): posToAtlasIndex must not be null");
+        if (!this._posToAtlasIndex) {
+            cc.log('cc.TileMapAtlas.setTile(): posToAtlasIndex must not be null');
             return;
         }
-        if(position.x >= this._TGAInfo.width || position.y >= this._TGAInfo.height)
-            throw "cc.TileMapAtlas.setTile(): Invalid position";
-        if(!tile || tile.r == 0)
-            throw "cc.TileMapAtlas.setTile(): tile should be non-null and tile.r should be non-nil";
+        if (position.x >= this._TGAInfo.width || position.y >= this._TGAInfo.height)
+            throw 'cc.TileMapAtlas.setTile(): Invalid position';
+        if (!tile || tile.r == 0)
+            throw 'cc.TileMapAtlas.setTile(): tile should be non-null and tile.r should be non-nil';
 
         var colorPos = 0 | (position.x * 3 + position.y * this._TGAInfo.width * 3);
         if (this._TGAInfo.imageData[colorPos] == 0)
-            cc.log("cocos2d: Value.r must be non 0.");
+            cc.log('cocos2d: Value.r must be non 0.');
         else {
             this._TGAInfo.imageData[colorPos] = tile.r;
             this._TGAInfo.imageData[colorPos + 1] = tile.g;
             this._TGAInfo.imageData[colorPos + 2] = tile.b;
 
-            var num = this._posToAtlasIndex[position.x + "_" + position.y];
+            var num = this._posToAtlasIndex[position.x + '_' + position.y];
             this._updateAtlasValueAt(position, tile, num);
         }
     },
@@ -146,16 +146,16 @@ cc.TileMapAtlas = cc.AtlasNode.extend(/** @lends cc.TileMapAtlas# */{
     /**
      * Dealloc the map from memory
      */
-    releaseMap:function () {
+    releaseMap: function() {
         if (this._TGAInfo) {
             cc.tgaDestroy(this._TGAInfo);
         }
         this._TGAInfo = null;
     },
 
-    _loadTGAfile:function (file) {
-        if(!file)
-            throw "cc.TileMapAtlas._loadTGAfile(): file should be non-null";
+    _loadTGAfile: function(file) {
+        if (!file)
+            throw 'cc.TileMapAtlas._loadTGAfile(): file should be non-null';
 
         //	//Find the path of the file
         //	NSBundle *mainBndl = [cc.Director sharedDirector].loadingBundle;
@@ -164,13 +164,13 @@ cc.TileMapAtlas = cc.AtlasNode.extend(/** @lends cc.TileMapAtlas# */{
 
         this._TGAInfo = cc.tgaLoad(cc.FileUtils.getInstance().fullPathForFilename(file));
         if (this._TGAInfo.status != cc.TGA_OK) {
-            cc.log("TileMapAtlasLoadTGA : TileMapAtlas cannot load TGA file");
+            cc.log('TileMapAtlasLoadTGA : TileMapAtlas cannot load TGA file');
         }
     },
 
-    _calculateItemsToRender:function () {
-        if(!this._TGAInfo){
-            cc.log("cc.TileMapAtlas._calculateItemsToRender(): tgaInfo must not be null");
+    _calculateItemsToRender: function() {
+        if (!this._TGAInfo) {
+            cc.log('cc.TileMapAtlas._calculateItemsToRender(): tgaInfo must not be null');
             return;
         }
 
@@ -190,10 +190,10 @@ cc.TileMapAtlas = cc.AtlasNode.extend(/** @lends cc.TileMapAtlas# */{
      * @param {Number} index
      * @private
      */
-    _updateAtlasValueAt:function (pos, value, index) {
+    _updateAtlasValueAt: function(pos, value, index) {
         var locTextureAtlas = this._textureAtlas;
-        if(index < 0 && index >= locTextureAtlas.getCapacity())
-            throw "cc.TileMapAtlas._updateAtlasValueAt(): Invalid index";
+        if (index < 0 && index >= locTextureAtlas.getCapacity())
+            throw 'cc.TileMapAtlas._updateAtlasValueAt(): Invalid index';
         var quad = locTextureAtlas.getQuads()[index];
 
         var x = pos.x;
@@ -257,9 +257,9 @@ cc.TileMapAtlas = cc.AtlasNode.extend(/** @lends cc.TileMapAtlas# */{
             locTextureAtlas.increaseTotalQuadsWith(index + 1 - totalQuads);
     },
 
-    _updateAtlasValues:function () {
-        if(!this._TGAInfo){
-            cc.log("cc.TileMapAtlas._updateAtlasValues(): tgaInfo must not be null");
+    _updateAtlasValues: function() {
+        if (!this._TGAInfo) {
+            cc.log('cc.TileMapAtlas._updateAtlasValues(): tgaInfo must not be null');
             return;
         }
 
@@ -273,7 +273,7 @@ cc.TileMapAtlas = cc.AtlasNode.extend(/** @lends cc.TileMapAtlas# */{
                     var value = new cc.Color3B(locTGAInfo.imageData[colorPos], locTGAInfo.imageData[colorPos + 1], locTGAInfo.imageData[colorPos + 2]);
                     if (value.r != 0) {
                         this._updateAtlasValueAt(cc.p(x, y), value, total);
-                        this._posToAtlasIndex[x + "_" + y] = total;
+                        this._posToAtlasIndex[x + '_' + y] = total;
                         total++;
                     }
                 }
@@ -295,7 +295,7 @@ cc.TileMapAtlas = cc.AtlasNode.extend(/** @lends cc.TileMapAtlas# */{
  * var tmpAtlas = new cc.TileMapAtlas();
  *  tmpAtlas.initWithTileFile("hello.png", "hello.tga", 16, 16);
  */
-cc.TileMapAtlas.create = function (tile, mapFile, tileWidth, tileHeight) {
+cc.TileMapAtlas.create = function(tile, mapFile, tileWidth, tileHeight) {
     var ret = new cc.TileMapAtlas();
     if (ret.initWithTileFile(tile, mapFile, tileWidth, tileHeight)) {
         return ret;

@@ -26,7 +26,7 @@
 // boot code needed for cocos2d + JS bindings.
 // Not needed by cocos2d-html5
 
-require("jsb.js");
+require('jsb.js');
 
 var appFiles = [
     'src/resource.js',
@@ -42,35 +42,35 @@ for (var i = 0; i < appFiles.length; i++) {
 var director = cc.Director.getInstance();
 
 //var screenSize = cc.EGLView.getInstance().getFrameSize();
-var screenSize = cc.size(320,480)
+var screenSize = cc.size(320, 480);
 var resourceSize = cc.size(800, 450);
 var designSize = cc.size(800, 450);
 
 var searchPaths = [];
 var resDirOrders = [];
 
-searchPaths.push("res");
+searchPaths.push('res');
 cc.FileUtils.getInstance().setSearchPaths(searchPaths);
 
 var platform = cc.Application.getInstance().getTargetPlatform();
 if (platform == cc.TARGET_PLATFORM.MOBILE_BROWSER) {
     if (screenSize.height > 450) {
-        resDirOrders.push("HD");
+        resDirOrders.push('HD');
     }
     else {
         resourceSize = cc.size(400, 225);
         designSize = cc.size(400, 225);
-        resDirOrders.push("Normal");
+        resDirOrders.push('Normal');
     }
 }
 else if (platform == cc.TARGET_PLATFORM.PC_BROWSER) {
-    resDirOrders.push("HD");
+    resDirOrders.push('HD');
 }
 else if (platform == cc.TARGET_PLATFORM.IPHONE) {
-    resDirOrders.push("Normal");
+    resDirOrders.push('Normal');
 }
 else if (platform == cc.TARGET_PLATFORM.IPAD) {
-    resDirOrders.push("HD");
+    resDirOrders.push('HD');
 }
 
 cc.FileUtils.getInstance().setSearchResolutionsOrder(resDirOrders);

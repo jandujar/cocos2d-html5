@@ -23,15 +23,15 @@
  ****************************************************************************/
 
 ccs.DisplayManager = ccs.Class.extend({
-    _decoDisplayList:null,
-    _currentDecoDisplay:null,
-    _displayRenderNode:null,
-    _displayIndex:-1,
-    _forceChangeDisplay:false,
-    _bone:null,
-    _visible:true,
+    _decoDisplayList: null,
+    _currentDecoDisplay: null,
+    _displayRenderNode: null,
+    _displayIndex: -1,
+    _forceChangeDisplay: false,
+    _bone: null,
+    _visible: true,
     _displayType: null,
-    ctor:function () {
+    ctor: function() {
         this._decoDisplayList = [];
         this._currentDecoDisplay = null;
         this._displayRenderNode = null;
@@ -42,13 +42,13 @@ ccs.DisplayManager = ccs.Class.extend({
         this._displayType = ccs.DisplayType.max;
     },
 
-    init:function (bone) {
+    init: function(bone) {
         this._bone = bone;
         this.initDisplayList(bone.getBoneData());
         return true;
     },
 
-    addDisplay: function (displayData, index) {
+    addDisplay: function(displayData, index) {
         var decoDisplay = null;
         if (index >= 0 && index < this._decoDisplayList.length) {
             decoDisplay = this._decoDisplayList[index];
@@ -58,10 +58,10 @@ ccs.DisplayManager = ccs.Class.extend({
             this._decoDisplayList.push(decoDisplay);
         }
 
-        if(displayData instanceof ccs.DisplayData){
+        if (displayData instanceof ccs.DisplayData) {
             ccs.DisplayFactory.addDisplay(this._bone, decoDisplay, displayData);
-        }else{
-            this._addDisplayOther(decoDisplay,displayData);
+        }else {
+            this._addDisplayOther(decoDisplay, displayData);
         }
 
         //! if changed display index is current display index, then change current display to the new display
@@ -71,9 +71,9 @@ ccs.DisplayManager = ccs.Class.extend({
         }
     },
 
-    _addDisplayOther:function(decoDisplay,display){
+    _addDisplayOther: function(decoDisplay, display) {
         var displayData = null;
-        if (display instanceof ccs.Skin){
+        if (display instanceof ccs.Skin) {
             var skin = display;
             skin.setBone(this._bone);
             displayData = new ccs.SpriteDisplayData();
@@ -82,7 +82,7 @@ ccs.DisplayManager = ccs.Class.extend({
             var spriteDisplayData = decoDisplay.getDisplayData();
             if (spriteDisplayData instanceof ccs.SpriteDisplayData)
                 skin.setSkinData(spriteDisplayData.skinData);
-            else{
+            else {
                 var find = false;
                 for (var i = this._decoDisplayList.length - 2; i >= 0; i--) {
                     var dd = this._decoDisplayList[i];
@@ -99,38 +99,38 @@ ccs.DisplayManager = ccs.Class.extend({
                 }
                 skin.setSkinData(new ccs.BaseData());
             }
-                
+
         }
-        else if (display instanceof cc.ParticleSystem){
+        else if (display instanceof cc.ParticleSystem) {
             displayData = new ccs.ParticleDisplayData();
             displayData.displayName = display._plistFile;
         }
-        else if (display instanceof ccs.Armature){
+        else if (display instanceof ccs.Armature) {
             displayData = new ccs.ArmatureDisplayData();
             displayData.displayName = display.getName();
             display.setParentBone(this._bone);
         }
-        else  {
+        else {
             displayData = new ccs.DisplayData();
         }
         decoDisplay.setDisplay(display);
         decoDisplay.setDisplayData(displayData);
     },
 
-    removeDisplay:function (index) {
+    removeDisplay: function(index) {
         cc.ArrayRemoveObjectAtIndex(this._decoDisplayList, index);
         if (index == this._displayIndex) {
             this.setCurrentDecorativeDisplay(null);
         }
     },
 
-    getDecorativeDisplayList:function(){
+    getDecorativeDisplayList: function() {
         return this._decoDisplayList;
     },
 
-    changeDisplayWithIndex:function (index, force) {
+    changeDisplayWithIndex: function(index, force) {
         if (index >= this._decoDisplayList.length) {
-            cc.log("the index value is out of range");
+            cc.log('the index value is out of range');
             return;
         }
 
@@ -154,13 +154,13 @@ ccs.DisplayManager = ccs.Class.extend({
         this._displayIndex = index;
 
         var decoDisplay = this._decoDisplayList[this._displayIndex];
-        if(!decoDisplay){
+        if (!decoDisplay) {
             return;
         }
         this.setCurrentDecorativeDisplay(decoDisplay);
     },
 
-    changeDisplayWithName: function (name, force) {
+    changeDisplayWithName: function(name, force) {
         for (var i = 0; i < this._decoDisplayList.length; i++) {
             if (this._decoDisplayList[i].getDisplayData().displayName == name) {
                 this.changeDisplayWithIndex(i, force);
@@ -169,7 +169,7 @@ ccs.DisplayManager = ccs.Class.extend({
         }
     },
 
-    setCurrentDecorativeDisplay:function (decoDisplay) {
+    setCurrentDecorativeDisplay: function(decoDisplay) {
         var locCurrentDecoDisplay = this._currentDecoDisplay;
         if (ccs.ENABLE_PHYSICS_CHIPMUNK_DETECT || ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
             if (locCurrentDecoDisplay && locCurrentDecoDisplay.getColliderDetector()) {
@@ -199,10 +199,10 @@ ccs.DisplayManager = ccs.Class.extend({
         if (displayRenderNode) {
             if (displayRenderNode instanceof ccs.Armature) {
                 this._bone.setChildArmature(displayRenderNode);
-            }else if(displayRenderNode instanceof cc.ParticleSystem) {
+            }else if (displayRenderNode instanceof cc.ParticleSystem) {
                 displayRenderNode.resetSystem();
             }
-            if (displayRenderNode.RGBAProtocol)            {
+            if (displayRenderNode.RGBAProtocol) {
                 displayRenderNode.setColor(this._bone.getDisplayedColor());
                 displayRenderNode.setOpacity(this._bone.getDisplayedOpacity());
             }
@@ -210,32 +210,32 @@ ccs.DisplayManager = ccs.Class.extend({
             this._displayType = this._currentDecoDisplay.getDisplayData().displayType;
             //todo
             //this._displayRenderNode.setVisible(this._visible);
-        }else{
+        }else {
             this._displayType = ccs.DisplayType.max;
         }
     },
 
-    getDisplayRenderNode:function () {
+    getDisplayRenderNode: function() {
         return this._displayRenderNode;
     },
 
-    getDisplayRenderNodeType:function(){
+    getDisplayRenderNodeType: function() {
         return this._displayType;
     },
 
-    getCurrentDisplayIndex:function () {
+    getCurrentDisplayIndex: function() {
         return this._displayIndex;
     },
 
-    getCurrentDecorativeDisplay:function () {
+    getCurrentDecorativeDisplay: function() {
         return this._currentDecoDisplay;
     },
 
-    getDecorativeDisplayByIndex:function (index) {
+    getDecorativeDisplayByIndex: function(index) {
         return this._decoDisplayList[index];
     },
 
-    initDisplayList:function (boneData) {
+    initDisplayList: function(boneData) {
         this._decoDisplayList = [];
         if (!boneData) {
             return;
@@ -252,7 +252,7 @@ ccs.DisplayManager = ccs.Class.extend({
         }
     },
 
-    containPoint:function (/*point|x,y*/) {
+    containPoint: function(/*point|x, y*/) {
         var p = cc.p(0, 0);
         if (arguments.length == 1) {
             p.x = arguments[0].x;
@@ -284,7 +284,7 @@ ccs.DisplayManager = ccs.Class.extend({
         return ret;
     },
 
-    setVisible:function (visible) {
+    setVisible: function(visible) {
         if (!this._displayRenderNode) {
             return;
         }
@@ -292,43 +292,43 @@ ccs.DisplayManager = ccs.Class.extend({
         this._displayRenderNode.setVisible(visible);
     },
 
-    isVisible:function () {
+    isVisible: function() {
         return this._visible;
     },
 
-    getContentSize:function () {
+    getContentSize: function() {
         if (!this._displayRenderNode) {
-            return  cc.size(0, 0);
+            return cc.size(0, 0);
         }
         return this._displayRenderNode.getContentSize();
     },
 
-    getBoundingBox:function () {
+    getBoundingBox: function() {
         if (!this._displayRenderNode) {
             return cc.rect(0, 0, 0, 0);
         }
         return this._displayRenderNode.getBoundingBox();
     },
 
-    getAnchorPoint:function () {
+    getAnchorPoint: function() {
         if (!this._displayRenderNode) {
-            return  cc.p(0, 0);
+            return cc.p(0, 0);
         }
         return this._displayRenderNode.getAnchorPoint();
     },
 
-    getAnchorPointInPoints:function () {
+    getAnchorPointInPoints: function() {
         if (!this._displayRenderNode) {
-            return  cc.p(0, 0);
+            return cc.p(0, 0);
         }
         return this._displayRenderNode.getAnchorPointInPoints();
     },
 
-    getForceChangeDisplay:function () {
+    getForceChangeDisplay: function() {
         return this._forceChangeDisplay;
     },
 
-    release:function () {
+    release: function() {
         this._decoDisplayList = [];
         if (this._displayRenderNode) {
             this._displayRenderNode.removeFromParent(true);
@@ -338,7 +338,7 @@ ccs.DisplayManager = ccs.Class.extend({
 
 });
 
-ccs.DisplayManager.create = function (bone) {
+ccs.DisplayManager.create = function(bone) {
     var displayManager = new ccs.DisplayManager();
     if (displayManager && displayManager.init(bone)) {
         return displayManager;

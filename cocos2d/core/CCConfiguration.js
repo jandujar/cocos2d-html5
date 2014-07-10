@@ -24,7 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-cc.ConfigurationType = {ConfigurationError:0, ConfigurationString:1, ConfigurationInt:2, ConfigurationDouble:3, ConfigurationBoolean:4};
+cc.ConfigurationType = {ConfigurationError: 0, ConfigurationString: 1, ConfigurationInt: 2, ConfigurationDouble: 3, ConfigurationBoolean: 4};
 
 /**
  * cc.Configuration contains some openGL variables
@@ -32,19 +32,19 @@ cc.ConfigurationType = {ConfigurationError:0, ConfigurationString:1, Configurati
  * @extends cc.Class
  */
 cc.Configuration = cc.Class.extend(/** @lends cc.Configuration# */{
-    _maxTextureSize:0,
-    _maxModelviewStackDepth:0,
-    _supportsPVRTC:false,
-    _supportsNPOT:false,
-    _supportsBGRA8888:false,
-    _supportsDiscardFramebuffer:false,
-    _supportsShareableVAO:false,
-    _maxSamplesAllowed:0,
-    _maxTextureUnits:0,
-    _GlExtensions:"",
-    _valueDict:null,
+    _maxTextureSize: 0,
+    _maxModelviewStackDepth: 0,
+    _supportsPVRTC: false,
+    _supportsNPOT: false,
+    _supportsBGRA8888: false,
+    _supportsDiscardFramebuffer: false,
+    _supportsShareableVAO: false,
+    _maxSamplesAllowed: 0,
+    _maxTextureUnits: 0,
+    _GlExtensions: '',
+    _valueDict: null,
 
-    ctor: function () {
+    ctor: function() {
         this._maxTextureSize = 0;
         this._maxModelviewStackDepth = 0;
         this._supportsPVRTC = false;
@@ -54,7 +54,7 @@ cc.Configuration = cc.Class.extend(/** @lends cc.Configuration# */{
         this._supportsShareableVAO = false;
         this._maxSamplesAllowed = 0;
         this._maxTextureUnits = 0;
-        this._GlExtensions = "";
+        this._GlExtensions = '';
         this._valueDict = {};
     },
 
@@ -62,7 +62,7 @@ cc.Configuration = cc.Class.extend(/** @lends cc.Configuration# */{
      * OpenGL Max texture size.
      * @return {Number}
      */
-    getMaxTextureSize:function () {
+    getMaxTextureSize: function() {
         return this._maxTextureSize;
     },
 
@@ -70,7 +70,7 @@ cc.Configuration = cc.Class.extend(/** @lends cc.Configuration# */{
      * OpenGL Max Modelview Stack Depth.
      * @return {Number}
      */
-    getMaxModelviewStackDepth:function () {
+    getMaxModelviewStackDepth: function() {
         return this._maxModelviewStackDepth;
     },
 
@@ -78,7 +78,7 @@ cc.Configuration = cc.Class.extend(/** @lends cc.Configuration# */{
      * returns the maximum texture units
      * @return {Number}
      */
-    getMaxTextureUnits:function () {
+    getMaxTextureUnits: function() {
         return this._maxTextureUnits;
     },
 
@@ -87,7 +87,7 @@ cc.Configuration = cc.Class.extend(/** @lends cc.Configuration# */{
      * OpenGL ES 2.0 already supports NPOT (iOS).
      * @return {Boolean}
      */
-    supportsNPOT:function () {
+    supportsNPOT: function() {
         return this._supportsNPOT;
     },
 
@@ -95,7 +95,7 @@ cc.Configuration = cc.Class.extend(/** @lends cc.Configuration# */{
      * Whether or not PVR Texture Compressed is supported
      * @return {Boolean}
      */
-    supportsPVRTC:function () {
+    supportsPVRTC: function() {
         return this._supportsPVRTC;
     },
 
@@ -103,7 +103,7 @@ cc.Configuration = cc.Class.extend(/** @lends cc.Configuration# */{
      * Whether or not BGRA8888 textures are supported.
      * @return {Boolean}
      */
-    supportsBGRA8888:function () {
+    supportsBGRA8888: function() {
         return this._supportsBGRA8888;
     },
 
@@ -111,7 +111,7 @@ cc.Configuration = cc.Class.extend(/** @lends cc.Configuration# */{
      * Whether or not glDiscardFramebufferEXT is supported
      * @return {Boolean}
      */
-    supportsDiscardFramebuffer:function () {
+    supportsDiscardFramebuffer: function() {
         return this._supportsDiscardFramebuffer;
     },
 
@@ -119,7 +119,7 @@ cc.Configuration = cc.Class.extend(/** @lends cc.Configuration# */{
      * Whether or not shareable VAOs are supported.
      * @return {Boolean}
      */
-    supportsShareableVAO:function () {
+    supportsShareableVAO: function() {
         return this._supportsShareableVAO;
     },
 
@@ -127,15 +127,15 @@ cc.Configuration = cc.Class.extend(/** @lends cc.Configuration# */{
      * returns whether or not an OpenGL is supported
      * @param {String} searchName
      */
-    checkForGLExtension:function (searchName) {
+    checkForGLExtension: function(searchName) {
         return this._GlExtensions.indexOf(searchName) > -1;
     },
 
-    init:function () {
+    init: function() {
         var locValueDict = this._valueDict;
-        locValueDict["cocos2d.x.version"] = cc.ENGINE_VERSION;
-        locValueDict["cocos2d.x.compiled_with_profiler"] = false;
-        locValueDict["cocos2d.x.compiled_with_gl_state_cache"] = cc.ENABLE_GL_STATE_CACHE;
+        locValueDict['cocos2d.x.version'] = cc.ENGINE_VERSION;
+        locValueDict['cocos2d.x.compiled_with_profiler'] = false;
+        locValueDict['cocos2d.x.compiled_with_gl_state_cache'] = cc.ENABLE_GL_STATE_CACHE;
         return true;
     },
 
@@ -143,11 +143,11 @@ cc.Configuration = cc.Class.extend(/** @lends cc.Configuration# */{
      * returns the value of a given key as a string.  If the key is not found, it will return the default value
      * @param {String} key
      * @param {String} [default_value=null]
-     * @returns {String}
+     * @return {String}
      */
-    getCString:function(key, default_value){
+    getCString: function(key, default_value) {
        var locValueDict = this._valueDict;
-        if(locValueDict.hasOwnProperty(key))
+        if (locValueDict.hasOwnProperty(key))
             return locValueDict[key];
         return default_value;
     },
@@ -155,14 +155,14 @@ cc.Configuration = cc.Class.extend(/** @lends cc.Configuration# */{
     /**
      * returns the value of a given key as a boolean. If the key is not found, it will return the default value
      * @param {string} key
-     * @param {boolean|null} [default_value=false]
-     * @returns {boolean}
+     * @param {?boolean} [default_value=false]
+     * @return {boolean}
      */
-    getBool: function(key, default_value){
-        if(default_value == null)
+    getBool: function(key, default_value) {
+        if (default_value == null)
             default_value = false;
         var locValueDict = this._valueDict;
-        if(locValueDict.hasOwnProperty(key))
+        if (locValueDict.hasOwnProperty(key))
             return locValueDict[key];
         return default_value;
     },
@@ -171,13 +171,13 @@ cc.Configuration = cc.Class.extend(/** @lends cc.Configuration# */{
      * returns the value of a given key as a double. If the key is not found, it will return the default value
      * @param {string} key
      * @param {number} [default_value=0]
-     * @returns {number}
+     * @return {number}
      */
-    getNumber: function(key, default_value){
-        if(default_value == null)
+    getNumber: function(key, default_value) {
+        if (default_value == null)
             default_value = 0;
         var locValueDict = this._valueDict;
-        if(locValueDict.hasOwnProperty(key))
+        if (locValueDict.hasOwnProperty(key))
             return locValueDict[key];
         return default_value;
     },
@@ -185,11 +185,11 @@ cc.Configuration = cc.Class.extend(/** @lends cc.Configuration# */{
     /**
      * returns the value of a given key as a double
      * @param {string} key
-     * @returns {Object|null}
+     * @return {Object|null}
      */
-    getObject:function(key){
+    getObject: function(key) {
         var locValueDict = this._valueDict;
-        if(locValueDict.hasOwnProperty(key))
+        if (locValueDict.hasOwnProperty(key))
             return locValueDict[key];
         return null;
     },
@@ -199,58 +199,58 @@ cc.Configuration = cc.Class.extend(/** @lends cc.Configuration# */{
      * @param {string} key
      * @param {Object} value
      */
-    setObject: function(key, value){
+    setObject: function(key, value) {
         this._valueDict[key] = value;
     },
 
     /**
      * dumps the current configuration on the console
      */
-    dumpInfo: function(){
-         if(cc.ENABLE_GL_STATE_CACHE === 0){
-             cc.log("");
-             cc.log("cocos2d: **** WARNING **** CC_ENABLE_PROFILERS is defined. Disable it when you finish profiling (from ccConfig.js)");
-             cc.log("")
+    dumpInfo: function() {
+         if (cc.ENABLE_GL_STATE_CACHE === 0) {
+             cc.log('');
+             cc.log('cocos2d: **** WARNING **** CC_ENABLE_PROFILERS is defined. Disable it when you finish profiling (from ccConfig.js)');
+             cc.log('');
          }
     },
 
     /**
      * gathers OpenGL / GPU information
      */
-    gatherGPUInfo: function(){
-        if(cc.renderContextType === cc.CANVAS)
+    gatherGPUInfo: function() {
+        if (cc.renderContextType === cc.CANVAS)
             return;
 
         var gl = cc.renderContext;
         var locValueDict = this._valueDict;
-        locValueDict["gl.vendor"] = gl.getParameter(gl.VENDOR);
-        locValueDict["gl.renderer"] = gl.getParameter(gl.RENDERER);
-        locValueDict["gl.version"] = gl.getParameter(gl.VERSION);
+        locValueDict['gl.vendor'] = gl.getParameter(gl.VENDOR);
+        locValueDict['gl.renderer'] = gl.getParameter(gl.RENDERER);
+        locValueDict['gl.version'] = gl.getParameter(gl.VERSION);
 
-        this._GlExtensions = "";
+        this._GlExtensions = '';
         var extArr = gl.getSupportedExtensions();
         for (var i = 0; i < extArr.length; i++)
-            this._GlExtensions += extArr[i] + " ";
+            this._GlExtensions += extArr[i] + ' ';
 
         this._maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE);
-        locValueDict["gl.max_texture_size"] = this._maxTextureSize;
+        locValueDict['gl.max_texture_size'] = this._maxTextureSize;
         this._maxTextureUnits = gl.getParameter(gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS);
-        locValueDict["gl.max_texture_units"] = this._maxTextureUnits;
+        locValueDict['gl.max_texture_units'] = this._maxTextureUnits;
 
-        this._supportsPVRTC = this.checkForGLExtension("GL_IMG_texture_compression_pvrtc");
-        locValueDict["gl.supports_PVRTC"] = this._supportsPVRTC;
+        this._supportsPVRTC = this.checkForGLExtension('GL_IMG_texture_compression_pvrtc');
+        locValueDict['gl.supports_PVRTC'] = this._supportsPVRTC;
 
         this._supportsNPOT = false; //true;
-        locValueDict["gl.supports_NPOT"] = this._supportsNPOT;
+        locValueDict['gl.supports_NPOT'] = this._supportsNPOT;
 
-        this._supportsBGRA8888 = this.checkForGLExtension("GL_IMG_texture_format_BGRA888");
-        locValueDict["gl.supports_BGRA8888"] = this._supportsBGRA8888;
+        this._supportsBGRA8888 = this.checkForGLExtension('GL_IMG_texture_format_BGRA888');
+        locValueDict['gl.supports_BGRA8888'] = this._supportsBGRA8888;
 
-        this._supportsDiscardFramebuffer = this.checkForGLExtension("GL_EXT_discard_framebuffer");
-        locValueDict["gl.supports_discard_framebuffer"] = this._supportsDiscardFramebuffer;
+        this._supportsDiscardFramebuffer = this.checkForGLExtension('GL_EXT_discard_framebuffer');
+        locValueDict['gl.supports_discard_framebuffer'] = this._supportsDiscardFramebuffer;
 
-        this._supportsShareableVAO = this.checkForGLExtension("vertex_array_object");
-        locValueDict["gl.supports_vertex_array_object"] = this._supportsShareableVAO;
+        this._supportsShareableVAO = this.checkForGLExtension('vertex_array_object');
+        locValueDict['gl.supports_vertex_array_object'] = this._supportsShareableVAO;
 
         cc.CHECK_GL_ERROR_DEBUG();
     },
@@ -259,22 +259,22 @@ cc.Configuration = cc.Class.extend(/** @lends cc.Configuration# */{
      * Loads a config file. If the keys are already present, then they are going to be replaced. Otherwise the new keys are added.
      * @param {string} filename
      */
-    loadConfigFile: function( filename){
+    loadConfigFile: function(filename) {
         var fileUtils = cc.FileUtils.getInstance();
         var fullPath = fileUtils.fullPathForFilename(filename);
         var dict = fileUtils.dictionaryWithContentsOfFileThreadSafe(fullPath);
 
-        if(dict == null)
+        if (dict == null)
             return;
 
-        var getDatas = dict["data"];
-        if(!getDatas){
+        var getDatas = dict['data'];
+        if (!getDatas) {
             cc.log("Expected 'data' dict, but not found. Config file: " + filename);
             return;
         }
 
         // Add all keys in the existing dictionary
-        for(var selKey in getDatas)
+        for (var selKey in getDatas)
             this._valueDict[selKey] = getDatas[selKey];
     }
 });
@@ -286,8 +286,8 @@ cc.Configuration._sharedConfiguration = null;
  * returns a shared instance of CCConfiguration
  * @return {cc.Configuration}
  */
-cc.Configuration.getInstance = function () {
-    if(!cc.Configuration._sharedConfiguration){
+cc.Configuration.getInstance = function() {
+    if (!cc.Configuration._sharedConfiguration) {
         cc.Configuration._sharedConfiguration = new cc.Configuration();
         cc.Configuration._sharedConfiguration.init();
     }
@@ -297,6 +297,6 @@ cc.Configuration.getInstance = function () {
 /**
  * purge the shared instance of CCConfiguration
  */
-cc.Configuration.purgeConfiguration = function () {
+cc.Configuration.purgeConfiguration = function() {
     cc.Configuration._sharedConfiguration = null;
 };

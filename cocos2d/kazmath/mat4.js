@@ -33,7 +33,7 @@
  | 2   6  10  14 |
  | 3   7  11  15 |
  */
-cc.kmMat4 = function () {
+cc.kmMat4 = function() {
     this.mat = new Float32Array([0, 0, 0, 0,
         0, 0, 0, 0,
         0, 0, 0, 0,
@@ -46,11 +46,11 @@ cc.kmMat4 = function () {
  * @Params pMat - A 16 element array of floats
  * @Return Returns pOut so that the call can be nested
  */
-cc.kmMat4Fill = function (pOut, pMat) {
-    pOut.mat[0] = pOut.mat[1] = pOut.mat[2] =pOut.mat[3] =
-        pOut.mat[4] =pOut.mat[5] =pOut.mat[6] =pOut.mat[7] =
-            pOut.mat[8] =pOut.mat[9] =pOut.mat[10] =pOut.mat[11] =
-                pOut.mat[12] =pOut.mat[13] =pOut.mat[14] =pOut.mat[15] =pMat;
+cc.kmMat4Fill = function(pOut, pMat) {
+    pOut.mat[0] = pOut.mat[1] = pOut.mat[2] = pOut.mat[3] =
+        pOut.mat[4] = pOut.mat[5] = pOut.mat[6] = pOut.mat[7] =
+            pOut.mat[8] = pOut.mat[9] = pOut.mat[10] = pOut.mat[11] =
+                pOut.mat[12] = pOut.mat[13] = pOut.mat[14] = pOut.mat[15] = pMat;
 };
 
 /**
@@ -58,7 +58,7 @@ cc.kmMat4Fill = function (pOut, pMat) {
  * @Params pOut - A pointer to the matrix to set to identity
  * @Return Returns pOut so that the call can be nested
  */
-cc.kmMat4Identity = function (pOut) {
+cc.kmMat4Identity = function(pOut) {
     pOut.mat[1] = pOut.mat[2] = pOut.mat[3]
         = pOut.mat[4] = pOut.mat[6] = pOut.mat[7]
         = pOut.mat[8] = pOut.mat[9] = pOut.mat[11]
@@ -67,22 +67,22 @@ cc.kmMat4Identity = function (pOut) {
     return pOut;
 };
 
-cc.kmMat4._get = function (pIn, row, col) {
+cc.kmMat4._get = function(pIn, row, col) {
     return pIn.mat[row + 4 * col];
 };
 
-cc.kmMat4._set = function (pIn, row, col, value) {
+cc.kmMat4._set = function(pIn, row, col, value) {
     pIn.mat[row + 4 * col] = value;
 };
 
-cc.kmMat4._swap = function (pIn, r1, c1, r2, c2) {
+cc.kmMat4._swap = function(pIn, r1, c1, r2, c2) {
     var tmp = cc.kmMat4._get(pIn, r1, c1);
     cc.kmMat4._set(pIn, r1, c1, cc.kmMat4._get(pIn, r2, c2));
     cc.kmMat4._set(pIn, r2, c2, tmp);
 };
 
 //Returns an upper and a lower triangular matrix which are L and R in the Gauss algorithm
-cc.kmMat4._gaussj = function (a, b) {
+cc.kmMat4._gaussj = function(a, b) {
     var i, icol = 0, irow = 0, j, k, l, ll, n = 4, m = 4;
     var big, dum, pivinv;
     var indxc = [0, 0, 0, 0];
@@ -163,7 +163,7 @@ cc.kmMat4._identity =
  * pOut.
  * @Return Returns NULL if there is no inverse, else pOut
  */
-cc.kmMat4Inverse = function (pOut, pM) {
+cc.kmMat4Inverse = function(pOut, pM) {
     var inv = new cc.kmMat4();
     var tmp = new cc.kmMat4();
 
@@ -181,7 +181,7 @@ cc.kmMat4Inverse = function (pOut, pM) {
  * Returns KM_TRUE if pIn is an identity matrix
  * KM_FALSE otherwise
  */
-cc.kmMat4IsIdentity = function (pIn) {
+cc.kmMat4IsIdentity = function(pIn) {
     for (var i = 0; i < 16; i++) {
         if (cc.kmMat4._identity[i] != pIn.mat[i])
             return false;
@@ -192,8 +192,8 @@ cc.kmMat4IsIdentity = function (pIn) {
 /**
  * Sets pOut to the transpose of pIn, returns pOut
  */
-cc.kmMat4Transpose = function (pOut, pIn) {
-    var x, z, outArr = pOut.mat,inArr = pIn.mat;
+cc.kmMat4Transpose = function(pOut, pIn) {
+    var x, z, outArr = pOut.mat, inArr = pIn.mat;
     for (z = 0; z < 4; ++z) {
         for (x = 0; x < 4; ++x)
             outArr[(z * 4) + x] = inArr[(x * 4) + z];
@@ -204,9 +204,9 @@ cc.kmMat4Transpose = function (pOut, pIn) {
 /**
  * Multiplies pM1 with pM2, stores the result in pOut, returns pOut
  */
-cc.kmMat4Multiply = function (pOut, pM1, pM2) {
+cc.kmMat4Multiply = function(pOut, pM1, pM2) {
     // Cache the matrix values (makes for huge speed increases!)
-    var  outArray = pOut.mat;
+    var outArray = pOut.mat;
     var a00 = pM1.mat[0], a01 = pM1.mat[1], a02 = pM1.mat[2], a03 = pM1.mat[3];
     var a10 = pM1.mat[4], a11 = pM1.mat[5], a12 = pM1.mat[6], a13 = pM1.mat[7];
     var a20 = pM1.mat[8], a21 = pM1.mat[9], a22 = pM1.mat[10], a23 = pM1.mat[11];
@@ -236,7 +236,7 @@ cc.kmMat4Multiply = function (pOut, pM1, pM2) {
     return pOut;
 };
 
-cc.getMat4MultiplyValue = function (pM1, pM2) {
+cc.getMat4MultiplyValue = function(pM1, pM2) {
     var m1 = pM1.mat, m2 = pM2.mat;
     var mat = new Float32Array(16);
 
@@ -263,7 +263,7 @@ cc.getMat4MultiplyValue = function (pM1, pM2) {
     return mat;
 };
 
-cc.getMat4MultiplyWithMat4 = function (pM1, pM2, swapMat) {
+cc.getMat4MultiplyWithMat4 = function(pM1, pM2, swapMat) {
     var m1 = pM1.mat, m2 = pM2.mat;
     var mat = swapMat.mat;
 
@@ -293,9 +293,9 @@ cc.getMat4MultiplyWithMat4 = function (pM1, pM2, swapMat) {
 /**
  * Assigns the value of pIn to pOut
  */
-cc.kmMat4Assign = function (pOut, pIn) {
-    if(pOut == pIn) {
-        cc.log("cc.kmMat4Assign(): pOut equals pIn");
+cc.kmMat4Assign = function(pOut, pIn) {
+    if (pOut == pIn) {
+        cc.log('cc.kmMat4Assign(): pOut equals pIn');
         return pOut;
     }
 
@@ -327,9 +327,9 @@ cc.kmMat4Assign = function (pOut, pIn) {
 /**
  * Returns KM_TRUE if the 2 matrices are equal (approximately)
  */
-cc.kmMat4AreEqual = function (pMat1, pMat2) {
-    if(pMat1 == pMat2){
-        cc.log("cc.kmMat4AreEqual(): pMat1 and pMat2 are same object.");
+cc.kmMat4AreEqual = function(pMat1, pMat2) {
+    if (pMat1 == pMat2) {
+        cc.log('cc.kmMat4AreEqual(): pMat1 and pMat2 are same object.');
         return true;
     }
 
@@ -345,7 +345,7 @@ cc.kmMat4AreEqual = function (pMat1, pMat2) {
 /**
  * Builds an X-axis rotation matrix and stores it in pOut, returns pOut
  */
-cc.kmMat4RotationX = function (pOut, radians) {
+cc.kmMat4RotationX = function(pOut, radians) {
     /*
      |  1  0       0       0 |
      M = |  0  cos(A) -sin(A)  0 |
@@ -381,7 +381,7 @@ cc.kmMat4RotationX = function (pOut, radians) {
  * Builds a rotation matrix using the rotation around the Y-axis
  * The result is stored in pOut, pOut is returned.
  */
-cc.kmMat4RotationY = function (pOut, radians) {
+cc.kmMat4RotationY = function(pOut, radians) {
     /*
      |  cos(A)  0   sin(A)  0 |
      M = |  0       1   0       0 |
@@ -415,7 +415,7 @@ cc.kmMat4RotationY = function (pOut, radians) {
  * Builds a rotation matrix around the Z-axis. The resulting
  * matrix is stored in pOut. pOut is returned.
  */
-cc.kmMat4RotationZ = function (pOut, radians) {
+cc.kmMat4RotationZ = function(pOut, radians) {
     /*
      |  cos(A)  -sin(A)   0   0 |
      M = |  sin(A)   cos(A)   0   0 |
@@ -449,7 +449,7 @@ cc.kmMat4RotationZ = function (pOut, radians) {
  * Builds a rotation matrix from pitch, yaw and roll. The resulting
  * matrix is stored in pOut and pOut is returned
  */
-cc.kmMat4RotationPitchYawRoll = function (pOut, pitch, yaw, roll) {
+cc.kmMat4RotationPitchYawRoll = function(pOut, pitch, yaw, roll) {
     var cr = Math.cos(pitch);
     var sr = Math.sin(pitch);
     var cp = Math.cos(yaw);
@@ -480,22 +480,22 @@ cc.kmMat4RotationPitchYawRoll = function (pOut, pitch, yaw, roll) {
 /** Converts a quaternion to a rotation matrix,
  * the result is stored in pOut, returns pOut
  */
-cc.kmMat4RotationQuaternion = function (pOut, pQ) {
-    pOut.mat[0] = 1.0 - 2.0 * (pQ.y * pQ.y + pQ.z * pQ.z );
+cc.kmMat4RotationQuaternion = function(pOut, pQ) {
+    pOut.mat[0] = 1.0 - 2.0 * (pQ.y * pQ.y + pQ.z * pQ.z);
     pOut.mat[1] = 2.0 * (pQ.x * pQ.y + pQ.z * pQ.w);
     pOut.mat[2] = 2.0 * (pQ.x * pQ.z - pQ.y * pQ.w);
     pOut.mat[3] = 0.0;
 
     // Second row
-    pOut.mat[4] = 2.0 * ( pQ.x * pQ.y - pQ.z * pQ.w );
-    pOut.mat[5] = 1.0 - 2.0 * ( pQ.x * pQ.x + pQ.z * pQ.z );
-    pOut.mat[6] = 2.0 * (pQ.z * pQ.y + pQ.x * pQ.w );
+    pOut.mat[4] = 2.0 * (pQ.x * pQ.y - pQ.z * pQ.w);
+    pOut.mat[5] = 1.0 - 2.0 * (pQ.x * pQ.x + pQ.z * pQ.z);
+    pOut.mat[6] = 2.0 * (pQ.z * pQ.y + pQ.x * pQ.w);
     pOut.mat[7] = 0.0;
 
     // Third row
-    pOut.mat[8] = 2.0 * ( pQ.x * pQ.z + pQ.y * pQ.w );
-    pOut.mat[9] = 2.0 * ( pQ.y * pQ.z - pQ.x * pQ.w );
-    pOut.mat[10] = 1.0 - 2.0 * ( pQ.x * pQ.x + pQ.y * pQ.y );
+    pOut.mat[8] = 2.0 * (pQ.x * pQ.z + pQ.y * pQ.w);
+    pOut.mat[9] = 2.0 * (pQ.y * pQ.z - pQ.x * pQ.w);
+    pOut.mat[10] = 1.0 - 2.0 * (pQ.x * pQ.x + pQ.y * pQ.y);
     pOut.mat[11] = 0.0;
 
     // Fourth row
@@ -511,7 +511,7 @@ cc.kmMat4RotationQuaternion = function (pOut, pQ) {
  * and a 3d vector representing a translation. Assign the result to pOut,
  * pOut is also returned.
  */
-cc.kmMat4RotationTranslation = function (pOut, rotation, translation) {
+cc.kmMat4RotationTranslation = function(pOut, rotation, translation) {
     pOut.mat[0] = rotation.mat[0];
     pOut.mat[1] = rotation.mat[1];
     pOut.mat[2] = rotation.mat[2];
@@ -536,7 +536,7 @@ cc.kmMat4RotationTranslation = function (pOut, rotation, translation) {
 };
 
 /** Builds a scaling matrix */
-cc.kmMat4Scaling = function (pOut, x, y, z) {
+cc.kmMat4Scaling = function(pOut, x, y, z) {
     pOut.mat[0] = x;
     pOut.mat[5] = y;
     pOut.mat[10] = z;
@@ -552,7 +552,7 @@ cc.kmMat4Scaling = function (pOut, x, y, z) {
  * Builds a translation matrix. All other elements in the matrix
  * will be set to zero except for the diagonal which is set to 1.0
  */
-cc.kmMat4Translation = function (pOut, x, y, z) {
+cc.kmMat4Translation = function(pOut, x, y, z) {
     //FIXME: Write a test for this
     pOut.mat[0] = pOut.mat[5] = pOut.mat[10] = pOut.mat[15] = 1.0;
     pOut.mat[1] = pOut.mat[2] = pOut.mat[3] =
@@ -569,7 +569,7 @@ cc.kmMat4Translation = function (pOut, x, y, z) {
  * wish to extract the vector from. pOut is a pointer to the
  * kmVec3 structure that should hold the resulting vector
  */
-cc.kmMat4GetUpVec3 = function (pOut, pIn) {
+cc.kmMat4GetUpVec3 = function(pOut, pIn) {
     pOut.x = pIn.mat[4];
     pOut.y = pIn.mat[5];
     pOut.z = pIn.mat[6];
@@ -580,7 +580,7 @@ cc.kmMat4GetUpVec3 = function (pOut, pIn) {
 /** Extract the right vector from a 4x4 matrix. The result is
  * stored in pOut. Returns pOut.
  */
-cc.kmMat4GetRightVec3 = function (pOut, pIn) {
+cc.kmMat4GetRightVec3 = function(pOut, pIn) {
     pOut.x = pIn.mat[0];
     pOut.y = pIn.mat[1];
     pOut.z = pIn.mat[2];
@@ -592,7 +592,7 @@ cc.kmMat4GetRightVec3 = function (pOut, pIn) {
  * Extract the forward vector from a 4x4 matrix. The result is
  * stored in pOut. Returns pOut.
  */
-cc.kmMat4GetForwardVec3 = function (pOut, pIn) {
+cc.kmMat4GetForwardVec3 = function(pOut, pIn) {
     pOut.x = pIn.mat[8];
     pOut.y = pIn.mat[9];
     pOut.z = pIn.mat[10];
@@ -604,7 +604,7 @@ cc.kmMat4GetForwardVec3 = function (pOut, pIn) {
  * Creates a perspective projection matrix in the
  * same way as gluPerspective
  */
-cc.kmMat4PerspectiveProjection = function (pOut, fovY, aspect, zNear, zFar) {
+cc.kmMat4PerspectiveProjection = function(pOut, fovY, aspect, zNear, zFar) {
     var r = cc.kmDegreesToRadians(fovY / 2);
     var deltaZ = zFar - zNear;
     var s = Math.sin(r);
@@ -627,7 +627,7 @@ cc.kmMat4PerspectiveProjection = function (pOut, fovY, aspect, zNear, zFar) {
 };
 
 /** Creates an orthographic projection matrix like glOrtho */
-cc.kmMat4OrthographicProjection = function (pOut, left, right, bottom, top, nearVal, farVal) {
+cc.kmMat4OrthographicProjection = function(pOut, left, right, bottom, top, nearVal, farVal) {
     cc.kmMat4Identity(pOut);
     pOut.mat[0] = 2 / (right - left);
     pOut.mat[5] = 2 / (top - bottom);
@@ -642,7 +642,7 @@ cc.kmMat4OrthographicProjection = function (pOut, left, right, bottom, top, near
  * Builds a translation matrix in the same way as gluLookAt()
  * the resulting matrix is stored in pOut. pOut is returned.
  */
-cc.kmMat4LookAt = function (pOut, pEye, pCenter, pUp) {
+cc.kmMat4LookAt = function(pOut, pEye, pCenter, pUp) {
     var f = new cc.kmVec3(), up = new cc.kmVec3(), s = new cc.kmVec3(), u = new cc.kmVec3();
     var translate = new cc.kmMat4();
 
@@ -682,7 +682,7 @@ cc.kmMat4LookAt = function (pOut, pEye, pCenter, pUp) {
  * Build a rotation matrix from an axis and an angle. Result is stored in pOut.
  * pOut is returned.
  */
-cc.kmMat4RotationAxisAngle = function (pOut, axis, radians) {
+cc.kmMat4RotationAxisAngle = function(pOut, axis, radians) {
     var rcos = Math.cos(radians);
     var rsin = Math.sin(radians);
 
@@ -716,7 +716,7 @@ cc.kmMat4RotationAxisAngle = function (pOut, axis, radians) {
  * Extract a 3x3 rotation matrix from the input 4x4 transformation.
  * Stores the result in pOut, returns pOut
  */
-cc.kmMat4ExtractRotation = function (pOut, pIn) {
+cc.kmMat4ExtractRotation = function(pOut, pIn) {
     pOut.mat[0] = pIn.mat[0];
     pOut.mat[1] = pIn.mat[1];
     pOut.mat[2] = pIn.mat[2];
@@ -732,7 +732,7 @@ cc.kmMat4ExtractRotation = function (pOut, pIn) {
     return pOut;
 };
 
-cc.kmMat4ExtractPlane = function (pOut, pIn, plane) {
+cc.kmMat4ExtractPlane = function(pOut, pIn, plane) {
     switch (plane) {
         case cc.KM_PLANE_RIGHT:
             pOut.a = pIn.mat[3] - pIn.mat[0];
@@ -771,7 +771,7 @@ cc.kmMat4ExtractPlane = function (pOut, pIn, plane) {
             pOut.d = pIn.mat[15] + pIn.mat[14];
             break;
         default:
-            cc.log("cc.kmMat4ExtractPlane(): Invalid plane index");
+            cc.log('cc.kmMat4ExtractPlane(): Invalid plane index');
             break;
     }
 
@@ -790,7 +790,7 @@ cc.kmMat4ExtractPlane = function (pOut, pIn, plane) {
  * Take the rotation from a 4x4 transformation matrix, and return it as an axis and an angle (in radians)
  * returns the output axis.
  */
-cc.kmMat4RotationToAxisAngle = function (pAxis, radians, pIn) {
+cc.kmMat4RotationToAxisAngle = function(pAxis, radians, pIn) {
     /*Surely not this easy?*/
     var temp = new cc.kmQuaternion();
     var rotation = new cc.kmMat3();

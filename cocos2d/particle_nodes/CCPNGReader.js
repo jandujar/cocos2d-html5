@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 cc.PNGReader = cc.Class.extend({
-    ctor:function(data){
+    ctor: function(data) {
         var chunkSize, colors, delayDen, delayNum, frame, i, index, key, section, ccshort, text, _i, _j, _ref;
         this.data = data;
         this.pos = 8;
@@ -146,7 +146,7 @@ cc.PNGReader = cc.Class.extend({
                                 return 'DeviceRGB';
                         }
                     }).call(this);
-                    if(Uint8Array != Array)
+                    if (Uint8Array != Array)
                         this.imgData = new Uint8Array(this.imgData);
                     return;
                 default:
@@ -154,11 +154,11 @@ cc.PNGReader = cc.Class.extend({
             }
             this.pos += 4;
             if (this.pos > this.data.length) {
-                throw new Error("Incomplete or corrupt PNG file");
+                throw new Error('Incomplete or corrupt PNG file');
             }
         }
     },
-    read:function(bytes){
+    read: function(bytes) {
         var i, _i, _results;
         _results = [];
         for (i = _i = 0; 0 <= bytes ? _i < bytes : _i > bytes; i = 0 <= bytes ? ++_i : --_i) {
@@ -166,7 +166,7 @@ cc.PNGReader = cc.Class.extend({
         }
         return _results;
     },
-    readUInt32:function(){
+    readUInt32: function() {
         var b1, b2, b3, b4;
         b1 = this.data[this.pos++] << 24;
         b2 = this.data[this.pos++] << 16;
@@ -174,13 +174,13 @@ cc.PNGReader = cc.Class.extend({
         b4 = this.data[this.pos++];
         return b1 | b2 | b3 | b4;
     },
-    readUInt16:function(){
+    readUInt16: function() {
         var b1, b2;
         b1 = this.data[this.pos++] << 8;
         b2 = this.data[this.pos++];
         return b1 | b2;
     },
-    decodePixels:function(data){
+    decodePixels: function(data) {
         var ccbyte, c, col, i, left, length, p, pa, paeth, pb, pc, pixelBytes, pixels, pos, row, scanlineLength, upper, upperLeft, _i, _j, _k, _l, _m;
         if (data == null) {
             data = this.imgData;
@@ -188,7 +188,7 @@ cc.PNGReader = cc.Class.extend({
         if (data.length === 0) {
             return new Uint8Array(0);
         }
-        var inflate = new Zlib.Inflate(data,{index:0, verify:false});
+        var inflate = new Zlib.Inflate(data, {index: 0, verify: false});
         data = inflate.decompress();
 
         pixelBytes = this.pixelBitlength / 8;
@@ -255,13 +255,13 @@ cc.PNGReader = cc.Class.extend({
                     }
                     break;
                 default:
-                    throw new Error("Invalid filter algorithm: " + data[pos - 1]);
+                    throw new Error('Invalid filter algorithm: ' + data[pos - 1]);
             }
             row++;
         }
         return pixels;
     },
-    copyToImageData:function(imageData,pixels){
+    copyToImageData: function(imageData, pixels) {
         var alpha, colors, data, i, input, j, k, length, palette, v, _ref;
         colors = this.colors;
         palette = null;
@@ -296,7 +296,7 @@ cc.PNGReader = cc.Class.extend({
             }
         }
     },
-    decodePalette:function(){
+    decodePalette: function() {
         var c, i, palette, pos, ret, transparency, _i, _ref, _ref1;
         palette = this.palette;
         transparency = this.transparency.indexed || [];
@@ -311,11 +311,11 @@ cc.PNGReader = cc.Class.extend({
         }
         return ret;
     },
-    render: function (canvas) {
+    render: function(canvas) {
         var ctx, data;
         canvas.width = this.width;
         canvas.height = this.height;
-        ctx = canvas.getContext("2d");
+        ctx = canvas.getContext('2d');
         data = ctx.createImageData(this.width, this.height);
         this.copyToImageData(data, this.decodePixels());
         return ctx.putImageData(data, 0, 0);

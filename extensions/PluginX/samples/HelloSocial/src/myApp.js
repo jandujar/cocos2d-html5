@@ -30,7 +30,7 @@ var TAG_SHARE_BY_QZONE = 102;
 var TAG_SHARE_BY_TWWITER = 103;
 var TAG_SHARE_BY_FACEBOOK = 104;
 
-var EventMenuItem = function (id, tag) {
+var EventMenuItem = function(id, tag) {
     this.id = id;
     this.tag = tag;
 };
@@ -44,7 +44,7 @@ var s_EventMenuItem = [
 ];
 
 var MyLayer = cc.Layer.extend({
-    init: function () {
+    init: function() {
         this._super();
 
 
@@ -91,33 +91,33 @@ var MyLayer = cc.Layer.extend({
             menuItem.setPosition(pos);
         }
 
-        var label = cc.LabelTTF.create("Reload all plugins", "Arial", 24);
+        var label = cc.LabelTTF.create('Reload all plugins', 'Arial', 24);
         var menuItem = cc.MenuItemLabel.create(label, this.reloadPluginMenuCallback, this);
         menuItem.setAnchorPoint(0.5, 0);
         pMenu.addChild(menuItem, 0);
         menuItem.setPosition(posBC);
     },
     //a selector callback
-    menuCloseCallback: function (sender) {
+    menuCloseCallback: function(sender) {
         MySocialManager.getInstance().unloadSocialPlugin();
         MySocialManager.getInstance().loadSocialPlugin();
     },
-    eventMenuCallback: function (sender) {
+    eventMenuCallback: function(sender) {
         var info = {};
-        info["SharedText"] = "Share message : HelloSocial!";
-        info["SharedImagePath"] = "http://www.cocos2d-x.org/images/banner-left.png";
-        info["SharedURLPath"] = "http://www.cocos2d-x.org";
+        info['SharedText'] = 'Share message : HelloSocial!';
+        info['SharedImagePath'] = 'http://www.cocos2d-x.org/images/banner-left.png';
+        info['SharedURLPath'] = 'http://www.cocos2d-x.org';
 
         var mode = sender.getTag() - TAG_SHARE_BY_SNWEIBO + 1;
         MySocialManager.getInstance().shareByMode(info, mode);
     },
-    reloadPluginMenuCallback: function (sender) {
+    reloadPluginMenuCallback: function(sender) {
         MySocialManager.purgeManager();
     }
 });
 
 var MyScene = cc.Scene.extend({
-    onEnter: function () {
+    onEnter: function() {
         this._super();
         var layer = new MyLayer();
         this.addChild(layer);

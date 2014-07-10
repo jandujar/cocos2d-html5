@@ -29,16 +29,16 @@ var plugin = plugin || {};
  * @class plugin.PluginManager
  */
 plugin.PluginManager = cc.Class.extend({
-    _pluginsMap:null,
+    _pluginsMap: null,
 
-    ctor:function(){
+    ctor: function() {
         this._pluginsMap = {};
     },
     /**
      * unload the plugin by name
      * @param {String} name
      */
-    unloadPlugin:function (name) {
+    unloadPlugin: function(name) {
         if (name == null || name.length == 0) return;
         if (this._pluginsMap.hasOwnProperty(name)) {
             delete this._pluginsMap[name];
@@ -51,7 +51,7 @@ plugin.PluginManager = cc.Class.extend({
      * @param {String} name
      * @return {plugin.PluginProtocol||null}
      */
-    loadPlugin:function (name) {
+    loadPlugin: function(name) {
         if (name == null || name.length == 0) return null;
 
         var tmpPlugin;
@@ -71,7 +71,7 @@ plugin.PluginManager = cc.Class.extend({
  * Get singleton of PluginManager
  * @return {plugin.PluginManager}
  */
-plugin.PluginManager.getInstance = function () {
+plugin.PluginManager.getInstance = function() {
     if (!this._instance) {
         this._instance = new plugin.PluginManager();
     }
@@ -81,7 +81,7 @@ plugin.PluginManager.getInstance = function () {
 /**
  * Destory the instance of PluginManager
  */
-plugin.PluginManager.end = function () {
+plugin.PluginManager.end = function() {
     if (this._instance != null) {
         delete this._instance;
     }

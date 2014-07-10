@@ -7,9 +7,9 @@
 /**
  * mixin cc.Codec.Base64
  */
-cc.Codec.Base64 = {name:'Jacob__Codec__Base64'};
+cc.Codec.Base64 = {name: 'Jacob__Codec__Base64'};
 
-cc.Codec.Base64._keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+cc.Codec.Base64._keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
 /**
  * <p>
@@ -28,7 +28,7 @@ cc.Codec.Base64.decode = function Jacob__Codec__Base64__decode(input) {
         enc1, enc2, enc3, enc4,
         i = 0;
 
-    input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+    input = input.replace(/[^A-Za-z0-9\+\/\=]/g, '');
 
     while (i < input.length) {
         enc1 = this._keyStr.indexOf(input.charAt(i++));
@@ -81,15 +81,15 @@ cc.Codec.Base64.decodeAsArray = function Jacob__Codec__Base64___decodeAsArray(in
     return ar;
 };
 
-cc.uint8ArrayToUint32Array = function(uint8Arr){
-    if(uint8Arr.length % 4 != 0)
+cc.uint8ArrayToUint32Array = function(uint8Arr) {
+    if (uint8Arr.length % 4 != 0)
         return null;
 
-    var arrLen = uint8Arr.length /4;
-    var retArr = window.Uint32Array? new Uint32Array(arrLen) : [];
-    for(var i = 0; i < arrLen; i++){
+    var arrLen = uint8Arr.length / 4;
+    var retArr = window.Uint32Array ? new Uint32Array(arrLen) : [];
+    for (var i = 0; i < arrLen; i++) {
         var offset = i * 4;
-        retArr[i] = uint8Arr[offset]  + uint8Arr[offset + 1] * (1 << 8) + uint8Arr[offset + 2] * (1 << 16) + uint8Arr[offset + 3] * (1<<24);
+        retArr[i] = uint8Arr[offset] + uint8Arr[offset + 1] * (1 << 8) + uint8Arr[offset + 2] * (1 << 16) + uint8Arr[offset + 3] * (1 << 24);
     }
     return retArr;
 };

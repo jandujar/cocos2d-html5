@@ -23,17 +23,17 @@
  ****************************************************************************/
 
 ccs.SpriteFrameCacheHelper = ccs.Class.extend({
-    _textureAtlasDic:null,
-    _imagePaths:[],
-    ctor:function () {
+    _textureAtlasDic: null,
+    _imagePaths: [],
+    ctor: function() {
         this._textureAtlasDic = {};
         this._imagePaths = [];
     },
-    addSpriteFrameFromFile:function (plistPath, imagePath) {
+    addSpriteFrameFromFile: function(plistPath, imagePath) {
         cc.SpriteFrameCache.getInstance().addSpriteFrames(plistPath, imagePath);
     },
 
-    getTexureAtlasWithTexture:function (texture) {
+    getTexureAtlasWithTexture: function(texture) {
         //todo
         return null;
         var textureName = texture.getName();
@@ -45,12 +45,12 @@ ccs.SpriteFrameCacheHelper = ccs.Class.extend({
         return atlas;
     }
 });
-ccs.SpriteFrameCacheHelper.getInstance = function () {
+ccs.SpriteFrameCacheHelper.getInstance = function() {
     if (!this._instance) {
         this._instance = new ccs.SpriteFrameCacheHelper();
     }
     return this._instance;
 };
-ccs.SpriteFrameCacheHelper.purge = function () {
+ccs.SpriteFrameCacheHelper.purge = function() {
     this._instance = null;
 };

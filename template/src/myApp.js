@@ -25,13 +25,13 @@
  ****************************************************************************/
 
 var MyLayer = cc.Layer.extend({
-    isMouseDown:false,
-    helloImg:null,
-    helloLabel:null,
-    circle:null,
-    sprite:null,
+    isMouseDown: false,
+    helloImg: null,
+    helloLabel: null,
+    circle: null,
+    sprite: null,
 
-    init:function () {
+    init: function() {
 
         //////////////////////////////
         // 1. super init first
@@ -47,8 +47,8 @@ var MyLayer = cc.Layer.extend({
         var closeItem = cc.MenuItemImage.create(
             s_CloseNormal,
             s_CloseSelected,
-            function () {
-                cc.log("close");
+            function() {
+                cc.log('close');
             },this);
         closeItem.setAnchorPoint(0.5, 0.5);
 
@@ -61,7 +61,7 @@ var MyLayer = cc.Layer.extend({
         // 3. add your codes below...
         // add a label shows "Hello World"
         // create and initialize a label
-        this.helloLabel = cc.LabelTTF.create("Hello World", "Impact", 38);
+        this.helloLabel = cc.LabelTTF.create('Hello World', 'Impact', 38);
         // position the label on the center of the screen
         this.helloLabel.setPosition(size.width / 2, size.height - 40);
         // add the label as a child to this layer
@@ -71,13 +71,13 @@ var MyLayer = cc.Layer.extend({
         this.sprite = cc.Sprite.create(s_HelloWorld);
         this.sprite.setAnchorPoint(0.5, 0.5);
         this.sprite.setPosition(size.width / 2, size.height / 2);
-        this.sprite.setScale(size.height/this.sprite.getContentSize().height);
+        this.sprite.setScale(size.height / this.sprite.getContentSize().height);
         this.addChild(this.sprite, 0);
     }
 });
 
 var MyScene = cc.Scene.extend({
-    onEnter:function () {
+    onEnter: function() {
         this._super();
         var layer = new MyLayer();
         this.addChild(layer);

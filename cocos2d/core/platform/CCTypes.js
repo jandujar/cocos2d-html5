@@ -41,7 +41,7 @@
  * //create a new color with color
  * var newColor = new cc.Color3B(redColor);
  */
-cc.Color3B = function (r1, g1, b1) {
+cc.Color3B = function(r1, g1, b1) {
     switch (arguments.length) {
         case 0:
             this.r = 0;
@@ -65,7 +65,7 @@ cc.Color3B = function (r1, g1, b1) {
             this.b = (0 | b1) || 0;
             break;
         default:
-            throw "unknown argument type";
+            throw 'unknown argument type';
             break;
     }
 };
@@ -78,11 +78,11 @@ cc.Color3B = function (r1, g1, b1) {
  * @param {Number} b blue value (0 to 255)
  * @return {Number,Number,Number}
  */
-cc.c3b = function (r, g, b) {
+cc.c3b = function(r, g, b) {
     return new cc.Color3B(r, g, b);
 };
 
-cc.integerToColor3B = function (intValue) {
+cc.integerToColor3B = function(intValue) {
     intValue = intValue || 0;
 
     var offset = 0xff;
@@ -102,54 +102,54 @@ cc.c3 = cc.c3b;
  * @param {cc.Color3B} color2
  * @return {Boolean}  true if both ccColor3B are equal. Otherwise it returns false.
  */
-cc.c3BEqual = function(color1, color2){
+cc.c3BEqual = function(color1, color2) {
     return color1.r === color2.r && color1.g === color2.g && color1.b === color2.b;
 };
 
 //ccColor3B predefined colors
 Object.defineProperties(cc, {
     WHITE: {
-        get: function () {
+        get: function() {
             return cc.c3b(255, 255, 255);
         }
     },
     YELLOW: {
-        get: function () {
+        get: function() {
             return cc.c3b(255, 255, 0);
         }
     },
     BLUE: {
-        get: function () {
+        get: function() {
             return cc.c3b(0, 0, 255);
         }
     },
     GREEN: {
-        get: function () {
+        get: function() {
             return cc.c3b(0, 255, 0);
         }
     },
     RED: {
-        get: function () {
+        get: function() {
             return cc.c3b(255, 0, 0);
         }
     },
     MAGENTA: {
-        get: function () {
+        get: function() {
             return cc.c3b(255, 0, 255);
         }
     },
     BLACK: {
-        get: function () {
+        get: function() {
             return cc.c3b(0, 0, 0);
         }
     },
     ORANGE: {
-        get: function () {
+        get: function() {
             return cc.c3b(255, 127, 0);
         }
     },
     GRAY: {
-        get: function () {
+        get: function() {
             return cc.c3b(166, 166, 166);
         }
     }
@@ -160,7 +160,7 @@ Object.defineProperties(cc, {
  * @constant
  * @type {Number,Number,Number}
  */
-cc.white = function () {
+cc.white = function() {
     return new cc.Color3B(255, 255, 255);
 };
 
@@ -169,7 +169,7 @@ cc.white = function () {
  * @constant
  * @type {Number,Number,Number}
  */
-cc.yellow = function () {
+cc.yellow = function() {
     return new cc.Color3B(255, 255, 0);
 };
 
@@ -178,7 +178,7 @@ cc.yellow = function () {
  * @constant
  * @type {Number,Number,Number}
  */
-cc.blue = function () {
+cc.blue = function() {
     return new cc.Color3B(0, 0, 255);
 };
 
@@ -187,7 +187,7 @@ cc.blue = function () {
  * @constant
  * @type {Number,Number,Number}
  */
-cc.green = function () {
+cc.green = function() {
     return new cc.Color3B(0, 255, 0);
 };
 
@@ -196,7 +196,7 @@ cc.green = function () {
  * @constant
  * @type {Number,Number,Number}
  */
-cc.red = function () {
+cc.red = function() {
     return new cc.Color3B(255, 0, 0);
 };
 
@@ -205,7 +205,7 @@ cc.red = function () {
  * @constant
  * @type {Number,Number,Number}
  */
-cc.magenta = function () {
+cc.magenta = function() {
     return new cc.Color3B(255, 0, 255);
 };
 
@@ -214,7 +214,7 @@ cc.magenta = function () {
  * @constant
  * @type {Number,Number,Number}
  */
-cc.black = function () {
+cc.black = function() {
     return new cc.Color3B(0, 0, 0);
 };
 
@@ -223,7 +223,7 @@ cc.black = function () {
  * @constant
  * @type {Number,Number,Number}
  */
-cc.orange = function () {
+cc.orange = function() {
     return new cc.Color3B(255, 127, 0);
 };
 
@@ -232,7 +232,7 @@ cc.orange = function () {
  * @constant
  * @type {Number,Number,Number}
  */
-cc.gray = function () {
+cc.gray = function() {
     return new cc.Color3B(166, 166, 166);
 };
 
@@ -248,7 +248,7 @@ cc.gray = function () {
  * //create a red color
  * var redColor = new cc.Color4B(255,0,0,255);
  */
-cc.Color4B = function (r1, g1, b1, a1) {
+cc.Color4B = function(r1, g1, b1, a1) {
     this.r = 0 | r1;
     this.g = 0 | g1;
     this.b = 0 | b1;
@@ -264,7 +264,7 @@ cc.Color4B = function (r1, g1, b1, a1) {
  * @param {Number} a Alpha value (0 to 255)
  * @return {Number,Number,Number,Number}
  */
-cc.c4b = function (r, g, b, a) {
+cc.c4b = function(r, g, b, a) {
     return new cc.Color4B(r, g, b, a);
 };
 
@@ -283,7 +283,7 @@ cc.c4 = cc.c4b;
  * //create a red color
  * var redColor = new cc.Color4F(1,0,0,1);
  */
-cc.Color4F = function (r1, g1, b1, a1) {
+cc.Color4F = function(r1, g1, b1, a1) {
     this.r = r1;
     this.g = g1;
     this.b = b1;
@@ -303,7 +303,7 @@ cc.Color4F = function (r1, g1, b1, a1) {
  * //create a red color
  * var redColor = cc.c4f(1,0,0,1);
  */
-cc.c4f = function (r, g, b, a) {
+cc.c4f = function(r, g, b, a) {
     return new cc.Color4F(r, g, b, a);
 };
 
@@ -313,7 +313,7 @@ cc.c4f = function (r, g, b, a) {
  * @param {cc.Color3B} c color
  * @return {cc.Color4F}
  */
-cc.c4FFromccc3B = function (c) {
+cc.c4FFromccc3B = function(c) {
     return new cc.Color4F(c.r / 255.0, c.g / 255.0, c.b / 255.0, 1.0);
 };
 
@@ -323,7 +323,7 @@ cc.c4FFromccc3B = function (c) {
  * @param {cc.Color4B} c Color
  * @return {cc.Color4F}
  */
-cc.c4FFromccc4B = function (c) {
+cc.c4FFromccc4B = function(c) {
     return new cc.Color4F(c.r / 255.0, c.g / 255.0, c.b / 255.0, c.a / 255.0);
 };
 
@@ -332,7 +332,7 @@ cc.c4FFromccc4B = function (c) {
  * @param {cc.Color4F} c
  * @return {cc.Color4B}
  */
-cc.c4BFromccc4F = function (c) {
+cc.c4BFromccc4F = function(c) {
     return new cc.Color4B(0 | (c.r * 255), 0 | (c.g * 255), 0 | (c.b * 255), 0 | (c.a * 255));
 };
 
@@ -342,7 +342,7 @@ cc.c4BFromccc4F = function (c) {
  * @param {cc.Color4F} b color2
  * @return {Boolean}
  */
-cc.c4FEqual = function (a, b) {
+cc.c4FEqual = function(a, b) {
     return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
 };
 
@@ -353,7 +353,7 @@ cc.c4FEqual = function (a, b) {
  * @param {Number} x1
  * @param {Number} y1
  */
-cc.Vertex2F = function (x1, y1) {
+cc.Vertex2F = function(x1, y1) {
     this.x = x1 || 0;
     this.y = y1 || 0;
 };
@@ -365,7 +365,7 @@ cc.Vertex2F = function (x1, y1) {
  * @param {Number} y
  * @return {cc.Vertex2F}
  */
-cc.Vertex2 = function (x, y) {
+cc.Vertex2 = function(x, y) {
     return new cc.Vertex2F(x, y);
 };
 
@@ -377,7 +377,7 @@ cc.Vertex2 = function (x, y) {
  * @param {Number} y1
  * @param {Number} z1
  */
-cc.Vertex3F = function (x1, y1, z1) {
+cc.Vertex3F = function(x1, y1, z1) {
     this.x = x1 || 0;
     this.y = y1 || 0;
     this.z = z1 || 0;
@@ -391,7 +391,7 @@ cc.Vertex3F = function (x1, y1, z1) {
  * @param {Number} z
  * @return {cc.Vertex3F}
  */
-cc.vertex3 = function (x, y, z) {
+cc.vertex3 = function(x, y, z) {
     return new cc.Vertex3F(x, y, z);
 };
 
@@ -402,7 +402,7 @@ cc.vertex3 = function (x, y, z) {
  * @param {Number} u1
  * @param {Number} v1
  */
-cc.Tex2F = function (u1, v1) {
+cc.Tex2F = function(u1, v1) {
     this.u = u1 || 0;
     this.v = v1 || 0;
 };
@@ -414,7 +414,7 @@ cc.Tex2F = function (u1, v1) {
  * @param {Number} v
  * @return {cc.Tex2F}
  */
-cc.tex2 = function (u, v) {
+cc.tex2 = function(u, v) {
     return new cc.Tex2F(u, v);
 };
 
@@ -426,7 +426,7 @@ cc.tex2 = function (u, v) {
  * @param {cc.Color4B} color1
  * @param {Number} size1
  */
-cc.PointSprite = function (pos1, color1, size1) {
+cc.PointSprite = function(pos1, color1, size1) {
     this.pos = pos1 || new cc.Vertex2F(0, 0);
     this.color = color1 || new cc.Color4B(0, 0, 0, 0);
     this.size = size1 || 0;
@@ -441,7 +441,7 @@ cc.PointSprite = function (pos1, color1, size1) {
  * @param {cc.Vertex2F} bl1
  * @param {cc.Vertex2F} br1
  */
-cc.Quad2 = function (tl1, tr1, bl1, br1) {
+cc.Quad2 = function(tl1, tr1, bl1, br1) {
     this.tl = tl1 || new cc.Vertex2F(0, 0);
     this.tr = tr1 || new cc.Vertex2F(0, 0);
     this.bl = bl1 || new cc.Vertex2F(0, 0);
@@ -457,7 +457,7 @@ cc.Quad2 = function (tl1, tr1, bl1, br1) {
  * @param {cc.Vertex3F} tl1
  * @param {cc.Vertex3F} tr1
  */
-cc.Quad3 = function (bl1, br1, tl1, tr1) {
+cc.Quad3 = function(bl1, br1, tl1, tr1) {
     this.bl = bl1 || new cc.Vertex3F(0, 0, 0);
     this.br = br1 || new cc.Vertex3F(0, 0, 0);
     this.tl = tl1 || new cc.Vertex3F(0, 0, 0);
@@ -472,7 +472,7 @@ cc.Quad3 = function (bl1, br1, tl1, tr1) {
  * @param {Number} y1
  * @deprecated
  */
-cc.GridSize = function (x1, y1) {
+cc.GridSize = function(x1, y1) {
     this.x = x1;
     this.y = y1;
 };
@@ -485,7 +485,7 @@ cc.GridSize = function (x1, y1) {
  * @return {cc.GridSize}
  * @deprecated
  */
-cc.g = function (x, y) {
+cc.g = function(x, y) {
     return new cc.GridSize(x, y);
 };
 
@@ -497,7 +497,7 @@ cc.g = function (x, y) {
  * @param {cc.Color4B} colors1
  * @param {cc.Tex2F} texCoords1
  */
-cc.V2F_C4B_T2F = function (vertices1, colors1, texCoords1) {
+cc.V2F_C4B_T2F = function(vertices1, colors1, texCoords1) {
     this.vertices = vertices1 || new cc.Vertex2F(0, 0);
     this.colors = colors1 || new cc.Color4B(0, 0, 0, 0);
     this.texCoords = texCoords1 || new cc.Tex2F(0, 0);
@@ -511,7 +511,7 @@ cc.V2F_C4B_T2F = function (vertices1, colors1, texCoords1) {
  * @param {cc.Color4F} colors1
  * @param {cc.Tex2F} texCoords1
  */
-cc.V2F_C4F_T2F = function (vertices1, colors1, texCoords1) {
+cc.V2F_C4F_T2F = function(vertices1, colors1, texCoords1) {
     this.vertices = vertices1 || new cc.Vertex2F(0, 0);
     this.colors = colors1 || new cc.Color4F(0, 0, 0, 0);
     this.texCoords = texCoords1 || new cc.Tex2F(0, 0);
@@ -525,7 +525,7 @@ cc.V2F_C4F_T2F = function (vertices1, colors1, texCoords1) {
  * @param {cc.Color4B} colors1
  * @param {cc.Tex2F} texCoords1
  */
-cc.V3F_C4B_T2F = function (vertices1, colors1, texCoords1) {
+cc.V3F_C4B_T2F = function(vertices1, colors1, texCoords1) {
     this.vertices = vertices1 || new cc.Vertex3F(0, 0, 0);
     this.colors = colors1 || new cc.Color4B(0, 0, 0, 0);
     this.texCoords = texCoords1 || new cc.Tex2F(0, 0);
@@ -539,7 +539,7 @@ cc.V3F_C4B_T2F = function (vertices1, colors1, texCoords1) {
  * @param {cc.V2F_C4B_T2F} b
  * @param {cc.V2F_C4B_T2F} c
  */
-cc.V2F_C4B_T2F_Triangle = function (a, b, c) {
+cc.V2F_C4B_T2F_Triangle = function(a, b, c) {
     this.a = a || new cc.V2F_C4B_T2F();
     this.b = b || new cc.V2F_C4B_T2F();
     this.c = c || new cc.V2F_C4B_T2F();
@@ -554,7 +554,7 @@ cc.V2F_C4B_T2F_Triangle = function (a, b, c) {
  * @param {cc.V2F_C4B_T2F} tl1 top left
  * @param {cc.V2F_C4B_T2F} tr1 top right
  */
-cc.V2F_C4B_T2F_Quad = function (bl1, br1, tl1, tr1) {
+cc.V2F_C4B_T2F_Quad = function(bl1, br1, tl1, tr1) {
     this.bl = bl1 || new cc.V2F_C4B_T2F();
     this.br = br1 || new cc.V2F_C4B_T2F();
     this.tl = tl1 || new cc.V2F_C4B_T2F();
@@ -566,7 +566,7 @@ cc.V2F_C4B_T2F_Quad = function (bl1, br1, tl1, tr1) {
  * @function
  * @return {cc.V2F_C4B_T2F_Quad}
  */
-cc.V2F_C4B_T2F_QuadZero = function () {
+cc.V2F_C4B_T2F_QuadZero = function() {
     return new cc.V2F_C4B_T2F_Quad(
         new cc.V2F_C4B_T2F(new cc.Vertex2F(0, 0), new cc.Color4B(0, 0, 0, 255), new cc.Tex2F(0, 0)),
         new cc.V2F_C4B_T2F(new cc.Vertex2F(0, 0), new cc.Color4B(0, 0, 0, 255), new cc.Tex2F(0, 0)),
@@ -584,7 +584,7 @@ cc.V2F_C4B_T2F_QuadZero = function () {
  * @param {cc.V3F_C4B_T2F} tr1 top right
  * @param {cc.V3F_C4B_T2F} br1 bottom right
  */
-cc.V3F_C4B_T2F_Quad = function (tl1, bl1, tr1, br1) {
+cc.V3F_C4B_T2F_Quad = function(tl1, bl1, tr1, br1) {
     this.tl = tl1 || new cc.V3F_C4B_T2F();
     this.bl = bl1 || new cc.V3F_C4B_T2F();
     this.tr = tr1 || new cc.V3F_C4B_T2F();
@@ -596,7 +596,7 @@ cc.V3F_C4B_T2F_Quad = function (tl1, bl1, tr1, br1) {
  * @function
  * @return {cc.V3F_C4B_T2F_Quad}
  */
-cc.V3F_C4B_T2F_QuadZero = function () {
+cc.V3F_C4B_T2F_QuadZero = function() {
     return new cc.V3F_C4B_T2F_Quad(
         new cc.V3F_C4B_T2F(new cc.Vertex3F(0, 0, 0), new cc.Color4B(0, 0, 0, 255), new cc.Tex2F(0, 0)),
         new cc.V3F_C4B_T2F(new cc.Vertex3F(0, 0, 0), new cc.Color4B(0, 0, 0, 255), new cc.Tex2F(0, 0)),
@@ -604,9 +604,9 @@ cc.V3F_C4B_T2F_QuadZero = function () {
         new cc.V3F_C4B_T2F(new cc.Vertex3F(0, 0, 0), new cc.Color4B(0, 0, 0, 255), new cc.Tex2F(0, 0)));
 };
 
-cc.V3F_C4B_T2F_QuadCopy = function (sourceQuad) {
+cc.V3F_C4B_T2F_QuadCopy = function(sourceQuad) {
     if (!sourceQuad)
-        return  cc.V3F_C4B_T2F_QuadZero();
+        return cc.V3F_C4B_T2F_QuadZero();
     var tl = sourceQuad.tl, bl = sourceQuad.bl, tr = sourceQuad.tr, br = sourceQuad.br;
     return new cc.V3F_C4B_T2F_Quad(
         new cc.V3F_C4B_T2F(new cc.Vertex3F(sourceQuad.tl.vertices.x, sourceQuad.tl.vertices.y, sourceQuad.tl.vertices.z),
@@ -623,9 +623,9 @@ cc.V3F_C4B_T2F_QuadCopy = function (sourceQuad) {
             new cc.Tex2F(sourceQuad.br.texCoords.u, sourceQuad.br.texCoords.v)));
 };
 
-cc.V3F_C4B_T2F_QuadsCopy = function (sourceQuads) {
+cc.V3F_C4B_T2F_QuadsCopy = function(sourceQuads) {
     if (!sourceQuads)
-        return  [];
+        return [];
 
     var retArr = [];
     for (var i = 0; i < sourceQuads.length; i++) {
@@ -644,7 +644,7 @@ cc.V3F_C4B_T2F_QuadsCopy = function (sourceQuads) {
  * @param {cc.V2F_C4F_T2F} tr1 top right
  * Constructor
  */
-cc.V2F_C4F_T2F_Quad = function (bl1, br1, tl1, tr1) {
+cc.V2F_C4F_T2F_Quad = function(bl1, br1, tl1, tr1) {
     this.bl = bl1 || new cc.V2F_C4F_T2F();
     this.br = br1 || new cc.V2F_C4F_T2F();
     this.tl = tl1 || new cc.V2F_C4F_T2F();
@@ -658,12 +658,12 @@ cc.V2F_C4F_T2F_Quad = function (bl1, br1, tl1, tr1) {
  * @param {Number} src1 source blend function
  * @param {Number} dst1 destination blend function
  */
-cc.BlendFunc = function (src1, dst1) {
+cc.BlendFunc = function(src1, dst1) {
     this.src = src1;
     this.dst = dst1;
 };
 
-cc.BlendFuncDisable = function () {
+cc.BlendFuncDisable = function() {
     return new cc.BlendFunc(gl.ONE, gl.ZERO);
 };
 
@@ -675,7 +675,7 @@ cc.BlendFuncDisable = function () {
  * @param {cc.Tex2F} tr
  * @constructor
  */
-cc.T2F_Quad = function(bl, br, tl, tr){
+cc.T2F_Quad = function(bl, br, tl, tr) {
     this.bl = bl;
     this.br = br;
     this.tl = tl;
@@ -689,7 +689,7 @@ cc.T2F_Quad = function(bl, br, tl, tr){
  * @param size
  * @constructor
  */
-cc.AnimationFrameData = function(texCoords, delay, size){
+cc.AnimationFrameData = function(texCoords, delay, size) {
     this.texCoords = texCoords;
     this.delay = delay;
     this.size = size;
@@ -701,19 +701,19 @@ cc.AnimationFrameData = function(texCoords, delay, size){
  * @param clr
  * @return {String}
  */
-cc.convertColor3BtoHexString = function (clr) {
+cc.convertColor3BtoHexString = function(clr) {
     var hR = clr.r.toString(16);
     var hG = clr.g.toString(16);
     var hB = clr.b.toString(16);
-    var stClr = "#" + (clr.r < 16 ? ("0" + hR) : hR) + (clr.g < 16 ? ("0" + hG) : hG) + (clr.b < 16 ? ("0" + hB) : hB);
+    var stClr = '#' + (clr.r < 16 ? ('0' + hR) : hR) + (clr.g < 16 ? ('0' + hG) : hG) + (clr.b < 16 ? ('0' + hB) : hB);
     return stClr;
 };
 
-if(cc.Browser.supportWebGL){
+if (cc.Browser.supportWebGL) {
     //redefine some types with ArrayBuffer for WebGL
 
     //redefine cc.Color4B
-    cc.Color4B = function (r, g, b, a, arrayBuffer, offset) {
+    cc.Color4B = function(r, g, b, a, arrayBuffer, offset) {
         this._arrayBuffer = arrayBuffer || new ArrayBuffer(cc.Color4B.BYTES_PER_ELEMENT);
         this._offset = offset || 0;
 
@@ -731,37 +731,37 @@ if(cc.Browser.supportWebGL){
     cc.Color4B.BYTES_PER_ELEMENT = 4;
     Object.defineProperties(cc.Color4B.prototype, {
         r: {
-            get: function () {
+            get: function() {
                 return this._rU8[0];
             },
-            set: function (xValue) {
+            set: function(xValue) {
                 this._rU8[0] = xValue;
             },
             enumerable: true
         },
         g: {
-            get: function () {
+            get: function() {
                 return this._gU8[0];
             },
-            set: function (yValue) {
-                this._gU8[0]= yValue;
+            set: function(yValue) {
+                this._gU8[0] = yValue;
             },
             enumerable: true
         },
         b: {
-            get: function () {
+            get: function() {
                 return this._bU8[0];
             },
-            set: function (xValue) {
+            set: function(xValue) {
                 this._bU8[0] = xValue;
             },
             enumerable: true
         },
         a: {
-            get: function () {
+            get: function() {
                 return this._aU8[0];
             },
-            set: function (yValue) {
+            set: function(yValue) {
                 this._aU8[0] = yValue;
             },
             enumerable: true
@@ -769,7 +769,7 @@ if(cc.Browser.supportWebGL){
     });
 
     //redefine cc.Color4F
-    cc.Color4F = function (r, g, b, a, arrayBuffer, offset) {
+    cc.Color4F = function(r, g, b, a, arrayBuffer, offset) {
         this._arrayBuffer = arrayBuffer || new ArrayBuffer(cc.Color4F.BYTES_PER_ELEMENT);
         this._offset = offset || 0;
 
@@ -786,45 +786,45 @@ if(cc.Browser.supportWebGL){
     cc.Color4F.BYTES_PER_ELEMENT = 16;
     Object.defineProperties(cc.Color4F.prototype, {
         r: {
-            get: function () {
+            get: function() {
                 return this._rF32[0];
             },
-            set: function (rValue) {
-                this._rF32[0]  = rValue;
+            set: function(rValue) {
+                this._rF32[0] = rValue;
             },
             enumerable: true
         },
         g: {
-            get: function () {
+            get: function() {
                 return this._gF32[0];
             },
-            set: function (rValue) {
-                this._gF32[0]  = rValue;
+            set: function(rValue) {
+                this._gF32[0] = rValue;
             },
             enumerable: true
         },
         b: {
-            get: function () {
+            get: function() {
                 return this._bF32[0];
             },
-            set: function (rValue) {
-                this._bF32[0]  = rValue;
+            set: function(rValue) {
+                this._bF32[0] = rValue;
             },
             enumerable: true
         },
         a: {
-            get: function () {
+            get: function() {
                 return this._aF32[0];
             },
-            set: function (rValue) {
-                this._aF32[0]  = rValue;
+            set: function(rValue) {
+                this._aF32[0] = rValue;
             },
             enumerable: true
         }
     });
 
     //redefine cc.Vertex2F
-    cc.Vertex2F = function (x, y, arrayBuffer, offset) {
+    cc.Vertex2F = function(x, y, arrayBuffer, offset) {
         this._arrayBuffer = arrayBuffer || new ArrayBuffer(cc.Vertex2F.BYTES_PER_ELEMENT);
         this._offset = offset || 0;
 
@@ -836,19 +836,19 @@ if(cc.Browser.supportWebGL){
     cc.Vertex2F.BYTES_PER_ELEMENT = 8;
     Object.defineProperties(cc.Vertex2F.prototype, {
         x: {
-            get: function () {
+            get: function() {
                 return this._xF32[0];
             },
-            set: function (xValue) {
+            set: function(xValue) {
                 this._xF32[0] = xValue;
             },
             enumerable: true
         },
         y: {
-            get: function () {
+            get: function() {
                 return this._yF32[0];
             },
-            set: function (yValue) {
+            set: function(yValue) {
                 this._yF32[0] = yValue;
             },
             enumerable: true
@@ -856,7 +856,7 @@ if(cc.Browser.supportWebGL){
     });
 
     // redefine cc.Vertex3F
-    cc.Vertex3F = function (x, y, z, arrayBuffer, offset) {
+    cc.Vertex3F = function(x, y, z, arrayBuffer, offset) {
         this._arrayBuffer = arrayBuffer || new ArrayBuffer(cc.Vertex3F.BYTES_PER_ELEMENT);
         this._offset = offset || 0;
 
@@ -871,28 +871,28 @@ if(cc.Browser.supportWebGL){
     cc.Vertex3F.BYTES_PER_ELEMENT = 12;
     Object.defineProperties(cc.Vertex3F.prototype, {
         x: {
-            get: function () {
+            get: function() {
                 return this._xF32[0];
             },
-            set: function (xValue) {
+            set: function(xValue) {
                 this._xF32[0] = xValue;
             },
             enumerable: true
         },
         y: {
-            get: function () {
+            get: function() {
                 return this._yF32[0];
             },
-            set: function (yValue) {
+            set: function(yValue) {
                 this._yF32[0] = yValue;
             },
             enumerable: true
         },
         z: {
-            get: function () {
+            get: function() {
                 return this._zF32[0];
             },
-            set: function (zValue) {
+            set: function(zValue) {
                 this._zF32[0] = zValue;
             },
             enumerable: true
@@ -900,7 +900,7 @@ if(cc.Browser.supportWebGL){
     });
 
     // redefine cc.Tex2F
-    cc.Tex2F = function (u, v, arrayBuffer, offset) {
+    cc.Tex2F = function(u, v, arrayBuffer, offset) {
         this._arrayBuffer = arrayBuffer || new ArrayBuffer(cc.Tex2F.BYTES_PER_ELEMENT);
         this._offset = offset || 0;
 
@@ -912,19 +912,19 @@ if(cc.Browser.supportWebGL){
     cc.Tex2F.BYTES_PER_ELEMENT = 8;
     Object.defineProperties(cc.Tex2F.prototype, {
         u: {
-            get: function () {
+            get: function() {
                 return this._uF32[0];
             },
-            set: function (xValue) {
+            set: function(xValue) {
                 this._uF32[0] = xValue;
             },
             enumerable: true
         },
         v: {
-            get: function () {
+            get: function() {
                 return this._vF32[0];
             },
-            set: function (yValue) {
+            set: function(yValue) {
                 this._vF32[0] = yValue;
             },
             enumerable: true
@@ -932,7 +932,7 @@ if(cc.Browser.supportWebGL){
     });
 
     //redefine cc.Quad2
-    cc.Quad2 = function (tl, tr, bl, br, arrayBuffer, offset) {
+    cc.Quad2 = function(tl, tr, bl, br, arrayBuffer, offset) {
         this._arrayBuffer = arrayBuffer || new ArrayBuffer(cc.Quad2.BYTES_PER_ELEMENT);
         this._offset = offset || 0;
 
@@ -945,40 +945,40 @@ if(cc.Browser.supportWebGL){
     cc.Quad2.BYTES_PER_ELEMENT = 32;
     Object.defineProperties(cc.Quad2.prototype, {
         tl: {
-            get: function () {
+            get: function() {
                 return this._tl;
             },
-            set: function (tlValue) {
+            set: function(tlValue) {
                 this._tl.x = tlValue.x;
                 this._tl.y = tlValue.y;
             },
             enumerable: true
         },
         tr: {
-            get: function () {
+            get: function() {
                 return this._tr;
             },
-            set: function (trValue) {
+            set: function(trValue) {
                 this._tr.x = trValue.x;
                 this._tr.y = trValue.y;
             },
             enumerable: true
         },
         bl: {
-            get: function () {
+            get: function() {
                 return this._bl;
             },
-            set: function (blValue) {
+            set: function(blValue) {
                 this._bl.x = blValue.x;
                 this._bl.y = blValue.y;
             },
             enumerable: true
         },
         br: {
-            get: function () {
+            get: function() {
                 return this._br;
             },
-            set: function (brValue) {
+            set: function(brValue) {
                 this._br.x = brValue.x;
                 this._br.y = brValue.y;
             },
@@ -987,7 +987,7 @@ if(cc.Browser.supportWebGL){
     });
 
     //redefine cc.V3F_C4B_T2F
-    cc.V3F_C4B_T2F = function (vertices, colors, texCoords, arrayBuffer, offset) {
+    cc.V3F_C4B_T2F = function(vertices, colors, texCoords, arrayBuffer, offset) {
         this._arrayBuffer = arrayBuffer || new ArrayBuffer(cc.V3F_C4B_T2F.BYTES_PER_ELEMENT);
         this._offset = offset || 0;
 
@@ -1002,10 +1002,10 @@ if(cc.Browser.supportWebGL){
     cc.V3F_C4B_T2F.BYTES_PER_ELEMENT = 24;
     Object.defineProperties(cc.V3F_C4B_T2F.prototype, {
         vertices: {
-            get: function () {
+            get: function() {
                 return this._vertices;
             },
-            set: function (verticesValue) {
+            set: function(verticesValue) {
                 var locVertices = this._vertices;
                 locVertices.x = verticesValue.x;
                 locVertices.y = verticesValue.y;
@@ -1014,10 +1014,10 @@ if(cc.Browser.supportWebGL){
             enumerable: true
         },
         colors: {
-            get: function () {
+            get: function() {
                 return this._colors;
             },
-            set: function (colorValue) {
+            set: function(colorValue) {
                 var locColors = this._colors;
                 locColors.r = colorValue.r;
                 locColors.g = colorValue.g;
@@ -1027,10 +1027,10 @@ if(cc.Browser.supportWebGL){
             enumerable: true
         },
         texCoords: {
-            get: function () {
+            get: function() {
                 return this._texCoords;
             },
-            set: function (texValue) {
+            set: function(texValue) {
                 this._texCoords.u = texValue.u;
                 this._texCoords.v = texValue.v;
             },
@@ -1039,7 +1039,7 @@ if(cc.Browser.supportWebGL){
     });
 
     //redefine cc.V3F_C4B_T2F_Quad
-    cc.V3F_C4B_T2F_Quad = function (tl, bl, tr, br, arrayBuffer, offset) {
+    cc.V3F_C4B_T2F_Quad = function(tl, bl, tr, br, arrayBuffer, offset) {
         this._arrayBuffer = arrayBuffer || new ArrayBuffer(cc.V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT);
         this._offset = offset || 0;
 
@@ -1055,11 +1055,11 @@ if(cc.Browser.supportWebGL){
     };
     cc.V3F_C4B_T2F_Quad.BYTES_PER_ELEMENT = 96;
     Object.defineProperties(cc.V3F_C4B_T2F_Quad.prototype, {
-        tl:{
-            get: function () {
+        tl: {
+            get: function() {
                 return this._tl;
             },
-            set: function (tlValue) {
+            set: function(tlValue) {
                 var locTl = this._tl;
                 locTl.vertices = tlValue.vertices;
                 locTl.colors = tlValue.colors;
@@ -1067,11 +1067,11 @@ if(cc.Browser.supportWebGL){
             },
             enumerable: true
         },
-        bl:{
-            get: function () {
+        bl: {
+            get: function() {
                 return this._bl;
             },
-            set: function (blValue) {
+            set: function(blValue) {
                 var locBl = this._bl;
                 locBl.vertices = blValue.vertices;
                 locBl.colors = blValue.colors;
@@ -1079,11 +1079,11 @@ if(cc.Browser.supportWebGL){
             },
             enumerable: true
         },
-        tr:{
-            get: function () {
+        tr: {
+            get: function() {
                 return this._tr;
             },
-            set: function (trValue) {
+            set: function(trValue) {
                 var locTr = this._tr;
                 locTr.vertices = trValue.vertices;
                 locTr.colors = trValue.colors;
@@ -1091,11 +1091,11 @@ if(cc.Browser.supportWebGL){
             },
             enumerable: true
         },
-        br:{
-            get: function () {
+        br: {
+            get: function() {
                 return this._br;
             },
-            set: function (brValue) {
+            set: function(brValue) {
                 var locBr = this._br;
                 locBr.vertices = brValue.vertices;
                 locBr.colors = brValue.colors;
@@ -1103,20 +1103,20 @@ if(cc.Browser.supportWebGL){
             },
             enumerable: true
         },
-        arrayBuffer:{
-            get: function () {
+        arrayBuffer: {
+            get: function() {
                 return this._arrayBuffer;
             },
             enumerable: true
         }
     });
-    cc.V3F_C4B_T2F_QuadZero = function(){
+    cc.V3F_C4B_T2F_QuadZero = function() {
         return new cc.V3F_C4B_T2F_Quad();
     };
 
-    cc.V3F_C4B_T2F_QuadCopy = function (sourceQuad) {
+    cc.V3F_C4B_T2F_QuadCopy = function(sourceQuad) {
         if (!sourceQuad)
-            return  cc.V3F_C4B_T2F_QuadZero();
+            return cc.V3F_C4B_T2F_QuadZero();
 
         //return new cc.V3F_C4B_T2F_Quad(sourceQuad,tl,sourceQuad,bl,sourceQuad.tr,sourceQuad.br,null,0);
         var srcTL = sourceQuad.tl, srcBL = sourceQuad.bl, srcTR = sourceQuad.tr, srcBR = sourceQuad.br;
@@ -1137,7 +1137,7 @@ if(cc.Browser.supportWebGL){
     };
 
     //redefine cc.V2F_C4B_T2F
-    cc.V2F_C4B_T2F = function (vertices, colors, texCoords, arrayBuffer, offset) {
+    cc.V2F_C4B_T2F = function(vertices, colors, texCoords, arrayBuffer, offset) {
         this._arrayBuffer = arrayBuffer || new ArrayBuffer(cc.V2F_C4B_T2F.BYTES_PER_ELEMENT);
         this._offset = offset || 0;
 
@@ -1152,20 +1152,20 @@ if(cc.Browser.supportWebGL){
     cc.V2F_C4B_T2F.BYTES_PER_ELEMENT = 20;
     Object.defineProperties(cc.V2F_C4B_T2F.prototype, {
         vertices: {
-            get: function () {
+            get: function() {
                 return this._vertices;
             },
-            set: function (verticesValue) {
+            set: function(verticesValue) {
                 this._vertices.x = verticesValue.x;
                 this._vertices.y = verticesValue.y;
             },
             enumerable: true
         },
         colors: {
-            get: function () {
+            get: function() {
                 return this._colors;
             },
-            set: function (colorValue) {
+            set: function(colorValue) {
                 var locColors = this._colors;
                 locColors.r = colorValue.r;
                 locColors.g = colorValue.g;
@@ -1175,10 +1175,10 @@ if(cc.Browser.supportWebGL){
             enumerable: true
         },
         texCoords: {
-            get: function () {
+            get: function() {
                 return this._texCoords;
             },
-            set: function (texValue) {
+            set: function(texValue) {
                 this._texCoords.u = texValue.u;
                 this._texCoords.v = texValue.v;
             },
@@ -1187,7 +1187,7 @@ if(cc.Browser.supportWebGL){
     });
 
     //redefine cc.V2F_C4B_T2F_Triangle
-    cc.V2F_C4B_T2F_Triangle = function (a, b, c, arrayBuffer, offset) {
+    cc.V2F_C4B_T2F_Triangle = function(a, b, c, arrayBuffer, offset) {
         this._arrayBuffer = arrayBuffer || new ArrayBuffer(cc.V2F_C4B_T2F_Triangle.BYTES_PER_ELEMENT);
         this._offset = offset || 0;
 
@@ -1201,11 +1201,11 @@ if(cc.Browser.supportWebGL){
     };
     cc.V2F_C4B_T2F_Triangle.BYTES_PER_ELEMENT = 60;
     Object.defineProperties(cc.V2F_C4B_T2F_Triangle.prototype, {
-        a:{
-            get: function () {
+        a: {
+            get: function() {
                 return this._a;
             },
-            set: function (aValue) {
+            set: function(aValue) {
                 var locA = this._a;
                 locA.vertices = aValue.vertices;
                 locA.colors = aValue.colors;
@@ -1213,11 +1213,11 @@ if(cc.Browser.supportWebGL){
             },
             enumerable: true
         },
-        b:{
-            get: function () {
+        b: {
+            get: function() {
                 return this._b;
             },
-            set: function (bValue) {
+            set: function(bValue) {
                 var locB = this._b;
                 locB.vertices = bValue.vertices;
                 locB.colors = bValue.colors;
@@ -1225,11 +1225,11 @@ if(cc.Browser.supportWebGL){
             },
             enumerable: true
         },
-        c:{
-            get: function () {
+        c: {
+            get: function() {
                 return this._c;
             },
-            set: function (cValue) {
+            set: function(cValue) {
                 var locC = this._c;
                 locC.vertices = cValue.vertices;
                 locC.colors = cValue.colors;
@@ -1246,11 +1246,11 @@ if(cc.Browser.supportWebGL){
  * @param {String} clrSt
  * @return {cc.Color3B}
  */
-cc.convertHexNumToColor3B = function (clrSt) {
-    var nAr = clrSt.substr(1).split("");
-    var r = parseInt("0x" + nAr[0] + nAr[1]);
-    var g = parseInt("0x" + nAr[2] + nAr[3]);
-    var b = parseInt("0x" + nAr[4] + nAr[5]);
+cc.convertHexNumToColor3B = function(clrSt) {
+    var nAr = clrSt.substr(1).split('');
+    var r = parseInt('0x' + nAr[0] + nAr[1]);
+    var g = parseInt('0x' + nAr[2] + nAr[3]);
+    var b = parseInt('0x' + nAr[4] + nAr[5]);
     return new cc.Color3B(r, g, b);
 };
 
@@ -1302,18 +1302,18 @@ cc._Dictionary = cc.Class.extend({
     _valueMapTb: null,
     __currId: 0,
 
-    ctor: function () {
+    ctor: function() {
         this._keyMapTb = {};
         this._valueMapTb = {};
         this.__currId = 2 << (0 | (Math.random() * 10));
     },
 
-    __getKey: function () {
+    __getKey: function() {
         this.__currId++;
-        return "key_" + this.__currId;
+        return 'key_' + this.__currId;
     },
 
-    setObject: function (value, key) {
+    setObject: function(value, key) {
         if (key == null)
             return;
 
@@ -1322,7 +1322,7 @@ cc._Dictionary = cc.Class.extend({
         this._valueMapTb[keyId] = value;
     },
 
-    objectForKey: function (key) {
+    objectForKey: function(key) {
         if (key == null)
             return null;
 
@@ -1334,11 +1334,11 @@ cc._Dictionary = cc.Class.extend({
         return null;
     },
 
-    valueForKey: function (key) {
+    valueForKey: function(key) {
         return this.objectForKey(key);
     },
 
-    removeObjectForKey: function (key) {
+    removeObjectForKey: function(key) {
         if (key == null)
             return;
 
@@ -1352,7 +1352,7 @@ cc._Dictionary = cc.Class.extend({
         }
     },
 
-    removeObjectsForKeys: function (keys) {
+    removeObjectsForKeys: function(keys) {
         if (keys == null)
             return;
 
@@ -1360,14 +1360,14 @@ cc._Dictionary = cc.Class.extend({
             this.removeObjectForKey(keys[i]);
     },
 
-    allKeys: function () {
+    allKeys: function() {
         var keyArr = [], locKeyMapTb = this._keyMapTb;
         for (var key in locKeyMapTb)
             keyArr.push(locKeyMapTb[key]);
         return keyArr;
     },
 
-    removeAllObjects: function () {
+    removeAllObjects: function() {
         this._keyMapTb = {};
         this._valueMapTb = {};
     },
@@ -1377,20 +1377,20 @@ cc._Dictionary = cc.Class.extend({
     }
 });
 
-cc.FontDefinition = function(){
-    this.fontName = "Arial";
+cc.FontDefinition = function() {
+    this.fontName = 'Arial';
     this.fontSize = 12;
     this.fontAlignmentH = cc.TEXT_ALIGNMENT_CENTER;
     this.fontAlignmentV = cc.VERTICAL_TEXT_ALIGNMENT_TOP;
     this.fontFillColor = cc.white();
-    this.fontDimensions = cc.size(0,0);
+    this.fontDimensions = cc.size(0, 0);
 
     this.strokeEnabled = false;
     this.strokeColor = cc.white();
     this.strokeSize = 1;
 
     this.shadowEnabled = false;
-    this.shadowOffset = cc.size(0,0);
+    this.shadowOffset = cc.size(0, 0);
     this.shadowBlur = 0;
     this.shadowOpacity = 1.0;
 };

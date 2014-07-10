@@ -30,32 +30,32 @@
  * @extends cc.ActionInterval
  */
 cc.ActionCamera = cc.ActionInterval.extend(/** @lends cc.ActionCamera# */{
-    _centerXOrig:0,
-    _centerYOrig:0,
-    _centerZOrig:0,
-    _eyeXOrig:0,
-    _eyeYOrig:0,
-    _eyeZOrig:0,
-    _upXOrig:0,
-    _upYOrig:0,
-    _upZOrig:0,
+    _centerXOrig: 0,
+    _centerYOrig: 0,
+    _centerZOrig: 0,
+    _eyeXOrig: 0,
+    _eyeYOrig: 0,
+    _eyeZOrig: 0,
+    _upXOrig: 0,
+    _upYOrig: 0,
+    _upZOrig: 0,
 
-    ctor:function(){
+    ctor: function() {
         cc.ActionInterval.prototype.ctor.call(this);
 
-        this._centerXOrig=0;
-        this._centerYOrig=0;
-        this._centerZOrig=0;
-        this._eyeXOrig=0;
-        this._eyeYOrig=0;
-        this._eyeZOrig=0;
-        this._upXOrig=0;
-        this._upYOrig=0;
-        this._upZOrig=0;
+        this._centerXOrig = 0;
+        this._centerYOrig = 0;
+        this._centerZOrig = 0;
+        this._eyeXOrig = 0;
+        this._eyeYOrig = 0;
+        this._eyeZOrig = 0;
+        this._upXOrig = 0;
+        this._upYOrig = 0;
+        this._upZOrig = 0;
     },
 
 
-    startWithTarget:function (target) {
+    startWithTarget: function(target) {
         cc.ActionInterval.prototype.startWithTarget.call(this, target);
 
         var camera = target.getCamera();
@@ -77,13 +77,13 @@ cc.ActionCamera = cc.ActionInterval.extend(/** @lends cc.ActionCamera# */{
 
     /**
      * returns a new clone of the action
-     * @returns {cc.ActionCamera}
+     * @return {cc.ActionCamera}
      */
-    clone:function(){
+    clone: function() {
        return new cc.ActionCamera();
     },
 
-    reverse:function () {
+    reverse: function() {
         return cc.ReverseTime.create(this);
     }
 });
@@ -94,30 +94,30 @@ cc.ActionCamera = cc.ActionInterval.extend(/** @lends cc.ActionCamera# */{
  * @extends cc.ActionCamera
  */
 cc.OrbitCamera = cc.ActionCamera.extend(/** @lends cc.OrbitCamera# */{
-    _radius:0.0,
-    _deltaRadius:0.0,
-    _angleZ:0.0,
-    _deltaAngleZ:0.0,
-    _angleX:0.0,
-    _deltaAngleX:0.0,
-    _radZ:0.0,
-    _radDeltaZ:0.0,
-    _radX:0.0,
-    _radDeltaX:0.0,
+    _radius: 0.0,
+    _deltaRadius: 0.0,
+    _angleZ: 0.0,
+    _deltaAngleZ: 0.0,
+    _angleX: 0.0,
+    _deltaAngleX: 0.0,
+    _radZ: 0.0,
+    _radDeltaZ: 0.0,
+    _radX: 0.0,
+    _radDeltaX: 0.0,
 
-    ctor:function(){
+    ctor: function() {
         cc.ActionCamera.prototype.ctor.call(this);
 
-        this._radius=0.0;
-        this._deltaRadius=0.0;
-        this._angleZ=0.0;
-        this._deltaAngleZ=0.0;
-        this._angleX=0.0;
-        this._deltaAngleX=0.0;
-        this._radZ=0.0;
-        this._radDeltaZ=0.0;
-        this._radX=0.0;
-        this._radDeltaX=0.0;
+        this._radius = 0.0;
+        this._deltaRadius = 0.0;
+        this._angleZ = 0.0;
+        this._deltaAngleZ = 0.0;
+        this._angleX = 0.0;
+        this._deltaAngleX = 0.0;
+        this._radZ = 0.0;
+        this._radDeltaZ = 0.0;
+        this._radX = 0.0;
+        this._radDeltaX = 0.0;
     },
 
     /**
@@ -131,7 +131,7 @@ cc.OrbitCamera = cc.ActionCamera.extend(/** @lends cc.OrbitCamera# */{
      * @param {Number} deltaAngleX
      * @return {Boolean}
      */
-    initWithDuration:function (t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX) {
+    initWithDuration: function(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX) {
         if (cc.ActionInterval.prototype.initWithDuration.call(this, t)) {
             this._radius = radius;
             this._deltaRadius = deltaRadius;
@@ -151,7 +151,7 @@ cc.OrbitCamera = cc.ActionCamera.extend(/** @lends cc.OrbitCamera# */{
      * positions the camera according to spherical coordinates
      * @return {Object}
      */
-    sphericalRadius:function () {
+    sphericalRadius: function() {
         var newRadius, zenith, azimuth;
         var camera = this._target.getCamera();
         var eyeXYZ = camera.getEye();
@@ -174,10 +174,10 @@ cc.OrbitCamera = cc.ActionCamera.extend(/** @lends cc.OrbitCamera# */{
         else
             azimuth = Math.asin(y / s);
         newRadius = r / cc.Camera.getZEye();
-        return {newRadius:newRadius, zenith:zenith, azimuth:azimuth};
+        return {newRadius: newRadius, zenith: zenith, azimuth: azimuth};
     },
 
-    startWithTarget:function (target) {
+    startWithTarget: function(target) {
         cc.ActionInterval.prototype.startWithTarget.call(this, target);
         var retValue = this.sphericalRadius();
         if (isNaN(this._radius))
@@ -193,13 +193,13 @@ cc.OrbitCamera = cc.ActionCamera.extend(/** @lends cc.OrbitCamera# */{
         this._radX = cc.DEGREES_TO_RADIANS(this._angleX);
     },
 
-    clone:function(){
+    clone: function() {
         var a = new cc.OrbitCamera();
         a.initWithDuration(this._duration, this._radius, this._deltaRadius, this._angleZ, this._deltaAngleZ, this._angleX, this._deltaAngleX);
         return a;
     },
 
-    update:function (dt) {
+    update: function(dt) {
         var r = (this._radius + this._deltaRadius * dt) * cc.Camera.getZEye();
         var za = this._radZ + this._radDeltaZ * dt;
         var xa = this._radX + this._radDeltaX * dt;
@@ -223,7 +223,7 @@ cc.OrbitCamera = cc.ActionCamera.extend(/** @lends cc.OrbitCamera# */{
  * @param {Number} deltaAngleX
  * @return {cc.OrbitCamera}
  */
-cc.OrbitCamera.create = function (t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX) {
+cc.OrbitCamera.create = function(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX) {
     var ret = new cc.OrbitCamera();
     if (ret.initWithDuration(t, radius, deltaRadius, angleZ, deltaAngleZ, angleX, deltaAngleX))
         return ret;

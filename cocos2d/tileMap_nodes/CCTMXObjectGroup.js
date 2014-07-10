@@ -31,17 +31,17 @@
  */
 cc.TMXObjectGroup = cc.Class.extend(/** @lends cc.TMXObjectGroup# */{
     //name of the group
-    _groupName:null,
-    _positionOffset:null,
-    _properties:null,
-    _objects:null,
+    _groupName: null,
+    _positionOffset: null,
+    _properties: null,
+    _objects: null,
 
     /**
      *  Constructor
      */
-    ctor:function () {
-        this._groupName = "";
-        this._positionOffset = cc._pConst(0,0);
+    ctor: function() {
+        this._groupName = '';
+        this._positionOffset = cc._pConst(0, 0);
         this._properties = [];
         this._objects = [];
     },
@@ -50,14 +50,14 @@ cc.TMXObjectGroup = cc.Class.extend(/** @lends cc.TMXObjectGroup# */{
      * Offset position of child objects
      * @return {cc.Point}
      */
-    getPositionOffset:function () {
+    getPositionOffset: function() {
         return this._positionOffset;
     },
 
     /**
      * @param {cc.Point} Var
      */
-    setPositionOffset:function (Var) {
+    setPositionOffset: function(Var) {
         this._positionOffset._x = Var.x;
         this._positionOffset._y = Var.y;
     },
@@ -66,28 +66,28 @@ cc.TMXObjectGroup = cc.Class.extend(/** @lends cc.TMXObjectGroup# */{
      * List of properties stored in a dictionary
      * @return {Array}
      */
-    getProperties:function () {
+    getProperties: function() {
         return this._properties;
     },
 
     /**
      * @param {object} Var
      */
-    setProperties:function (Var) {
+    setProperties: function(Var) {
         this._properties.push(Var);
     },
 
     /**
      * @return {String}
      */
-    getGroupName:function () {
+    getGroupName: function() {
         return this._groupName.toString();
     },
 
     /**
      * @param {String} groupName
      */
-    setGroupName:function (groupName) {
+    setGroupName: function(groupName) {
         this._groupName = groupName;
     },
 
@@ -96,7 +96,7 @@ cc.TMXObjectGroup = cc.Class.extend(/** @lends cc.TMXObjectGroup# */{
      * @param {String} propertyName
      * @return {object}
      */
-    propertyNamed:function (propertyName) {
+    propertyNamed: function(propertyName) {
         return this._properties[propertyName];
     },
 
@@ -106,11 +106,11 @@ cc.TMXObjectGroup = cc.Class.extend(/** @lends cc.TMXObjectGroup# */{
      * @param {String} objectName
      * @return {object|Null}
      */
-    objectNamed:function (objectName) {
+    objectNamed: function(objectName) {
         if (this._objects && this._objects.length > 0) {
             var locObjects = this._objects;
             for (var i = 0, len = locObjects.length; i < len; i++) {
-                var name = locObjects[i]["name"];
+                var name = locObjects[i]['name'];
                 if (name && name == objectName)
                     return locObjects[i];
             }
@@ -122,14 +122,14 @@ cc.TMXObjectGroup = cc.Class.extend(/** @lends cc.TMXObjectGroup# */{
     /**
      * @return {Array}
      */
-    getObjects:function () {
+    getObjects: function() {
         return this._objects;
     },
 
     /**
      * @param {object} objects
      */
-    setObjects:function (objects) {
+    setObjects: function(objects) {
         this._objects.push(objects);
     }
 });

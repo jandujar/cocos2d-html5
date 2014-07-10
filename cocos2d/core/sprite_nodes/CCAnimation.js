@@ -36,25 +36,25 @@
  * @extends cc.Class
  */
 cc.AnimationFrame = cc.Class.extend(/** @lends cc.AnimationFrame# */{
-    _spriteFrame:null,
-    _delayPerUnit:0,
-    _userInfo:null,
+    _spriteFrame: null,
+    _delayPerUnit: 0,
+    _userInfo: null,
 
-    ctor:function () {
+    ctor: function() {
         this._delayPerUnit = 0;
     },
 
-    clone: function(){
+    clone: function() {
         var frame = new cc.AnimationFrame();
         frame.initWithSpriteFrame(this._spriteFrame.clone(), this._delayPerUnit, this._userInfo);
         return frame;
     },
 
-    copyWithZone:function (pZone) {
+    copyWithZone: function(pZone) {
         return cc.clone(this);
     },
 
-    copy:function (pZone) {
+    copy: function(pZone) {
         var newFrame = new cc.AnimationFrame();
         newFrame.initWithSpriteFrame(this._spriteFrame.clone(), this._delayPerUnit, this._userInfo);
         return newFrame;
@@ -66,7 +66,7 @@ cc.AnimationFrame = cc.Class.extend(/** @lends cc.AnimationFrame# */{
      * @param {Number} delayUnits
      * @param {object} userInfo
      */
-    initWithSpriteFrame:function (spriteFrame, delayUnits, userInfo) {
+    initWithSpriteFrame: function(spriteFrame, delayUnits, userInfo) {
         this._spriteFrame = spriteFrame;
         this._delayPerUnit = delayUnits;
         this._userInfo = userInfo;
@@ -78,7 +78,7 @@ cc.AnimationFrame = cc.Class.extend(/** @lends cc.AnimationFrame# */{
      * cc.SpriteFrameName to be used
      * @return {cc.SpriteFrame}
      */
-    getSpriteFrame:function () {
+    getSpriteFrame: function() {
         return this._spriteFrame;
     },
 
@@ -86,7 +86,7 @@ cc.AnimationFrame = cc.Class.extend(/** @lends cc.AnimationFrame# */{
      * cc.SpriteFrameName to be used
      * @param {cc.SpriteFrame} spriteFrame
      */
-    setSpriteFrame:function (spriteFrame) {
+    setSpriteFrame: function(spriteFrame) {
         this._spriteFrame = spriteFrame;
     },
 
@@ -94,7 +94,7 @@ cc.AnimationFrame = cc.Class.extend(/** @lends cc.AnimationFrame# */{
      * how many units of time the frame takes getter
      * @return {Number}
      */
-    getDelayUnits:function () {
+    getDelayUnits: function() {
         return this._delayPerUnit;
     },
 
@@ -102,7 +102,7 @@ cc.AnimationFrame = cc.Class.extend(/** @lends cc.AnimationFrame# */{
      *  how many units of time the frame takes setter
      * @param delayUnits
      */
-    setDelayUnits:function (delayUnits) {
+    setDelayUnits: function(delayUnits) {
         this._delayPerUnit = delayUnits;
     },
 
@@ -111,14 +111,14 @@ cc.AnimationFrame = cc.Class.extend(/** @lends cc.AnimationFrame# */{
      *  If UserInfo is nil, then no notification will be broadcasted. </p>
      * @return {object}
      */
-    getUserInfo:function () {
+    getUserInfo: function() {
         return this._userInfo;
     },
 
     /**
      * @param {object} userInfo
      */
-    setUserInfo:function (userInfo) {
+    setUserInfo: function(userInfo) {
         this._userInfo = userInfo;
     }
 });
@@ -147,17 +147,17 @@ cc.AnimationFrame = cc.Class.extend(/** @lends cc.AnimationFrame# */{
  * this._grossini.runAction(action);
  */
 cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
-    _frames:null,
-    _loops:0,
-    _restoreOriginalFrame:false,
-    _duration:0,
-    _delayPerUnit:0,
-    _totalDelayUnits:0,
+    _frames: null,
+    _loops: 0,
+    _restoreOriginalFrame: false,
+    _duration: 0,
+    _delayPerUnit: 0,
+    _totalDelayUnits: 0,
 
     /**
      * Constructor
      */
-    ctor:function () {
+    ctor: function() {
         this._frames = [];
     },
 
@@ -167,7 +167,7 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
      * return array of CCAnimationFrames
      * @return {Array}
      */
-    getFrames:function () {
+    getFrames: function() {
         return this._frames;
     },
 
@@ -175,7 +175,7 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
      * array of CCAnimationFrames setter
      * @param {Array} frames
      */
-    setFrames:function (frames) {
+    setFrames: function(frames) {
         this._frames = frames;
     },
 
@@ -183,7 +183,7 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
      * adds a frame to a cc.Animation  The frame will be added with one "delay unit".
      * @param {cc.SpriteFrame} frame
      */
-    addSpriteFrame:function (frame) {
+    addSpriteFrame: function(frame) {
         var animFrame = new cc.AnimationFrame();
 
         animFrame.initWithSpriteFrame(frame, 1, null);
@@ -196,7 +196,7 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
      * Adds a frame with an image filename. Internally it will create a cc.SpriteFrame and it will add it. The frame will be added with one "delay unit".
      * @param {String} fileName
      */
-    addSpriteFrameWithFile:function (fileName) {
+    addSpriteFrameWithFile: function(fileName) {
         var texture = cc.TextureCache.getInstance().addImage(fileName);
         var rect = cc.RectZero();
         rect._size = texture.getContentSize();
@@ -209,7 +209,7 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
      * @param {cc.Texture2D} texture
      * @param {cc.Rect} rect
      */
-    addSpriteFrameWithTexture:function (texture, rect) {
+    addSpriteFrameWithTexture: function(texture, rect) {
         var pFrame = cc.SpriteFrame.createWithTexture(texture, rect);
         this.addSpriteFrame(pFrame);
     },
@@ -220,7 +220,7 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
      * @param {Number} delayPerUnit
      * @param {Number} loops
      */
-    initWithAnimationFrames:function (arrayOfAnimationFrames, delayPerUnit, loops) {
+    initWithAnimationFrames: function(arrayOfAnimationFrames, delayPerUnit, loops) {
         cc.ArrayVerifyType(arrayOfAnimationFrames, cc.AnimationFrame);
 
         this._delayPerUnit = delayPerUnit;
@@ -236,7 +236,7 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
         return true;
     },
 
-    clone: function(){
+    clone: function() {
         var animation = new cc.Animation();
         animation.initWithAnimationFrames(this._copyFrames(), this._delayPerUnit, this._loops);
         animation.setRestoreOriginalFrame(this._restoreOriginalFrame);
@@ -246,21 +246,21 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
     /**
      * @param {cc.Animation} pZone
      */
-    copyWithZone:function (pZone) {
+    copyWithZone: function(pZone) {
         var pCopy = new cc.Animation();
         pCopy.initWithAnimationFrames(this._copyFrames(), this._delayPerUnit, this._loops);
         pCopy.setRestoreOriginalFrame(this._restoreOriginalFrame);
         return pCopy;
     },
 
-    _copyFrames:function(){
+    _copyFrames: function() {
        var copyFrames = [];
-        for(var i = 0; i< this._frames.length;i++)
+        for (var i = 0; i < this._frames.length; i++)
             copyFrames.push(this._frames[i].clone());
         return copyFrames;
     },
 
-    copy:function (pZone) {
+    copy: function(pZone) {
         return this.copyWithZone(null);
     },
 
@@ -268,7 +268,7 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
      * return how many times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ...
      * @return {Number}
      */
-    getLoops:function () {
+    getLoops: function() {
         return this._loops;
     },
 
@@ -276,7 +276,7 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
      * set how many times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ...
      * @param {Number} value
      */
-    setLoops:function (value) {
+    setLoops: function(value) {
         this._loops = value;
     },
 
@@ -284,7 +284,7 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
      * whether or not it shall restore the original frame when the animation finishes
      * @param {Boolean} restOrigFrame
      */
-    setRestoreOriginalFrame:function (restOrigFrame) {
+    setRestoreOriginalFrame: function(restOrigFrame) {
         this._restoreOriginalFrame = restOrigFrame;
     },
 
@@ -292,7 +292,7 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
      * return whether or not it shall restore the original frame when the animation finishes
      * @return {Boolean}
      */
-    getRestoreOriginalFrame:function () {
+    getRestoreOriginalFrame: function() {
         return this._restoreOriginalFrame;
     },
 
@@ -300,7 +300,7 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
      * return duration in seconds of the whole animation. It is the result of totalDelayUnits * delayPerUnit
      * @return {Number}
      */
-    getDuration:function () {
+    getDuration: function() {
         return this._totalDelayUnits * this._delayPerUnit;
     },
 
@@ -308,7 +308,7 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
      * return Delay in seconds of the "delay unit"
      * @return {Number}
      */
-    getDelayPerUnit:function () {
+    getDelayPerUnit: function() {
         return this._delayPerUnit;
     },
 
@@ -316,7 +316,7 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
      * set Delay in seconds of the "delay unit"
      * @param {Number} delayPerUnit
      */
-    setDelayPerUnit:function (delayPerUnit) {
+    setDelayPerUnit: function(delayPerUnit) {
         this._delayPerUnit = delayPerUnit;
     },
 
@@ -324,7 +324,7 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
      * return total Delay units of the cc.Animation.
      * @return {Number}
      */
-    getTotalDelayUnits:function () {
+    getTotalDelayUnits: function() {
         return this._totalDelayUnits;
     },
 
@@ -333,7 +333,7 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
      * @param {Array} frames
      * @param {Number} delay
      */
-    initWithSpriteFrames:function (frames, delay) {
+    initWithSpriteFrames: function(frames, delay) {
         cc.ArrayVerifyType(frames, cc.SpriteFrame);
         this._loops = 1;
         delay = delay || 0;
@@ -357,9 +357,9 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
      * and the ugly workaround is to use retain/release. So, these 2 methods were added to be compatible with JSB.
      * This is a hack, and should be removed once JSB fixes the retain/release bug
      */
-    retain:function () {
+    retain: function() {
     },
-    release:function () {
+    release: function() {
     }
 });
 
@@ -382,7 +382,7 @@ cc.Animation = cc.Class.extend(/** @lends cc.Animation# */{
  * //Create an animation with sprite frames and delay
  * var animation3 = cc.Animation.create(animFrames, 0.2);
  */
-cc.Animation.create = function (frames, delay, loops) {
+cc.Animation.create = function(frames, delay, loops) {
     var len = arguments.length;
     var animation = new cc.Animation();
     if (len == 0) {
@@ -404,7 +404,7 @@ cc.Animation.create = function (frames, delay, loops) {
  * @param {Number} loops
  * @return {cc.Animation}
  */
-cc.Animation.createWithAnimationFrames = function (arrayOfAnimationFrameNames, delayPerUnit, loops) {
+cc.Animation.createWithAnimationFrames = function(arrayOfAnimationFrameNames, delayPerUnit, loops) {
     var animation = new cc.Animation();
     animation.initWithAnimationFrames(arrayOfAnimationFrameNames, delayPerUnit, loops);
     return animation;

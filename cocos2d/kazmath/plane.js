@@ -36,7 +36,7 @@ cc.KM_PLANE_NEAR = 4;
 
 cc.KM_PLANE_FAR = 5;
 
-cc.kmPlane = function (a, b, c, d) {
+cc.kmPlane = function(a, b, c, d) {
     this.a = a || 0;
     this.b = b || 0;
     this.c = c || 0;
@@ -49,7 +49,7 @@ cc.POINT_BEHIND_PLANE = 1;
 
 cc.POINT_ON_PLANE = 2;
 
-cc.kmPlaneDot = function(pP, pV){
+cc.kmPlaneDot = function(pP, pV) {
     //a*x + b*y + c*z + d*w
     return (pP.a * pV.x +
         pP.b * pV.y +
@@ -57,19 +57,19 @@ cc.kmPlaneDot = function(pP, pV){
         pP.d * pV.w);
 };
 
-cc.kmPlaneDotCoord = function(pP, pV){
+cc.kmPlaneDotCoord = function(pP, pV) {
     return (pP.a * pV.x +
         pP.b * pV.y +
         pP.c * pV.z + pP.d);
 };
 
-cc.kmPlaneDotNormal = function(pP, pV){
+cc.kmPlaneDotNormal = function(pP, pV) {
     return (pP.a * pV.x +
         pP.b * pV.y +
         pP.c * pV.z);
 };
 
-cc.kmPlaneFromPointNormal = function(pOut, pPoint, pNormal){
+cc.kmPlaneFromPointNormal = function(pOut, pPoint, pNormal) {
     /*
      Planea = Nx
      Planeb = Ny
@@ -88,7 +88,7 @@ cc.kmPlaneFromPointNormal = function(pOut, pPoint, pNormal){
  * Creates a plane from 3 points. The result is stored in pOut.
  * pOut is returned.
  */
-cc.kmPlaneFromPoints = function(pOut, p1, p2, p3){
+cc.kmPlaneFromPoints = function(pOut, p1, p2, p3) {
     /*
      v = (B − A) × (C − A)
      n = 1⁄|v| v
@@ -113,7 +113,7 @@ cc.kmPlaneFromPoints = function(pOut, p1, p2, p3){
     return pOut;
 };
 
-cc.kmPlaneIntersectLine = function(pOut, pP, pV1, pV2){
+cc.kmPlaneIntersectLine = function(pOut, pP, pV1, pV2) {
     throw "cc.kmPlaneIntersectLine() hasn't been implemented.";
     /*
      n = (Planea, Planeb, Planec)
@@ -136,7 +136,7 @@ cc.kmPlaneIntersectLine = function(pOut, pP, pV1, pV2){
     //return null;
 };
 
-cc.kmPlaneNormalize = function(pOut, pP){
+cc.kmPlaneNormalize = function(pOut, pP) {
     var n = new cc.kmVec3();
 
     n.x = pP.a;
@@ -155,23 +155,23 @@ cc.kmPlaneNormalize = function(pOut, pP){
     return pOut;
 };
 
-cc.kmPlaneScale = function(pOut, pP, s){
-    cc.log("cc.kmPlaneScale() has not been implemented.");
+cc.kmPlaneScale = function(pOut, pP, s) {
+    cc.log('cc.kmPlaneScale() has not been implemented.');
 };
 
 /**
  * Returns POINT_INFRONT_OF_PLANE if pP is infront of pIn. Returns
  * POINT_BEHIND_PLANE if it is behind. Returns POINT_ON_PLANE otherwise
  */
-cc.kmPlaneClassifyPoint = function(pIn, pP){
+cc.kmPlaneClassifyPoint = function(pIn, pP) {
     // This function will determine if a point is on, in front of, or behind
     // the plane.  First we store the dot product of the plane and the point.
     var distance = pIn.a * pP.x + pIn.b * pP.y + pIn.c * pP.z + pIn.d;
 
     // Simply put if the dot product is greater than 0 then it is infront of it.
     // If it is less than 0 then it is behind it.  And if it is 0 then it is on it.
-    if(distance > 0.001) return cc.POINT_INFRONT_OF_PLANE;
-    if(distance < -0.001) return cc.POINT_BEHIND_PLANE;
+    if (distance > 0.001) return cc.POINT_INFRONT_OF_PLANE;
+    if (distance < -0.001) return cc.POINT_BEHIND_PLANE;
 
     return cc.POINT_ON_PLANE;
 };

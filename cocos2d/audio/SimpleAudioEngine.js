@@ -32,15 +32,15 @@ var cc = cc || {};
  * @extends   cc.Class
  */
 cc.AudioEngine = cc.Class.extend(/** @lends cc.AudioEngine# */{
-    _audioID:0,
-    _audioIDList:null,
-    _supportedFormat:null,
-    _soundSupported:false,                                        // if sound is not enabled, this engine's init() will return false
-    _effectsVolume:1,                                              // the volume applied to all effects
-    _playingMusic:null,                                           // the music being played, when null, no music is being played; when not null, it may be playing or paused
-    _resPath : "",          //root path for resources
+    _audioID: 0,
+    _audioIDList: null,
+    _supportedFormat: null,
+    _soundSupported: false,                                        // if sound is not enabled, this engine's init() will return false
+    _effectsVolume: 1,                                              // the volume applied to all effects
+    _playingMusic: null,                                           // the music being played, when null, no music is being played; when not null, it may be playing or paused
+    _resPath: '',          //root path for resources
 
-    ctor:function(){
+    ctor: function() {
         this._audioIDList = {};
         this._supportedFormat = [];
     },
@@ -49,9 +49,9 @@ cc.AudioEngine = cc.Class.extend(/** @lends cc.AudioEngine# */{
      * Set root path for music resources.
      * @param resPath
      */
-    setResPath : function(resPath){
-        if(!resPath || resPath.length == 0) return;
-        this._resPath = resPath.substring(resPath.length - 1) == "/" ? resPath : resPath + "/";
+    setResPath: function(resPath) {
+        if (!resPath || resPath.length == 0) return;
+        this._resPath = resPath.substring(resPath.length - 1) == '/' ? resPath : resPath + '/';
     },
     /**
      * Check each type to see if it can be played by current browser
@@ -64,17 +64,17 @@ cc.AudioEngine = cc.Class.extend(/** @lends cc.AudioEngine# */{
             // <audio> tag is supported, go on
             var _check = function(typeStr) {
                 var result = au.canPlayType(typeStr);
-                return result != "no" && result != "";
+                return result != 'no' && result != '';
             };
 
-            capabilities["mp3"] = _check("audio/mpeg");
-            capabilities["mp4"] = _check("audio/mp4");
-            capabilities["m4a"] = _check("audio/x-m4a") || _check("audio/aac");
-            capabilities["ogg"] = _check('audio/ogg; codecs="vorbis"');
-            capabilities["wav"] = _check('audio/wav; codecs="1"');
+            capabilities['mp3'] = _check('audio/mpeg');
+            capabilities['mp4'] = _check('audio/mp4');
+            capabilities['m4a'] = _check('audio/x-m4a') || _check('audio/aac');
+            capabilities['ogg'] = _check('audio/ogg; codecs="vorbis"');
+            capabilities['wav'] = _check('audio/wav; codecs="1"');
         } else {
             // <audio> tag is not supported, nothing is supported
-            var formats = ["mp3", "mp4", "m4a", "ogg", "wav"];
+            var formats = ['mp3', 'mp4', 'm4a', 'ogg', 'wav'];
             for (var idx in formats) {
                 capabilities[formats[idx]] = false;
             }
@@ -84,14 +84,14 @@ cc.AudioEngine = cc.Class.extend(/** @lends cc.AudioEngine# */{
     /**
      * Helper function for cutting out the extension from the path
      * @param {String} fullpath
-     * @return {String|null} path without ext name
+     * @return {?String} path without ext name
      * @protected
      */
-    _getPathWithoutExt: function (fullpath) {
-        if (typeof(fullpath) != "string") {
+    _getPathWithoutExt: function(fullpath) {
+        if (typeof(fullpath) != 'string') {
             return null;
         }
-        var endPos = fullpath.lastIndexOf(".");
+        var endPos = fullpath.lastIndexOf('.');
         if (endPos !== -1)
             return fullpath.substring(0, endPos);
         return fullpath;
@@ -102,8 +102,8 @@ cc.AudioEngine = cc.Class.extend(/** @lends cc.AudioEngine# */{
      * @param {String} fullpath
      * @protected
      */
-    _getExtFromFullPath: function (fullpath) {
-        var startPos = fullpath.lastIndexOf(".");
+    _getExtFromFullPath: function(fullpath) {
+        var startPos = fullpath.lastIndexOf('.');
         if (startPos !== -1) {
             return fullpath.substring(startPos + 1, fullpath.length);
         }
@@ -112,7 +112,7 @@ cc.AudioEngine = cc.Class.extend(/** @lends cc.AudioEngine# */{
 
     /**
      * Indicates whether any background music can be played or not.
-     * @returns {boolean} <i>true</i> if the background music is playing, otherwise <i>false</i>
+     * @return {boolean} <i>true</i> if the background music is playing, otherwise <i>false</i>
      */
     willPlayMusic: function() {
         return false;
@@ -122,7 +122,7 @@ cc.AudioEngine = cc.Class.extend(/** @lends cc.AudioEngine# */{
      * Preload music resource.
      * @param {String} path
      */
-    preloadMusic:function(path){
+    preloadMusic: function(path) {
         this.preloadSound(path);
     },
 
@@ -130,16 +130,16 @@ cc.AudioEngine = cc.Class.extend(/** @lends cc.AudioEngine# */{
      * Preload effect resource.
      * @param {String} path
      */
-    preloadEffect:function(path){
+    preloadEffect: function(path) {
         this.preloadSound(path);
     },
 
     /**
      * search in this._supportedFormat if ext is there
      * @param {String} ext
-     * @returns {Boolean}
+     * @return {Boolean}
      */
-    isFormatSupported: function (ext) {
+    isFormatSupported: function(ext) {
         var locSupportedFormat = this._supportedFormat;
         for (var i = 0, len = locSupportedFormat.length; i < len; i++) {
             if (locSupportedFormat[i] == ext)
@@ -164,9 +164,9 @@ cc.AudioEngine = cc.Class.extend(/** @lends cc.AudioEngine# */{
  * the entity stored in soundList and effectList, containing the audio element and the extension name.
  * used in cc.SimpleAudioEngine
  */
-cc.SimpleSFX = function (audio, ext) {
+cc.SimpleSFX = function(audio, ext) {
     this.audio = audio;
-    this.ext = ext || ".ogg";
+    this.ext = ext || '.ogg';
 };
 
 /**
@@ -175,23 +175,23 @@ cc.SimpleSFX = function (audio, ext) {
  * @extends   cc.AudioEngine
  */
 cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */{
-    _effectList:null,
-    _soundList:null,
-    _maxAudioInstance:10,
-    _canPlay:true,
-    _musicListenerBound:null,
+    _effectList: null,
+    _soundList: null,
+    _maxAudioInstance: 10,
+    _canPlay: true,
+    _musicListenerBound: null,
     _musicIsStopped: false,
 
     /**
      * Constructor
      */
-    ctor:function () {
+    ctor: function() {
         cc.AudioEngine.prototype.ctor.call(this);
         this._effectList = {};
         this._soundList = {};
         this._musicListenerBound = this._musicListener.bind(this);
         var ua = navigator.userAgent;
-        if(/Mobile/.test(ua) && (/iPhone OS/.test(ua)||/iPad/.test(ua)||/Firefox/.test(ua)) || /MSIE/.test(ua)){
+        if (/Mobile/.test(ua) && (/iPhone OS/.test(ua) || /iPad/.test(ua) || /Firefox/.test(ua)) || /MSIE/.test(ua)) {
             this._canPlay = false;
         }
     },
@@ -200,12 +200,12 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * Initialize sound type
      * @return {Boolean}
      */
-    init:function () {
+    init: function() {
         // gather capabilities information, enable sound if any of the audio format is supported
         var capabilities = {};
         this._checkCanPlay(capabilities);
 
-        var formats = ["ogg", "mp3", "wav", "mp4", "m4a"], locSupportedFormat = this._supportedFormat;
+        var formats = ['ogg', 'mp3', 'wav', 'mp4', 'm4a'], locSupportedFormat = this._supportedFormat;
         for (var idx in formats) {
             var name = formats[idx];
             if (capabilities[name])
@@ -220,29 +220,29 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * This method is called when cc.Loader preload  resources.
      * @param {String} path The path of the music file with filename extension.
      */
-    preloadSound:function (path) {
+    preloadSound: function(path) {
         if (this._soundSupported) {
             var realPath = this._resPath + path;
             var extName = this._getExtFromFullPath(path);
             var keyname = this._getPathWithoutExt(path);
             if (this.isFormatSupported(extName) && !this._soundList.hasOwnProperty(keyname)) {
-                if(this._canPlay){
+                if (this._canPlay) {
                     var sfxCache = new cc.SimpleSFX();
                     sfxCache.ext = extName;
                     sfxCache.audio = new Audio(realPath);
                     sfxCache.audio.preload = 'auto';
-                    var soundPreloadCanplayHandler = function () {
+                    var soundPreloadCanplayHandler = function() {
                         cc.Loader.getInstance().onResLoaded();
                         this.removeEventListener('canplaythrough', soundPreloadCanplayHandler, false);
                         this.removeEventListener('error', soundPreloadErrorHandler, false);
                     };
-                    var soundPreloadErrorHandler = function (e) {
+                    var soundPreloadErrorHandler = function(e) {
                         cc.Loader.getInstance().onResLoadingErr(e.srcElement.src);
                         this.removeEventListener('canplaythrough', soundPreloadCanplayHandler, false);
                         this.removeEventListener('error', soundPreloadErrorHandler, false);
                     };
                     sfxCache.audio.addEventListener('canplaythrough', soundPreloadCanplayHandler, false);
-                    sfxCache.audio.addEventListener("error", soundPreloadErrorHandler, false);
+                    sfxCache.audio.addEventListener('error', soundPreloadErrorHandler, false);
 
                     this._soundList[keyname] = sfxCache;
                     sfxCache.audio.load();
@@ -261,7 +261,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * //example
      * cc.AudioEngine.getInstance().playMusic(path, false);
      */
-    playMusic:function (path, loop) {
+    playMusic: function(path, loop) {
         if (!this._soundSupported)
             return;
 
@@ -285,14 +285,14 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
             sfxCache.audio.load();
         }
 
-        au.addEventListener("pause", this._musicListenerBound , false);
+        au.addEventListener('pause', this._musicListenerBound, false);
         au.loop = loop || false;
         au.play();
         cc.AudioEngine.isMusicPlaying = true;
         this._musicIsStopped = false;
     },
 
-    _musicListener:function(e){
+    _musicListener: function(e) {
         cc.AudioEngine.isMusicPlaying = false;
         if (this._soundList.hasOwnProperty(this._playingMusic)) {
             var au = this._soundList[this._playingMusic].audio;
@@ -307,7 +307,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * //example
      * cc.AudioEngine.getInstance().stopMusic();
      */
-    stopMusic:function (releaseData) {
+    stopMusic: function(releaseData) {
         var locSoundList = this._soundList, locPlayingMusic = this._playingMusic;
         if (locSoundList.hasOwnProperty(locPlayingMusic)) {
             var au = locSoundList[locPlayingMusic].audio;
@@ -326,7 +326,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * //example
      * cc.AudioEngine.getInstance().pauseMusic();
      */
-    pauseMusic:function () {
+    pauseMusic: function() {
         if (!this._musicIsStopped && this._soundList.hasOwnProperty(this._playingMusic)) {
             var au = this._soundList[this._playingMusic].audio;
             au.pause();
@@ -340,11 +340,11 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * //example
      * cc.AudioEngine.getInstance().resumeMusic();
      */
-    resumeMusic:function () {
+    resumeMusic: function() {
         if (!this._musicIsStopped && this._soundList.hasOwnProperty(this._playingMusic)) {
             var au = this._soundList[this._playingMusic].audio;
             au.play();
-            au.addEventListener("pause", this._musicListenerBound , false);
+            au.addEventListener('pause', this._musicListenerBound, false);
             cc.AudioEngine.isMusicPlaying = true;
         }
     },
@@ -355,12 +355,12 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * //example
      * cc.AudioEngine.getInstance().rewindMusic();
      */
-    rewindMusic:function () {
+    rewindMusic: function() {
         if (this._soundList.hasOwnProperty(this._playingMusic)) {
             var au = this._soundList[this._playingMusic].audio;
             au.currentTime = 0;
             au.play();
-            au.addEventListener("pause", this._musicListenerBound , false);
+            au.addEventListener('pause', this._musicListenerBound, false);
             cc.AudioEngine.isMusicPlaying = true;
             this._musicIsStopped = false;
         }
@@ -373,7 +373,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * //example
      * var volume = cc.AudioEngine.getInstance().getMusicVolume();
      */
-    getMusicVolume:function () {
+    getMusicVolume: function() {
         if (this._soundList.hasOwnProperty(this._playingMusic)) {
             return this._soundList[this._playingMusic].audio.volume;
         }
@@ -387,7 +387,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * //example
      * cc.AudioEngine.getInstance().setMusicVolume(0.5);
      */
-    setMusicVolume:function (volume) {
+    setMusicVolume: function(volume) {
         if (this._soundList.hasOwnProperty(this._playingMusic)) {
             var music = this._soundList[this._playingMusic].audio;
             if (volume > 1) {
@@ -412,7 +412,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      *      cc.log("music is not playing");
      *  }
      */
-    isMusicPlaying: function () {
+    isMusicPlaying: function() {
         return cc.AudioEngine.isMusicPlaying;
     },
 
@@ -420,12 +420,12 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * Play sound effect.
      * @param {String} path The path of the sound effect with filename extension.
      * @param {Boolean} loop Whether to loop the effect playing, default value is false
-     * @return {Number|null} the audio id
+     * @return {?Number} the audio id
      * @example
      * //example
      * var soundId = cc.AudioEngine.getInstance().playEffect(path);
      */
-    playEffect: function (path, loop) {
+    playEffect: function(path, loop) {
         if (!this._soundSupported)
             return null;
 
@@ -452,10 +452,10 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
 
         if (!au) {
             if (reclaim.length >= this._maxAudioInstance) {
-                cc.log("Error: " + path + " greater than " + this._maxAudioInstance);
+                cc.log('Error: ' + path + ' greater than ' + this._maxAudioInstance);
                 return null;
             }
-            au = new Audio(keyname + "." + actExt);
+            au = new Audio(keyname + '.' + actExt);
             au.volume = this._effectsVolume;
             reclaim.push(au);
         }
@@ -475,7 +475,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * //example
      * cc.AudioEngine.getInstance().setEffectsVolume(0.5);
      */
-    setEffectsVolume:function (volume) {
+    setEffectsVolume: function(volume) {
         if (volume > 1)
             this._effectsVolume = 1;
         else if (volume < 0)
@@ -502,7 +502,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * //example
      * cc.AudioEngine.getInstance().pauseEffect(audioID);
      */
-    pauseEffect:function (audioID) {
+    pauseEffect: function(audioID) {
         if (audioID == null) return;
 
         if (this._audioIDList.hasOwnProperty(audioID)) {
@@ -519,7 +519,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * //example
      * cc.AudioEngine.getInstance().pauseAllEffects();
      */
-    pauseAllEffects:function () {
+    pauseAllEffects: function() {
         var tmpArr, au;
         var locEffectList = this._effectList;
         for (var i in locEffectList) {
@@ -539,7 +539,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * //example
      * cc.AudioEngine.getInstance().resumeEffect(audioID);
      */
-    resumeEffect:function (audioID) {
+    resumeEffect: function(audioID) {
         if (audioID == null) return;
 
         if (this._audioIDList.hasOwnProperty(audioID)) {
@@ -555,7 +555,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * //example
      * cc.AudioEngine.getInstance().resumeAllEffects();
      */
-    resumeAllEffects:function () {
+    resumeAllEffects: function() {
         var tmpArr, au;
         var locEffectList = this._effectList;
         for (var i in locEffectList) {
@@ -577,7 +577,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * //example
      * cc.AudioEngine.getInstance().stopEffect(audioID);
      */
-    stopEffect:function (audioID) {
+    stopEffect: function(audioID) {
         if (audioID == null) return;
 
         if (this._audioIDList.hasOwnProperty(audioID)) {
@@ -595,7 +595,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * //example
      * cc.AudioEngine.getInstance().stopAllEffects();
      */
-    stopAllEffects:function () {
+    stopAllEffects: function() {
         var tmpArr, au, locEffectList = this._effectList;
         for (var i in locEffectList) {
             tmpArr = locEffectList[i];
@@ -616,7 +616,7 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
      * //example
      * cc.AudioEngine.getInstance().unloadEffect(EFFECT_FILE);
      */
-    unloadEffect:function (path) {
+    unloadEffect: function(path) {
         if (!path) return;
         var keyname = this._getPathWithoutExt(path);
         if (this._effectList.hasOwnProperty(keyname)) {
@@ -626,15 +626,15 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
         var au, pathName, locAudioIDList = this._audioIDList;
         for (var k in locAudioIDList) {
             au = locAudioIDList[k];
-            pathName  = this._getPathWithoutExt(au.src);
-            if(pathName.indexOf(keyname) > -1){
+            pathName = this._getPathWithoutExt(au.src);
+            if (pathName.indexOf(keyname) > -1) {
                 this.stopEffect(k);
                 delete locAudioIDList[k];
             }
         }
     },
 
-    _getEffectList:function (elt) {
+    _getEffectList: function(elt) {
         var locEffectList = this._effectList;
         if (locEffectList.hasOwnProperty(elt)) {
             return locEffectList[elt];
@@ -645,23 +645,23 @@ cc.SimpleAudioEngine = cc.AudioEngine.extend(/** @lends cc.SimpleAudioEngine# */
     }
 });
 
-cc.PlayingTask = function(id, audio,isLoop, status){
+cc.PlayingTask = function(id, audio, isLoop, status) {
     this.id = id;
     this.audio = audio;
     this.isLoop = isLoop || false;
     this.status = status || cc.PlayingTaskStatus.stop;
 };
 
-cc.PlayingTaskStatus = {playing:1, pause:2, stop:3, waiting:4};
+cc.PlayingTaskStatus = {playing: 1, pause: 2, stop: 3, waiting: 4};
 
 cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
     _playingList: null,
-    _currentTask:null,
+    _currentTask: null,
     _isPauseForList: false,
     _checkFlag: true,
     _audioEndedCallbackBound: null,
 
-    ctor:function(){
+    ctor: function() {
         cc.SimpleAudioEngine.prototype.ctor.call(this);
 
         this._playingList = [];
@@ -671,7 +671,7 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
         this._audioEndedCallbackBound = this._audioEndCallback.bind(this);
     },
 
-    _stopAllEffectsForList: function(){
+    _stopAllEffectsForList: function() {
         var tmpArr, au, locEffectList = this._effectList;
         for (var i in locEffectList) {
             tmpArr = locEffectList[i];
@@ -696,7 +696,7 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
      * //example
      * cc.AudioEngine.getInstance().playMusic(path, false);
      */
-    playMusic:function (path, loop) {
+    playMusic: function(path, loop) {
         if (!this._soundSupported)
             return;
 
@@ -707,9 +707,9 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
         var au;
 
         var locSoundList = this._soundList;
-        if (locSoundList.hasOwnProperty(this._playingMusic)){
+        if (locSoundList.hasOwnProperty(this._playingMusic)) {
             var currMusic = locSoundList[this._playingMusic];
-            currMusic.audio.removeEventListener("pause",this._musicListenerBound , false)
+            currMusic.audio.removeEventListener('pause', this._musicListenerBound, false);
             currMusic.audio.pause();
         }
 
@@ -725,30 +725,30 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
             sfxCache.audio.load();
         }
 
-        au.addEventListener("pause", this._musicListenerBound , false);
+        au.addEventListener('pause', this._musicListenerBound, false);
         au.loop = loop || false;
         au.play();
         cc.AudioEngine.isMusicPlaying = true;
         this._musicIsStopped = false;
     },
 
-    _musicListener:function(){
+    _musicListener: function() {
         cc.AudioEngine.isMusicPlaying = false;
         if (this._soundList.hasOwnProperty(this._playingMusic)) {
             var au = this._soundList[this._playingMusic].audio;
             au.removeEventListener('pause', arguments.callee, false);
         }
-        if(this._checkFlag)
+        if (this._checkFlag)
             this._isPauseForList = false;
         else
             this._checkFlag = true;
     },
 
-    _stopExpiredTask:function(expendTime){
+    _stopExpiredTask: function(expendTime) {
         var locPlayingList = this._playingList, locAudioIDList = this._audioIDList;
-        for(var i = 0; i < locPlayingList.length; ){
+        for (var i = 0; i < locPlayingList.length; ) {
             var selTask = locPlayingList[i];
-            if ((selTask.status === cc.PlayingTaskStatus.waiting)){
+            if ((selTask.status === cc.PlayingTaskStatus.waiting)) {
                 if (selTask.audio.currentTime + expendTime >= selTask.audio.duration) {
                     locPlayingList.splice(i, 1);
                     if (locAudioIDList.hasOwnProperty(selTask.id)) {
@@ -767,7 +767,7 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
         }
     },
 
-    _audioEndCallback: function () {
+    _audioEndCallback: function() {
         var locCurrentTask = this._currentTask;
         var expendTime = locCurrentTask.audio.currentTime;
         this._stopExpiredTask(expendTime);
@@ -794,78 +794,78 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
         }
     },
 
-    _pushingPlayingTask: function(playingTask){
-        if(!playingTask)
-            throw "cc.SimpleAudioEngineForMobile._pushingPlayingTask(): playingTask should be non-null.";
+    _pushingPlayingTask: function(playingTask) {
+        if (!playingTask)
+            throw 'cc.SimpleAudioEngineForMobile._pushingPlayingTask(): playingTask should be non-null.';
 
         var locPlayingTaskList = this._playingList;
-        if(!this._currentTask){
-            if(this.isMusicPlaying()){
+        if (!this._currentTask) {
+            if (this.isMusicPlaying()) {
                 this._checkFlag = false;
                 this.pauseMusic();
                 this._isPauseForList = true;
             }
-        }else{
+        }else {
             this._currentTask.status = cc.PlayingTaskStatus.waiting;
             this._currentTask.audio.pause();
         }
         locPlayingTaskList.push(playingTask);
         this._currentTask = playingTask;
-        this._playingAudioTask(playingTask)
+        this._playingAudioTask(playingTask);
     },
 
-    _playingAudioTask: function(playTask){
-        playTask.audio.addEventListener("ended", this._audioEndedCallbackBound, false);
+    _playingAudioTask: function(playTask) {
+        playTask.audio.addEventListener('ended', this._audioEndedCallbackBound, false);
         playTask.audio.play();
         playTask.status = cc.PlayingTaskStatus.playing;
     },
 
-    _getPlayingTaskFromList:function(audioID){
+    _getPlayingTaskFromList: function(audioID) {
         var locPlayList = this._playingList;
-        for(var i = 0, len = locPlayList.length;i< len;i++){
-            if(locPlayList[i].id === audioID)
+        for (var i = 0, len = locPlayList.length; i < len; i++) {
+            if (locPlayList[i].id === audioID)
                 return locPlayList[i];
         }
         return null;
     },
 
-    _getNextTaskToPlay: function(){
+    _getNextTaskToPlay: function() {
         var locPlayingList = this._playingList;
-        for(var i = locPlayingList.length -1; i >= 0; i--){
+        for (var i = locPlayingList.length - 1; i >= 0; i--) {
             var selTask = locPlayingList[i];
-            if(selTask.status === cc.PlayingTaskStatus.waiting)
+            if (selTask.status === cc.PlayingTaskStatus.waiting)
                 return selTask;
         }
         return null;
     },
 
-    _playingNextTask:function(){
+    _playingNextTask: function() {
         var locCurrentTask = this._currentTask = this._getNextTaskToPlay();
-        if(locCurrentTask){
+        if (locCurrentTask) {
             locCurrentTask.status = cc.PlayingTaskStatus.playing;
             locCurrentTask.audio.play();
         } else {
-            if(this._isPauseForList){
+            if (this._isPauseForList) {
                 this._isPauseForList = false;
                 this.resumeMusic();
             }
         }
     },
 
-    _deletePlayingTaskFromList: function(audioID){
+    _deletePlayingTaskFromList: function(audioID) {
         var locPlayList = this._playingList;
-        for(var i = 0, len = locPlayList.length;i< len;i++){
+        for (var i = 0, len = locPlayList.length; i < len; i++) {
             var selTask = locPlayList[i];
-            if(selTask.id === audioID){
-                locPlayList.splice(i,1);
-                if(selTask == this._currentTask)
+            if (selTask.id === audioID) {
+                locPlayList.splice(i, 1);
+                if (selTask == this._currentTask)
                     this._playingNextTask();
                 return;
             }
         }
     },
 
-    _pausePlayingTaskFromList: function (audioID) {
+    _pausePlayingTaskFromList: function(audioID) {
         var locPlayList = this._playingList;
         for (var i = 0, len = locPlayList.length; i < len; i++) {
             var selTask = locPlayList[i];
@@ -878,17 +878,17 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
         }
     },
 
-    _resumePlayingTaskFromList: function(audioID){
+    _resumePlayingTaskFromList: function(audioID) {
         var locPlayList = this._playingList;
         for (var i = 0, len = locPlayList.length; i < len; i++) {
             var selTask = locPlayList[i];
             if (selTask.id === audioID) {
                 selTask.status = cc.PlayingTaskStatus.waiting;
-                if(!this._currentTask){
+                if (!this._currentTask) {
                     var locCurrentTask = this._getNextTaskToPlay();
-                    if(locCurrentTask){
+                    if (locCurrentTask) {
                         //pause music
-                        if(this.isMusicPlaying()){
+                        if (this.isMusicPlaying()) {
                             this._checkFlag = false;
                             this.pauseMusic();
                             this._isPauseForList = true;
@@ -906,12 +906,12 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
      * Play sound effect.
      * @param {String} path The path of the sound effect with filename extension.
      * @param {Boolean} loop Whether to loop the effect playing, default value is false
-     * @return {Number|null} the audio id
+     * @return {?Number} the audio id
      * @example
      * //example
      * var soundId = cc.AudioEngine.getInstance().playEffect(path);
      */
-    playEffect: function (path, loop) {
+    playEffect: function(path, loop) {
         if (!this._soundSupported)
             return null;
 
@@ -937,10 +937,10 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
 
         if (!au) {
             if (reclaim.length >= this._maxAudioInstance) {
-                cc.log("Error: " + path + " greater than " + this._maxAudioInstance);
+                cc.log('Error: ' + path + ' greater than ' + this._maxAudioInstance);
                 return null;
             }
-            au = new Audio(keyname + "." + actExt);
+            au = new Audio(keyname + '.' + actExt);
             au.volume = this._effectsVolume;
             reclaim.push(au);
         }
@@ -958,7 +958,7 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
      * //example
      * cc.AudioEngine.getInstance().pauseEffect(audioID);
      */
-    pauseEffect:function (audioID) {
+    pauseEffect: function(audioID) {
         if (audioID == null) return;
 
         var strID = audioID.toString();
@@ -975,7 +975,7 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
      * //example
      * cc.AudioEngine.getInstance().pauseAllEffects();
      */
-    pauseAllEffects:function () {
+    pauseAllEffects: function() {
         var tmpArr, au;
         var locEffectList = this._effectList;
         for (var selKey in locEffectList) {
@@ -987,11 +987,11 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
         }
 
         var locPlayTask = this._playingList;
-        for(var i = 0, len = locPlayTask.length; i < len; i++)
+        for (var i = 0, len = locPlayTask.length; i < len; i++)
             locPlayTask[i].status = cc.PlayingTaskStatus.pause;
         this._currentTask = null;
 
-        if(this._isPauseForList){
+        if (this._isPauseForList) {
             this._isPauseForList = false;
             this.resumeMusic();
         }
@@ -1004,7 +1004,7 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
      * //example
      * cc.AudioEngine.getInstance().resumeEffect(audioID);
      */
-    resumeEffect:function (audioID) {
+    resumeEffect: function(audioID) {
         if (audioID == null) return;
 
         if (this._audioIDList.hasOwnProperty(audioID)) {
@@ -1021,7 +1021,7 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
      * //example
      * cc.AudioEngine.getInstance().resumeAllEffects();
      */
-    resumeAllEffects:function () {
+    resumeAllEffects: function() {
         var tmpArr, au;
         var locEffectList = this._effectList;
         for (var selKey in locEffectList) {
@@ -1035,16 +1035,16 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
         }
 
         var locPlayingList = this._playingList;
-        for(var i = 0, len = locPlayingList.length; i < len; i++){
+        for (var i = 0, len = locPlayingList.length; i < len; i++) {
              var selTask = locPlayingList[i];
-            if(selTask.status === cc.PlayingTaskStatus.pause)
+            if (selTask.status === cc.PlayingTaskStatus.pause)
                 selTask.status = cc.PlayingTaskStatus.waiting;
         }
-        if(this._currentTask == null){
+        if (this._currentTask == null) {
             var locCurrentTask = this._getNextTaskToPlay();
-            if(locCurrentTask){
+            if (locCurrentTask) {
                 //pause music
-                if(this.isMusicPlaying()){
+                if (this.isMusicPlaying()) {
                     this._checkFlag = false;
                     this.pauseMusic();
                     this._isPauseForList = true;
@@ -1062,7 +1062,7 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
      * //example
      * cc.AudioEngine.getInstance().stopEffect(audioID);
      */
-    stopEffect:function (audioID) {
+    stopEffect: function(audioID) {
         if (audioID == null) return;
 
         if (this._audioIDList.hasOwnProperty(audioID)) {
@@ -1082,7 +1082,7 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
      * //example
      * cc.AudioEngine.getInstance().stopAllEffects();
      */
-    stopAllEffects:function () {
+    stopAllEffects: function() {
         var tmpArr, au, locEffectList = this._effectList;
         for (var i in locEffectList) {
             tmpArr = locEffectList[i];
@@ -1099,7 +1099,7 @@ cc.SimpleAudioEngineForMobile = cc.SimpleAudioEngine.extend({
         this._playingList = [];
         this._currentTask = null;
 
-        if(this._isPauseForList){
+        if (this._isPauseForList) {
             this._isPauseForList = false;
             this.resumeMusic();
         }
@@ -1186,7 +1186,7 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
         var capabilities = {};
         this._checkCanPlay(capabilities);
 
-        var formats = ["ogg", "mp3", "wav", "mp4", "m4a"], locSupportedFormat = this._supportedFormat;
+        var formats = ['ogg', 'mp3', 'wav', 'mp4', 'm4a'], locSupportedFormat = this._supportedFormat;
         for (var idx in formats) {
             var name = formats[idx];
             if (capabilities[name])
@@ -1272,7 +1272,7 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
         sfxCache.sourceNode = this._ctx.createBufferSource();
         sfxCache.sourceNode.buffer = this._audioData[key];
         sfxCache.sourceNode.loop = loop;
-        if(locCtx.createGain)
+        if (locCtx.createGain)
             sfxCache.volumeNode = this._ctx.createGain();
         else
             sfxCache.volumeNode = this._ctx.createGainNode();
@@ -1328,7 +1328,7 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
      * However, the older specification doesn't include this property, such as this one: http://www.w3.org/2011/audio/drafts/2WD/Overview.html
      * </p>
      * @param {Object} sfxCache Assuming not null
-     * @returns {Boolean} Whether sfxCache is playing or not
+     * @return {Boolean} Whether sfxCache is playing or not
      * @private
      */
     _isSoundPlaying: function(sfxCache) {
@@ -1338,7 +1338,7 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
     /**
      * To distinguish 3 kinds of status for each sound (PLAYING, PAUSED, FINISHED), _isSoundPlaying() is not enough
      * @param {Object} sfxCache Assuming not null
-     * @returns {Boolean}
+     * @return {Boolean}
      * @private
      */
     _isSoundPaused: function(sfxCache) {
@@ -1358,7 +1358,7 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
      *      cc.log("music is not playing");
      *  }
      */
-    isMusicPlaying: function () {
+    isMusicPlaying: function() {
         /*
          * cc.AudioEngine.isMusicPlaying property is not going to be used here in cc.WebAudioEngine
          * that is only used in cc.SimpleAudioEngine
@@ -1376,7 +1376,7 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
      * //example
      * cc.AudioEngine.getInstance().playMusic(path, false);
      */
-    playMusic: function (path, loop) {
+    playMusic: function(path, loop) {
         var keyName = this._getPathWithoutExt(path);
         var extName = this._getExtFromFullPath(path);
         loop = loop || false;
@@ -1474,7 +1474,7 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
      * Used in resumeMusic() & resumeEffect() & resumeAllEffects()
      * @param {Object} paused The paused WebAudioSFX, assuming not null
      * @param {Number} volume Can be getMusicVolume() or getEffectsVolume()
-     * @returns {Object} A new WebAudioSFX object representing the resumed sound
+     * @return {Object} A new WebAudioSFX object representing the resumed sound
      * @private
      */
     _resumeSound: function(paused, volume) {
@@ -1567,7 +1567,7 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
      * Play sound effect.
      * @param {String} path The path of the sound effect with filename extension.
      * @param {Boolean} loop Whether to loop the effect playing, default value is false
-     * @return {Number|null}
+     * @return {?Number}
      * @example
      * //example
      * cc.AudioEngine.getInstance().playEffect(path);
@@ -1682,7 +1682,7 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
         if (audioID == null)
             return;
 
-        if (this._audioIDList.hasOwnProperty(audioID)){
+        if (this._audioIDList.hasOwnProperty(audioID)) {
             var sfxCache = this._audioIDList[audioID];
             if (sfxCache && this._isSoundPlaying(sfxCache))
                 this._pauseSound(sfxCache);
@@ -1728,21 +1728,21 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
         if (audioID == null)
             return;
 
-        if (this._audioIDList.hasOwnProperty(audioID)){
+        if (this._audioIDList.hasOwnProperty(audioID)) {
             var sfxCache = this._audioIDList[audioID];
-            if (sfxCache && this._isSoundPaused(sfxCache)){
+            if (sfxCache && this._isSoundPaused(sfxCache)) {
                 this._audioIDList[audioID] = this._resumeSound(sfxCache, this.getEffectsVolume());
                 this._updateEffectsList(sfxCache, this._audioIDList[audioID]);
             }
         }
     },
 
-    _updateEffectsList:function(oldSFX, newSFX){
+    _updateEffectsList: function(oldSFX, newSFX) {
         var locEffects = this._effects, locEffectList;
-        for(var eKey in locEffects){
+        for (var eKey in locEffects) {
             locEffectList = locEffects[eKey];
-            for(var i = 0; i< locEffectList.length; i++){
-                if(locEffectList[i] == oldSFX)
+            for (var i = 0; i < locEffectList.length; i++) {
+                if (locEffectList[i] == oldSFX)
                     locEffectList[i] = newSFX;
             }
         }
@@ -1810,12 +1810,12 @@ cc.WebAudioEngine = cc.AudioEngine.extend(/** @lends cc.WebAudioEngine# */{
             return;
 
         var keyName = this._getPathWithoutExt(path);
-        if (this._effects.hasOwnProperty(keyName)){
+        if (this._effects.hasOwnProperty(keyName)) {
             var locEffect = this._effects[keyName];
             delete this._effects[keyName];
             var locAudioIDList = this._audioIDList;
-            for(var auID in locAudioIDList){
-                if(locEffect.indexOf(locAudioIDList[auID]) > -1){
+            for (var auID in locAudioIDList) {
+                if (locEffect.indexOf(locAudioIDList[auID]) > -1) {
                     this.stopEffect(auID);
                     delete locAudioIDList[auID];
                 }
@@ -1835,13 +1835,13 @@ cc.AudioEngine.isMusicPlaying = false;
  * Get the shared Engine object, it will new one when first time be called.
  * @return {cc.AudioEngine}
  */
-cc.AudioEngine.getInstance = function () {
+cc.AudioEngine.getInstance = function() {
     if (!this._instance) {
         var ua = navigator.userAgent;
-        if (cc.Browser.supportWebAudio && !(/iPhone OS/.test(ua)||/iPad/.test(ua))) {
+        if (cc.Browser.supportWebAudio && !(/iPhone OS/.test(ua) || /iPad/.test(ua))) {
             this._instance = new cc.WebAudioEngine();
         } else {
-            if(cc.Browser.isMobile)                                                        // TODO construct a supported list for mobile browser
+            if (cc.Browser.isMobile)                                                        // TODO construct a supported list for mobile browser
                 this._instance = new cc.SimpleAudioEngineForMobile();
             else
                 this._instance = new cc.SimpleAudioEngine();
@@ -1857,7 +1857,7 @@ cc.AudioEngine.getInstance = function () {
  * //example
  * cc.AudioEngine.end();
  */
-cc.AudioEngine.end = function () {
+cc.AudioEngine.end = function() {
     if (this._instance) {
         this._instance.stopMusic();
         this._instance.stopAllEffects();

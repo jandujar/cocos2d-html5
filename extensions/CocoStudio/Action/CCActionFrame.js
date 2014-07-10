@@ -46,7 +46,7 @@ ccs.ActionFrame = ccs.Class.extend(/** @lends ccs.ActionFrame# */{
     _easingType: 0,
     _frameIndex: 0,
     _time: 0,
-    ctor: function () {
+    ctor: function() {
         this._frameType = 0;
         this._easingType = 0;
         this._frameIndex = 0;
@@ -57,15 +57,15 @@ ccs.ActionFrame = ccs.Class.extend(/** @lends ccs.ActionFrame# */{
      * Changes the index of action frame
      * @param {number} index
      */
-    setFrameIndex: function (index) {
+    setFrameIndex: function(index) {
         this._frameIndex = index;
     },
 
     /**
      * Gets the index of action frame
-     * @returns {number}
+     * @return {number}
      */
-    getFrameIndex: function () {
+    getFrameIndex: function() {
         return this._frameIndex;
     },
 
@@ -73,15 +73,15 @@ ccs.ActionFrame = ccs.Class.extend(/** @lends ccs.ActionFrame# */{
      * Changes the time of action frame
      * @param {number} fTime
      */
-    setFrameTime: function (time) {
+    setFrameTime: function(time) {
         this._time = time;
     },
 
     /**
      * Gets the time of action frame
-     * @returns {number}
+     * @return {number}
      */
-    getFrameTime: function () {
+    getFrameTime: function() {
         return this._time;
     },
 
@@ -89,15 +89,15 @@ ccs.ActionFrame = ccs.Class.extend(/** @lends ccs.ActionFrame# */{
      * Changes the type of action frame
      * @param {number} frameType
      */
-    setFrameType: function (frameType) {
+    setFrameType: function(frameType) {
         this._frameType = frameType;
     },
 
     /**
      * Gets the type of action frame
-     * @returns {number}
+     * @return {number}
      */
-    getFrameType: function () {
+    getFrameType: function() {
         return this._frameType;
     },
 
@@ -105,24 +105,24 @@ ccs.ActionFrame = ccs.Class.extend(/** @lends ccs.ActionFrame# */{
      * Changes the easing type.
      * @param {number} easingType
      */
-    setEasingType: function (easingType) {
+    setEasingType: function(easingType) {
         this._easingType = easingType;
     },
 
     /**
      * Gets the easing type.
-     * @returns {number}
+     * @return {number}
      */
-    getEasingType: function () {
+    getEasingType: function() {
         return this._easingType;
     },
 
     /**
      * Gets the action of ActionFrame.
      * @param {number} duration
-     * @returns {null}
+     * @return {null}
      */
-    getAction: function (duration) {
+    getAction: function(duration) {
         return null;
     }
 });
@@ -134,7 +134,7 @@ ccs.ActionFrame = ccs.Class.extend(/** @lends ccs.ActionFrame# */{
  */
 ccs.ActionMoveFrame = ccs.ActionFrame.extend({
     _position: null,
-    ctor: function () {
+    ctor: function() {
         ccs.ActionFrame.prototype.ctor.call(this);
         this._position = cc.p(0, 0);
         this._frameType = ccs.FrameType.move;
@@ -144,24 +144,24 @@ ccs.ActionMoveFrame = ccs.ActionFrame.extend({
      * Changes the move action position.
      * @param {cc.Point} pos
      */
-    setPosition: function (pos) {
+    setPosition: function(pos) {
         this._position = pos;
     },
 
     /**
      * Gets the move action position.
-     * @returns {cc.Point}
+     * @return {cc.Point}
      */
-    getPosition: function () {
+    getPosition: function() {
         return this._position;
     },
 
     /**
      * Gets the CCAction of ActionFrame.
      * @param {number} duration
-     * @returns {cc.MoveTo}
+     * @return {cc.MoveTo}
      */
-    getAction: function (duration) {
+    getAction: function(duration) {
         return cc.MoveTo.create(duration, this._position);
     }
 });
@@ -174,7 +174,7 @@ ccs.ActionMoveFrame = ccs.ActionFrame.extend({
 ccs.ActionScaleFrame = ccs.ActionFrame.extend({
     _scaleX: 1,
     _scaleY: 1,
-    ctor: function () {
+    ctor: function() {
         ccs.ActionFrame.prototype.ctor.call(this);
         this._scaleX = 1;
         this._scaleY = 1;
@@ -185,15 +185,15 @@ ccs.ActionScaleFrame = ccs.ActionFrame.extend({
      * Changes the scale action scaleX.
      * @param {number} scaleX
      */
-    setScaleX: function (scaleX) {
+    setScaleX: function(scaleX) {
         this._scaleX = scaleX;
     },
 
     /**
      * Gets the scale action scaleX.
-     * @returns {number} {number}
+     * @return {number} {number}
      */
-    getScaleX: function () {
+    getScaleX: function() {
         return this._scaleX;
     },
 
@@ -201,24 +201,24 @@ ccs.ActionScaleFrame = ccs.ActionFrame.extend({
      * Changes the scale action scaleY.
      * @param {number} scaleY
      */
-    setScaleY: function (scaleY) {
+    setScaleY: function(scaleY) {
         this._scaleY = scaleY;
     },
 
     /**
      * Gets the scale action scaleY.
-     * @returns {number}
+     * @return {number}
      */
-    getScaleY: function () {
+    getScaleY: function() {
         return this._scaleY;
     },
 
     /**
      * Gets the action of ActionFrame.
      * @param duration
-     * @returns {cc.ScaleTo}
+     * @return {cc.ScaleTo}
      */
-    getAction: function (duration) {
+    getAction: function(duration) {
         return cc.ScaleTo.create(duration, this._scaleX, this._scaleY);
     }
 });
@@ -230,7 +230,7 @@ ccs.ActionScaleFrame = ccs.ActionFrame.extend({
  */
 ccs.ActionRotationFrame = ccs.ActionFrame.extend({
     _rotation: 0,
-    ctor: function () {
+    ctor: function() {
         ccs.ActionFrame.prototype.ctor.call(this);
         this._rotation = 0;
         this._frameType = ccs.FrameType.rotate;
@@ -240,24 +240,24 @@ ccs.ActionRotationFrame = ccs.ActionFrame.extend({
      * Changes rotate action rotation.
      * @param {number} rotation
      */
-    setRotation: function (rotation) {
+    setRotation: function(rotation) {
         this._rotation = rotation;
     },
 
     /**
      * Gets the rotate action rotation.
-     * @returns {number}
+     * @return {number}
      */
-    getRotation: function () {
+    getRotation: function() {
         return this._rotation;
     },
 
     /**
      * Gets the CCAction of ActionFrame.
      * @param {number} duration
-     * @returns {cc.RotateTo}
+     * @return {cc.RotateTo}
      */
-    getAction: function (duration) {
+    getAction: function(duration) {
         return cc.RotateTo.create(duration, this._rotation);
     }
 });
@@ -269,7 +269,7 @@ ccs.ActionRotationFrame = ccs.ActionFrame.extend({
  */
 ccs.ActionFadeFrame = ccs.ActionFrame.extend({
     _opacity: 255,
-    ctor: function () {
+    ctor: function() {
         ccs.ActionFrame.prototype.ctor.call(this);
         this._opacity = 255;
         this._frameType = ccs.FrameType.fade;
@@ -279,24 +279,24 @@ ccs.ActionFadeFrame = ccs.ActionFrame.extend({
      * Changes the fade action opacity.
      * @param {number} opacity
      */
-    setOpacity: function (opacity) {
+    setOpacity: function(opacity) {
         this._opacity = opacity;
     },
 
     /**
      * Gets the fade action opacity.
-     * @returns {number}
+     * @return {number}
      */
-    getOpacity: function () {
+    getOpacity: function() {
         return this._opacity;
     },
 
     /**
      * Gets the CCAction of ActionFrame.
      * @param duration
-     * @returns {cc.FadeTo}
+     * @return {cc.FadeTo}
      */
-    getAction: function (duration) {
+    getAction: function(duration) {
         return cc.FadeTo.create(duration, this._opacity);
     }
 });
@@ -308,7 +308,7 @@ ccs.ActionFadeFrame = ccs.ActionFrame.extend({
  */
 ccs.ActionTintFrame = ccs.ActionFrame.extend({
     _color: 255,
-    ctor: function () {
+    ctor: function() {
         ccs.ActionFrame.prototype.ctor.call(this);
         this._color = 255;
         this._frameType = ccs.FrameType.tint;
@@ -318,24 +318,24 @@ ccs.ActionTintFrame = ccs.ActionFrame.extend({
      * Changes the tint action color.
      * @param {number} color
      */
-    setColor: function (color) {
+    setColor: function(color) {
         this._color = color;
     },
 
     /**
      * Gets the tint action color.
-     * @returns {number}
+     * @return {number}
      */
-    getColor: function () {
+    getColor: function() {
         return this._color;
     },
 
     /**
      * Gets the action of ActionFrame.
      * @param duration
-     * @returns {cc.TintTo}
+     * @return {cc.TintTo}
      */
-    getAction: function (duration) {
+    getAction: function(duration) {
         return cc.TintTo.create(duration, this._color.r, this._color.g, this._color.b);
     }
 });

@@ -4,17 +4,17 @@
  *
  * Copyright 2012 Yannick Loriot. All rights reserved.
  * http://yannickloriot.com
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,17 +31,17 @@
  * @extends cc.Control
  */
 cc.ControlPotentiometer = cc.Control.extend({
-    _thumbSprite:null,
-    _progressTimer:null,
-    _previousLocation:null,
+    _thumbSprite: null,
+    _progressTimer: null,
+    _previousLocation: null,
     /** Contains the receiver’s current value. */
-    _value:0,
+    _value: 0,
     /** Contains the minimum value of the receiver.
      * The default value of this property is 0.0. */
-    _minimumValue:0,
+    _minimumValue: 0,
     /** Contains the maximum value of the receiver.
      * The default value of this property is 1.0. */
-    _maximumValue:1,
+    _maximumValue: 1,
 
     /**
      *
@@ -50,7 +50,7 @@ cc.ControlPotentiometer = cc.Control.extend({
      * @param {cc.Sprite}  thumbSprite
      * @return {Boolean}
      */
-    initWithTrackSprite_ProgressTimer_ThumbSprite:function (trackSprite, progressTimer, thumbSprite) {
+    initWithTrackSprite_ProgressTimer_ThumbSprite: function(trackSprite, progressTimer, thumbSprite) {
         if (this.init()) {
             this.setTouchEnabled(true);
 
@@ -73,14 +73,14 @@ cc.ControlPotentiometer = cc.Control.extend({
         return false;
     },
 
-    setEnabled:function (enabled) {
+    setEnabled: function(enabled) {
         this.setEnabled(enabled);
         if (this._thumbSprite != NULL) {
             this._thumbSprite.setOpacity((enabled) ? 255 : 128);
         }
     },
 
-    setValue:function (value) {
+    setValue: function(value) {
         // set new value with sentinel
         if (value < this._minimumValue) {
             value = this._minimumValue;
@@ -100,11 +100,11 @@ cc.ControlPotentiometer = cc.Control.extend({
         this.sendActionsForControlEvents(cc.CONTROL_EVENT_VALUECHANGED);
     },
 
-    getValue:function () {
+    getValue: function() {
         return this._value;
     },
 
-    setMinimumValue:function (minimumValue) {
+    setMinimumValue: function(minimumValue) {
         this._minimumValue = minimumValue;
 
         if (this._minimumValue >= this._maximumValue) {
@@ -114,11 +114,11 @@ cc.ControlPotentiometer = cc.Control.extend({
         this.setValue(this._maximumValue);
     },
 
-    getMinimumValue:function () {
+    getMinimumValue: function() {
         return this._minimumValue;
     },
 
-    setMaximumValue:function (maximumValue) {
+    setMaximumValue: function(maximumValue) {
         this._maximumValue = maximumValue;
 
         if (this._maximumValue <= this._minimumValue) {
@@ -128,11 +128,11 @@ cc.ControlPotentiometer = cc.Control.extend({
         this.setValue(this._minimumValue);
     },
 
-    getMaximumValue:function () {
+    getMaximumValue: function() {
         return this._maximumValue;
     },
 
-    isTouchInside:function (touch) {
+    isTouchInside: function(touch) {
         var touchLocation = this.getTouchLocation(touch);
 
         var distance = this.distanceBetweenPointAndPoint(this._progressTimer.getPosition(), touchLocation);
@@ -140,7 +140,7 @@ cc.ControlPotentiometer = cc.Control.extend({
         return distance < Math.min(this.getContentSize().width / 2, this.getContentSize().height / 2);
     },
 
-    onTouchBegan:function (touch, event) {
+    onTouchBegan: function(touch, event) {
         if (!this.isTouchInside(touch) || !this.isEnabled() || !this.isVisible()) {
             return false;
         }
@@ -152,13 +152,13 @@ cc.ControlPotentiometer = cc.Control.extend({
         return true;
     },
 
-    onTouchMoved:function (touch, event) {
+    onTouchMoved: function(touch, event) {
         var location = this.getTouchLocation(touch);
 
         this.potentiometerMoved(location);
     },
 
-    onTouchEnded:function (touch, event) {
+    onTouchEnded: function(touch, event) {
         this.potentiometerEnded(cc.p(0, 0));
     },
 
@@ -168,7 +168,7 @@ cc.ControlPotentiometer = cc.Control.extend({
      * @param {cc.Point}  point2
      * @return {Number}
      */
-    distanceBetweenPointAndPoint:function (point1, point2) {
+    distanceBetweenPointAndPoint: function(point1, point2) {
         var dx = point1.x - point2.x;
         var dy = point1.y - point2.y;
         return Math.sqrt(dx * dx + dy * dy);
@@ -182,7 +182,7 @@ cc.ControlPotentiometer = cc.Control.extend({
      * @param {cc.Point}  endLineB
      * @return {Number}
      */
-    angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint:function (beginLineA, endLineA, beginLineB, endLineB) {
+    angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint: function(beginLineA, endLineA, beginLineB, endLineB) {
         var a = endLineA.x - beginLineA.x;
         var b = endLineA.y - beginLineA.y;
         var c = endLineB.x - beginLineB.x;
@@ -195,12 +195,12 @@ cc.ControlPotentiometer = cc.Control.extend({
         return (atanA - atanB) * 180 / Math.PI;
     },
 
-    potentiometerBegan:function (location) {
+    potentiometerBegan: function(location) {
         this.setSelected(true);
         this.getThumbSprite().setColor(cc.gray());
     },
 
-    potentiometerMoved:function (location) {
+    potentiometerMoved: function(location) {
         var angle = this.angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint(this._progressTimer.getPosition(), location, this._progressTimer.getPosition(), this._previousLocation);
 
         // fix value, if the 12 o'clock position is between location and previousLocation
@@ -216,31 +216,31 @@ cc.ControlPotentiometer = cc.Control.extend({
         this._previousLocation = location;
     },
 
-    potentiometerEnded:function (location) {
+    potentiometerEnded: function(location) {
         this.getThumbSprite().setColor(cc.white());
         this.setSelected(false);
     },
-    setThumbSprite:function (sprite) {
+    setThumbSprite: function(sprite) {
         this._thumbSprite = sprite;
     },
-    getThumbSprite:function () {
+    getThumbSprite: function() {
         return this._thumbSprite;
     },
-    setProgressTimer:function (sprite) {
+    setProgressTimer: function(sprite) {
         this._progressTimer = sprite;
     },
-    getProgressTimer:function () {
+    getProgressTimer: function() {
         return this._progressTimer;
     },
-    setPreviousLocation:function (point) {
+    setPreviousLocation: function(point) {
         this._previousLocation = point;
     },
-    getPreviousLocation:function () {
+    getPreviousLocation: function() {
         return this._previousLocation;
     }
 });
 
-cc.ControlPotentiometer.create = function (backgroundFile, progressFile, thumbFile) {
+cc.ControlPotentiometer.create = function(backgroundFile, progressFile, thumbFile) {
     var pRet = new cc.ControlPotentiometer();
     if (pRet) {
         // Prepare track for potentiometer

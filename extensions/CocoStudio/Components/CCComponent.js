@@ -25,60 +25,60 @@
 cc.Component = cc.Class.extend({
     _owner: null,
     _name: null,
-    _enabled:null,
+    _enabled: null,
 
-    ctor:function(){
+    ctor: function() {
         this._owner = null;
-        this._name = "";
+        this._name = '';
         this._enabled = true;
     },
 
-    init:function(){
+    init: function() {
        return true;
     },
 
-    onEnter:function(){
+    onEnter: function() {
 
     },
 
-    onExit:function(){
+    onExit: function() {
 
     },
 
-    update:function(delta){
+    update: function(delta) {
 
     },
 
-    serialize:function( reader){
+    serialize: function(reader) {
 
     },
 
-    isEnabled:function(){
+    isEnabled: function() {
         return this._enabled;
     },
 
-    setEnabled:function(enable){
+    setEnabled: function(enable) {
         this._enabled = enable;
     },
 
-    getName:function(){
+    getName: function() {
         return this._name;
     } ,
 
-    setName:function(name){
+    setName: function(name) {
          this._name = name;
     } ,
 
-    setOwner:function(owner){
+    setOwner: function(owner) {
         this._owner = owner;
     },
 
-    getOwner:function(){
+    getOwner: function() {
         return this._owner;
     }
 });
 
-cc.Component.create = function(){
+cc.Component.create = function() {
     return new cc.Component();
 };
 

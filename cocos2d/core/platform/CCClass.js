@@ -34,29 +34,29 @@
 var cc = cc || {};
 
 //
-function ClassManager(){
+function ClassManager() {
     //tells own name
     return arguments.callee.name || (arguments.callee.toString()).match(/^function ([^(]+)/)[1];
 }
-ClassManager.id=(0|(Math.random()*998));
-ClassManager.instanceId=(0|(Math.random()*998));
-ClassManager.compileSuper=function(func, name, id){
+ClassManager.id = (0 | (Math.random() * 998));
+ClassManager.instanceId = (0 | (Math.random() * 998));
+ClassManager.compileSuper = function(func, name, id) {
     //make the func to a string
     var str = func.toString();
     //find parameters
     var pstart = str.indexOf('(');
     var pend = str.indexOf(')');
-    var params = str.substring(pstart+1, pend);
+    var params = str.substring(pstart + 1, pend);
     params = params.trim();
 
     //find function body
     var bstart = str.indexOf('{');
     var bend = str.lastIndexOf('}');
-    var str = str.substring(bstart+1, bend);
+    var str = str.substring(bstart + 1, bend);
 
     //now we have the content of the function, replace this._super
     //find this._super
-    while(str.indexOf('this._super')!= -1)
+    while (str.indexOf('this._super') != -1)
     {
         var sp = str.indexOf('this._super');
         //find the first '(' from this._super)
@@ -64,38 +64,38 @@ ClassManager.compileSuper=function(func, name, id){
 
         //find if we are passing params to super
         var bbp = str.indexOf(')', bp);
-        var superParams = str.substring(bp+1, bbp);
+        var superParams = str.substring(bp + 1, bbp);
         superParams = superParams.trim();
-        var coma = superParams? ',':'';
+        var coma = superParams ? ',' : '';
 
         //find name of ClassManager
         var Cstr = arguments.callee.ClassManager();
 
         //replace this._super
-        str = str.substring(0, sp)+  Cstr+'['+id+'].'+name+'.call(this'+coma+str.substring(bp+1);
+        str = str.substring(0, sp) + Cstr + '[' + id + '].' + name + '.call(this' + coma + str.substring(bp + 1);
     }
     return Function(params, str);
 };
 ClassManager.compileSuper.ClassManager = ClassManager;
-ClassManager.getNewID=function(){
+ClassManager.getNewID = function() {
     return this.id++;
 };
-ClassManager.getNewInstanceId=function(){
+ClassManager.getNewInstanceId = function() {
     return this.instanceId++;
 };
 
-(function () {
+(function() {
     var initializing = false, fnTest = /\b_super\b/;
     var releaseMode = (document['ccConfig'] && document['ccConfig']['CLASS_RELEASE_MODE']) ? document['ccConfig']['CLASS_RELEASE_MODE'] : null;
-    if(releaseMode) {
-        console.log("release Mode");
+    if (releaseMode) {
+        console.log('release Mode');
     }
 
     /**
      * The base Class implementation (does nothing)
      * @class
      */
-    cc.Class = function () {
+    cc.Class = function() {
     };
 
     /**
@@ -103,7 +103,7 @@ ClassManager.getNewInstanceId=function(){
      * @param {object} prop
      * @return {function}
      */
-    cc.Class.extend = function (prop) {
+    cc.Class.extend = function(prop) {
         var _super = this.prototype;
 
         // Instantiate a base Class (but only create the instance,
@@ -119,12 +119,12 @@ ClassManager.getNewInstanceId=function(){
         // these function properties cacheable in Carakan.
         var desc = { writable: true, enumerable: false, configurable: true };
         for (var name in prop) {
-            if(releaseMode && typeof prop[name] == "function" && typeof _super[name] == "function" && fnTest.test(prop[name])) {
+            if (releaseMode && typeof prop[name] == 'function' && typeof _super[name] == 'function' && fnTest.test(prop[name])) {
                 desc.value = ClassManager.compileSuper(prop[name], name, classId);
                 Object.defineProperty(prototype, name, desc);
-            } else if(typeof prop[name] == "function" && typeof _super[name] == "function" && fnTest.test(prop[name])){
-                desc.value = (function (name, fn) {
-                    return function () {
+            } else if (typeof prop[name] == 'function' && typeof _super[name] == 'function' && fnTest.test(prop[name])) {
+                desc.value = (function(name, fn) {
+                    return function() {
                         var tmp = this._super;
 
                         // Add a new ._super() method that is the same method
@@ -140,10 +140,10 @@ ClassManager.getNewInstanceId=function(){
                     };
                 })(name, prop[name]);
                 Object.defineProperty(prototype, name, desc);
-            } else if(typeof prop[name] == "function") {
+            } else if (typeof prop[name] == 'function') {
                 desc.value = prop[name];
                 Object.defineProperty(prototype, name, desc);
-            } else{
+            } else {
                 prototype[name] = prop[name];
             }
         }
@@ -174,7 +174,7 @@ ClassManager.getNewInstanceId=function(){
         Class.extend = arguments.callee;
 
         //add implementation method
-        Class.implement = function (prop) {
+        Class.implement = function(prop) {
             for (var name in prop) {
                 prototype[name] = prop[name];
             }
@@ -182,9 +182,9 @@ ClassManager.getNewInstanceId=function(){
         return Class;
     };
 
-    Function.prototype.bind = Function.prototype.bind || function (bind) {
+    Function.prototype.bind = Function.prototype.bind || function(bind) {
         var self = this;
-        return function () {
+        return function() {
             var args = Array.prototype.slice.call(arguments);
             return self.apply(bind || null, args);
         };
@@ -196,7 +196,7 @@ ClassManager.getNewInstanceId=function(){
 // Another way to subclass: Using Google Closure.
 // The following code was copied + pasted from goog.base / goog.inherits
 //
-cc.inherits = function (childCtor, parentCtor) {
+cc.inherits = function(childCtor, parentCtor) {
     /** @constructor */
     function tempCtor() {}
     tempCtor.prototype = parentCtor.prototype;
@@ -213,7 +213,7 @@ cc.base = function(me, opt_methodName, var_args) {
     var caller = arguments.callee.caller;
     if (caller.superClass_) {
         // This is a constructor. Call the superclass constructor.
-        ret =  caller.superClass_.constructor.apply( me, Array.prototype.slice.call(arguments, 1));
+        ret = caller.superClass_.constructor.apply(me, Array.prototype.slice.call(arguments, 1));
         return ret;
     }
 
@@ -241,11 +241,11 @@ cc.base = function(me, opt_methodName, var_args) {
     }
 };
 
-cc.concatObjectProperties = function(dstObject, srcObject){
-    if(!dstObject)
+cc.concatObjectProperties = function(dstObject, srcObject) {
+    if (!dstObject)
         dstObject = {};
 
-    for(var selKey in srcObject){
+    for (var selKey in srcObject) {
         dstObject[selKey] = srcObject[selKey];
     }
     return dstObject;

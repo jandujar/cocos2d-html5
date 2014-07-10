@@ -30,18 +30,18 @@
  * @type Object
  */
 cc.VisibleRect = {
-    _topLeft:cc._pConst(0,0),
-    _topRight:cc._pConst(0,0),
-    _top:cc._pConst(0,0),
-    _bottomLeft:cc._pConst(0,0),
-    _bottomRight:cc._pConst(0,0),
-    _bottom:cc._pConst(0,0),
-    _center:cc._pConst(0,0),
-    _left:cc._pConst(0,0),
-    _right:cc._pConst(0,0),
-    _width:0,
-    _height:0,
-    init:function(size){
+    _topLeft: cc._pConst(0, 0),
+    _topRight: cc._pConst(0, 0),
+    _top: cc._pConst(0, 0),
+    _bottomLeft: cc._pConst(0, 0),
+    _bottomRight: cc._pConst(0, 0),
+    _bottom: cc._pConst(0, 0),
+    _center: cc._pConst(0, 0),
+    _left: cc._pConst(0, 0),
+    _right: cc._pConst(0, 0),
+    _width: 0,
+    _height: 0,
+    init: function(size) {
         this._width = size.width;
         this._height = size.height;
 
@@ -52,55 +52,55 @@ cc.VisibleRect = {
         this._topLeft._y = h;
         this._topRight._x = w;
         this._topRight._y = h;
-        this._top._x = w/2;
+        this._top._x = w / 2;
         this._top._y = h;
 
         //bottom
         this._bottomRight._x = w;
-        this._bottom._x = w/2;
+        this._bottom._x = w / 2;
 
         //center
-        this._center._x = w/2;
-        this._center._y = h/2;
+        this._center._x = w / 2;
+        this._center._y = h / 2;
 
         //left
-        this._left._y = h/2;
+        this._left._y = h / 2;
 
         //right
         this._right._x = w;
-        this._right._y = h/2;
+        this._right._y = h / 2;
     },
-    getWidth:function(){
+    getWidth: function() {
         return this._width;
     },
-    getHeight:function(){
+    getHeight: function() {
         return this._height;
     },
-    topLeft:function(){
+    topLeft: function() {
         return this._topLeft;
     },
-    topRight:function(){
+    topRight: function() {
         return this._topRight;
     },
-    top:function(){
+    top: function() {
         return this._top;
     },
-    bottomLeft:function(){
+    bottomLeft: function() {
         return this._bottomLeft;
     },
-    bottomRight:function(){
+    bottomRight: function() {
         return this._bottomRight;
     },
-    bottom:function(){
+    bottom: function() {
         return this._bottom;
     },
-    center:function(){
+    center: function() {
         return this._center;
     },
-    left:function(){
+    left: function() {
         return this._left;
     },
-    right:function(){
+    right: function() {
         return this._right;
     }
 };

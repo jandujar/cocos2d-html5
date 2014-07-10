@@ -28,25 +28,25 @@
  * @extends ccs.Component
  */
 ccs.ComAudio = ccs.Component.extend(/** @lends ccs.ComAudio# */{
-    _filePath: "",
+    _filePath: '',
     _loop: false,
-    ctor: function () {
+    ctor: function() {
         cc.Component.prototype.ctor.call(this);
-        this._name = "Audio";
+        this._name = 'Audio';
     },
-    init: function () {
+    init: function() {
         return true;
     },
 
-    onEnter: function () {
+    onEnter: function() {
     },
 
-    onExit: function () {
+    onExit: function() {
         this.stopBackgroundMusic(true);
         this.stopAllEffects();
     },
 
-    end: function () {
+    end: function() {
         cc.AudioEngine.end();
     },
 
@@ -54,7 +54,7 @@ ccs.ComAudio = ccs.Component.extend(/** @lends ccs.ComAudio# */{
      * Preload background music resource
      * @param {String} pszFilePath
      */
-    preloadBackgroundMusic: function (pszFilePath) {
+    preloadBackgroundMusic: function(pszFilePath) {
         cc.AudioEngine.getInstance().preloadMusic(pszFilePath);
     },
 
@@ -63,10 +63,10 @@ ccs.ComAudio = ccs.Component.extend(/** @lends ccs.ComAudio# */{
      * @param {String} pszFilePath
      * @param {Boolean} loop
      */
-    playBackgroundMusic: function (pszFilePath, loop) {
-        if(pszFilePath){
+    playBackgroundMusic: function(pszFilePath, loop) {
+        if (pszFilePath) {
             cc.AudioEngine.getInstance().playMusic(pszFilePath, loop);
-        }else{
+        }else {
             cc.AudioEngine.getInstance().playMusic(this._filePath, this._loop);
         }
     },
@@ -75,52 +75,52 @@ ccs.ComAudio = ccs.Component.extend(/** @lends ccs.ComAudio# */{
      * Stop background music
      * @param {String} releaseData
      */
-    stopBackgroundMusic: function (releaseData) {
+    stopBackgroundMusic: function(releaseData) {
         cc.AudioEngine.getInstance().stopMusic(releaseData);
     },
 
     /**
      * Pause background music
      */
-    pauseBackgroundMusic: function () {
+    pauseBackgroundMusic: function() {
         cc.AudioEngine.getInstance().pauseMusic();
     },
 
     /**
      * Resume background music
      */
-    resumeBackgroundMusic: function () {
+    resumeBackgroundMusic: function() {
         cc.AudioEngine.getInstance().resumeMusic();
     },
 
     /**
      * Rewind background music
      */
-    rewindBackgroundMusic: function () {
+    rewindBackgroundMusic: function() {
         cc.AudioEngine.getInstance().rewindMusic();
     },
 
     /**
      * Indicates whether any background music can be played or not.
-     * @returns {boolean}
+     * @return {boolean}
      */
-    willPlayBackgroundMusic: function () {
+    willPlayBackgroundMusic: function() {
         return cc.AudioEngine.getInstance().willPlayMusic();
     },
 
     /**
      * Whether the music is playing.
-     * @returns {Boolean}
+     * @return {Boolean}
      */
-    isBackgroundMusicPlaying: function () {
+    isBackgroundMusicPlaying: function() {
         return cc.AudioEngine.getInstance().isMusicPlaying();
     },
 
     /**
      * The volume of the music max value is 1.0,the min value is 0.0 .
-     * @returns {Number}
+     * @return {Number}
      */
-    getBackgroundMusicVolume: function () {
+    getBackgroundMusicVolume: function() {
         return cc.AudioEngine.getInstance().getMusicVolume();
     },
 
@@ -128,15 +128,15 @@ ccs.ComAudio = ccs.Component.extend(/** @lends ccs.ComAudio# */{
      * Set the volume of music.
      * @param {Number} volume   must be in 0.0~1.0 .
      */
-    setBackgroundMusicVolume: function (volume) {
+    setBackgroundMusicVolume: function(volume) {
         cc.AudioEngine.getInstance().setMusicVolume(volume);
     },
 
     /**
      * The volume of the effects max value is 1.0,the min value is 0.0 .
-     * @returns {Number}
+     * @return {Number}
      */
-    getEffectsVolume: function () {
+    getEffectsVolume: function() {
         return cc.AudioEngine.getInstance().getEffectsVolume();
     },
 
@@ -144,7 +144,7 @@ ccs.ComAudio = ccs.Component.extend(/** @lends ccs.ComAudio# */{
      * Set the volume of sound effects.
      * @param {Number} volume
      */
-    setEffectsVolume: function (volume) {
+    setEffectsVolume: function(volume) {
         cc.AudioEngine.getInstance().setEffectsVolume(volume);
     },
 
@@ -152,9 +152,9 @@ ccs.ComAudio = ccs.Component.extend(/** @lends ccs.ComAudio# */{
      * Play sound effect.
      * @param {String} pszFilePath
      * @param {Boolean} loop
-     * @returns {Boolean}
+     * @return {Boolean}
      */
-    playEffect: function (pszFilePath, loop) {
+    playEffect: function(pszFilePath, loop) {
         if (pszFilePath) {
             return cc.AudioEngine.getInstance().playEffect(pszFilePath, loop);
         } else {
@@ -166,14 +166,14 @@ ccs.ComAudio = ccs.Component.extend(/** @lends ccs.ComAudio# */{
      * Pause playing sound effect.
      * @param {Number} soundId
      */
-    pauseEffect: function (soundId) {
+    pauseEffect: function(soundId) {
         cc.AudioEngine.getInstance().pauseEffect(soundId);
     },
 
     /**
      * Pause all effects
      */
-    pauseAllEffects: function () {
+    pauseAllEffects: function() {
         cc.AudioEngine.getInstance().pauseAllEffects();
     },
 
@@ -181,14 +181,14 @@ ccs.ComAudio = ccs.Component.extend(/** @lends ccs.ComAudio# */{
      * Resume effect
      * @param {Number} soundId
      */
-    resumeEffect: function (soundId) {
+    resumeEffect: function(soundId) {
         cc.AudioEngine.getInstance().resumeEffect(soundId);
     },
 
     /**
      * Resume all effects
      */
-    resumeAllEffects: function () {
+    resumeAllEffects: function() {
         cc.AudioEngine.getInstance().resumeAllEffects();
     },
 
@@ -196,14 +196,14 @@ ccs.ComAudio = ccs.Component.extend(/** @lends ccs.ComAudio# */{
      * Stop effect
      * @param {Number} soundId
      */
-    stopEffect: function (soundId) {
+    stopEffect: function(soundId) {
         cc.AudioEngine.getInstance().stopEffect(soundId);
     },
 
     /**
      * stop all effects
      */
-    stopAllEffects: function () {
+    stopAllEffects: function() {
         cc.AudioEngine.getInstance().stopAllEffects();
     },
 
@@ -211,7 +211,7 @@ ccs.ComAudio = ccs.Component.extend(/** @lends ccs.ComAudio# */{
      * Preload effect
      * @param {String} pszFilePath
      */
-    preloadEffect: function (pszFilePath) {
+    preloadEffect: function(pszFilePath) {
         cc.AudioEngine.getInstance().preloadEffect(pszFilePath);
         this.setFile(pszFilePath);
         this.setLoop(false);
@@ -221,7 +221,7 @@ ccs.ComAudio = ccs.Component.extend(/** @lends ccs.ComAudio# */{
      * Unload effect
      * @param {String} pszFilePath
      */
-    unloadEffect: function (pszFilePath) {
+    unloadEffect: function(pszFilePath) {
         cc.AudioEngine.getInstance().unloadEffect(pszFilePath);
     },
 
@@ -229,7 +229,7 @@ ccs.ComAudio = ccs.Component.extend(/** @lends ccs.ComAudio# */{
      * File path setter
      * @param {String} pszFilePath
      */
-    setFile: function (pszFilePath) {
+    setFile: function(pszFilePath) {
         this._filePath = pszFilePath;
     },
 
@@ -237,23 +237,23 @@ ccs.ComAudio = ccs.Component.extend(/** @lends ccs.ComAudio# */{
      * Set loop
      * @param {Boolean} loop
      */
-    setLoop: function (loop) {
+    setLoop: function(loop) {
         this._loop = loop;
     },
 
     /**
      * File path Getter
-     * @returns {string}
+     * @return {string}
      */
-    getFile: function () {
+    getFile: function() {
         return this._filePath;
     },
 
     /**
      * Whether is loop
-     * @returns {boolean}
+     * @return {boolean}
      */
-    isLoop: function () {
+    isLoop: function() {
         return this._loop;
     }
 });
@@ -265,7 +265,7 @@ ccs.ComAudio = ccs.Component.extend(/** @lends ccs.ComAudio# */{
  * // example
  * var com = ccs.ComAudio.create();
  */
-ccs.ComAudio.create = function () {
+ccs.ComAudio.create = function() {
     var com = new ccs.ComAudio();
     if (com && com.init()) {
         return com;

@@ -31,50 +31,50 @@
  */
 
 cc.ControlSaturationBrightnessPicker = cc.Control.extend({
-    _saturation:0,
-    _brightness:0,
+    _saturation: 0,
+    _brightness: 0,
 
-    _background:null,
-    _overlay:null,
-    _shadow:null,
-    _slider:null,
-    _startPos:null,
+    _background: null,
+    _overlay: null,
+    _shadow: null,
+    _slider: null,
+    _startPos: null,
 
-    _boxPos:0,
-    _boxSize:0,
+    _boxPos: 0,
+    _boxSize: 0,
 
-    getSaturation:function () {
+    getSaturation: function() {
         return this._saturation;
     },
-    getBrightness:function () {
+    getBrightness: function() {
         return this._brightness;
     },
 
     //not sure if these need to be there actually. I suppose someone might want to access the sprite?
-    getBackground:function () {
+    getBackground: function() {
         return this._background;
     },
-    getOverlay:function () {
+    getOverlay: function() {
         return this._brightness;
     },
-    getShadow:function () {
+    getShadow: function() {
         return this._shadow;
     },
-    getSlider:function () {
+    getSlider: function() {
         return this._slider;
     },
-    getStartPos:function () {
+    getStartPos: function() {
         return this._startPos;
     },
 
-    initWithTargetAndPos:function (target, pos) {
+    initWithTargetAndPos: function(target, pos) {
         if (cc.Control.prototype.init.call(this)) {
             this.setTouchEnabled(true);
             // Add background and slider sprites
-            this._background = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("colourPickerBackground.png", target, pos, cc.p(0.0, 0.0));
-            this._overlay = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("colourPickerOverlay.png", target, pos, cc.p(0.0, 0.0));
-            this._shadow = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("colourPickerShadow.png", target, pos, cc.p(0.0, 0.0));
-            this._slider = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor("colourPicker.png", target, pos, cc.p(0.5, 0.5));
+            this._background = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor('colourPickerBackground.png', target, pos, cc.p(0.0, 0.0));
+            this._overlay = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor('colourPickerOverlay.png', target, pos, cc.p(0.0, 0.0));
+            this._shadow = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor('colourPickerShadow.png', target, pos, cc.p(0.0, 0.0));
+            this._slider = cc.ControlUtils.addSpriteToTargetWithPosAndAnchor('colourPicker.png', target, pos, cc.p(0.5, 0.5));
 
             this._startPos = pos; // starting position of the colour picker
             this._boxPos = 35;    // starting position of the virtual box area for picking a colour
@@ -84,14 +84,14 @@ cc.ControlSaturationBrightnessPicker = cc.Control.extend({
             return false;
     },
 
-    setEnabled:function (enabled) {
+    setEnabled: function(enabled) {
         cc.Control.prototype.setEnabled.call(this, enabled);
         if (this._slider) {
             this._slider.setOpacity(enabled ? 255 : 128);
         }
     },
 
-    updateWithHSV:function (hsv) {
+    updateWithHSV: function(hsv) {
         var hsvTemp = new cc.HSV();
         hsvTemp.s = 1;
         hsvTemp.h = hsv.h;
@@ -100,7 +100,7 @@ cc.ControlSaturationBrightnessPicker = cc.Control.extend({
         var rgb = cc.ControlUtils.RGBfromHSV(hsvTemp);
         this._background.setColor(cc.c3(0 | (rgb.r * 255), 0 | (rgb.g * 255), 0 | (rgb.b * 255)));
     },
-    updateDraggerWithHSV:function (hsv) {
+    updateDraggerWithHSV: function(hsv) {
         // Set the position of the slider to the correct saturation and brightness
         var pos = cc.p(this._startPos.x + this._boxPos + (this._boxSize * (1 - hsv.s)),
             this._startPos.y + this._boxPos + (this._boxSize * hsv.v));
@@ -109,7 +109,7 @@ cc.ControlSaturationBrightnessPicker = cc.Control.extend({
         this._updateSliderPosition(pos);
     },
 
-    _updateSliderPosition:function (sliderPosition) {
+    _updateSliderPosition: function(sliderPosition) {
         // Clamp the position of the icon within the circle
 
         // Get the center point of the bkgd image
@@ -152,7 +152,7 @@ cc.ControlSaturationBrightnessPicker = cc.Control.extend({
         this._brightness = Math.abs((this._startPos.y + this._boxPos - sliderPosition.y) / this._boxSize);
     },
 
-    _checkSliderPosition:function (location) {
+    _checkSliderPosition: function(location) {
         // Clamp the position of the icon within the circle
         // get the center point of the bkgd image
         var centerX = this._startPos.x + this._background.getBoundingBox().width * 0.5;
@@ -172,8 +172,8 @@ cc.ControlSaturationBrightnessPicker = cc.Control.extend({
         return false;
     },
 
-    onTouchBegan:function (touch, event) {
-        if (!this.isEnabled() || !this.isVisible())        {
+    onTouchBegan: function(touch, event) {
+        if (!this.isEnabled() || !this.isVisible()) {
             return false;
         }
         // Get the touch location
@@ -183,7 +183,7 @@ cc.ControlSaturationBrightnessPicker = cc.Control.extend({
         return this._checkSliderPosition(touchLocation);
     },
 
-    onTouchMoved:function (touch, event) {
+    onTouchMoved: function(touch, event) {
         // Get the touch location
         var touchLocation = this.getTouchLocation(touch);
 
@@ -195,7 +195,7 @@ cc.ControlSaturationBrightnessPicker = cc.Control.extend({
     }
 });
 
-cc.ControlSaturationBrightnessPicker.create = function (target, pos) {
+cc.ControlSaturationBrightnessPicker.create = function(target, pos) {
     var pRet = new cc.ControlSaturationBrightnessPicker();
     pRet.initWithTargetAndPos(target, pos);
     return pRet;

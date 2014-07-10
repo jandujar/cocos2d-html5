@@ -39,7 +39,7 @@ cc.TransitionPageTurn = cc.TransitionScene.extend(/** @lends cc.TransitionPageTu
     /**
      * @type Boolean
      */
-    _back:true,
+    _back: true,
 
     /**
      * Creates a base transition with duration and incoming scene.<br/>
@@ -50,7 +50,7 @@ cc.TransitionPageTurn = cc.TransitionScene.extend(/** @lends cc.TransitionPageTu
      * @param {Boolean} backwards
      * @return {Boolean}
      */
-    initWithDuration:function (t, scene, backwards) {
+    initWithDuration: function(t, scene, backwards) {
         // XXX: needed before [super init]
         this._back = backwards;
 
@@ -64,7 +64,7 @@ cc.TransitionPageTurn = cc.TransitionScene.extend(/** @lends cc.TransitionPageTu
      * @param {cc.Size} vector
      * @return {cc.ReverseTime|cc.TransitionScene}
      */
-    actionWithSize:function (vector) {
+    actionWithSize: function(vector) {
         if (this._back)
             return cc.ReverseTime.create(cc.PageTurn3D.create(this._duration, vector));        // Get hold of the PageTurn3DAction
         else
@@ -74,7 +74,7 @@ cc.TransitionPageTurn = cc.TransitionScene.extend(/** @lends cc.TransitionPageTu
     /**
      * custom on enter
      */
-    onEnter:function () {
+    onEnter: function() {
         cc.TransitionScene.prototype.onEnter.call(this);
         var winSize = cc.Director.getInstance().getWinSize();
         var x, y;
@@ -89,17 +89,17 @@ cc.TransitionPageTurn = cc.TransitionScene.extend(/** @lends cc.TransitionPageTu
         var action = this.actionWithSize(cc.size(x, y));
 
         if (!this._back) {
-            this._outScene.runAction( cc.Sequence.create(action,cc.CallFunc.create(this.finish, this),cc.StopGrid.create()));
+            this._outScene.runAction(cc.Sequence.create(action, cc.CallFunc.create(this.finish, this), cc.StopGrid.create()));
         } else {
             // to prevent initial flicker
             this._inScene.setVisible(false);
             this._inScene.runAction(
-                cc.Sequence.create(cc.Show.create(),action, cc.CallFunc.create(this.finish, this), cc.StopGrid.create())
+                cc.Sequence.create(cc.Show.create(), action, cc.CallFunc.create(this.finish, this), cc.StopGrid.create())
             );
         }
     },
 
-    _sceneOrder:function () {
+    _sceneOrder: function() {
         this._isInSceneOnTop = this._back;
     }
 });
@@ -116,7 +116,7 @@ cc.TransitionPageTurn = cc.TransitionScene.extend(/** @lends cc.TransitionPageTu
  * // Example
  * var myTransition = cc.TransitionPageTurn.create(1.5, nextScene, true)//true means backwards
  */
-cc.TransitionPageTurn.create = function (t, scene, backwards) {
+cc.TransitionPageTurn.create = function(t, scene, backwards) {
     var transition = new cc.TransitionPageTurn();
     transition.initWithDuration(t, scene, backwards);
     return transition;

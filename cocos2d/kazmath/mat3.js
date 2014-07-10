@@ -26,20 +26,20 @@
 
 var Float32Array = Float32Array || Array;
 
-cc.kmMat3 = function () {
+cc.kmMat3 = function() {
     this.mat = new Float32Array([0, 0, 0,
         0, 0, 0,
         0, 0, 0]);
 };
 
-cc.kmMat3Fill = function (pOut, pMat) {
+cc.kmMat3Fill = function(pOut, pMat) {
     for (var i = 0; i < 9; i++) {
         pOut.mat[i] = pMat;
     }
     return pOut;
 };
 
-cc.kmMat3Adjugate = function (pOut, pIn) {
+cc.kmMat3Adjugate = function(pOut, pIn) {
     pOut.mat[0] = pIn.mat[4] * pIn.mat[8] - pIn.mat[5] * pIn.mat[7];
     pOut.mat[1] = pIn.mat[2] * pIn.mat[7] - pIn.mat[1] * pIn.mat[8];
     pOut.mat[2] = pIn.mat[1] * pIn.mat[5] - pIn.mat[2] * pIn.mat[4];
@@ -55,14 +55,14 @@ cc.kmMat3Adjugate = function (pOut, pIn) {
     return pOut;
 };
 
-cc.kmMat3Identity = function (pOut) {
+cc.kmMat3Identity = function(pOut) {
     pOut.mat[1] = pOut.mat[2] = pOut.mat[3] =
         pOut.mat[5] = pOut.mat[6] = pOut.mat[7] = 0;
     pOut.mat[0] = pOut.mat[4] = pOut.mat[8] = 1.0;
     return pOut;
 };
 
-cc.kmMat3Inverse = function (pOut, pDeterminate, pM) {
+cc.kmMat3Inverse = function(pOut, pDeterminate, pM) {
     var detInv;
     var adjugate = new cc.kmMat3();
 
@@ -82,7 +82,7 @@ cc.kmMat3._identity =
         0.0, 1.0, 0.0,
         0.0, 0.0, 1.0]);
 
-cc.kmMat3IsIdentity = function (pIn) {
+cc.kmMat3IsIdentity = function(pIn) {
     for (var i = 0; i < 9; i++) {
         if (cc.kmMat3._identity[i] !== pIn.mat[i])
             return false;
@@ -90,7 +90,7 @@ cc.kmMat3IsIdentity = function (pIn) {
     return true;
 };
 
-cc.kmMat3Transpose = function (pOut, pIn) {
+cc.kmMat3Transpose = function(pOut, pIn) {
     var z, x;
     for (z = 0; z < 3; ++z) {
         for (x = 0; x < 3; ++x)
@@ -100,7 +100,7 @@ cc.kmMat3Transpose = function (pOut, pIn) {
     return pOut;
 };
 
-cc.kmMat3Determinant = function (pIn) {
+cc.kmMat3Determinant = function(pIn) {
     var output;
     /*
      calculating the determinant following the rule of sarus,
@@ -117,7 +117,7 @@ cc.kmMat3Determinant = function (pIn) {
     return output;
 };
 
-cc.kmMat3Multiply = function (pOut, pM1, pM2) {
+cc.kmMat3Multiply = function(pOut, pM1, pM2) {
     var m1 = pM1.mat, m2 = pM2.mat;
 
     pOut.mat[0] = m1[0] * m2[0] + m1[3] * m2[1] + m1[6] * m2[2];
@@ -135,14 +135,14 @@ cc.kmMat3Multiply = function (pOut, pM1, pM2) {
     return pOut;
 };
 
-cc.kmMat3ScalarMultiply = function (pOut, pM, pFactor) {
+cc.kmMat3ScalarMultiply = function(pOut, pM, pFactor) {
     for (var i = 0; i < 9; i++) {
         pOut.mat[i] = pM.mat[i] * pFactor;
     }
     return pOut;
 };
 
-cc.kmMat3RotationAxisAngle = function (pOut, axis, radians) {
+cc.kmMat3RotationAxisAngle = function(pOut, axis, radians) {
     var rcos = Math.cos(radians);
     var rsin = Math.sin(radians);
 
@@ -161,9 +161,9 @@ cc.kmMat3RotationAxisAngle = function (pOut, axis, radians) {
     return pOut;
 };
 
-cc.kmMat3Assign = function (pOut, pIn) {
-    if(pOut == pIn) {
-        cc.log("cc.kmMat3Assign(): pOut equals pIn");
+cc.kmMat3Assign = function(pOut, pIn) {
+    if (pOut == pIn) {
+        cc.log('cc.kmMat3Assign(): pOut equals pIn');
         return pOut;
     }
 
@@ -172,7 +172,7 @@ cc.kmMat3Assign = function (pOut, pIn) {
     return pOut;
 };
 
-cc.kmMat3AreEqual = function (pMat1, pMat2) {
+cc.kmMat3AreEqual = function(pMat1, pMat2) {
     if (pMat1 == pMat2)
         return true;
 
@@ -186,7 +186,7 @@ cc.kmMat3AreEqual = function (pMat1, pMat2) {
     return true;
 };
 
-cc.kmMat3RotationX = function (pOut, radians) {
+cc.kmMat3RotationX = function(pOut, radians) {
     /*
      |  1  0       0      |
      M = |  0  cos(A) -sin(A) |
@@ -209,7 +209,7 @@ cc.kmMat3RotationX = function (pOut, radians) {
     return pOut;
 };
 
-cc.kmMat3RotationY = function (pOut, radians) {
+cc.kmMat3RotationY = function(pOut, radians) {
     /*
      |  cos(A)  0   sin(A) |
      M = |  0       1   0      |
@@ -231,7 +231,7 @@ cc.kmMat3RotationY = function (pOut, radians) {
     return pOut;
 };
 
-cc.kmMat3RotationZ = function (pOut, radians) {
+cc.kmMat3RotationZ = function(pOut, radians) {
     /*
      |  cos(A)  -sin(A)   0  |
      M = |  sin(A)   cos(A)   0  |
@@ -252,7 +252,7 @@ cc.kmMat3RotationZ = function (pOut, radians) {
     return pOut;
 };
 
-cc.kmMat3Rotation = function (pOut, radians) {
+cc.kmMat3Rotation = function(pOut, radians) {
     /*
      |  cos(A)  -sin(A)   0  |
      M = |  sin(A)   cos(A)   0  |
@@ -272,7 +272,7 @@ cc.kmMat3Rotation = function (pOut, radians) {
     return pOut;
 };
 
-cc.kmMat3Scaling = function (pOut, x, y) {
+cc.kmMat3Scaling = function(pOut, x, y) {
 //    memset(pOut.mat, 0, sizeof(float) * 9);
     cc.kmMat3Identity(pOut);
     pOut.mat[0] = x;
@@ -281,7 +281,7 @@ cc.kmMat3Scaling = function (pOut, x, y) {
     return pOut;
 };
 
-cc.kmMat3Translation = function (pOut, x, y) {
+cc.kmMat3Translation = function(pOut, x, y) {
 //    memset(pOut.mat, 0, sizeof(float) * 9);
     cc.kmMat3Identity(pOut);
     pOut.mat[6] = x;
@@ -291,7 +291,7 @@ cc.kmMat3Translation = function (pOut, x, y) {
     return pOut;
 };
 
-cc.kmMat3RotationQuaternion = function (pOut, pIn) {
+cc.kmMat3RotationQuaternion = function(pOut, pIn) {
     if (!pIn || !pOut)
         return null;
 
@@ -313,7 +313,7 @@ cc.kmMat3RotationQuaternion = function (pOut, pIn) {
     return pOut;
 };
 
-cc.kmMat3RotationToAxisAngle = function (pAxis, radians, pIn) {
+cc.kmMat3RotationToAxisAngle = function(pAxis, radians, pIn) {
     /*Surely not this easy?*/
     var temp;
     cc.kmQuaternionRotationMatrix(temp, pIn);

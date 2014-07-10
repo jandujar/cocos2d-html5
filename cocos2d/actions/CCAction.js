@@ -37,18 +37,18 @@ cc.ACTION_TAG_INVALID = -1;
  */
 cc.Action = cc.Class.extend(/** @lends cc.Action# */{
     //***********variables*************
-    _originalTarget:null,
+    _originalTarget: null,
 
     /** The "target".
      The target will be set with the 'startWithTarget' method.
      When the 'stop' method is called, target will be set to nil.
      The target is 'assigned', it is not 'retained'.
      */
-    _target:null,
-    _tag:cc.ACTION_TAG_INVALID,
+    _target: null,
+    _tag: cc.ACTION_TAG_INVALID,
 
     //**************Public Functions***********
-    ctor:function () {
+    ctor: function() {
         this._originalTarget = null;
         this._target = null;
         this._tag = cc.ACTION_TAG_INVALID;
@@ -56,8 +56,8 @@ cc.Action = cc.Class.extend(/** @lends cc.Action# */{
     /**
      * @return {String}
      */
-    description:function () {
-        return "<cc.Action | Tag = " + this._tag + ">";
+    description: function() {
+        return '<cc.Action | Tag = ' + this._tag + '>';
     },
 
     /**
@@ -65,7 +65,7 @@ cc.Action = cc.Class.extend(/** @lends cc.Action# */{
      * @deprecated
      * @return {object}
      */
-    copy:function () {
+    copy: function() {
         return cc.clone(this);
     },
 
@@ -73,7 +73,7 @@ cc.Action = cc.Class.extend(/** @lends cc.Action# */{
      * returns a clone of action
      * @return {cc.Action}
      */
-    clone:function () {
+    clone: function() {
         var action = new cc.Action();
         action._originalTarget = null;
         action._target = null;
@@ -85,7 +85,7 @@ cc.Action = cc.Class.extend(/** @lends cc.Action# */{
      * return true if the action has finished
      * @return {Boolean}
      */
-    isDone:function () {
+    isDone: function() {
         return true;
     },
 
@@ -93,7 +93,7 @@ cc.Action = cc.Class.extend(/** @lends cc.Action# */{
      * called before the action start. It will also set the target.
      * @param {cc.Node} target
      */
-    startWithTarget:function (target) {
+    startWithTarget: function(target) {
         this._originalTarget = target;
         this._target = target;
     },
@@ -102,7 +102,7 @@ cc.Action = cc.Class.extend(/** @lends cc.Action# */{
      * called after the action has finished. It will set the 'target' to nil.
      * IMPORTANT: You should never call "action stop" manually. Instead, use: "target.stopAction(action);"
      */
-    stop:function () {
+    stop: function() {
         this._target = null;
     },
     /** called every frame with it's delta time. DON'T override unless you know what you are doing.
@@ -110,8 +110,8 @@ cc.Action = cc.Class.extend(/** @lends cc.Action# */{
      * @param {Number} dt
      */
 
-    step:function (dt) {
-        cc.log("[Action step]. override me");
+    step: function(dt) {
+        cc.log('[Action step]. override me');
     },
 
     /**
@@ -123,15 +123,15 @@ cc.Action = cc.Class.extend(/** @lends cc.Action# */{
      - 1 means that the action is over </P>
      * @param {Number}  time
      */
-    update:function (time) {
-        cc.log("[Action update]. override me");
+    update: function(time) {
+        cc.log('[Action update]. override me');
     },
 
     /**
      *
      * @return {cc.Node}
      */
-    getTarget:function () {
+    getTarget: function() {
         return this._target;
     },
 
@@ -139,7 +139,7 @@ cc.Action = cc.Class.extend(/** @lends cc.Action# */{
      *
      * @param {cc.Node} target
      */
-    setTarget:function (target) {
+    setTarget: function(target) {
         this._target = target;
     },
 
@@ -147,7 +147,7 @@ cc.Action = cc.Class.extend(/** @lends cc.Action# */{
      *
      * @return {cc.Node}
      */
-    getOriginalTarget:function () {
+    getOriginalTarget: function() {
         return this._originalTarget;
     },
 
@@ -157,7 +157,7 @@ cc.Action = cc.Class.extend(/** @lends cc.Action# */{
      * The target is 'assigned', it is not 'retained'. <br/>
      * @param {cc.Node} originalTarget
      */
-    setOriginalTarget:function (originalTarget) {
+    setOriginalTarget: function(originalTarget) {
         this._originalTarget = originalTarget;
     },
 
@@ -165,7 +165,7 @@ cc.Action = cc.Class.extend(/** @lends cc.Action# */{
      *
      * @return {Number}
      */
-    getTag:function () {
+    getTag: function() {
         return this._tag;
     },
 
@@ -173,7 +173,7 @@ cc.Action = cc.Class.extend(/** @lends cc.Action# */{
      *
      * @param {Number} tag
      */
-    setTag:function (tag) {
+    setTag: function(tag) {
         this._tag = tag;
     },
     /**
@@ -181,18 +181,18 @@ cc.Action = cc.Class.extend(/** @lends cc.Action# */{
      * and the ugly workaround is to use retain/release. So, these 2 methods were added to be compatible with JSB.
      * This is a hack, and should be removed once JSB fixes the retain/release bug
      */
-    retain:function () {
+    retain: function() {
     },
-    release:function () {
+    release: function() {
     }
 });
 /** Allocates and initializes the action
- * @returns {cc.Action}
+ * @return {cc.Action}
  * @example
  * // example
  * var action = cc.Action.create();
  */
-cc.Action.create = function () {
+cc.Action.create = function() {
     return new cc.Action();
 };
 
@@ -209,9 +209,9 @@ cc.Action.create = function () {
  */
 cc.FiniteTimeAction = cc.Action.extend(/** @lends cc.FiniteTimeAction# */{
     //! duration in seconds
-    _duration:0,
+    _duration: 0,
 
-    ctor:function () {
+    ctor: function() {
         cc.Action.prototype.ctor.call(this);
         this._duration = 0;
     },
@@ -220,7 +220,7 @@ cc.FiniteTimeAction = cc.Action.extend(/** @lends cc.FiniteTimeAction# */{
      *
      * @return {Number}
      */
-    getDuration:function () {
+    getDuration: function() {
         return this._duration;
     },
 
@@ -228,7 +228,7 @@ cc.FiniteTimeAction = cc.Action.extend(/** @lends cc.FiniteTimeAction# */{
      *
      * @param {Number} duration
      */
-    setDuration:function (duration) {
+    setDuration: function(duration) {
         this._duration = duration;
     },
 
@@ -236,15 +236,15 @@ cc.FiniteTimeAction = cc.Action.extend(/** @lends cc.FiniteTimeAction# */{
      *
      * @return {Null}
      */
-    reverse:function () {
-        cc.log("cocos2d: FiniteTimeAction#reverse: Implement me");
+    reverse: function() {
+        cc.log('cocos2d: FiniteTimeAction#reverse: Implement me');
         return null;
     },
 
     /**
      *
      */
-    clone:function () {
+    clone: function() {
         return new cc.FiniteTimeAction();
     }
 });
@@ -258,10 +258,10 @@ cc.FiniteTimeAction = cc.Action.extend(/** @lends cc.FiniteTimeAction# */{
  * @extends cc.Action
  */
 cc.Speed = cc.Action.extend(/** @lends cc.Speed# */{
-    _speed:0.0,
-    _innerAction:null,
+    _speed: 0.0,
+    _innerAction: null,
 
-    ctor:function () {
+    ctor: function() {
         cc.Action.prototype.ctor.call(this);
         this._speed = 0;
         this._innerAction = null;
@@ -270,14 +270,14 @@ cc.Speed = cc.Action.extend(/** @lends cc.Speed# */{
     /**
      * @return {Number}
      */
-    getSpeed:function () {
+    getSpeed: function() {
         return this._speed;
     },
 
     /** alter the speed of the inner function in runtime
      * @param {Number} speed
      */
-    setSpeed:function (speed) {
+    setSpeed: function(speed) {
         this._speed = speed;
     },
 
@@ -286,9 +286,9 @@ cc.Speed = cc.Action.extend(/** @lends cc.Speed# */{
      * @param {Number} speed
      * @return {Boolean}
      */
-    initWithAction:function (action, speed) {
-        if(!action)
-            throw "cc.Speed.initWithAction(): action must be non nil";
+    initWithAction: function(action, speed) {
+        if (!action)
+            throw 'cc.Speed.initWithAction(): action must be non nil';
 
         this._innerAction = action;
         this._speed = speed;
@@ -297,9 +297,9 @@ cc.Speed = cc.Action.extend(/** @lends cc.Speed# */{
 
     /**
      * returns a clone of action
-     * @returns {cc.Speed}
+     * @return {cc.Speed}
      */
-    clone:function () {
+    clone: function() {
         var action = new cc.Speed();
         action.initWithAction(this._innerAction.clone(), this._speed);
         return action;
@@ -308,7 +308,7 @@ cc.Speed = cc.Action.extend(/** @lends cc.Speed# */{
     /**
      * @param {cc.Node} target
      */
-    startWithTarget:function (target) {
+    startWithTarget: function(target) {
         cc.Action.prototype.startWithTarget.call(this, target);
         this._innerAction.startWithTarget(target);
     },
@@ -316,7 +316,7 @@ cc.Speed = cc.Action.extend(/** @lends cc.Speed# */{
     /**
      *  Stop the action
      */
-    stop:function () {
+    stop: function() {
         this._innerAction.stop();
         cc.Action.prototype.stop.call(this);
     },
@@ -324,21 +324,21 @@ cc.Speed = cc.Action.extend(/** @lends cc.Speed# */{
     /**
      * @param {Number} dt
      */
-    step:function (dt) {
+    step: function(dt) {
         this._innerAction.step(dt * this._speed);
     },
 
     /**
      * @return {Boolean}
      */
-    isDone:function () {
+    isDone: function() {
         return this._innerAction.isDone();
     },
 
     /**
      * @return {cc.ActionInterval}
      */
-    reverse:function () {
+    reverse: function() {
         return (cc.Speed.create(this._innerAction.reverse(), this._speed));
     },
 
@@ -346,7 +346,7 @@ cc.Speed = cc.Action.extend(/** @lends cc.Speed# */{
      *
      * @param {cc.ActionInterval} action
      */
-    setInnerAction:function (action) {
+    setInnerAction: function(action) {
         if (this._innerAction != action) {
             this._innerAction = action;
         }
@@ -356,7 +356,7 @@ cc.Speed = cc.Action.extend(/** @lends cc.Speed# */{
      *
      * @return {cc.ActionInterval}
      */
-    getInnerAction:function () {
+    getInnerAction: function() {
         return this._innerAction;
     }
 });
@@ -366,7 +366,7 @@ cc.Speed = cc.Action.extend(/** @lends cc.Speed# */{
  * @param {Number} speed
  * @return {cc.Speed}
  */
-cc.Speed.create = function (action, speed) {
+cc.Speed.create = function(action, speed) {
     var ret = new cc.Speed();
     if (ret && ret.initWithAction(action, speed))
         return ret;
@@ -386,34 +386,34 @@ cc.Speed.create = function (action, speed) {
  */
 cc.Follow = cc.Action.extend(/** @lends cc.Follow# */{
     // node to follow
-    _followedNode:null,
+    _followedNode: null,
     // whether camera should be limited to certain area
-    _boundarySet:false,
+    _boundarySet: false,
     // if screen size is bigger than the boundary - update not needed
-    _boundaryFullyCovered:false,
+    _boundaryFullyCovered: false,
     // fast access to the screen dimensions
-    _halfScreenSize:null,
-    _fullScreenSize:null,
+    _halfScreenSize: null,
+    _fullScreenSize: null,
 
     /** world leftBoundary
      * @Type {Number}
      */
-    leftBoundary:0.0,
+    leftBoundary: 0.0,
     /** world rightBoundary
      * @Type Number
      */
-    rightBoundary:0.0,
+    rightBoundary: 0.0,
     /** world topBoundary
      * @Type Number
      */
-    topBoundary:0.0,
+    topBoundary: 0.0,
     /** world bottomBoundary
      * @Type {Number}
      */
-    bottomBoundary:0.0,
-    _worldRect:null,
+    bottomBoundary: 0.0,
+    _worldRect: null,
 
-    ctor:function () {
+    ctor: function() {
         cc.Action.prototype.ctor.call(this);
         this._followedNode = null;
         this._boundarySet = false;
@@ -429,7 +429,7 @@ cc.Follow = cc.Action.extend(/** @lends cc.Follow# */{
         this._worldRect = cc.RectZero();
     },
 
-    clone:function () {
+    clone: function() {
         var action = new cc.Follow();
         var locRect = this._worldRect;
         var rect = new cc.Rect(locRect.x, locRect.y, locRect.width, locRect.height);
@@ -440,14 +440,14 @@ cc.Follow = cc.Action.extend(/** @lends cc.Follow# */{
     /**
      * @return {Boolean}
      */
-    isBoundarySet:function () {
+    isBoundarySet: function() {
         return this._boundarySet;
     },
 
     /** alter behavior - turn on/off boundary
      * @param {Boolean} value
      */
-    setBoudarySet:function (value) {
+    setBoudarySet: function(value) {
         this._boundarySet = value;
     },
 
@@ -457,9 +457,9 @@ cc.Follow = cc.Action.extend(/** @lends cc.Follow# */{
      * @param {cc.Rect} [rect=]
      * @return {Boolean}
      */
-    initWithTarget:function (followedNode, rect) {
-        if(!followedNode)
-            throw "cc.Follow.initWithAction(): followedNode must be non nil";
+    initWithTarget: function(followedNode, rect) {
+        if (!followedNode)
+            throw 'cc.Follow.initWithAction(): followedNode must be non nil';
 
         rect = rect || cc.RectZero();
         this._followedNode = followedNode;
@@ -499,7 +499,7 @@ cc.Follow = cc.Action.extend(/** @lends cc.Follow# */{
     /**
      * @param {Number} dt
      */
-    step:function (dt) {
+    step: function(dt) {
         var tempPosX = this._followedNode.getPositionX();
         var tempPosY = this._followedNode.getPositionY();
         tempPosX = this._halfScreenSize.x - tempPosX;
@@ -520,14 +520,14 @@ cc.Follow = cc.Action.extend(/** @lends cc.Follow# */{
     /**
      * @return {Boolean}
      */
-    isDone:function () {
-        return ( !this._followedNode.isRunning() );
+    isDone: function() {
+        return (!this._followedNode.isRunning());
     },
 
     /**
      * Stop the action.
      */
-    stop:function () {
+    stop: function() {
         this._target = null;
         cc.Action.prototype.stop.call(this);
     }
@@ -549,7 +549,7 @@ cc.Follow = cc.Action.extend(/** @lends cc.Follow# */{
  * var followAction = cc.Follow.create(sprite);
  * this.runAction(followAction);
  */
-cc.Follow.create = function (followedNode, rect) {
+cc.Follow.create = function(followedNode, rect) {
     rect = rect || new cc.RectZero();
     var ret = new cc.Follow();
     if (rect != null && ret && ret.initWithTarget(followedNode, rect))

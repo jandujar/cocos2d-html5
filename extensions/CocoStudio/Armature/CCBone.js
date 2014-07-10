@@ -28,24 +28,24 @@
  * @extends ccs.NodeRGBA
  */
 ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
-    _boneData:null,
-    _armature:null,
-    _childArmature:null,
-    _displayManager:null,
-    _ignoreMovementBoneData:false,
-    _tween:null,
-    _tweenData:null,
-    _name:"",
-    _childrenBone:null,
-    _parentBone:null,
-    _boneTransformDirty:false,
-    _worldTransform:null,
-    _blendFunc:0,
-    _blendDirty:false,
-    _worldInfo:null,
-    _armatureParentBone:null,
-    _dataVersion:0,
-    ctor:function () {
+    _boneData: null,
+    _armature: null,
+    _childArmature: null,
+    _displayManager: null,
+    _ignoreMovementBoneData: false,
+    _tween: null,
+    _tweenData: null,
+    _name: '',
+    _childrenBone: null,
+    _parentBone: null,
+    _boneTransformDirty: false,
+    _worldTransform: null,
+    _blendFunc: 0,
+    _blendDirty: false,
+    _worldInfo: null,
+    _armatureParentBone: null,
+    _dataVersion: 0,
+    ctor: function() {
         cc.NodeRGBA.prototype.ctor.call(this);
         this._boneData = null;
         this._armature = null;
@@ -54,7 +54,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
         this._ignoreMovementBoneData = false;
         this._tween = null;
         this._tweenData = null;
-        this._name = "";
+        this._name = '';
         this._childrenBone = [];
         this._parentBone = null;
         this._boneTransformDirty = true;
@@ -66,7 +66,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
     /**
      * release objects
      */
-    release:function () {
+    release: function() {
         CC_SAFE_RELEASE(this._tweenData);
         for (var i = 0; i < this._childrenBone.length; i++) {
             CC_SAFE_RELEASE(this._childrenBone[i]);
@@ -83,7 +83,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * @param {String} name
      * @return {Boolean}
      */
-    init:function (name) {
+    init: function(name) {
         cc.NodeRGBA.prototype.init.call(this);
         if (name) {
             this._name = name;
@@ -102,9 +102,9 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * set the boneData
      * @param {ccs.BoneData} boneData
      */
-    setBoneData:function (boneData) {
+    setBoneData: function(boneData) {
         if (!boneData) {
-            cc.log("boneData must not be null");
+            cc.log('boneData must not be null');
             return;
         }
         this._boneData = boneData;
@@ -117,7 +117,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * boneData getter
      * @return {ccs.BoneData}
      */
-    getBoneData:function () {
+    getBoneData: function() {
         return this._boneData;
     },
 
@@ -125,13 +125,13 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * set the armature
      * @param {ccs.Armature} armature
      */
-    setArmature:function (armature) {
+    setArmature: function(armature) {
         this._armature = armature;
-        if(armature){
+        if (armature) {
             this._tween.setAnimation(this._armature.getAnimation());
             this._dataVersion = this._armature.getArmatureData().dataVersion;
             this._armatureParentBone = this._armature.getParentBone();
-        }else{
+        }else {
             this._armatureParentBone = null;
         }
     },
@@ -140,7 +140,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * armature getter
      * @return {ccs.Armature}
      */
-    getArmature:function () {
+    getArmature: function() {
         return this._armature;
     },
 
@@ -148,7 +148,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * update worldTransform
      * @param dt
      */
-    update:function (dt) {
+    update: function(dt) {
         var locParentBone = this._parentBone;
         var locArmature = this._armature;
         var locTweenData = this._tweenData;
@@ -159,7 +159,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
         if (locParentBone) {
             this._boneTransformDirty = this._boneTransformDirty || locParentBone.isTransformDirty();
         }
-        if (locArmatureParentBone && !this._boneTransformDirty){
+        if (locArmatureParentBone && !this._boneTransformDirty) {
             this._boneTransformDirty = locArmatureParentBone.isTransformDirty();
         }
         if (this._boneTransformDirty) {
@@ -207,7 +207,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
         this._boneTransformDirty = false;
     },
 
-    applyParentTransform: function (parent) {
+    applyParentTransform: function(parent) {
         var locWorldInfo = this._worldInfo;
         var locParentWorldTransform = parent._worldTransform;
         var locParentWorldInfo = parent._worldInfo;
@@ -224,7 +224,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
     /**
      * Rewrite visit ,when node draw, g_NumberOfDraws is changeless
      */
-    visit:function (ctx) {
+    visit: function(ctx) {
         var node = this.getDisplayManager().getDisplayRenderNode();
         if (node) {
             node.visit(ctx);
@@ -235,8 +235,8 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * update display color
      * @param {cc.c3b} color
      */
-    updateDisplayedColor:function (color) {
-        this._realColor = cc.c3b(255,255,255);
+    updateDisplayedColor: function(color) {
+        this._realColor = cc.c3b(255, 255, 255);
         cc.NodeRGBA.prototype.updateDisplayedColor.call(this, color);
         this.updateColor();
     },
@@ -245,7 +245,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * update display opacity
      * @param {Number} opacity
      */
-    updateDisplayedOpacity:function (opacity) {
+    updateDisplayedOpacity: function(opacity) {
         this._realOpacity = 255;
         cc.NodeRGBA.prototype.updateDisplayedOpacity.call(this, opacity);
         this.updateColor();
@@ -255,7 +255,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * set display color
      * @param {cc.c3b} color
      */
-    setColor: function (color) {
+    setColor: function(color) {
         cc.NodeRGBA.prototype.setColor.call(this, color);
         this.updateColor();
     },
@@ -264,7 +264,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * set display opacity
      * @param {Number} opacity  0-255
      */
-    setOpacity: function (opacity) {
+    setOpacity: function(opacity) {
         cc.NodeRGBA.prototype.setOpacity.call(this, opacity);
         this.updateColor();
     },
@@ -272,7 +272,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
     /**
      * update display color
      */
-    updateColor:function () {
+    updateColor: function() {
         var display = this._displayManager.getDisplayRenderNode();
         if (display && display.RGBAProtocol) {
             var locDisplayedColor = this._displayedColor;
@@ -287,7 +287,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
     /**
      * update display zOrder
      */
-    updateZOrder: function () {
+    updateZOrder: function() {
         if (this._armature.getArmatureData().dataVersion >= ccs.CONST_VERSION_COMBINED) {
             var zorder = this._tweenData.zOrder + this._boneData.zOrder;
             this.setZOrder(zorder);
@@ -301,9 +301,9 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * Add a child to this bone, and it will let this child call setParent(ccs.Bone) function to set self to it's parent
      * @param {ccs.Bone} child
      */
-    addChildBone:function (child) {
+    addChildBone: function(child) {
         if (!child) {
-            cc.log("Argument must be non-nil");
+            cc.log('Argument must be non-nil');
             return;
         }
         if (child._parentBone) {
@@ -321,7 +321,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * @param {ccs.Bone} bone
      * @param {Boolean} recursion
      */
-    removeChildBone:function (bone, recursion) {
+    removeChildBone: function(bone, recursion) {
         for (var i = 0; i < this._childrenBone.length; i++) {
             if (this._childrenBone[i] == bone) {
                 if (recursion) {
@@ -341,7 +341,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * Remove itself from its parent CCBone.
      * @param {Boolean} recursion
      */
-    removeFromParent:function (recursion) {
+    removeFromParent: function(recursion) {
         if (this._parentBone) {
             this._parentBone.removeChildBone(this, recursion);
         }
@@ -353,7 +353,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * It will not set the CCArmature, if you want to add the bone to a CCArmature, you should use ccs.Armature.addBone(bone, parentName).
      * @param {ccs.Bone}  parent  the parent bone.
      */
-    setParentBone:function (parent) {
+    setParentBone: function(parent) {
         this._parentBone = parent;
     },
 
@@ -361,7 +361,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * parent bone getter
      * @return {ccs.Bone}
      */
-    getParentBone:function () {
+    getParentBone: function() {
         return this._parentBone;
     },
 
@@ -369,9 +369,9 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * child armature setter
      * @param {ccs.Armature} armature
      */
-    setChildArmature:function (armature) {
+    setChildArmature: function(armature) {
         if (this._childArmature != armature) {
-            if (armature == null && this._childArmature)            {
+            if (armature == null && this._childArmature) {
                 this._childArmature.setParentBone(null);
             }
             this._childArmature = armature;
@@ -382,7 +382,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * child armature getter
      * @return {ccs.Armature}
      */
-    getChildArmature:function () {
+    getChildArmature: function() {
         return this._childArmature;
     },
 
@@ -390,7 +390,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * child bone getter
      * @return {Array}
      */
-    getChildrenBone:function () {
+    getChildrenBone: function() {
         return this._childrenBone;
     },
 
@@ -398,7 +398,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * tween getter
      * @return {ccs.Tween}
      */
-    getTween:function () {
+    getTween: function() {
         return this._tween;
     },
 
@@ -406,7 +406,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * zOrder setter
      * @param {Number}
         */
-    setZOrder:function (zOrder) {
+    setZOrder: function(zOrder) {
         if (this._zOrder != zOrder)
             cc.Node.prototype.setZOrder.call(this, zOrder);
     },
@@ -415,7 +415,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * transform dirty setter
      * @param {Boolean}
         */
-    setTransformDirty:function (dirty) {
+    setTransformDirty: function(dirty) {
         this._boneTransformDirty = dirty;
     },
 
@@ -423,7 +423,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * transform dirty getter
      * @return {Boolean}
      */
-    isTransformDirty:function () {
+    isTransformDirty: function() {
         return this._boneTransformDirty;
     },
 
@@ -431,31 +431,31 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * return world transform
      * @return {{a:0.b:0,c:0,d:0,tx:0,ty:0}}
      */
-    nodeToArmatureTransform:function () {
+    nodeToArmatureTransform: function() {
         return this._worldTransform;
     },
 
     /**
      * Returns the world affine transform matrix. The matrix is in Pixels.
-     * @returns {cc.AffineTransform}
+     * @return {cc.AffineTransform}
      */
-    nodeToWorldTransform: function () {
+    nodeToWorldTransform: function() {
         return cc.AffineTransformConcat(this._worldTransform, this._armature.nodeToWorldTransform());
     },
 
     /**
      * get render node
-     * @returns {cc.Node}
+     * @return {cc.Node}
      */
-    getDisplayRenderNode: function () {
+    getDisplayRenderNode: function() {
         return this._displayManager.getDisplayRenderNode();
     },
 
     /**
      * get render node type
-     * @returns {Number}
+     * @return {Number}
      */
-    getDisplayRenderNodeType: function () {
+    getDisplayRenderNodeType: function() {
         return this._displayManager.getDisplayRenderNodeType();
     },
 
@@ -468,7 +468,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      *@param {Number}    index the index of the display you want to replace or add to
      *          -1 : append display from back
      */
-    addDisplay:function (displayData, index) {
+    addDisplay: function(displayData, index) {
         index = index || 0;
         return this._displayManager.addDisplay(displayData, index);
     },
@@ -477,12 +477,12 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * remove display
      * @param {Number} index
      */
-    removeDisplay: function (index) {
+    removeDisplay: function(index) {
         this._displayManager.removeDisplay(index);
     },
 
-    addSkin:function (skin, index) {
-        index = index||0;
+    addSkin: function(skin, index) {
+        index = index || 0;
         return this._displayManager.addSkin(skin, index);
     },
 
@@ -491,8 +491,8 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * @param {Number} index
      * @param {Boolean} force
      */
-    changeDisplayByIndex:function (index, force) {
-        cc.log("changeDisplayByIndex is deprecated. Use changeDisplayWithIndex instead.");
+    changeDisplayByIndex: function(index, force) {
+        cc.log('changeDisplayByIndex is deprecated. Use changeDisplayWithIndex instead.');
         this.changeDisplayWithIndex(index, force);
     },
 
@@ -501,7 +501,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * @param {Number} index
      * @param {Boolean} force
      */
-    changeDisplayWithIndex:function (index, force) {
+    changeDisplayWithIndex: function(index, force) {
         this._displayManager.changeDisplayWithIndex(index, force);
     },
 
@@ -510,18 +510,18 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * @param {String} name
      * @param {Boolean} force
      */
-    changeDisplayWithName:function (name, force) {
+    changeDisplayWithName: function(name, force) {
         this._displayManager.changeDisplayWithName(name, force);
     },
 
     /**
      * get the collider body list in this bone.
-     * @returns {*}
+     * @return {*}
      */
-    getColliderBodyList: function () {
-        var decoDisplay = this._displayManager.getCurrentDecorativeDisplay()
+    getColliderBodyList: function() {
+        var decoDisplay = this._displayManager.getCurrentDecorativeDisplay();
         if (decoDisplay) {
-            var detector = decoDisplay.getColliderDetector()
+            var detector = decoDisplay.getColliderDetector();
             if (detector) {
                 return detector.getColliderBodyList();
             }
@@ -533,7 +533,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * collider filter setter
      * @param {cc.ColliderFilter} filter
      */
-    setColliderFilter: function (filter) {
+    setColliderFilter: function(filter) {
         var displayList = this._displayManager.getDecorativeDisplayList();
         for (var i = 0; i < displayList.length; i++) {
             var locDecoDisplay = displayList[i];
@@ -547,9 +547,9 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
 
     /**
      * collider filter getter
-     * @returns {cc.ColliderFilter}
+     * @return {cc.ColliderFilter}
      */
-    getColliderFilter: function () {
+    getColliderFilter: function() {
         var decoDisplay = this._displayManager.getCurrentDecorativeDisplay();
         if (decoDisplay) {
             var detector = decoDisplay.getColliderDetector();
@@ -564,7 +564,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * displayManager setter
      * @param {ccs.DisplayManager}
         */
-    setDisplayManager:function (displayManager) {
+    setDisplayManager: function(displayManager) {
         this._displayManager = displayManager;
     },
 
@@ -572,7 +572,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * displayManager dirty getter
      * @return {ccs.DisplayManager}
      */
-    getDisplayManager:function () {
+    getDisplayManager: function() {
         return this._displayManager;
     },
 
@@ -581,7 +581,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      *    Set IgnoreMovementBoneData to true, then this bone will also show.
      * @param {Boolean} bool
      */
-    setIgnoreMovementBoneData:function (bool) {
+    setIgnoreMovementBoneData: function(bool) {
         this._ignoreMovementBoneData = bool;
     },
 
@@ -589,7 +589,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * ignoreMovementBoneData  getter
      * @return {Boolean}
      */
-    getIgnoreMovementBoneData:function () {
+    getIgnoreMovementBoneData: function() {
         return this._ignoreMovementBoneData;
     },
 
@@ -597,7 +597,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * tweenData  getter
      * @return {ccs.FrameData}
      */
-    getTweenData:function () {
+    getTweenData: function() {
         return this._tweenData;
     },
 
@@ -605,7 +605,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * name  setter
      * @param {String} name
      */
-    setName:function (name) {
+    setName: function(name) {
         this._name = name;
     },
 
@@ -613,7 +613,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * name  getter
      * @return {String}
      */
-    getName:function () {
+    getName: function() {
         return this._name;
     },
 
@@ -621,8 +621,8 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * BlendFunc  setter
      * @param {cc.BlendFunc} blendFunc
      */
-    setBlendFunc:function (blendFunc) {
-        if (this._blendFunc.src != blendFunc.src || this._blendFunc.dst != blendFunc.dst)        {
+    setBlendFunc: function(blendFunc) {
+        if (this._blendFunc.src != blendFunc.src || this._blendFunc.dst != blendFunc.dst) {
             this._blendFunc = blendFunc;
             this._blendDirty = true;
         }
@@ -632,15 +632,15 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
      * blendType  getter
      * @return {cc.BlendFunc}
      */
-    getBlendFunc:function () {
+    getBlendFunc: function() {
         return this._blendFunc;
     },
 
-    setBlendDirty:function(dirty){
+    setBlendDirty: function(dirty) {
         this._blendDirty = dirty;
     },
 
-    isBlendDirty:function(){
+    isBlendDirty: function() {
         return this._blendDirty;
     }
 });
@@ -653,7 +653,7 @@ ccs.Bone = ccs.NodeRGBA.extend(/** @lends ccs.Bone# */{
  * // example
  * var bone = ccs.Bone.create();
  */
-ccs.Bone.create = function (name) {
+ccs.Bone.create = function(name) {
     var bone = new ccs.Bone();
     if (bone && bone.init(name)) {
         return bone;

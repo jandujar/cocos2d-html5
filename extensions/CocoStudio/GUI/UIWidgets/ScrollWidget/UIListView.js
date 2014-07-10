@@ -57,7 +57,7 @@ ccs.ListView = ccs.ScrollView.extend({
     _listViewEventSelector: null,
     _curSelectedIndex: 0,
     _refreshViewDirty: true,
-    ctor: function () {
+    ctor: function() {
         ccs.ScrollView.prototype.ctor.call(this);
         this._model = null;
         this._items = [];
@@ -69,7 +69,7 @@ ccs.ListView = ccs.ScrollView.extend({
         this._refreshViewDirty = true;
     },
 
-    init: function () {
+    init: function() {
         if (ccs.ScrollView.prototype.init.call(this)) {
             this._items = [];
             this.setLayoutType(ccs.LayoutType.linearVertical);
@@ -82,14 +82,14 @@ ccs.ListView = ccs.ScrollView.extend({
      * Sets a item model for listview. A model will be cloned for adding default item.
      * @param {ccs.Widget} model
      */
-    setItemModel: function (model) {
+    setItemModel: function(model) {
         if (!model) {
             return;
         }
         this._model = model;
     },
 
-    updateInnerContainerSize: function () {
+    updateInnerContainerSize: function() {
         switch (this._direction) {
             case ccs.ScrollViewDir.vertical:
                 var length = this._items.length;
@@ -118,7 +118,7 @@ ccs.ListView = ccs.ScrollView.extend({
         }
     },
 
-    remedyLayoutParameter: function (item) {
+    remedyLayoutParameter: function(item) {
         if (!item) {
             return;
         }
@@ -225,7 +225,7 @@ ccs.ListView = ccs.ScrollView.extend({
     /**
      * Push back a default item(create by a cloned model) into listview.
      */
-    pushBackDefaultItem: function () {
+    pushBackDefaultItem: function() {
         if (!this._model) {
             return;
         }
@@ -240,7 +240,7 @@ ccs.ListView = ccs.ScrollView.extend({
      * Insert a default item(create by a cloned model) into listview.
      * @param {Number} index
      */
-    insertDefaultItem: function (index) {
+    insertDefaultItem: function(index) {
         if (!this._model) {
             return;
         }
@@ -255,7 +255,7 @@ ccs.ListView = ccs.ScrollView.extend({
      * Push back custom item into listview.
      * @param {ccs.Widget} item
      */
-    pushBackCustomItem: function (item) {
+    pushBackCustomItem: function(item) {
         this._items.push(item);
         this.remedyLayoutParameter(item);
         this.addChild(item);
@@ -267,7 +267,7 @@ ccs.ListView = ccs.ScrollView.extend({
      * @param {ccs.Widget} item
      * @param {Number} index
      */
-    insertCustomItem: function (item, index) {
+    insertCustomItem: function(item, index) {
         cc.ArrayAppendObjectToIndex(this._items, item, index);
         this.remedyLayoutParameter(item);
         this.addChild(item);
@@ -278,7 +278,7 @@ ccs.ListView = ccs.ScrollView.extend({
      * Removes a item whose index is same as the parameter.
      * @param {Number} index
      */
-    removeItem: function (index) {
+    removeItem: function(index) {
         var item = this.getItem(index);
         if (!item) {
             return;
@@ -291,16 +291,16 @@ ccs.ListView = ccs.ScrollView.extend({
     /**
      * Removes the last item of listview.
      */
-    removeLastItem: function () {
+    removeLastItem: function() {
         this.removeItem(this._items.length - 1);
     },
 
     /**
      * Returns a item whose index is same as the parameter.
      * @param {Number} index
-     * @returns {cc.Widget}
+     * @return {cc.Widget}
      */
-    getItem: function (index) {
+    getItem: function(index) {
         if (index < 0 || index >= this._items.length) {
             return null;
         }
@@ -309,18 +309,18 @@ ccs.ListView = ccs.ScrollView.extend({
 
     /**
      * Returns the item container.
-     * @returns {Array}
+     * @return {Array}
      */
-    getItems: function () {
+    getItems: function() {
         return this._items;
     },
 
     /**
      * Returns the index of item.
      * @param {ccs.Widget} item
-     * @returns {Number}
+     * @return {Number}
      */
-    getIndex: function (item) {
+    getIndex: function(item) {
         return cc.ArrayGetIndexOfObject(this._items, item);
     },
 
@@ -328,7 +328,7 @@ ccs.ListView = ccs.ScrollView.extend({
      * Changes the gravity of listview.
      * @param {ccs.ListViewGravity} gravity
      */
-    setGravity: function (gravity) {
+    setGravity: function(gravity) {
         if (this._gravity == gravity) {
             return;
         }
@@ -340,7 +340,7 @@ ccs.ListView = ccs.ScrollView.extend({
      * Changes the margin between each item.
      * @param {Number} margin
      */
-    setItemsMargin: function (margin) {
+    setItemsMargin: function(margin) {
         if (this._itemsMargin == margin) {
             return;
         }
@@ -352,7 +352,7 @@ ccs.ListView = ccs.ScrollView.extend({
      * Changes scroll direction of scrollview.
      * @param {ccs.ScrollViewDir } dir
      */
-    setDirection: function (dir) {
+    setDirection: function(dir) {
         switch (dir) {
             case ccs.ScrollViewDir.vertical:
                 this.setLayoutType(ccs.LayoutType.linearVertical);
@@ -375,18 +375,18 @@ ccs.ListView = ccs.ScrollView.extend({
      * @param {Function} selector
      * @param {Object} target
      */
-    addEventListenerListView: function (selector, target) {
+    addEventListenerListView: function(selector, target) {
         this._listViewEventListener = target;
         this._listViewEventSelector = selector;
     },
 
-    selectedItemEvent: function () {
-        if(this._listViewEventSelector&&this._listViewEventListener){
+    selectedItemEvent: function() {
+        if (this._listViewEventSelector && this._listViewEventListener) {
             this._listViewEventSelector.call(this._listViewEventListener, this, ccs.ListViewEventType.listViewOnselectedItem);
         }
     },
 
-    interceptTouchEvent: function (handleState, sender, touchPoint) {
+    interceptTouchEvent: function(handleState, sender, touchPoint) {
         ccs.ScrollView.prototype.interceptTouchEvent.call(this, handleState, sender, touchPoint);
         if (handleState != 1) {
             var parent = sender;
@@ -403,20 +403,20 @@ ccs.ListView = ccs.ScrollView.extend({
 
     /**
      * get current selected index
-     * @returns {number}
+     * @return {number}
      */
-    getCurSelectedIndex: function () {
+    getCurSelectedIndex: function() {
         return this._curSelectedIndex;
     },
 
     /**
      * request refresh view
      */
-    requestRefreshView: function () {
+    requestRefreshView: function() {
         this._refreshViewDirty = true;
     },
 
-    refreshView: function () {
+    refreshView: function() {
         for (var i = 0; i < this._items.length; i++) {
             var item = this._items[i];
             item.setZOrder(i);
@@ -425,7 +425,7 @@ ccs.ListView = ccs.ScrollView.extend({
         this.updateInnerContainerSize();
     },
 
-    sortAllChildren: function () {
+    sortAllChildren: function() {
         ccs.ScrollView.prototype.sortAllChildren.call(this);
         if (this._refreshViewDirty) {
             this.refreshView();
@@ -433,24 +433,24 @@ ccs.ListView = ccs.ScrollView.extend({
         }
     },
 
-    onSizeChanged: function () {
+    onSizeChanged: function() {
         ccs.ScrollView.prototype.onSizeChanged.call(this);
         this._refreshViewDirty = true;
     },
 
     /**
      * Returns the "class name" of widget.
-     * @returns {string}
+     * @return {string}
      */
-    getDescription: function () {
-        return "ListView";
+    getDescription: function() {
+        return 'ListView';
     },
 
-    createCloneInstance: function () {
+    createCloneInstance: function() {
         return ccs.ListView.create();
     },
 
-    copyClonedWidgetChildren: function (model) {
+    copyClonedWidgetChildren: function(model) {
         var arrayItems = model.getItems();
         for (var i = 0; i < arrayItems.length; i++) {
             var item = arrayItems[i];
@@ -458,7 +458,7 @@ ccs.ListView = ccs.ScrollView.extend({
         }
     },
 
-    copySpecialProperties: function (listView) {
+    copySpecialProperties: function(listView) {
         ccs.ScrollView.prototype.copySpecialProperties.call(this, listView);
         this.setItemModel(listView._model);
         this.setItemsMargin(listView._itemsMargin);
@@ -466,7 +466,7 @@ ccs.ListView = ccs.ScrollView.extend({
     }
 });
 
-ccs.ListView.create = function () {
+ccs.ListView.create = function() {
     var uiListView = new ccs.ListView();
     if (uiListView && uiListView.init()) {
         return uiListView;

@@ -59,13 +59,13 @@ cc.CONTROL_STATE_INITIAL = 1 << 3;
  * @extends cc.LayerRGBA
  */
 cc.Control = cc.LayerRGBA.extend({
-    _isOpacityModifyRGB:false,
-    _hasVisibleParents:false,
+    _isOpacityModifyRGB: false,
+    _hasVisibleParents: false,
 
-    isOpacityModifyRGB:function () {
+    isOpacityModifyRGB: function() {
         return this._isOpacityModifyRGB;
     },
-    setOpacityModifyRGB:function (opacityModifyRGB) {
+    setOpacityModifyRGB: function(opacityModifyRGB) {
         this._isOpacityModifyRGB = opacityModifyRGB;
 
         var children = this.getChildren();
@@ -77,28 +77,28 @@ cc.Control = cc.LayerRGBA.extend({
     },
 
     /** The current control state constant. */
-    _state:cc.CONTROL_STATE_NORMAL,
-    getState:function () {
+    _state: cc.CONTROL_STATE_NORMAL,
+    getState: function() {
         return this._state;
     },
 
-    _enabled:false,
-    _selected:false,
-    _highlighted:false,
+    _enabled: false,
+    _selected: false,
+    _highlighted: false,
 
-    _dispatchTable:null,
+    _dispatchTable: null,
 
     /**
      * Tells whether the control is enabled
      * @param {Boolean} enabled
      */
-    setEnabled:function (enabled) {
+    setEnabled: function(enabled) {
         this._enabled = enabled;
-        this._state = enabled ? cc.CONTROL_STATE_NORMAL:cc.CONTROL_STATE_DISABLED;
+        this._state = enabled ? cc.CONTROL_STATE_NORMAL : cc.CONTROL_STATE_DISABLED;
 
         this.needsLayout();
     },
-    isEnabled:function () {
+    isEnabled: function() {
         return this._enabled;
     },
 
@@ -106,11 +106,11 @@ cc.Control = cc.LayerRGBA.extend({
      * A Boolean value that determines the control selected state.
      * @param {Boolean} selected
      */
-    setSelected:function (selected) {
+    setSelected: function(selected) {
         this._selected = selected;
         this.needsLayout();
     },
-    isSelected:function () {
+    isSelected: function() {
         return this._selected;
     },
 
@@ -118,15 +118,15 @@ cc.Control = cc.LayerRGBA.extend({
      *  A Boolean value that determines whether the control is highlighted.
      * @param {Boolean} highlighted
      */
-    setHighlighted:function (highlighted) {
+    setHighlighted: function(highlighted) {
         this._highlighted = highlighted;
         this.needsLayout();
     },
-    isHighlighted:function () {
+    isHighlighted: function() {
         return this._highlighted;
     },
 
-    hasVisibleParents:function () {
+    hasVisibleParents: function() {
         var parent = this.getParent();
         for (var c = parent; c != null; c = c.getParent()) {
             if (!c.isVisible())
@@ -135,13 +135,13 @@ cc.Control = cc.LayerRGBA.extend({
         return true;
     },
 
-    ctor:function () {
+    ctor: function() {
         cc.LayerRGBA.prototype.ctor.call(this);
         this._dispatchTable = {};
         this._color = cc.white();
     },
 
-    init:function () {
+    init: function() {
         if (cc.LayerRGBA.prototype.init.call(this)) {
             //this.setTouchEnabled(true);
             //m_bIsTouchEnabled=true;
@@ -163,7 +163,7 @@ cc.Control = cc.LayerRGBA.extend({
             return false;
     },
 
-    registerWithTouchDispatcher:function () {
+    registerWithTouchDispatcher: function() {
         cc.registerTargetedDelegate(this.getTouchPriority(), true, this);
     },
 
@@ -172,7 +172,7 @@ cc.Control = cc.LayerRGBA.extend({
      * which action messages are sent. See "CCControlEvent" for bitmask constants.
      * @param {Number} controlEvents A bitmask whose set flags specify the control events for
      */
-    sendActionsForControlEvents:function (controlEvents) {
+    sendActionsForControlEvents: function(controlEvents) {
         // For each control events
         for (var i = 0, len = cc.CONTROL_EVENT_TOTAL_NUMBER; i < len; i++) {
             // If the given controlEvents bitmask contains the curent event
@@ -199,7 +199,7 @@ cc.Control = cc.LayerRGBA.extend({
      * @param {function} action A selector identifying an action message. It cannot be NULL.
      * @param {Number} controlEvents A bitmask specifying the control events for which the action message is sent. See "CCControlEvent" for bitmask constants.
      */
-    addTargetWithActionForControlEvents:function (target, action, controlEvents) {
+    addTargetWithActionForControlEvents: function(target, action, controlEvents) {
         // For each control events
         for (var i = 0, len = cc.CONTROL_EVENT_TOTAL_NUMBER; i < len; i++) {
             // If the given controlEvents bit mask contains the current event
@@ -215,7 +215,7 @@ cc.Control = cc.LayerRGBA.extend({
      * @param {function} action A selector identifying an action message. Pass NULL to remove all action messages paired with target.
      * @param {Number} controlEvents A bitmask specifying the control events associated with target and action. See "CCControlEvent" for bitmask constants.
      */
-    removeTargetWithActionForControlEvents:function (target, action, controlEvents) {
+    removeTargetWithActionForControlEvents: function(target, action, controlEvents) {
         // For each control events
         for (var i = 0, len = cc.CONTROL_EVENT_TOTAL_NUMBER; i < len; i++) {
             // If the given controlEvents bitmask contains the current event
@@ -229,7 +229,7 @@ cc.Control = cc.LayerRGBA.extend({
      * control space coordinates.
      * @param {cc.Touch} touch A CCTouch object that represents a touch.
      */
-    getTouchLocation:function (touch) {
+    getTouchLocation: function(touch) {
         var touchLocation = touch.getLocation();                      // Get the touch position
         return this.convertToNodeSpace(touchLocation);  // Convert to the node space of this class
     },
@@ -240,7 +240,7 @@ cc.Control = cc.LayerRGBA.extend({
      * @param {cc.Touch} touch A cc.Touch object that represents a touch.
      * @return {Boolean} YES whether a touch is inside the receiver's rect.
      */
-    isTouchInside:function (touch) {
+    isTouchInside: function(touch) {
         var touchLocation = touch.getLocation(); // Get the touch position
         touchLocation = this.getParent().convertToNodeSpace(touchLocation);
         return cc.rectContainsPoint(this.getBoundingBox(), touchLocation);
@@ -258,7 +258,7 @@ cc.Control = cc.LayerRGBA.extend({
      *
      * @return {cc.Invocation} an CCInvocation object able to construct messages using a given target-action pair.
      */
-    _invocationWithTargetAndActionForControlEvent:function (target, action, controlEvent) {
+    _invocationWithTargetAndActionForControlEvent: function(target, action, controlEvent) {
         return null;
     },
 
@@ -268,7 +268,7 @@ cc.Control = cc.LayerRGBA.extend({
      * @param {Number} controlEvent A control events for which the action message is sent. See "CCControlEvent" for constants.
      * @return {cc.Invocation} the cc.Invocation list for the given control event.
      */
-    _dispatchListforControlEvent:function (controlEvent) {
+    _dispatchListforControlEvent: function(controlEvent) {
         controlEvent = controlEvent.toString();
         // If the invocation list does not exist for the  dispatch table, we create it
         if (!this._dispatchTable.hasOwnProperty(controlEvent))
@@ -289,7 +289,7 @@ cc.Control = cc.LayerRGBA.extend({
      * @param controlEvent A control event for which the action message is sent.
      * See "CCControlEvent" for constants.
      */
-    _addTargetWithActionForControlEvent:function (target, action, controlEvent) {
+    _addTargetWithActionForControlEvent: function(target, action, controlEvent) {
         // Create the invocation object
         var invocation = new cc.Invocation(target, action, controlEvent);
 
@@ -305,7 +305,7 @@ cc.Control = cc.LayerRGBA.extend({
      * @param {function} action A selector identifying an action message. Pass NULL to remove all action messages paired with target.
      * @param {Number} controlEvent A control event for which the action message is sent. See "CCControlEvent" for constants.
      */
-    _removeTargetWithActionForControlEvent:function (target, action, controlEvent) {
+    _removeTargetWithActionForControlEvent: function(target, action, controlEvent) {
         // Retrieve all invocations for the given control event
         //<CCInvocation*>
         var eventInvocationList = this._dispatchListforControlEvent(controlEvent);
@@ -329,7 +329,7 @@ cc.Control = cc.LayerRGBA.extend({
                 if (shouldBeRemoved)
                     cc.ArrayRemoveObject(eventInvocationList, invocation);
                 else
-                    i ++;
+                    i++;
             }
         }
     },
@@ -337,11 +337,11 @@ cc.Control = cc.LayerRGBA.extend({
     /**
      * Updates the control layout using its current internal state.
      */
-    needsLayout:function () {
+    needsLayout: function() {
     }
 });
 
-cc.Control.create = function () {
+cc.Control.create = function() {
     var retControl = new cc.Control();
     if (retControl && retControl.init())
         return retControl;

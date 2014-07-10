@@ -4,38 +4,38 @@ plugin.SocialWeibo = cc.Class.extend({
     /**
      methods of protocol : InterfaceSocial
      */
-    init: function () {
+    init: function() {
         this._shareInfo = {
             'appkey': 12345678,
-            'title': "Hello, Cocos2d-html5!",
+            'title': 'Hello, Cocos2d-html5!',
             'url': window.location.href,
             'pic': null
         };
     },
-    configDeveloperInfo: function (cpInfo) {
-        this._shareInfo.appkey = cpInfo["WeiboAppKey"];
+    configDeveloperInfo: function(cpInfo) {
+        this._shareInfo.appkey = cpInfo['WeiboAppKey'];
     },
-    share: function (shareInfo) {
-        this._shareInfo.title = shareInfo["SharedText"];
-        this._shareInfo.pic = shareInfo["SharedImagePath"];
+    share: function(shareInfo) {
+        this._shareInfo.title = shareInfo['SharedText'];
+        this._shareInfo.pic = shareInfo['SharedImagePath'];
 
-        var urlstring = "?", value;
+        var urlstring = '?', value;
         for (var key in this._shareInfo) {
             value = this._shareInfo[key];
             if (value) {
-                urlstring += encodeURI(key + "=" + value) + "&";
+                urlstring += encodeURI(key + '=' + value) + '&';
             }
         }
         urlstring = urlstring.substr(0, urlstring.length - 1);
-        cc.Browser.openURL("http://v.t.sina.com.cn/share/share.php?" + urlstring);
+        cc.Browser.openURL('http://v.t.sina.com.cn/share/share.php?' + urlstring);
     },
-    setDebugMode: function (debug) {
+    setDebugMode: function(debug) {
         //invalid on html5
     },
-    getSDKVersion: function () {
-        return "2.0";
+    getSDKVersion: function() {
+        return '2.0';
     },
-    getPluginVersion: function () {
+    getPluginVersion: function() {
         return plugin.Version;
     }
 });

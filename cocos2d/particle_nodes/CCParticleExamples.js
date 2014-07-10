@@ -37,7 +37,7 @@ cc.ParticleFire = cc.ParticleSystem.extend(/** @lends cc.ParticleFire# */{
      * initialize a fire particle system
      * @return {Boolean}
      */
-    init:function () {
+    init: function() {
         return this.initWithTotalParticles((cc.renderContextType === cc.WEBGL) ? 300 : 150);
     },
 
@@ -46,7 +46,7 @@ cc.ParticleFire = cc.ParticleSystem.extend(/** @lends cc.ParticleFire# */{
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
+    initWithTotalParticles: function(numberOfParticles) {
         if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
             // duration
             this.setDuration(cc.PARTICLE_DURATION_INFINITY);
@@ -89,10 +89,10 @@ cc.ParticleFire = cc.ParticleSystem.extend(/** @lends cc.ParticleFire# */{
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(cc.c4f(0.76,0.25,0.12,1.0));
-            this.setStartColorVar(cc.c4f(0,0,0,0));
-            this.setEndColor(cc.c4f(0,0,0,1));
-            this.setEndColorVar(cc.c4f(0,0,0,0));
+            this.setStartColor(cc.c4f(0.76, 0.25, 0.12, 1.0));
+            this.setStartColorVar(cc.c4f(0, 0, 0, 0));
+            this.setEndColor(cc.c4f(0, 0, 0, 1));
+            this.setEndColorVar(cc.c4f(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(true);
@@ -109,7 +109,7 @@ cc.ParticleFire = cc.ParticleSystem.extend(/** @lends cc.ParticleFire# */{
  * @example
  * var emitter = cc.ParticleFire.create();
  */
-cc.ParticleFire.create = function () {
+cc.ParticleFire.create = function() {
     var ret = new cc.ParticleFire();
     if (ret.init()) {
         return ret;
@@ -130,7 +130,7 @@ cc.ParticleFireworks = cc.ParticleSystem.extend(/** @lends cc.ParticleFireworks#
      * initialize a fireworks particle system
      * @return {Boolean}
      */
-    init:function () {
+    init: function() {
         return this.initWithTotalParticles((cc.renderContextType === cc.WEBGL) ? 1500 : 150);
     },
 
@@ -139,7 +139,7 @@ cc.ParticleFireworks = cc.ParticleSystem.extend(/** @lends cc.ParticleFireworks#
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
+    initWithTotalParticles: function(numberOfParticles) {
         if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
             // duration
             this.setDuration(cc.PARTICLE_DURATION_INFINITY);
@@ -174,10 +174,10 @@ cc.ParticleFireworks = cc.ParticleSystem.extend(/** @lends cc.ParticleFireworks#
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(cc.c4f(0.5,0.5,0.5,1.0));
-            this.setStartColorVar(cc.c4f(0.5,0.5,0.5,1.0));
-            this.setEndColor(cc.c4f(0.1,0.1,0.1,0.2));
-            this.setEndColorVar(cc.c4f(0.1,0.1,0.1,0.2));
+            this.setStartColor(cc.c4f(0.5, 0.5, 0.5, 1.0));
+            this.setStartColorVar(cc.c4f(0.5, 0.5, 0.5, 1.0));
+            this.setEndColor(cc.c4f(0.1, 0.1, 0.1, 0.2));
+            this.setEndColorVar(cc.c4f(0.1, 0.1, 0.1, 0.2));
 
             // size, in pixels
             this.setStartSize(8.0);
@@ -199,7 +199,7 @@ cc.ParticleFireworks = cc.ParticleSystem.extend(/** @lends cc.ParticleFireworks#
  * @example
  * var emitter = cc.ParticleFireworks.create();
  */
-cc.ParticleFireworks.create = function () {
+cc.ParticleFireworks.create = function() {
     var ret = new cc.ParticleFireworks();
     if (ret.init()) {
         return ret;
@@ -220,7 +220,7 @@ cc.ParticleSun = cc.ParticleSystem.extend(/** @lends cc.ParticleSun# */{
      * initialize a sun particle system
      * @return {Boolean}
      */
-    init:function () {
+    init: function() {
         return this.initWithTotalParticles((cc.renderContextType === cc.WEBGL) ? 350 : 150);
     },
 
@@ -229,7 +229,7 @@ cc.ParticleSun = cc.ParticleSystem.extend(/** @lends cc.ParticleSun# */{
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
+    initWithTotalParticles: function(numberOfParticles) {
         if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
             // additive
             this.setBlendAdditive(true);
@@ -273,10 +273,10 @@ cc.ParticleSun = cc.ParticleSystem.extend(/** @lends cc.ParticleSun# */{
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(cc.c4f(0.76,0.25,0.12,1));
-            this.setStartColorVar(cc.c4f(0,0,0,0));
-            this.setEndColor(cc.c4f(0,0,0,1));
-            this.setEndColorVar(cc.c4f(0,0,0,0));
+            this.setStartColor(cc.c4f(0.76, 0.25, 0.12, 1));
+            this.setStartColorVar(cc.c4f(0, 0, 0, 0));
+            this.setEndColor(cc.c4f(0, 0, 0, 1));
+            this.setEndColorVar(cc.c4f(0, 0, 0, 0));
 
             return true;
         }
@@ -291,7 +291,7 @@ cc.ParticleSun = cc.ParticleSystem.extend(/** @lends cc.ParticleSun# */{
  * @example
  * var emitter = cc.ParticleSun.create();
  */
-cc.ParticleSun.create = function () {
+cc.ParticleSun.create = function() {
     var ret = new cc.ParticleSun();
     if (ret.init()) {
         return ret;
@@ -313,7 +313,7 @@ cc.ParticleGalaxy = cc.ParticleSystem.extend(/** @lends cc.ParticleGalaxy# */{
      * initialize a galaxy particle system
      * @return {Boolean}
      */
-    init:function () {
+    init: function() {
         //return this.initWithTotalParticles(200);
         return this.initWithTotalParticles((cc.renderContextType === cc.WEBGL) ? 200 : 100);
     },
@@ -323,7 +323,7 @@ cc.ParticleGalaxy = cc.ParticleSystem.extend(/** @lends cc.ParticleGalaxy# */{
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
+    initWithTotalParticles: function(numberOfParticles) {
         if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
             // duration
             this.setDuration(cc.PARTICLE_DURATION_INFINITY);
@@ -368,10 +368,10 @@ cc.ParticleGalaxy = cc.ParticleSystem.extend(/** @lends cc.ParticleGalaxy# */{
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(cc.c4f(0.12,0.25,0.76,1));
-            this.setStartColorVar(cc.c4f(0,0,0,0));
-            this.setEndColor(cc.c4f(0,0,0,1));
-            this.setEndColorVar(cc.c4f(0,0,0,0));
+            this.setStartColor(cc.c4f(0.12, 0.25, 0.76, 1));
+            this.setStartColorVar(cc.c4f(0, 0, 0, 0));
+            this.setEndColor(cc.c4f(0, 0, 0, 1));
+            this.setEndColorVar(cc.c4f(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(true);
@@ -387,7 +387,7 @@ cc.ParticleGalaxy = cc.ParticleSystem.extend(/** @lends cc.ParticleGalaxy# */{
  * @example
  * var emitter = cc.ParticleGalaxy.create();
  */
-cc.ParticleGalaxy.create = function () {
+cc.ParticleGalaxy.create = function() {
     var ret = new cc.ParticleGalaxy();
     if (ret.init()) {
         return ret;
@@ -408,7 +408,7 @@ cc.ParticleFlower = cc.ParticleSystem.extend(/** @lends cc.ParticleFlower# */{
      * initialize a flower particle system
      * @return {Boolean}
      */
-    init:function () {
+    init: function() {
         return this.initWithTotalParticles((cc.renderContextType === cc.WEBGL) ? 250 : 100);
     },
 
@@ -417,7 +417,7 @@ cc.ParticleFlower = cc.ParticleSystem.extend(/** @lends cc.ParticleFlower# */{
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
+    initWithTotalParticles: function(numberOfParticles) {
         if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
             // duration
             this.setDuration(cc.PARTICLE_DURATION_INFINITY);
@@ -462,10 +462,10 @@ cc.ParticleFlower = cc.ParticleSystem.extend(/** @lends cc.ParticleFlower# */{
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(cc.c4f(0.5,0.5,0.5,1));
-            this.setStartColorVar(cc.c4f(0.5,0.5,0.5,0.5));
-            this.setEndColor(cc.c4f(0,0,0,1));
-            this.setEndColorVar(cc.c4f(0,0,0,0));
+            this.setStartColor(cc.c4f(0.5, 0.5, 0.5, 1));
+            this.setStartColorVar(cc.c4f(0.5, 0.5, 0.5, 0.5));
+            this.setEndColor(cc.c4f(0, 0, 0, 1));
+            this.setEndColorVar(cc.c4f(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(true);
@@ -482,7 +482,7 @@ cc.ParticleFlower = cc.ParticleSystem.extend(/** @lends cc.ParticleFlower# */{
  * @example
  * var emitter = cc.ParticleFlower.create();
  */
-cc.ParticleFlower.create = function () {
+cc.ParticleFlower.create = function() {
     var ret = new cc.ParticleFlower();
     if (ret.init()) {
         return ret;
@@ -504,7 +504,7 @@ cc.ParticleMeteor = cc.ParticleSystem.extend(/** @lends cc.ParticleMeteor# */{
      * initialize a meteor particle system
      * @return {Boolean}
      */
-    init:function () {
+    init: function() {
         return this.initWithTotalParticles((cc.renderContextType === cc.WEBGL) ? 150 : 100);
     },
 
@@ -513,7 +513,7 @@ cc.ParticleMeteor = cc.ParticleSystem.extend(/** @lends cc.ParticleMeteor# */{
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
+    initWithTotalParticles: function(numberOfParticles) {
         if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
             // duration
             this.setDuration(cc.PARTICLE_DURATION_INFINITY);
@@ -558,10 +558,10 @@ cc.ParticleMeteor = cc.ParticleSystem.extend(/** @lends cc.ParticleMeteor# */{
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(cc.c4f(0.2,0.4,0.7,1));
-            this.setStartColorVar(cc.c4f(0,0,0.2,0.1));
-            this.setEndColor(cc.c4f(0,0,0,1));
-            this.setEndColorVar(cc.c4f(0,0,0,0));
+            this.setStartColor(cc.c4f(0.2, 0.4, 0.7, 1));
+            this.setStartColorVar(cc.c4f(0, 0, 0.2, 0.1));
+            this.setEndColor(cc.c4f(0, 0, 0, 1));
+            this.setEndColorVar(cc.c4f(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(true);
@@ -578,7 +578,7 @@ cc.ParticleMeteor = cc.ParticleSystem.extend(/** @lends cc.ParticleMeteor# */{
  * @example
  * var emitter = cc.ParticleMeteor.create();
  */
-cc.ParticleMeteor.create = function () {
+cc.ParticleMeteor.create = function() {
     var ret = new cc.ParticleMeteor();
     if (ret.init()) {
         return ret;
@@ -599,7 +599,7 @@ cc.ParticleSpiral = cc.ParticleSystem.extend(/** @lends cc.ParticleSpiral# */{
      * initialize a spiral particle system
      * @return {Boolean}
      */
-    init:function () {
+    init: function() {
         return this.initWithTotalParticles((cc.renderContextType === cc.WEBGL) ? 500 : 100);
     },
 
@@ -608,7 +608,7 @@ cc.ParticleSpiral = cc.ParticleSystem.extend(/** @lends cc.ParticleSpiral# */{
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
+    initWithTotalParticles: function(numberOfParticles) {
         if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
             // duration
             this.setDuration(cc.PARTICLE_DURATION_INFINITY);
@@ -653,10 +653,10 @@ cc.ParticleSpiral = cc.ParticleSystem.extend(/** @lends cc.ParticleSpiral# */{
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(cc.c4f(0.5,0.5,0.5,1));
-            this.setStartColorVar(cc.c4f(0.5,0.5,0.5,0));
-            this.setEndColor(cc.c4f(0.5,0.5,0.5,1));
-            this.setEndColorVar(cc.c4f(0.5,0.5,0.5,0));
+            this.setStartColor(cc.c4f(0.5, 0.5, 0.5, 1));
+            this.setStartColorVar(cc.c4f(0.5, 0.5, 0.5, 0));
+            this.setEndColor(cc.c4f(0.5, 0.5, 0.5, 1));
+            this.setEndColorVar(cc.c4f(0.5, 0.5, 0.5, 0));
 
             // additive
             this.setBlendAdditive(false);
@@ -673,7 +673,7 @@ cc.ParticleSpiral = cc.ParticleSystem.extend(/** @lends cc.ParticleSpiral# */{
  * @example
  * var emitter = cc.ParticleSpiral.create();
  */
-cc.ParticleSpiral.create = function () {
+cc.ParticleSpiral.create = function() {
     var ret = new cc.ParticleSpiral();
     if (ret.init()) {
         return ret;
@@ -694,7 +694,7 @@ cc.ParticleExplosion = cc.ParticleSystem.extend(/** @lends cc.ParticleExplosion#
      * initialize an explosion particle system
      * @return {Boolean}
      */
-    init:function () {
+    init: function() {
         //return this.initWithTotalParticles(700);
         return this.initWithTotalParticles((cc.renderContextType === cc.WEBGL) ? 700 : 300);
     },
@@ -704,7 +704,7 @@ cc.ParticleExplosion = cc.ParticleSystem.extend(/** @lends cc.ParticleExplosion#
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
+    initWithTotalParticles: function(numberOfParticles) {
         if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
             // duration
             this.setDuration(0.1);
@@ -748,10 +748,10 @@ cc.ParticleExplosion = cc.ParticleSystem.extend(/** @lends cc.ParticleExplosion#
             this.setEmissionRate(this.getTotalParticles() / this.getDuration());
 
             // color of particles
-            this.setStartColor(cc.c4f(0.7,0.1,0.2,1));
-            this.setStartColorVar(cc.c4f(0.5,0.5,0.5,0));
-            this.setEndColor(cc.c4f(0.5,0.5,0.5,0));
-            this.setEndColorVar(cc.c4f(0.5,0.5,0.5,0));
+            this.setStartColor(cc.c4f(0.7, 0.1, 0.2, 1));
+            this.setStartColorVar(cc.c4f(0.5, 0.5, 0.5, 0));
+            this.setEndColor(cc.c4f(0.5, 0.5, 0.5, 0));
+            this.setEndColorVar(cc.c4f(0.5, 0.5, 0.5, 0));
 
             // additive
             this.setBlendAdditive(false);
@@ -768,7 +768,7 @@ cc.ParticleExplosion = cc.ParticleSystem.extend(/** @lends cc.ParticleExplosion#
  * @example
  * var emitter = cc.ParticleExplosion.create();
  */
-cc.ParticleExplosion.create = function () {
+cc.ParticleExplosion.create = function() {
     var ret = new cc.ParticleExplosion();
     if (ret.init()) {
         return ret;
@@ -789,7 +789,7 @@ cc.ParticleSmoke = cc.ParticleSystem.extend(/** @lends cc.ParticleSmoke# */{
      * initialize a smoke particle system
      * @return {Boolean}
      */
-    init:function () {
+    init: function() {
         //return this.initWithTotalParticles(200);
         return this.initWithTotalParticles((cc.renderContextType === cc.WEBGL) ? 200 : 100);
     },
@@ -799,7 +799,7 @@ cc.ParticleSmoke = cc.ParticleSystem.extend(/** @lends cc.ParticleSmoke# */{
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
+    initWithTotalParticles: function(numberOfParticles) {
         if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
             // duration
             this.setDuration(cc.PARTICLE_DURATION_INFINITY);
@@ -840,10 +840,10 @@ cc.ParticleSmoke = cc.ParticleSystem.extend(/** @lends cc.ParticleSmoke# */{
             this.setEmissionRate(this.getTotalParticles() / this.getLife());
 
             // color of particles
-            this.setStartColor(cc.c4f(0.8,0.8,0.8,1));
-            this.setStartColorVar(cc.c4f(0.02,0.02,0.02,0));
-            this.setEndColor(cc.c4f(0,0,0,1));
-            this.setEndColorVar(cc.c4f(0,0,0,0));
+            this.setStartColor(cc.c4f(0.8, 0.8, 0.8, 1));
+            this.setStartColorVar(cc.c4f(0.02, 0.02, 0.02, 0));
+            this.setEndColor(cc.c4f(0, 0, 0, 1));
+            this.setEndColorVar(cc.c4f(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(false);
@@ -860,7 +860,7 @@ cc.ParticleSmoke = cc.ParticleSystem.extend(/** @lends cc.ParticleSmoke# */{
  * @example
  * var emitter = cc.ParticleFireworks.create();
  */
-cc.ParticleSmoke.create = function () {
+cc.ParticleSmoke.create = function() {
     var ret = new cc.ParticleSmoke();
     if (ret.init()) {
         return ret;
@@ -881,7 +881,7 @@ cc.ParticleSnow = cc.ParticleSystem.extend(/** @lends cc.ParticleSnow# */{
      * initialize a snow particle system
      * @return {Boolean}
      */
-    init:function () {
+    init: function() {
         return this.initWithTotalParticles((cc.renderContextType === cc.WEBGL) ? 700 : 250);
     },
 
@@ -890,7 +890,7 @@ cc.ParticleSnow = cc.ParticleSystem.extend(/** @lends cc.ParticleSnow# */{
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
+    initWithTotalParticles: function(numberOfParticles) {
         if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
             // duration
             this.setDuration(cc.PARTICLE_DURATION_INFINITY);
@@ -935,10 +935,10 @@ cc.ParticleSnow = cc.ParticleSystem.extend(/** @lends cc.ParticleSnow# */{
             this.setEmissionRate(10);
 
             // color of particles
-            this.setStartColor(cc.c4f(1,1,1,1));
-            this.setStartColorVar(cc.c4f(0,0,0,0));
-            this.setEndColor(cc.c4f(1,1,1,0));
-            this.setEndColorVar(cc.c4f(0,0,0,0));
+            this.setStartColor(cc.c4f(1, 1, 1, 1));
+            this.setStartColorVar(cc.c4f(0, 0, 0, 0));
+            this.setEndColor(cc.c4f(1, 1, 1, 0));
+            this.setEndColorVar(cc.c4f(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(false);
@@ -955,7 +955,7 @@ cc.ParticleSnow = cc.ParticleSystem.extend(/** @lends cc.ParticleSnow# */{
  * @example
  * var emitter = cc.ParticleSnow.create();
  */
-cc.ParticleSnow.create = function () {
+cc.ParticleSnow.create = function() {
     var ret = new cc.ParticleSnow();
     if (ret.init()) {
         return ret;
@@ -977,7 +977,7 @@ cc.ParticleRain = cc.ParticleSystem.extend(/** @lends cc.ParticleRain# */{
      * initialize a rain particle system
      * @return {Boolean}
      */
-    init:function () {
+    init: function() {
         return this.initWithTotalParticles((cc.renderContextType === cc.WEBGL) ? 1000 : 300);
     },
 
@@ -986,7 +986,7 @@ cc.ParticleRain = cc.ParticleSystem.extend(/** @lends cc.ParticleRain# */{
      * @param {Number} numberOfParticles
      * @return {Boolean}
      */
-    initWithTotalParticles:function (numberOfParticles) {
+    initWithTotalParticles: function(numberOfParticles) {
         if (cc.ParticleSystem.prototype.initWithTotalParticles.call(this, numberOfParticles)) {
             // duration
             this.setDuration(cc.PARTICLE_DURATION_INFINITY);
@@ -1031,10 +1031,10 @@ cc.ParticleRain = cc.ParticleSystem.extend(/** @lends cc.ParticleRain# */{
             this.setEmissionRate(20);
 
             // color of particles
-            this.setStartColor(cc.c4f(0.7,0.8,1,1));
-            this.setStartColorVar(cc.c4f(0,0,0,0));
-            this.setEndColor(cc.c4f(0.7,0.8,1,0.5));
-            this.setEndColorVar(cc.c4f(0,0,0,0));
+            this.setStartColor(cc.c4f(0.7, 0.8, 1, 1));
+            this.setStartColorVar(cc.c4f(0, 0, 0, 0));
+            this.setEndColor(cc.c4f(0.7, 0.8, 1, 0.5));
+            this.setEndColorVar(cc.c4f(0, 0, 0, 0));
 
             // additive
             this.setBlendAdditive(false);
@@ -1051,7 +1051,7 @@ cc.ParticleRain = cc.ParticleSystem.extend(/** @lends cc.ParticleRain# */{
  * @example
  * var emitter = cc.ParticleRain.create();
  */
-cc.ParticleRain.create = function () {
+cc.ParticleRain.create = function() {
     var ret = new cc.ParticleRain();
     if (ret.init()) {
         return ret;

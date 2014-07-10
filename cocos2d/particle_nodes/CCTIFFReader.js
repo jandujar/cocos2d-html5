@@ -29,22 +29,22 @@ cc.TIFFReader = cc.Class.extend({
     _tiffData: null,
     _fileDirectories: null,
 
-    ctor: function () {
+    ctor: function() {
         this._fileDirectories = [];
     },
 
-    getUint8: function (offset) {
+    getUint8: function(offset) {
         return this._tiffData[offset];
     },
 
-    getUint16: function (offset) {
+    getUint16: function(offset) {
         if (this._littleEndian)
             return (this._tiffData[offset + 1] << 8) | (this._tiffData[offset]);
         else
             return (this._tiffData[offset] << 8) | (this._tiffData[offset + 1]);
     },
 
-    getUint32: function (offset) {
+    getUint32: function(offset) {
         var a = this._tiffData;
         if (this._littleEndian)
             return (a[offset + 3] << 24) | (a[offset + 2] << 16) | (a[offset + 1] << 8) | (a[offset]);
@@ -52,7 +52,7 @@ cc.TIFFReader = cc.Class.extend({
             return (a[offset] << 24) | (a[offset + 1] << 16) | (a[offset + 2] << 8) | (a[offset + 3]);
     },
 
-    checkLittleEndian: function () {
+    checkLittleEndian: function() {
         var BOM = this.getUint16(0);
 
         if (BOM === 0x4949) {
@@ -61,23 +61,23 @@ cc.TIFFReader = cc.Class.extend({
             this.littleEndian = false;
         } else {
             console.log(BOM);
-            throw TypeError("Invalid byte order value.");
+            throw TypeError('Invalid byte order value.');
         }
 
         return this.littleEndian;
     },
 
-    hasTowel: function () {
+    hasTowel: function() {
         // Check for towel.
         if (this.getUint16(2) !== 42) {
-            throw RangeError("You forgot your towel!");
+            throw RangeError('You forgot your towel!');
             return false;
         }
 
         return true;
     },
 
-    getFieldTypeName: function (fieldType) {
+    getFieldTypeName: function(fieldType) {
         var typeNames = this.fieldTypeNames;
         if (fieldType in typeNames) {
             return typeNames[fieldType];
@@ -85,18 +85,18 @@ cc.TIFFReader = cc.Class.extend({
         return null;
     },
 
-    getFieldTagName: function (fieldTag) {
+    getFieldTagName: function(fieldTag) {
         var tagNames = this.fieldTagNames;
 
         if (fieldTag in tagNames) {
             return tagNames[fieldTag];
         } else {
-            console.log("Unknown Field Tag:", fieldTag);
-            return "Tag" + fieldTag;
+            console.log('Unknown Field Tag:', fieldTag);
+            return 'Tag' + fieldTag;
         }
     },
 
-    getFieldTypeLength: function (fieldTypeName) {
+    getFieldTypeLength: function(fieldTypeName) {
         if (['BYTE', 'ASCII', 'SBYTE', 'UNDEFINED'].indexOf(fieldTypeName) !== -1) {
             return 1;
         } else if (['SHORT', 'SSHORT'].indexOf(fieldTypeName) !== -1) {
@@ -109,7 +109,7 @@ cc.TIFFReader = cc.Class.extend({
         return null;
     },
 
-    getFieldValues: function (fieldTagName, fieldTypeName, typeCount, valueOffset) {
+    getFieldValues: function(fieldTagName, fieldTypeName, typeCount, valueOffset) {
         var fieldValues = [];
         var fieldTypeLength = this.getFieldTypeLength(fieldTypeName);
         var fieldValueSize = fieldTypeLength * typeCount;
@@ -139,16 +139,16 @@ cc.TIFFReader = cc.Class.extend({
         }
 
         if (fieldTypeName === 'ASCII') {
-            fieldValues.forEach(function (e, i, a) {
+            fieldValues.forEach(function(e, i, a) {
                 a[i] = String.fromCharCode(e);
             });
         }
         return fieldValues;
     },
 
-    getBytes: function (numBytes, offset) {
+    getBytes: function(numBytes, offset) {
         if (numBytes <= 0) {
-            cc.log("No bytes requested");
+            cc.log('No bytes requested');
         } else if (numBytes <= 1) {
             return this.getUint8(offset);
         } else if (numBytes <= 2) {
@@ -158,20 +158,20 @@ cc.TIFFReader = cc.Class.extend({
         } else if (numBytes <= 4) {
             return this.getUint32(offset);
         } else {
-            cc.log("Too many bytes requested");
+            cc.log('Too many bytes requested');
         }
     },
 
-    getBits: function (numBits, byteOffset, bitOffset) {
+    getBits: function(numBits, byteOffset, bitOffset) {
         bitOffset = bitOffset || 0;
         var extraBytes = Math.floor(bitOffset / 8);
         var newByteOffset = byteOffset + extraBytes;
         var totalBits = bitOffset + numBits;
         var shiftRight = 32 - numBits;
-        var shiftLeft,rawBits;
+        var shiftLeft, rawBits;
 
         if (totalBits <= 0) {
-            console.log("No bits requested");
+            console.log('No bits requested');
         } else if (totalBits <= 8) {
             shiftLeft = 24 + bitOffset;
             rawBits = this.getUint8(newByteOffset);
@@ -182,7 +182,7 @@ cc.TIFFReader = cc.Class.extend({
             shiftLeft = bitOffset;
             rawBits = this.getUint32(newByteOffset);
         } else {
-            console.log( "Too many bits requested" );
+            console.log('Too many bits requested');
         }
 
         return {
@@ -192,7 +192,7 @@ cc.TIFFReader = cc.Class.extend({
         };
     },
 
-    parseFileDirectory: function (byteOffset) {
+    parseFileDirectory: function(byteOffset) {
         var numDirEntries = this.getUint16(byteOffset);
         var tiffFields = [];
 
@@ -223,7 +223,7 @@ cc.TIFFReader = cc.Class.extend({
         return Math.floor((colorSample * multiplier) + (multiplier - 1));
     },
 
-    parseTIFF: function (tiffData, canvas) {
+    parseTIFF: function(tiffData, canvas) {
         canvas = canvas || document.createElement('canvas');
 
         this._tiffData = tiffData;
@@ -259,7 +259,7 @@ cc.TIFFReader = cc.Class.extend({
         var bitsPerPixel = 0;
         var hasBytesPerPixel = false;
 
-        fileDirectory['BitsPerSample'].values.forEach(function (bitsPerSample, i, bitsPerSampleValues) {
+        fileDirectory['BitsPerSample'].values.forEach(function(bitsPerSample, i, bitsPerSampleValues) {
             sampleProperties[i] = {
                 'bitsPerSample': bitsPerSample,
                 'hasBytesPerSample': false,
@@ -286,13 +286,13 @@ cc.TIFFReader = cc.Class.extend({
         if (fileDirectory['StripByteCounts']) {
             var stripByteCountValues = fileDirectory['StripByteCounts'].values;
         } else {
-            cc.log("Missing StripByteCounts!");
+            cc.log('Missing StripByteCounts!');
 
             // Infer StripByteCounts, if possible.
             if (numStripOffsetValues === 1) {
                 var stripByteCountValues = [Math.ceil((imageWidth * imageLength * bitsPerPixel) / 8)];
             } else {
-                throw Error("Cannot recover from missing StripByteCounts");
+                throw Error('Cannot recover from missing StripByteCounts');
             }
         }
 
@@ -322,7 +322,7 @@ cc.TIFFReader = cc.Class.extend({
                                 byteOffset = sampleInfo.byteOffset - stripOffset;
                                 bitOffset = sampleInfo.bitOffset;
 
-                                throw RangeError("Cannot handle sub-byte bits per sample");
+                                throw RangeError('Cannot handle sub-byte bits per sample');
                             }
                         }
 
@@ -332,7 +332,7 @@ cc.TIFFReader = cc.Class.extend({
                             jIncrement = bytesPerPixel;
                         } else {
                             jIncrement = 0;
-                            throw RangeError("Cannot handle sub-byte bits per pixel");
+                            throw RangeError('Cannot handle sub-byte bits per pixel');
                         }
                         break;
 
@@ -402,7 +402,7 @@ cc.TIFFReader = cc.Class.extend({
                                         sample++;
                                     }
                                 } else {
-                                    throw RangeError("Cannot handle sub-byte bits per sample");
+                                    throw RangeError('Cannot handle sub-byte bits per sample');
                                 }
 
                                 // Is our pixel complete?
@@ -433,10 +433,10 @@ cc.TIFFReader = cc.Class.extend({
         }
 
         if (canvas.getContext) {
-            var ctx = this.canvas.getContext("2d");
+            var ctx = this.canvas.getContext('2d');
 
             // Set a default fill style.
-            ctx.fillStyle = "rgba(255, 255, 255, 0)";
+            ctx.fillStyle = 'rgba(255, 255, 255, 0)';
 
             // If RowsPerStrip is missing, the whole image is in one strip.
             var rowsPerStrip = fileDirectory['RowsPerStrip'] ? fileDirectory['RowsPerStrip'].values[0] : imageLength;
@@ -505,7 +505,7 @@ cc.TIFFReader = cc.Class.extend({
                                 }
 
                                 // Invert samples.
-                                pixelSamples.forEach(function (sample, index, samples) {
+                                pixelSamples.forEach(function(sample, index, samples) {
                                     samples[index] = invertValue - sample;
                                 });
 
@@ -525,7 +525,7 @@ cc.TIFFReader = cc.Class.extend({
                             // RGB Color Palette
                             case 3:
                                 if (colorMapValues === undefined) {
-                                    throw Error("Palette image missing color map");
+                                    throw Error('Palette image missing color map');
                                 }
 
                                 var colorMapIndex = pixelSamples[0];
@@ -541,7 +541,7 @@ cc.TIFFReader = cc.Class.extend({
                                 break;
                         }
 
-                        ctx.fillStyle = "rgba(" + red + ", " + green + ", " + blue + ", " + opacity + ")";
+                        ctx.fillStyle = 'rgba(' + red + ', ' + green + ', ' + blue + ', ' + opacity + ')';
                         ctx.fillRect(x, yPadding + y, 1, 1);
                     }
                 }
@@ -682,7 +682,7 @@ cc.TIFFReader = cc.Class.extend({
 });
 
 cc.TIFFReader.__instance = null;
-cc.TIFFReader.getInstance = function () {
+cc.TIFFReader.getInstance = function() {
     if (!cc.TIFFReader.__instance)
         cc.TIFFReader.__instance = new cc.TIFFReader();
     return cc.TIFFReader.__instance;

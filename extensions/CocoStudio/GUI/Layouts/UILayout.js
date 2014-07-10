@@ -76,18 +76,18 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
     _backGroundImageTextureSize: null,
     _layoutType: null,
     _doLayoutDirty: false,
-    _clippingType : null,
+    _clippingType: null,
     _clippingStencil: null,
     _handleScissor: false,
     _scissorRectDirty: false,
     _clippingRect: null,
     _clippingParent: null,
-    ctor: function () {
+    ctor: function() {
         ccs.Widget.prototype.ctor.call(this);
         this._clippingEnabled = false;
         this._backGroundScale9Enabled = false;
         this._backGroundImage = null;
-        this._backGroundImageFileName = "";
+        this._backGroundImageFileName = '';
         this._backGroundImageCapInsets = cc.RectZero();
         this._colorType = ccs.LayoutBackGroundColorType.none;
         this._bgImageTexType = ccs.TextureResType.local;
@@ -109,8 +109,8 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
         this._clippingRect = cc.rect(0, 0, 0, 0);
         this._clippingParent = null;
     },
-    init: function () {
-        if (cc.NodeRGBA.prototype.init.call(this)){
+    init: function() {
+        if (cc.NodeRGBA.prototype.init.call(this)) {
             this._layoutParameterDictionary = {};
             this._widgetChildren = [];
             this.initRenderer();
@@ -125,23 +125,23 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
         }
         return false;
     },
-    initStencil : null,
-    _initStencilForWebGL:function(){
+    initStencil: null,
+    _initStencilForWebGL: function() {
         this._clippingStencil = cc.DrawNode.create();
         ccs.Layout._init_once = true;
         if (ccs.Layout._init_once) {
             cc.stencilBits = cc.renderContext.getParameter(cc.renderContext.STENCIL_BITS);
             if (cc.stencilBits <= 0)
-                cc.log("Stencil buffer is not enabled.");
+                cc.log('Stencil buffer is not enabled.');
             ccs.Layout._init_once = false;
         }
     },
-    _initStencilForCanvas: function () {
+    _initStencilForCanvas: function() {
         this._clippingStencil = cc.DrawNode.create();
         var locEGL_ScaleX = cc.EGLView.getInstance().getScaleX(), locEGL_ScaleY = cc.EGLView.getInstance().getScaleY();
         var locContext = cc.renderContext;
         var stencil = this._clippingStencil;
-        stencil.draw = function () {
+        stencil.draw = function() {
             for (var i = 0; i < stencil._buffer.length; i++) {
                 var element = stencil._buffer[i];
                 var vertices = element.verts;
@@ -151,7 +151,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
                 for (var j = 1, len = vertices.length; j < len; j++)
                     locContext.lineTo(vertices[j].x * locEGL_ScaleX, -vertices[j].y * locEGL_ScaleY);
             }
-        }
+        };
     },
 
     /**
@@ -160,8 +160,8 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
      * @param {Number} zOrder
      * @param {Number} tag
      */
-    addChild: function (child, zOrder, tag) {
-        if(!(child instanceof ccs.Widget))
+    addChild: function(child, zOrder, tag) {
+        if (!(child instanceof ccs.Widget))
             return;
         this.supplyTheLayoutParameterLackToChild(child);
         ccs.Widget.prototype.addChild.call(this, child, zOrder, tag);
@@ -170,13 +170,13 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
 
     /**
      * Gets if layout is clipping enabled.
-     * @returns {Boolean}
+     * @return {Boolean}
      */
-    isClippingEnabled: function () {
+    isClippingEnabled: function() {
         return this._clippingEnabled;
     },
 
-    visit: function (ctx) {
+    visit: function(ctx) {
         if (!this._enabled) {
             return;
         }
@@ -193,18 +193,18 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
             }
         }
         else {
-            cc.NodeRGBA.prototype.visit.call(this,ctx);
+            cc.NodeRGBA.prototype.visit.call(this, ctx);
         }
     },
 
-    sortAllChildren: function () {
+    sortAllChildren: function() {
         ccs.Widget.prototype.sortAllChildren.call(this);
         this.doLayout();
     },
 
-    stencilClippingVisit : null,
+    stencilClippingVisit: null,
 
-    _stencilClippingVisitForWebGL: function (ctx) {
+    _stencilClippingVisitForWebGL: function(ctx) {
         var gl = ctx || cc.renderContext;
 
         // if stencil buffer disabled
@@ -231,7 +231,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
             // warn once
             ccs.Layout._visit_once = true;
             if (ccs.Layout._visit_once) {
-                cc.log("Nesting more than " + cc.stencilBits + "stencils is not supported. Everything will be drawn without stencil for this node and its childs.");
+                cc.log('Nesting more than ' + cc.stencilBits + 'stencils is not supported. Everything will be drawn without stencil for this node and its childs.');
                 ccs.Layout._visit_once = false;
             }
             // draw everything, as if there where no stencil
@@ -359,7 +359,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
         ccs.Layout._layer--;
     },
 
-    _stencilClippingVisitForCanvas: function (ctx) {
+    _stencilClippingVisitForCanvas: function(ctx) {
         // return fast (draw nothing, or draw everything if in inverted mode) if:
         // - nil stencil node
         // - or stencil node invisible:
@@ -375,14 +375,14 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
             var locCache = ccs.Layout._getSharedCache();
             locCache.width = canvas.width;
             locCache.height = canvas.height;
-            var locCacheCtx = locCache.getContext("2d");
+            var locCacheCtx = locCache.getContext('2d');
             locCacheCtx.drawImage(canvas, 0, 0);
 
             context.save();
             // Draw everything first using node visit function
             cc.Node.prototype.visit.call(this, ctx);
 
-            context.globalCompositeOperation = "destination-in";
+            context.globalCompositeOperation = 'destination-in';
 
             this.transform(context);
             this._clippingStencil.visit();
@@ -392,7 +392,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
             // Redraw the cached canvas, so that the cliped area shows the background etc.
             context.save();
             context.setTransform(1, 0, 0, 1, 0, 0);
-            context.globalCompositeOperation = "destination-over";
+            context.globalCompositeOperation = 'destination-over';
             context.drawImage(locCache, 0, 0);
             context.restore();
         }
@@ -431,15 +431,15 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
         }
     },
 
-    _godhelpme:false,
-    _cangodhelpme: function (godhelpme) {
+    _godhelpme: false,
+    _cangodhelpme: function(godhelpme) {
         if (godhelpme === true || godhelpme === false)
             cc.ClippingNode.prototype._godhelpme = godhelpme;
         return cc.ClippingNode.prototype._godhelpme;
     },
 
-    scissorClippingVisit : null,
-    _scissorClippingVisitForWebGL: function (ctx) {
+    scissorClippingVisit: null,
+    _scissorClippingVisitForWebGL: function(ctx) {
         var clippingRect = this.getClippingRect();
         var gl = ctx || cc.renderContext;
         if (this._handleScissor) {
@@ -456,7 +456,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
      * Changes if layout can clip it's content and locChild.
      * @param {Boolean} able
      */
-    setClippingEnabled: function (able) {
+    setClippingEnabled: function(able) {
         if (able == this._clippingEnabled) {
             return;
         }
@@ -479,7 +479,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
      * set clipping type
      * @param {ccs.LayoutClippingType} type
      */
-    setClippingType: function (type) {
+    setClippingType: function(type) {
         if (type == this._clippingType) {
             return;
         }
@@ -489,7 +489,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
         this.setClippingEnabled(clippingEnabled);
     },
 
-    setStencilClippingSize: function (size) {
+    setStencilClippingSize: function(size) {
         if (this._clippingEnabled && this._clippingType == ccs.LayoutClippingType.stencil) {
             var rect = [];
             rect[0] = cc.p(0, 0);
@@ -502,11 +502,11 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
         }
     },
 
-    rendererVisitCallBack: function () {
+    rendererVisitCallBack: function() {
         this.doLayout();
     },
 
-    getClippingRect: function () {
+    getClippingRect: function() {
         this._handleScissor = true;
         var worldPos = this.convertToWorldSpace(cc.p(0, 0));
         var t = this.nodeToWorldTransform();
@@ -577,7 +577,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
         return this._clippingRect;
     },
 
-    onSizeChanged: function () {
+    onSizeChanged: function() {
         ccs.Widget.prototype.onSizeChanged.call(this);
         this.setStencilClippingSize(this._size);
         this._doLayoutDirty = true;
@@ -602,7 +602,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
      * Sets background iamge use scale9 renderer.
      * @param {Boolean} able
      */
-    setBackGroundImageScale9Enabled: function (able) {
+    setBackGroundImageScale9Enabled: function(able) {
         if (this._backGroundScale9Enabled == able) {
             return;
         }
@@ -625,7 +625,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
      * @param {String} fileName
      * @param {ccs.TextureResType} texType
      */
-    setBackGroundImage: function (fileName, texType) {
+    setBackGroundImage: function(fileName, texType) {
         if (!fileName) {
             return;
         }
@@ -658,14 +658,14 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
      * Sets a background image capinsets for layout, if the background image is a scale9 render.
      * @param {cc.Rect} capInsets
      */
-    setBackGroundImageCapInsets: function (capInsets) {
+    setBackGroundImageCapInsets: function(capInsets) {
         this._backGroundImageCapInsets = capInsets;
         if (this._backGroundScale9Enabled) {
             this._backGroundImage.setCapInsets(capInsets);
         }
     },
 
-    supplyTheLayoutParameterLackToChild: function (locChild) {
+    supplyTheLayoutParameterLackToChild: function(locChild) {
         if (!locChild) {
             return;
         }
@@ -693,7 +693,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
     /**
      * init background image renderer.
      */
-    addBackGroundImage: function () {
+    addBackGroundImage: function() {
         if (this._backGroundScale9Enabled) {
             this._backGroundImage = cc.Scale9Sprite.create();
             this._backGroundImage.setPreferredSize(this._size);
@@ -708,13 +708,13 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
     /**
      * Remove the background image of layout.
      */
-    removeBackGroundImage: function () {
+    removeBackGroundImage: function() {
         if (!this._backGroundImage) {
             return;
         }
         cc.NodeRGBA.prototype.removeChild.call(this, this._backGroundImage, true);
         this._backGroundImage = null;
-        this._backGroundImageFileName = "";
+        this._backGroundImageFileName = '';
         this._backGroundImageTextureSize = cc.SizeZero();
     },
 
@@ -722,7 +722,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
      * Sets Color Type for layout.
      * @param {ccs.LayoutBackGroundColorType} type
      */
-    setBackGroundColorType: function (type) {
+    setBackGroundColorType: function(type) {
         if (this._colorType == type) {
             return;
         }
@@ -782,7 +782,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
      * @param {cc.c3b} color
      * @param {cc.c3b} endColor
      */
-    setBackGroundColor: function (color, endColor) {
+    setBackGroundColor: function(color, endColor) {
         if (!endColor) {
             this._color = color;
             if (this._colorRender) {
@@ -804,7 +804,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
      * Sets background opacity layout.
      * @param {number} opacity
      */
-    setBackGroundColorOpacity: function (opacity) {
+    setBackGroundColorOpacity: function(opacity) {
         this._opacity = opacity;
         switch (this._colorType) {
             case ccs.LayoutBackGroundColorType.none:
@@ -824,7 +824,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
      * Sets background color vector for layout, if color type is LAYOUT_COLOR_GRADIENT
      * @param {cc.Point} vector
      */
-    setBackGroundColorVector: function (vector) {
+    setBackGroundColorVector: function(vector) {
         this._alongVector = vector;
         if (this._gradientRender) {
             this._gradientRender.setVector(vector);
@@ -833,9 +833,9 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
 
     /**
      * Gets background image texture size.
-     * @returns {cc.Size}
+     * @return {cc.Size}
      */
-    getBackGroundImageTextureSize: function () {
+    getBackGroundImageTextureSize: function() {
         return this._backGroundImageTextureSize;
     },
 
@@ -843,7 +843,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
      * Sets LayoutType.
      * @param {ccs.LayoutType} type
      */
-    setLayoutType: function (type) {
+    setLayoutType: function(type) {
         this._layoutType = type;
         var layoutChildrenArray = this._widgetChildren;
         var locChild = null;
@@ -856,20 +856,20 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
 
     /**
      * Gets LayoutType.
-     * @returns {null}
+     * @return {null}
      */
-    getLayoutType: function () {
+    getLayoutType: function() {
         return this._layoutType;
     },
 
     /**
      * request do layout
      */
-    requestDoLayout: function () {
+    requestDoLayout: function() {
         this._doLayoutDirty = true;
     },
 
-    doLayout_LINEAR_VERTICAL: function () {
+    doLayout_LINEAR_VERTICAL: function() {
         var layoutChildrenArray = this._widgetChildren;
         var layoutSize = this.getSize();
         var topBoundary = layoutSize.height;
@@ -904,7 +904,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
             }
         }
     },
-    doLayout_LINEAR_HORIZONTAL: function () {
+    doLayout_LINEAR_HORIZONTAL: function() {
         var layoutChildrenArray = this._widgetChildren;
         var layoutSize = this.getSize();
         var leftBoundary = 0;
@@ -939,7 +939,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
             }
         }
     },
-    doLayout_RELATIVE: function () {
+    doLayout_RELATIVE: function() {
         var layoutChildrenArray = this._widgetChildren;
         var length = layoutChildrenArray.length;
         var unlayoutChildCount = length;
@@ -1152,7 +1152,7 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
                         default:
                             break;
                     }
-                    var locRelativeWidgetMargin,locRelativeWidgetLPAlign;
+                    var locRelativeWidgetMargin, locRelativeWidgetLPAlign;
                     var locMargin = locLayoutParameter.getMargin();
                     if (locRelativeWidgetLP) {
                         locRelativeWidgetMargin = locRelativeWidgetLP.getMargin();
@@ -1326,8 +1326,8 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
             }
         }
     },
-    doLayout: function () {
-        if(!this._doLayoutDirty){
+    doLayout: function() {
+        if (!this._doLayoutDirty) {
             return;
         }
         switch (this._layoutType) {
@@ -1350,21 +1350,21 @@ ccs.Layout = ccs.Widget.extend(/** @lends ccs.Layout# */{
 
     /**
      * Returns the "class name" of widget.
-     * @returns {string}
+     * @return {string}
      */
-    getDescription: function () {
-        return "Layout";
+    getDescription: function() {
+        return 'Layout';
     },
 
-    createCloneInstance: function () {
+    createCloneInstance: function() {
         return ccs.Layout.create();
     },
 
-    copyClonedWidgetChildren: function (model) {
+    copyClonedWidgetChildren: function(model) {
         ccs.Widget.prototype.copyClonedWidgetChildren.call(this, model);
     },
 
-    copySpecialProperties: function (layout) {
+    copySpecialProperties: function(layout) {
         this.setBackGroundImageScale9Enabled(layout._backGroundScale9Enabled);
         this.setBackGroundImage(layout._backGroundImageFileName, layout._bgImageTexType);
         this.setBackGroundImageCapInsets(layout._backGroundImageCapInsets);
@@ -1388,13 +1388,13 @@ if (cc.Browser.supportWebGL) {
     ccs.Layout.prototype.initStencil = ccs.Layout.prototype._initStencilForWebGL;
     ccs.Layout.prototype.stencilClippingVisit = ccs.Layout.prototype._stencilClippingVisitForWebGL;
     ccs.Layout.prototype.scissorClippingVisit = ccs.Layout.prototype._scissorClippingVisitForWebGL;
-}else{
+}else {
     ccs.Layout.prototype.initStencil = ccs.Layout.prototype._initStencilForCanvas;
     ccs.Layout.prototype.stencilClippingVisit = ccs.Layout.prototype._stencilClippingVisitForCanvas;
     ccs.Layout.prototype.scissorClippingVisit = ccs.Layout.prototype._stencilClippingVisitForCanvas;
 }
-ccs.Layout._getSharedCache = function () {
-    return (cc.ClippingNode._sharedCache) || (cc.ClippingNode._sharedCache = document.createElement("canvas"));
+ccs.Layout._getSharedCache = function() {
+    return (cc.ClippingNode._sharedCache) || (cc.ClippingNode._sharedCache = document.createElement('canvas'));
 };
 /**
  * allocates and initializes a UILayout.
@@ -1404,7 +1404,7 @@ ccs.Layout._getSharedCache = function () {
  * // example
  * var uiLayout = ccs.Layout.create();
  */
-ccs.Layout.create = function () {
+ccs.Layout.create = function() {
     var layout = new ccs.Layout();
     if (layout && layout.init()) {
         return layout;

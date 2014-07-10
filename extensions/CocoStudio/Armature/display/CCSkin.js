@@ -28,32 +28,32 @@
  * @extends ccs.Sprite
  */
 ccs.Skin = ccs.Sprite.extend(/** @lends ccs.Skin# */{
-    _skinData:null,
-    _bone:null,
-    _skinTransform:null,
-    _displayName:"",
-    _blend:null,
-    _armature:null,
-    ctor:function () {
+    _skinData: null,
+    _bone: null,
+    _skinTransform: null,
+    _displayName: '',
+    _blend: null,
+    _armature: null,
+    ctor: function() {
         cc.Sprite.prototype.ctor.call(this);
         this._skinData = null;
         this._bone = null;
-        this._displayName = "";
+        this._displayName = '';
         this._skinTransform = cc.AffineTransformIdentity();
         this._blend = new cc.BlendFunc(cc.BLEND_SRC, cc.BLEND_DST);
         this._armature = null;
     },
-    initWithSpriteFrameName:function(spriteFrameName){
-        var ret = cc.Sprite.prototype.initWithSpriteFrameName.call(this,spriteFrameName);
+    initWithSpriteFrameName: function(spriteFrameName) {
+        var ret = cc.Sprite.prototype.initWithSpriteFrameName.call(this, spriteFrameName);
         this._displayName = spriteFrameName;
         return ret;
     },
-    initWithFile:function(fileName){
-        var ret = cc.Sprite.prototype.initWithFile.call(this,spriteFrameName);
+    initWithFile: function(fileName) {
+        var ret = cc.Sprite.prototype.initWithFile.call(this, spriteFrameName);
         this._displayName = fileName;
         return ret;
     },
-    setSkinData:function (skinData) {
+    setSkinData: function(skinData) {
         this._skinData = skinData;
 
         this.setScaleX(skinData.scaleX);
@@ -73,19 +73,19 @@ ccs.Skin = ccs.Sprite.extend(/** @lends ccs.Skin# */{
         this.updateArmatureTransform();
     },
 
-    getSkinData:function () {
+    getSkinData: function() {
         return this._skinData;
     },
 
-    setBone:function (bone) {
+    setBone: function(bone) {
         this._bone = bone;
     },
 
-    getBone:function () {
+    getBone: function() {
         return this._bone;
     },
 
-    updateArmatureTransform:function () {
+    updateArmatureTransform: function() {
         this._transform = cc.AffineTransformConcat(this._skinTransform, this._bone.nodeToArmatureTransform());
         var locTransform = this._transform;
         var locArmature = this._armature;
@@ -97,7 +97,7 @@ ccs.Skin = ccs.Sprite.extend(/** @lends ccs.Skin# */{
      * The returned box is relative only to its parent.
      * @return {cc.Rect}
      */
-    getBoundingBox:function () {
+    getBoundingBox: function() {
         var rect = cc.rect(0, 0, this._contentSize._width, this._contentSize._height);
         var transForm = this.nodeToParentTransform();
         return cc.RectApplyAffineTransform(rect, transForm);
@@ -105,18 +105,18 @@ ccs.Skin = ccs.Sprite.extend(/** @lends ccs.Skin# */{
 
     /**
      * display name getter
-     * @returns {String}
+     * @return {String}
      */
-    getDisplayName:function(){
+    getDisplayName: function() {
         return this._displayName;
     },
 
-    nodeToWorldTransform: function () {
+    nodeToWorldTransform: function() {
         return cc.AffineTransformConcat(this._transform, this._bone.getArmature().nodeToWorldTransform());
     },
 
 
-    nodeToWorldTransformAR: function () {
+    nodeToWorldTransformAR: function() {
         var displayTransform = this._transform;
         var anchorPoint = this._anchorPointInPoints;
 
@@ -130,7 +130,7 @@ ccs.Skin = ccs.Sprite.extend(/** @lends ccs.Skin# */{
      * update blendType
      * @param {ccs.BlendType} blendType
      */
-    updateBlendType: function (blendType) {
+    updateBlendType: function(blendType) {
         var blendFunc = this._blend;
         switch (blendType) {
             case ccs.BlendType.normal:
@@ -160,12 +160,12 @@ ccs.Skin = ccs.Sprite.extend(/** @lends ccs.Skin# */{
  * allocates and initializes a skin.
  * @param {String} fileName
  * @param {cc.Rect} rect
- * @returns {ccs.Skin}
+ * @return {ccs.Skin}
  * @example
  * // example
  * var skin = ccs.Skin.create("res/test.png",cc.rect(0,0,50,50));
  */
-ccs.Skin.create = function (fileName, rect) {
+ccs.Skin.create = function(fileName, rect) {
     var argnum = arguments.length;
     var sprite = new ccs.Skin();
     if (argnum === 0) {
@@ -181,12 +181,12 @@ ccs.Skin.create = function (fileName, rect) {
 /**
  * allocates and initializes a skin.
  * @param {String} pszSpriteFrameName
- * @returns {ccs.Skin}
+ * @return {ccs.Skin}
  * @example
  * // example
  * var skin = ccs.Skin.createWithSpriteFrameName("test.png");
  */
-ccs.Skin.createWithSpriteFrameName = function (pszSpriteFrameName) {
+ccs.Skin.createWithSpriteFrameName = function(pszSpriteFrameName) {
     var skin = new ccs.Skin();
     if (skin && skin.initWithSpriteFrameName(pszSpriteFrameName)) {
         return skin;

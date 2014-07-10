@@ -27,84 +27,84 @@ var sys = sys || {};
 
 /** LocalStorage is a local storage component.
 */
-try{
+try {
 	sys.localStorage = window.localStorage;
-	window.localStorage.setItem("storage", "");
-	window.localStorage.removeItem("storage");
+	window.localStorage.setItem('storage', '');
+	window.localStorage.removeItem('storage');
 
-}catch(e){
+}catch (e) {
 
-	if( e.name === "SECURITY_ERR" || e.name === "QuotaExceededError" ) {
+	if (e.name === 'SECURITY_ERR' || e.name === 'QuotaExceededError') {
 		console.log("Warning: localStorage isn't enabled. Please confirm browser cookie or privacy option");
 	}
-	sys.localStorage = function(){};
+	sys.localStorage = function() {};
 }
 
 /** Capabilities
 */
 Object.defineProperties(sys,
 {
-	capabilities : {
-		get : function(){
-			var capabilities = {"canvas":true};
+	capabilities: {
+		get: function() {
+			var capabilities = {'canvas': true};
 
 			// if (window.DeviceOrientationEvent!==undefined || window.OrientationEvent!==undefined)
 			//   capabilities["accelerometer"] = true;
-            if(cc.Browser.supportWebGL)
-                capabilities["opengl"] = true;
+            if (cc.Browser.supportWebGL)
+                capabilities['opengl'] = true;
 
-			if( 'ontouchstart' in document.documentElement  || window.navigator.msPointerEnabled)
-				capabilities["touches"] = true;
+			if ('ontouchstart' in document.documentElement || window.navigator.msPointerEnabled)
+				capabilities['touches'] = true;
 
-			else if( 'onmouseup' in document.documentElement )
-				capabilities["mouse"] = true;
+			else if ('onmouseup' in document.documentElement)
+				capabilities['mouse'] = true;
 
-			if( 'onkeyup' in document.documentElement )
-				capabilities["keyboard"] = true;
+			if ('onkeyup' in document.documentElement)
+				capabilities['keyboard'] = true;
 
-            if(window.DeviceMotionEvent || window.DeviceOrientationEvent)
-                capabilities["accelerometer"] = true;
+            if (window.DeviceMotionEvent || window.DeviceOrientationEvent)
+                capabilities['accelerometer'] = true;
 
 			return capabilities;
         },
-		enumerable : true,
-		configurable : true
+		enumerable: true,
+		configurable: true
 	},
-	os : {
-		get : function() {
-			var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/i) ? true : false );
+	os: {
+		get: function() {
+			var iOS = (navigator.userAgent.match(/(iPad|iPhone|iPod)/i) ? true : false);
 			var isAndroid = navigator.userAgent.match(/android/i) || navigator.platform.match(/android/i) ? true : false;
-			var OSName=navigator.appVersion;
-			if (navigator.appVersion.indexOf("Win")!=-1)
-				OSName="Windows";
-			else if (navigator.appVersion.indexOf("Mac")!=-1)
-				OSName="OS X";
-			else if (navigator.appVersion.indexOf("X11")!=-1)
-				OSName="UNIX";
-			else if (navigator.appVersion.indexOf("Linux")!=-1)
-				OSName="Linux";
-			else if( iOS )
-				OSName = "iOS";
-			else if( isAndroid )
-				OSName = "Android";
+			var OSName = navigator.appVersion;
+			if (navigator.appVersion.indexOf('Win') != -1)
+				OSName = 'Windows';
+			else if (navigator.appVersion.indexOf('Mac') != -1)
+				OSName = 'OS X';
+			else if (navigator.appVersion.indexOf('X11') != -1)
+				OSName = 'UNIX';
+			else if (navigator.appVersion.indexOf('Linux') != -1)
+				OSName = 'Linux';
+			else if (iOS)
+				OSName = 'iOS';
+			else if (isAndroid)
+				OSName = 'Android';
 			return OSName;
 		},
-		enumerable : true,
-		configurable : true
+		enumerable: true,
+		configurable: true
 	},
-	platform : {
-		get : function(){
-			return "browser";
+	platform: {
+		get: function() {
+			return 'browser';
 		},
-		enumerable : true,
-		configurable : true
+		enumerable: true,
+		configurable: true
 	},
-	version : {
-		get : function(){
+	version: {
+		get: function() {
 			return cc.ENGINE_VERSION;
 		},
-		enumerable : true,
-		configurable : true
+		enumerable: true,
+		configurable: true
 	}
 });
 

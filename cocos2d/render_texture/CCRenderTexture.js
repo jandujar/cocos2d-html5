@@ -49,7 +49,7 @@ cc.IMAGE_FORMAT_RAWDATA = 2;
  * @return {Number}
  * Constructor
  */
-cc.NextPOT = function (x) {
+cc.NextPOT = function(x) {
     x = x - 1;
     x = x | (x >> 1);
     x = x | (x >> 2);
@@ -74,61 +74,61 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
      * the off-screen canvas for rendering and storing the texture
      * @type HTMLCanvasElement
      */
-    _cacheCanvas:null,
+    _cacheCanvas: null,
     /**
      * stores a reference to the canvas context object
      * @type CanvasRenderingContext2D
      */
-    _cacheContext:null,
+    _cacheContext: null,
 
-    _fBO:0,
-    _depthRenderBuffer:0,
-    _oldFBO:0,
-    _texture:null,
-    _textureCopy:null,
-    _uITextureImage:null,
+    _fBO: 0,
+    _depthRenderBuffer: 0,
+    _oldFBO: 0,
+    _texture: null,
+    _textureCopy: null,
+    _uITextureImage: null,
 
-    _pixelFormat:cc.TEXTURE_2D_PIXEL_FORMAT_RGBA8888,
-    _sprite:null,
+    _pixelFormat: cc.TEXTURE_2D_PIXEL_FORMAT_RGBA8888,
+    _sprite: null,
 
     //code for "auto" update
-    _clearFlags:0,
-    _clearColor:null,
-    _clearDepth:0,
-    _clearStencil:0,
-    _autoDraw:false,
+    _clearFlags: 0,
+    _clearColor: null,
+    _clearDepth: 0,
+    _clearStencil: 0,
+    _autoDraw: false,
 
-    _clearColorStr:null,
+    _clearColorStr: null,
 
     /**
      * Constructor
      */
     ctor: null,
 
-    _ctorForCanvas: function () {
+    _ctorForCanvas: function() {
         cc.Node.prototype.ctor.call(this);
         this._clearColor = cc.c4f(1, 1, 1, 1);
-        this._clearColorStr = "rgba(255,255,255,1)";
+        this._clearColorStr = 'rgba(255,255,255,1)';
 
         this._cacheCanvas = document.createElement('canvas');
         this._cacheContext = this._cacheCanvas.getContext('2d');
         this.setAnchorPoint(0, 0);
     },
 
-    _ctorForWebGL: function () {
+    _ctorForWebGL: function() {
         cc.Node.prototype.ctor.call(this);
         this._clearColor = cc.c4f(0, 0, 0, 0);
     },
 
-    cleanup:null,
+    cleanup: null,
 
-    _cleanupForCanvas:function () {
+    _cleanupForCanvas: function() {
         cc.Node.prototype.onExit.call(this);
         this._cacheContext = null;
         this._cacheCanvas = null;
     },
 
-    _cleanupForWebGL: function () {
+    _cleanupForWebGL: function() {
         cc.Node.prototype.onExit.call(this);
 
         //this._sprite = null;
@@ -147,14 +147,14 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
      * The sprite
      * @return {cc.Sprite}
      */
-    getSprite:function () {
+    getSprite: function() {
         return this._sprite;
     },
 
     /**
      * @param {cc.Sprite} sprite
      */
-    setSprite:function (sprite) {
+    setSprite: function(sprite) {
         this._sprite = sprite;
     },
 
@@ -167,7 +167,7 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
      */
     initWithWidthAndHeight: null,
 
-    _initWithWidthAndHeightForCanvas: function (width, height, format, depthStencilFormat) {
+    _initWithWidthAndHeightForCanvas: function(width, height, format, depthStencilFormat) {
         var locCacheCanvas = this._cacheCanvas, locScaleFactor = cc.CONTENT_SCALE_FACTOR();
         locCacheCanvas.width = 0 | (width * locScaleFactor);
         locCacheCanvas.height = 0 | (height * locScaleFactor);
@@ -179,9 +179,9 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
         return true;
     },
 
-    _initWithWidthAndHeightForWebGL: function (width, height, format, depthStencilFormat) {
-        if(format == cc.TEXTURE_2D_PIXEL_FORMAT_A8)
-            cc.log( "cc.RenderTexture._initWithWidthAndHeightForWebGL() : only RGB and RGBA formats are valid for a render texture;");
+    _initWithWidthAndHeightForWebGL: function(width, height, format, depthStencilFormat) {
+        if (format == cc.TEXTURE_2D_PIXEL_FORMAT_A8)
+            cc.log('cc.RenderTexture._initWithWidthAndHeightForWebGL() : only RGB and RGBA formats are valid for a render texture;');
 
         var gl = cc.renderContext, locScaleFactor = cc.CONTENT_SCALE_FACTOR();
 
@@ -191,7 +191,7 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
         this._oldFBO = gl.getParameter(gl.FRAMEBUFFER_BINDING);
 
         // textures must be power of two squared
-        var powW , powH;
+        var powW, powH;
 
         if (cc.Configuration.getInstance().supportsNPOT()) {
             powW = width;
@@ -220,7 +220,7 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
 
         var oldRBO = gl.getParameter(gl.RENDERBUFFER_BINDING);
 
-        if (cc.Configuration.getInstance().checkForGLExtension("GL_QCOM")) {
+        if (cc.Configuration.getInstance().checkForGLExtension('GL_QCOM')) {
             this._textureCopy = new cc.Texture2D();
             if (!this._textureCopy) {
                 return false;
@@ -248,8 +248,8 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
         }
 
         // check if it worked (probably worth doing :) )
-        if(gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE)
-            cc.log("Could not attach texture to the framebuffer");
+        if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE)
+            cc.log('Could not attach texture to the framebuffer');
 
         locTexture.setAliasTexParameters();
 
@@ -274,7 +274,7 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
      */
     begin: null,
 
-    _beginForCanvas: function () {
+    _beginForCanvas: function() {
         cc.renderContext = this._cacheContext;
         cc.EGLView.getInstance()._setScaleXYForRenderTexture();
 
@@ -285,7 +285,7 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
          cc.kmGLPushMatrix();*/
     },
 
-    _beginForWebGL: function () {
+    _beginForWebGL: function() {
         // Save the current matrix
         cc.kmGLMatrixMode(cc.KM_GL_PROJECTION);
         cc.kmGLPushMatrix();
@@ -320,7 +320,7 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
          *   Create a temporary texture to overcome this. At the end of CCRenderTexture::begin(), switch the attached texture to the second one, call glClear,
          *   and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
          */
-        if (cc.Configuration.getInstance().checkForGLExtension("GL_QCOM")) {
+        if (cc.Configuration.getInstance().checkForGLExtension('GL_QCOM')) {
             // -- bind a temporary texture so we can clear the render buffer without losing our texture
             gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, this._textureCopy._webTextureObj, 0);
             //cc.CHECK_GL_ERROR_DEBUG();
@@ -339,7 +339,7 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
      * @param {Number} [depthValue=]
      * @param {Number} [stencilValue=]
      */
-    beginWithClear:function (r, g, b, a, depthValue, stencilValue) {
+    beginWithClear: function(r, g, b, a, depthValue, stencilValue) {
         var gl = cc.renderContext;
         depthValue = depthValue || gl.COLOR_BUFFER_BIT;
         stencilValue = stencilValue || (gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -349,7 +349,7 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
 
     _beginWithClear: null,
 
-    _beginWithClearForCanvas: function (r, g, b, a, depthValue, stencilValue, flags) {
+    _beginWithClearForCanvas: function(r, g, b, a, depthValue, stencilValue, flags) {
         this.begin();
 
         r = r || 0;
@@ -361,13 +361,13 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
         var context = this._cacheContext;
         var locCanvas = this._cacheCanvas;
         context.save();
-        context.fillStyle = "rgba(" + (0 | (r * 255)) + "," + (0 | (g * 255)) + "," + (0 | (b * 255)) + "," + a + ")";
+        context.fillStyle = 'rgba(' + (0 | (r * 255)) + ',' + (0 | (g * 255)) + ',' + (0 | (b * 255)) + ',' + a + ')';
         context.clearRect(0, 0, locCanvas.width, -locCanvas.height);
         context.fillRect(0, 0, locCanvas.width, -locCanvas.height);
         context.restore();
     },
 
-    _beginWithClearForWebGL: function (r, g, b, a, depthValue, stencilValue, flags) {
+    _beginWithClearForWebGL: function(r, g, b, a, depthValue, stencilValue, flags) {
         this.begin();
 
         var gl = cc.renderContext;
@@ -410,7 +410,7 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
      */
     end: null,
 
-    _endForCanvas: function () {
+    _endForCanvas: function() {
         cc.renderContext = cc.mainRenderContextBackup;
         cc.EGLView.getInstance()._resetScale();
 
@@ -423,7 +423,7 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
          cc.kmGLPopMatrix();*/
     },
 
-    _endForWebGL: function () {
+    _endForWebGL: function() {
         var gl = cc.renderContext;
         var director = cc.Director.getInstance();
         gl.bindFramebuffer(gl.FRAMEBUFFER, this._oldFBO);
@@ -455,18 +455,18 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
      * @param {Number} b blue 0-1
      * @param {Number} a alpha 0-1
      */
-    clear:function (r, g, b, a) {
+    clear: function(r, g, b, a) {
         this.beginWithClear(r, g, b, a);
         this.end();
     },
 
-    clearRect:null,
+    clearRect: null,
 
-    _clearRectForCanvas:function(x, y, width, height){
+    _clearRectForCanvas: function(x, y, width, height) {
         this._cacheContext.clearRect(x, y, width, -height);
     },
 
-    _clearRectForWebGL:function(x, y, width, height){
+    _clearRectForWebGL: function(x, y, width, height) {
         //TODO need to implement
     },
 
@@ -474,13 +474,13 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
      * clears the texture with a specified depth value
      * @param {Number} depthValue
      */
-    clearDepth:null,
+    clearDepth: null,
 
-    _clearDepthForCanvas:function (depthValue) {
+    _clearDepthForCanvas: function(depthValue) {
         cc.log("clearDepth isn't supported on Cocos2d-Html5");
     },
 
-    _clearDepthForWebGL:function (depthValue) {
+    _clearDepthForWebGL: function(depthValue) {
         this.begin();
 
         var gl = cc.renderContext;
@@ -499,13 +499,13 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
      * clears the texture with a specified stencil value
      * @param {Number} stencilValue
      */
-    clearStencil:null,
+    clearStencil: null,
 
-    _clearStencilForCanvas:function (stencilValue) {
+    _clearStencilForCanvas: function(stencilValue) {
         cc.log("clearDepth isn't supported on Cocos2d-Html5");
     },
 
-    _clearStencilForWebGL:function (stencilValue) {
+    _clearStencilForWebGL: function(stencilValue) {
         var gl = cc.renderContext;
         // save old stencil value
         var stencilClearValue = gl.getParameter(gl.STENCIL_CLEAR_VALUE);
@@ -517,9 +517,9 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
         gl.clearStencil(stencilClearValue);
     },
 
-    visit:null,
+    visit: null,
 
-    _visitForCanvas:function (ctx) {
+    _visitForCanvas: function(ctx) {
         // override visit.
         // Don't call visit on its children
         if (!this._visible)
@@ -537,7 +537,7 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
         this._orderOfArrival = 0;
     },
 
-    _visitForWebGL:function (ctx) {
+    _visitForWebGL: function(ctx) {
         // override visit.
         // Don't call visit on its children
         if (!this._visible)
@@ -563,9 +563,9 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
         this._orderOfArrival = 0;
     },
 
-    draw:null,
+    draw: null,
 
-    _drawForCanvas: function (ctx) {
+    _drawForCanvas: function(ctx) {
         ctx = ctx || cc.renderContext;
         if (this._autoDraw) {
             this.begin();
@@ -594,7 +594,7 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
         }
     },
 
-    _drawForWebGL: function (ctx) {
+    _drawForWebGL: function(ctx) {
         var gl = cc.renderContext;
         if (this._autoDraw) {
             this.begin();
@@ -652,19 +652,19 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
      * creates a new CCImage from with the texture's data. Caller is responsible for releasing it by calling delete.
      * @return {cc.Image}
      */
-    newCCImage:null,
+    newCCImage: null,
 
-    _newCCImageForCanvas:function (flipImage) {
+    _newCCImageForCanvas: function(flipImage) {
         cc.log("saveToFile isn't supported on Cocos2d-Html5");
         return null;
     },
 
-    _newCCImageForWebGL:function (flipImage) {
+    _newCCImageForWebGL: function(flipImage) {
         cc.log("saveToFile isn't supported on Cocos2d-Html5");
 
-        if(flipImage === null)
+        if (flipImage === null)
             flipImage = true;
-        cc.Assert(this._pixelFormat == cc.TEXTURE_2D_PIXEL_FORMAT_RGBA8888, "only RGBA8888 can be saved as image");
+        cc.Assert(this._pixelFormat == cc.TEXTURE_2D_PIXEL_FORMAT_RGBA8888, 'only RGBA8888 can be saved as image');
 
         if (!this._texture)
             return null;
@@ -707,7 +707,7 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
         return pImage;
     },
 
-    _memcpy:function (destArr, destIndex, srcArr, srcIndex, size) {
+    _memcpy: function(destArr, destIndex, srcArr, srcIndex, size) {
         for (var i = 0; i < size; i++) {
             destArr[destIndex + i] = srcArr[srcIndex + i];
         }
@@ -720,7 +720,7 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
      * @param {Number} filePath
      * @param {Number} format
      */
-    saveToFile:function (filePath, format) {
+    saveToFile: function(filePath, format) {
         cc.log("saveToFile isn't supported on Cocos2d-Html5");
     },
 
@@ -728,7 +728,7 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
      * Listen "come to background" message, and save render texture. It only has effect on Android.
      * @param {cc.Class} obj
      */
-    listenToBackground:function (obj) {
+    listenToBackground: function(obj) {
         cc.log("listenToBackground isn't supported on Cocos2d-Html5");
     },
 
@@ -736,7 +736,7 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
      * Listen "come to foreground" message and restore the frame buffer object. It only has effect on Android.
      * @param {cc.Class} obj
      */
-    listenToForeground:function (obj) {
+    listenToForeground: function(obj) {
         cc.log("listenToForeground isn't supported on Cocos2d-Html5");
     },
 
@@ -744,11 +744,11 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
      * Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw is YES.
      * @return {Number}
      */
-    getClearFlags:function () {
+    getClearFlags: function() {
         return this._clearFlags;
     },
 
-    setClearFlags:function (clearFlags) {
+    setClearFlags: function(clearFlags) {
         this._clearFlags = clearFlags;
     },
 
@@ -756,23 +756,23 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
      * Clear color value. Valid only when "autoDraw" is true.
      * @return {cc.Color4F}
      */
-    getClearColor:function () {
+    getClearColor: function() {
         return this._clearColor;
     },
 
-    setClearColor:null,
+    setClearColor: null,
 
-    _setClearColorForCanvas:function (clearColor) {
+    _setClearColorForCanvas: function(clearColor) {
         var locClearColor = this._clearColor;
         locClearColor.r = clearColor.r;
         locClearColor.g = clearColor.g;
         locClearColor.b = clearColor.b;
         locClearColor.a = clearColor.a;
 
-        this._clearColorStr = "rgba(" + (0 | (clearColor.r * 255)) + "," + (0 | (clearColor.g * 255)) + "," + (0 | (clearColor.b * 255)) + "," + clearColor.a + ")";
+        this._clearColorStr = 'rgba(' + (0 | (clearColor.r * 255)) + ',' + (0 | (clearColor.g * 255)) + ',' + (0 | (clearColor.b * 255)) + ',' + clearColor.a + ')';
     },
 
-    _setClearColorForWebGL:function (clearColor) {
+    _setClearColorForWebGL: function(clearColor) {
         var locClearColor = this._clearColor;
         locClearColor.r = clearColor.r;
         locClearColor.g = clearColor.g;
@@ -784,11 +784,11 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
      * Value for clearDepth. Valid only when autoDraw is true.
      * @return {Number}
      */
-    getClearDepth:function () {
+    getClearDepth: function() {
         return this._clearDepth;
     },
 
-    setClearDepth:function (clearDepth) {
+    setClearDepth: function(clearDepth) {
         this._clearDepth = clearDepth;
     },
 
@@ -796,11 +796,11 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
      * Value for clear Stencil. Valid only when autoDraw is true
      * @return {Number}
      */
-    getClearStencil:function () {
+    getClearStencil: function() {
         return this._clearStencil;
     },
 
-    setClearStencil:function (clearStencil) {
+    setClearStencil: function(clearStencil) {
         this._clearStencil = clearStencil;
     },
 
@@ -809,16 +809,16 @@ cc.RenderTexture = cc.Node.extend(/** @lends cc.RenderTexture# */{
      * Will be enabled in the future.
      * @return {Boolean}
      */
-    isAutoDraw:function () {
+    isAutoDraw: function() {
         return this._autoDraw;
     },
 
-    setAutoDraw:function (autoDraw) {
+    setAutoDraw: function(autoDraw) {
         this._autoDraw = autoDraw;
     }
 });
 
-if(cc.Browser.supportWebGL){
+if (cc.Browser.supportWebGL) {
     cc.RenderTexture.prototype.ctor = cc.RenderTexture.prototype._ctorForWebGL;
     cc.RenderTexture.prototype.cleanup = cc.RenderTexture.prototype._cleanupForWebGL;
     cc.RenderTexture.prototype.initWithWidthAndHeight = cc.RenderTexture.prototype._initWithWidthAndHeightForWebGL;
@@ -859,7 +859,7 @@ if(cc.Browser.supportWebGL){
  * // Example
  * var rt = cc.RenderTexture.create()
  */
-cc.RenderTexture.create = function (width, height, format, depthStencilFormat) {
+cc.RenderTexture.create = function(width, height, format, depthStencilFormat) {
     format = format || cc.TEXTURE_2D_PIXEL_FORMAT_RGBA8888;
     depthStencilFormat = depthStencilFormat || 0;
 

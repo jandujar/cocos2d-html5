@@ -31,39 +31,39 @@
  - If you update the rotation or position manually, the physics body will be updated
  - You can't eble both Chipmunk support and Box2d support at the same time. Only one can be enabled at compile time
  */
-(function () {
+(function() {
     var box2dAPI = {
-        _ignoreBodyRotation:false,
-        _body:null,
-        _PTMRatio:32,
-        _rotation:1,
-        setBody:function (body) {
+        _ignoreBodyRotation: false,
+        _body: null,
+        _PTMRatio: 32,
+        _rotation: 1,
+        setBody: function(body) {
             this._body = body;
         },
-        getBody:function () {
+        getBody: function() {
             return this._body;
         },
-        setPTMRatio:function (r) {
+        setPTMRatio: function(r) {
             this._PTMRatio = r;
         },
-        getPTMRatio:function () {
+        getPTMRatio: function() {
             return this._PTMRatio;
         },
-        getPosition:function () {
+        getPosition: function() {
             var pos = this._body.GetPosition();
-            var locPTMRatio =this._PTMRatio;
+            var locPTMRatio = this._PTMRatio;
             return cc.p(pos.x * locPTMRatio, pos.y * locPTMRatio);
         },
-        setPosition:function (p) {
+        setPosition: function(p) {
             var angle = this._body.GetAngle();
-            var locPTMRatio =this._PTMRatio;
+            var locPTMRatio = this._PTMRatio;
             this._body.setTransform(Box2D.b2Vec2(p.x / locPTMRatio, p.y / locPTMRatio), angle);
             this.setNodeDirty();
         },
-        getRotation:function () {
+        getRotation: function() {
             return (this._ignoreBodyRotation ? cc.RADIANS_TO_DEGREES(this._rotationRadians) : cc.RADIANS_TO_DEGREES(this._body.GetAngle()));
         },
-        setRotation:function (r) {
+        setRotation: function(r) {
             if (this._ignoreBodyRotation) {
                 this._rotation = r;
             } else {
@@ -73,70 +73,70 @@
             }
             this.setNodeDirty();
         },
-        _syncPosition:function () {
+        _syncPosition: function() {
             var pos = this._body.GetPosition();
             this._position._x = pos.x * this._PTMRatio;
             this._position._y = pos.y * this._PTMRatio;
             this._rotationRadians = this._rotation * (Math.PI / 180);
         },
-        _syncRotation:function () {
+        _syncRotation: function() {
             this._rotationRadians = this._body.GetAngle();
         },
-        visit:function () {
+        visit: function() {
             if (this._body && this._PTMRatio) {
                 this._syncPosition();
                 if (!this._ignoreBodyRotation)
                     this._syncRotation();
             }
             else {
-                cc.log("PhysicsSprite body or PTIMRatio was not set");
+                cc.log('PhysicsSprite body or PTIMRatio was not set');
             }
             this._super();
         }
     };
     var chipmunkAPI = {
-        _ignoreBodyRotation:false,
-        _body:null, //physics body
-        _rotation:1,
-        setBody:function (body) {
+        _ignoreBodyRotation: false,
+        _body: null, //physics body
+        _rotation: 1,
+        setBody: function(body) {
             this._body = body;
         },
-        getBody:function () {
+        getBody: function() {
             return this._body;
         },
-        getPosition:function () {
+        getPosition: function() {
             var locBody = this._body;
-            return {x:locBody.p.x, y:locBody.p.y};
+            return {x: locBody.p.x, y: locBody.p.y};
         },
 
-        getPositionX:function () {
+        getPositionX: function() {
             return this._body.p.x;
         },
 
-        getPositionY:function () {
+        getPositionY: function() {
             return this._body.p.y;
         },
 
-        setPosition:function (newPosOrxValue, yValue) {
-            if(arguments.length==2){
+        setPosition: function(newPosOrxValue, yValue) {
+            if (arguments.length == 2) {
                 this._body.p.x = newPosOrxValue;
                 this._body.p.y = yValue;
-            }else{
+            }else {
                 this._body.p.x = newPosOrxValue.x;
                 this._body.p.y = newPosOrxValue.y;
             }
             //this._syncPosition();
         },
-        _syncPosition:function () {
+        _syncPosition: function() {
             var locPosition = this._position, locBody = this._body;
             if (locPosition._x != locBody.p.x || locPosition._y != locBody.p.y) {
                 cc.Sprite.prototype.setPosition.call(this, locBody.p.x, locBody.p.y);
             }
         },
-        getRotation:function () {
-            return this._ignoreBodyRotation ? cc.RADIANS_TO_DEGREES(this._rotationRadiansX) : -cc.RADIANS_TO_DEGREES(this._body.a)
+        getRotation: function() {
+            return this._ignoreBodyRotation ? cc.RADIANS_TO_DEGREES(this._rotationRadiansX) : -cc.RADIANS_TO_DEGREES(this._body.a);
         },
-        setRotation:function (r) {
+        setRotation: function(r) {
             if (this._ignoreBodyRotation) {
                 cc.Sprite.prototype.setRotation.call(this, r);
             } else {
@@ -144,13 +144,13 @@
                 //this._syncRotation();
             }
         },
-        _syncRotation:function () {
+        _syncRotation: function() {
             if (this._rotationRadiansX != -this._body.a) {
                 cc.Sprite.prototype.setRotation.call(this, -cc.RADIANS_TO_DEGREES(this._body.a));
             }
         },
-        nodeToParentTransform:function () {
-            if(cc.renderContextType === cc.CANVAS)
+        nodeToParentTransform: function() {
+            if (cc.renderContextType === cc.CANVAS)
                 return this._nodeToParentTransformForCanvas();
 
             var locBody = this._body, locAnchorPIP = this._anchorPointInPoints, locScaleX = this._scaleX, locScaleY = this._scaleY;
@@ -183,7 +183,7 @@
             return this._transform;
         },
 
-        _nodeToParentTransformForCanvas: function () {
+        _nodeToParentTransformForCanvas: function() {
             if (this.isDirty()) {
                 var t = this._transform;// quick reference
                 // base position
@@ -226,7 +226,7 @@
             return this._transform;
         },
 
-        isDirty:function(){
+        isDirty: function() {
            return !this._body.isSleeping();
         }
     };
@@ -245,7 +245,7 @@
      * //create a sprite with filename and rect
      * var sprite2 = cc.PhysicsSprite.create("HelloHTML5World.png",cc.rect(0,0,480,320));
      */
-    cc.PhysicsSprite.create = function (fileName, rect) {
+    cc.PhysicsSprite.create = function(fileName, rect) {
         var argnum = arguments.length;
         var sprite = new cc.PhysicsSprite();
         if (argnum === 0) {
@@ -280,16 +280,16 @@
      * //create a PhysicsSprite with a sprite frame
      * var sprite = cc.PhysicsSprite.createWithSpriteFrameName('grossini_dance_01.png');
      */
-    cc.PhysicsSprite.createWithSpriteFrameName = function (spriteFrameName) {
+    cc.PhysicsSprite.createWithSpriteFrameName = function(spriteFrameName) {
         var spriteFrame = null;
         if (typeof(spriteFrameName) == 'string') {
             spriteFrame = cc.SpriteFrameCache.getInstance().getSpriteFrame(spriteFrameName);
             if (!spriteFrame) {
-                cc.log("Invalid spriteFrameName: " + spriteFrameName);
+                cc.log('Invalid spriteFrameName: ' + spriteFrameName);
                 return null;
             }
         } else {
-            cc.log("Invalid argument. Expecting string.");
+            cc.log('Invalid argument. Expecting string.');
             return null;
         }
         var sprite = new cc.PhysicsSprite();
@@ -310,7 +310,7 @@
      * //create a sprite with a sprite frame
      * var sprite = cc.Sprite.createWithSpriteFrameName(spriteFrame);
      */
-    cc.PhysicsSprite.createWithSpriteFrame = function (spriteFrame) {
+    cc.PhysicsSprite.createWithSpriteFrame = function(spriteFrame) {
         var sprite = new cc.PhysicsSprite();
         if (sprite && sprite.initWithSpriteFrame(spriteFrame)) {
             return sprite;

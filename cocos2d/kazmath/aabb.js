@@ -28,7 +28,7 @@
  * A struture that represents an axis-aligned
  * bounding box.
  */
-cc.kmAABB = function (min, max) {
+cc.kmAABB = function(min, max) {
     /** The max corner of the box */
     this.min = min || new cc.kmVec3();
     /** The min corner of the box */
@@ -39,7 +39,7 @@ cc.kmAABB = function (min, max) {
  * Returns KM_TRUE if point is in the specified AABB, returns
  * KM_FALSE otherwise.
  */
-cc.kmAABBContainsPoint = function (pPoint, pBox) {
+cc.kmAABBContainsPoint = function(pPoint, pBox) {
     if (pPoint.x >= pBox.min.x && pPoint.x <= pBox.max.x &&
         pPoint.y >= pBox.min.y && pPoint.y <= pBox.max.y &&
         pPoint.z >= pBox.min.z && pPoint.z <= pBox.max.z) {
@@ -51,7 +51,7 @@ cc.kmAABBContainsPoint = function (pPoint, pBox) {
 /**
  * Assigns pIn to pOut, returns pOut.
  */
-cc.kmAABBAssign = function (pOut, pIn) {
+cc.kmAABBAssign = function(pOut, pIn) {
     cc.kmVec3Assign(pOut.min, pIn.min);
     cc.kmVec3Assign(pOut.max, pIn.max);
     return pOut;
@@ -60,7 +60,7 @@ cc.kmAABBAssign = function (pOut, pIn) {
 /**
  * Scales pIn by s, stores the resulting AABB in pOut. Returns pOut
  */
-cc.kmAABBScale = function (pOut, pIn, s) {
+cc.kmAABBScale = function(pOut, pIn, s) {
     cc.log("cc.kmAABBScale hasn't been supported.");
 };
 

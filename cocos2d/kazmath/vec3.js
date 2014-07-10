@@ -24,30 +24,30 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-cc.kmVec3 = function (x, y, z) {
+cc.kmVec3 = function(x, y, z) {
     this.x = x || 0;
     this.y = y || 0;
     this.z = z || 0;
 };
 
-cc.kmVec3Fill = function(pOut, x, y , z){
-    if(!pOut)
-        return new cc.kmVec3(x, y , z);
+cc.kmVec3Fill = function(pOut, x, y , z) {
+    if (!pOut)
+        return new cc.kmVec3(x, y, z);
     pOut.x = x;
     pOut.y = y;
     pOut.z = z;
     return pOut;
 };
 
-cc.kmVec3Length = function(pIn){
+cc.kmVec3Length = function(pIn) {
     return Math.sqrt(cc.kmSQR(pIn.x) + cc.kmSQR(pIn.y) + cc.kmSQR(pIn.z));
 };
 
-cc.kmVec3LengthSq = function(pIn){
-    return cc.kmSQR(pIn.x) + cc.kmSQR(pIn.y) + cc.kmSQR(pIn.z)
-} ;
+cc.kmVec3LengthSq = function(pIn) {
+    return cc.kmSQR(pIn.x) + cc.kmSQR(pIn.y) + cc.kmSQR(pIn.z);
+};
 
-cc.kmVec3Normalize = function(pOut,pIn){
+cc.kmVec3Normalize = function(pOut, pIn) {
     var l = 1.0 / cc.kmVec3Length(pIn);
 
     pOut.x = pIn.x * l;
@@ -56,34 +56,34 @@ cc.kmVec3Normalize = function(pOut,pIn){
     return pOut;
 };
 
-cc.kmVec3Cross = function(pOut, pV1,pV2){
+cc.kmVec3Cross = function(pOut, pV1, pV2) {
     pOut.x = (pV1.y * pV2.z) - (pV1.z * pV2.y);
     pOut.y = (pV1.z * pV2.x) - (pV1.x * pV2.z);
     pOut.z = (pV1.x * pV2.y) - (pV1.y * pV2.x);
     return pOut;
 };
 
-cc.kmVec3Dot = function(pV1, pV2){
-    return (  pV1.x * pV2.x
+cc.kmVec3Dot = function(pV1, pV2) {
+    return (pV1.x * pV2.x
         + pV1.y * pV2.y
-        + pV1.z * pV2.z );
-} ;
+        + pV1.z * pV2.z);
+};
 
-cc.kmVec3Add = function(pOut, pV1, pV2){
+cc.kmVec3Add = function(pOut, pV1, pV2) {
     pOut.x = pV1.x + pV2.x;
     pOut.y = pV1.y + pV2.y;
     pOut.z = pV1.z + pV2.z;
     return pOut;
 };
 
-cc.kmVec3Subtract = function(pOut, pV1, pV2){
+cc.kmVec3Subtract = function(pOut, pV1, pV2) {
     pOut.x = pV1.x - pV2.x;
     pOut.y = pV1.y - pV2.y;
     pOut.z = pV1.z - pV2.z;
     return pOut;
 };
 
-cc.kmVec3Transform = function(pOut, pV, pM){
+cc.kmVec3Transform = function(pOut, pV, pM) {
     /*
      a = (Vx, Vy, Vz, 1)
      b = (a×M)T
@@ -95,7 +95,7 @@ cc.kmVec3Transform = function(pOut, pV, pM){
     return pOut;
 };
 
-cc.kmVec3TransformNormal = function(pOut, pV, pM){
+cc.kmVec3TransformNormal = function(pOut, pV, pM) {
     /*
      a = (Vx, Vy, Vz, 0)
      b = (a×M)T
@@ -108,7 +108,7 @@ cc.kmVec3TransformNormal = function(pOut, pV, pM){
     return pOut;
 };
 
-cc.kmVec3TransformCoord = function(pOut,pV,pM){
+cc.kmVec3TransformCoord = function(pOut, pV, pM) {
     /*
      a = (Vx, Vy, Vz, 1)
      b = (a×M)T
@@ -118,7 +118,7 @@ cc.kmVec3TransformCoord = function(pOut,pV,pM){
     var inV = new cc.kmVec4();
     cc.kmVec4Fill(inV, pV.x, pV.y, pV.z, 1.0);
 
-    cc.kmVec4Transform(v, inV,pM);
+    cc.kmVec4Transform(v, inV, pM);
 
     pOut.x = v.x / v.w;
     pOut.y = v.y / v.w;
@@ -127,7 +127,7 @@ cc.kmVec3TransformCoord = function(pOut,pV,pM){
     return pOut;
 };
 
-cc.kmVec3Scale = function(pOut, pIn, s){
+cc.kmVec3Scale = function(pOut, pIn, s) {
     pOut.x = pIn.x * s;
     pOut.y = pIn.y * s;
     pOut.z = pIn.z * s;
@@ -135,7 +135,7 @@ cc.kmVec3Scale = function(pOut, pIn, s){
     return pOut;
 };
 
-cc.kmVec3AreEqual = function(p1, p2){
+cc.kmVec3AreEqual = function(p1, p2) {
     if ((p1.x < (p2.x + cc.kmEpsilon) && p1.x > (p2.x - cc.kmEpsilon)) &&
         (p1.y < (p2.y + cc.kmEpsilon) && p1.y > (p2.y - cc.kmEpsilon)) &&
         (p1.z < (p2.z + cc.kmEpsilon) && p1.z > (p2.z - cc.kmEpsilon))) {
@@ -145,8 +145,8 @@ cc.kmVec3AreEqual = function(p1, p2){
     return 0;
 };
 
-cc.kmVec3InverseTransform = function(pOut, pVect,pM){
-    var v1 = new cc.kmVec3(pVect.x - pM.mat[12], pVect.y - pM.mat[13],pVect.z - pM.mat[14]);
+cc.kmVec3InverseTransform = function(pOut, pVect, pM) {
+    var v1 = new cc.kmVec3(pVect.x - pM.mat[12], pVect.y - pM.mat[13], pVect.z - pM.mat[14]);
 
     pOut.x = v1.x * pM.mat[0] + v1.y * pM.mat[1] + v1.z * pM.mat[2];
     pOut.y = v1.x * pM.mat[4] + v1.y * pM.mat[5] + v1.z * pM.mat[6];
@@ -155,7 +155,7 @@ cc.kmVec3InverseTransform = function(pOut, pVect,pM){
     return pOut;
 };
 
-cc.kmVec3InverseTransformNormal = function(pOut, pVect, pM){
+cc.kmVec3InverseTransformNormal = function(pOut, pVect, pM) {
     pOut.x = pVect.x * pM.mat[0] + pVect.y * pM.mat[1] + pVect.z * pM.mat[2];
     pOut.y = pVect.x * pM.mat[4] + pVect.y * pM.mat[5] + pVect.z * pM.mat[6];
     pOut.z = pVect.x * pM.mat[8] + pVect.y * pM.mat[9] + pVect.z * pM.mat[10];
@@ -163,7 +163,7 @@ cc.kmVec3InverseTransformNormal = function(pOut, pVect, pM){
     return pOut;
 };
 
-cc.kmVec3Assign = function(pOut,pIn){
+cc.kmVec3Assign = function(pOut, pIn) {
     if (pOut == pIn)
         return pOut;
 
@@ -173,7 +173,7 @@ cc.kmVec3Assign = function(pOut,pIn){
     return pOut;
 };
 
-cc.kmVec3Zero = function(pOut){
+cc.kmVec3Zero = function(pOut) {
     pOut.x = 0.0;
     pOut.y = 0.0;
     pOut.z = 0.0;
@@ -181,8 +181,8 @@ cc.kmVec3Zero = function(pOut){
     return pOut;
 };
 
-cc.kmVec3ToTypeArray = function(vecValue){
-    if(!vecValue)
+cc.kmVec3ToTypeArray = function(vecValue) {
+    if (!vecValue)
         return null;
 
     var tyArr = new Float32Array(3);

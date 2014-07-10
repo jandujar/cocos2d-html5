@@ -30,7 +30,7 @@
  * @param {cc.Rect} end the soft keyboard rectangle when animatin end
  * @param {Number} duration the soft keyboard animation duration
  */
-cc.IMEKeyboardNotificationInfo = function (begin, end, duration) {
+cc.IMEKeyboardNotificationInfo = function(begin, end, duration) {
     this.begin = begin || cc.RectZero();
     this.end = end || cc.RectZero();
     this.duration = duration || 0;
@@ -45,27 +45,27 @@ cc.IMEDelegate = cc.Class.extend(/** @lends cc.IMEDelegate# */{
     /**
      * Constructor
      */
-    ctor:function () {
+    ctor: function() {
         cc.IMEDispatcher.getInstance().addDelegate(this);
     },
     /**
      * Remove delegate
      */
-    removeDelegate:function () {
+    removeDelegate: function() {
         cc.IMEDispatcher.getInstance().removeDelegate(this);
     },
     /**
      * Remove delegate
      * @return {Boolean}
      */
-    attachWithIME:function () {
+    attachWithIME: function() {
         return cc.IMEDispatcher.getInstance().attachDelegateWithIME(this);
     },
     /**
      * Detach with IME
      * @return {Boolean}
      */
-    detachWithIME:function () {
+    detachWithIME: function() {
         return cc.IMEDispatcher.getInstance().detachDelegateWithIME(this);
     },
 
@@ -74,60 +74,60 @@ cc.IMEDelegate = cc.Class.extend(/** @lends cc.IMEDelegate# */{
      * Called by CCIMEDispatcher.
      * @return {Boolean}
      */
-    canAttachWithIME:function () {
+    canAttachWithIME: function() {
         return false;
     },
 
     /**
      * When the delegate detach with IME, this method call by CCIMEDispatcher.
      */
-    didAttachWithIME:function () {
+    didAttachWithIME: function() {
     },
 
     /**
      * Decide the delegate instance can stop receive ime message or not.
      * @return {Boolean}
      */
-    canDetachWithIME:function () {
+    canDetachWithIME: function() {
         return false;
     },
 
     /**
      * When the delegate detach with IME, this method call by CCIMEDispatcher.
      */
-    didDetachWithIME:function () {
+    didDetachWithIME: function() {
     },
 
     /**
      * Called by CCIMEDispatcher when some text input from IME.
      */
-    insertText:function (text, len) {
+    insertText: function(text, len) {
     },
 
     /**
      * Called by CCIMEDispatcher when user clicked the backward key.
      */
-    deleteBackward:function () {
+    deleteBackward: function() {
     },
 
     /**
      * Called by CCIMEDispatcher for get text which delegate already has.
      * @return {String}
      */
-    getContentText:function () {
-        return "";
+    getContentText: function() {
+        return '';
     },
 
     //////////////////////////////////////////////////////////////////////////
     // keyboard show/hide notification
     //////////////////////////////////////////////////////////////////////////
-    keyboardWillShow:function (info) {
+    keyboardWillShow: function(info) {
     },
-    keyboardDidShow:function (info) {
+    keyboardDidShow: function(info) {
     },
-    keyboardWillHide:function (info) {
+    keyboardWillHide: function(info) {
     },
-    keyboardDidHide:function (info) {
+    keyboardDidHide: function(info) {
     }
 });
 
@@ -137,63 +137,63 @@ cc.IMEDelegate = cc.Class.extend(/** @lends cc.IMEDelegate# */{
  * @extends cc.Class
  */
 cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.IMEDispatcher# */{
-    _domInputControl:null,
-    impl:null,
-    _currentInputString:"",
-    _lastClickPosition:null,
+    _domInputControl: null,
+    impl: null,
+    _currentInputString: '',
+    _lastClickPosition: null,
     /**
      * Constructor
      */
-    ctor:function () {
+    ctor: function() {
         this.impl = new cc.IMEDispatcher.Impl();
         this._lastClickPosition = cc.p(0, 0);
     },
 
-    init:function () {
+    init: function() {
         if (cc.Browser.isMobile)
             return;
-        this._domInputControl = cc.$("#imeDispatcherInput");
+        this._domInputControl = cc.$('#imeDispatcherInput');
         if (!this._domInputControl) {
-            this._domInputControl = cc.$new("input");
-            this._domInputControl.setAttribute("type", "text");
-            this._domInputControl.setAttribute("id", "imeDispatcherInput");
+            this._domInputControl = cc.$new('input');
+            this._domInputControl.setAttribute('type', 'text');
+            this._domInputControl.setAttribute('id', 'imeDispatcherInput');
             this._domInputControl.resize(0.0, 0.0);
             this._domInputControl.translates(0, 0);
-            this._domInputControl.style.opacity = "0";
+            this._domInputControl.style.opacity = '0';
             //this._domInputControl.style.filter = "alpha(opacity = 0)";
-            this._domInputControl.style.fontSize = "1px";
+            this._domInputControl.style.fontSize = '1px';
             this._domInputControl.setAttribute('tabindex', 2);
-            this._domInputControl.style.position = "absolute";
+            this._domInputControl.style.position = 'absolute';
             this._domInputControl.style.top = 0;
             this._domInputControl.style.left = 0;
             document.body.appendChild(this._domInputControl);
         }
         var selfPointer = this;
         //add event listener
-        this._domInputControl.addEventListener("input", function () {
+        this._domInputControl.addEventListener('input', function() {
             selfPointer._processDomInputString(selfPointer._domInputControl.value);
         }, false);
-        this._domInputControl.addEventListener("keydown", function (e) {
+        this._domInputControl.addEventListener('keydown', function(e) {
             // ignore tab key
             if (e.keyCode === cc.KEY.tab) {
                 e.stopPropagation();
                 e.preventDefault();
             } else if (e.keyCode == cc.KEY.enter) {
-                selfPointer.dispatchInsertText("\n", 1);
+                selfPointer.dispatchInsertText('\n', 1);
                 e.stopPropagation();
                 e.preventDefault();
             }
         }, false);
 
         if (/msie/i.test(navigator.userAgent)) {
-            this._domInputControl.addEventListener("keyup", function (e) {
+            this._domInputControl.addEventListener('keyup', function(e) {
                 if (e.keyCode == cc.KEY.backspace) {
                     selfPointer._processDomInputString(selfPointer._domInputControl.value);
                 }
             }, false);
         }
 
-        window.addEventListener('mousedown', function (event) {
+        window.addEventListener('mousedown', function(event) {
             var tx = event.pageX || 0;
             var ty = event.pageY || 0;
 
@@ -202,7 +202,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.IMEDispatcher# */{
         }, false);
     },
 
-    _processDomInputString:function (text) {
+    _processDomInputString: function(text) {
         var i, startPos;
         var len = this._currentInputString.length < text.length ? this._currentInputString.length : text.length;
         for (startPos = 0; startPos < len; startPos++) {
@@ -225,7 +225,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.IMEDispatcher# */{
      * @param {String} text
      * @param {Number} len
      */
-    dispatchInsertText:function (text, len) {
+    dispatchInsertText: function(text, len) {
         if (!this.impl || !text || len <= 0)
             return;
 
@@ -239,7 +239,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.IMEDispatcher# */{
     /**
      * Dispatch the delete backward operation
      */
-    dispatchDeleteBackward:function () {
+    dispatchDeleteBackward: function() {
         if (!this.impl) {
             return;
         }
@@ -255,19 +255,19 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.IMEDispatcher# */{
      * Get the content text, which current CCIMEDelegate which attached with IME has.
      * @return {String}
      */
-    getContentText:function () {
+    getContentText: function() {
         if (this.impl && this.impl._delegateWithIme) {
             var pszContentText = this.impl._delegateWithIme.getContentText();
-            return (pszContentText) ? pszContentText : "";
+            return (pszContentText) ? pszContentText : '';
         }
-        return "";
+        return '';
     },
 
     /**
      * Dispatch keyboard notification
      * @param {cc.IMEKeyboardNotificationInfo} info
      */
-    dispatchKeyboardWillShow:function (info) {
+    dispatchKeyboardWillShow: function(info) {
         if (this.impl) {
             for (var i = 0; i < this.impl._delegateList.length; i++) {
                 var delegate = this.impl._delegateList[i];
@@ -282,7 +282,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.IMEDispatcher# */{
      * Dispatch keyboard notification
      * @param {cc.IMEKeyboardNotificationInfo} info
      */
-    dispatchKeyboardDidShow:function (info) {
+    dispatchKeyboardDidShow: function(info) {
         if (this.impl) {
             for (var i = 0; i < this.impl._delegateList.length; i++) {
                 var delegate = this.impl._delegateList[i];
@@ -296,7 +296,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.IMEDispatcher# */{
      * Dispatch keyboard notification
      * @param {cc.IMEKeyboardNotificationInfo} info
      */
-    dispatchKeyboardWillHide:function (info) {
+    dispatchKeyboardWillHide: function(info) {
         if (this.impl) {
             for (var i = 0; i < this.impl._delegateList.length; i++) {
                 var delegate = this.impl._delegateList[i];
@@ -311,7 +311,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.IMEDispatcher# */{
      * Dispatch keyboard notification
      * @param {cc.IMEKeyboardNotificationInfo} info
      */
-    dispatchKeyboardDidHide:function (info) {
+    dispatchKeyboardDidHide: function(info) {
         if (this.impl) {
             for (var i = 0; i < this.impl._delegateList.length; i++) {
                 var delegate = this.impl._delegateList[i];
@@ -329,7 +329,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.IMEDispatcher# */{
      * //example
      * cc.IMEDispatcher.getInstance().addDelegate(this);
      */
-    addDelegate:function (delegate) {
+    addDelegate: function(delegate) {
         if (!delegate || !this.impl)
             return;
 
@@ -348,7 +348,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.IMEDispatcher# */{
      * //example
      * var ret = cc.IMEDispatcher.getInstance().attachDelegateWithIME(this);
      */
-    attachDelegateWithIME:function (delegate) {
+    attachDelegateWithIME: function(delegate) {
         if (!this.impl || !delegate)
             return false;
 
@@ -381,19 +381,19 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.IMEDispatcher# */{
         return true;
     },
 
-    _focusDomInput:function (delegate) {
-        if(cc.Browser.isMobile){
+    _focusDomInput: function(delegate) {
+        if (cc.Browser.isMobile) {
             this.impl._delegateWithIme = delegate;
             delegate.didAttachWithIME();
             //prompt
-            this._currentInputString = delegate.getString ? delegate.getString() : "";
-            var userInput = prompt("please enter your word:", this._currentInputString);
-            if(userInput != null)
+            this._currentInputString = delegate.getString ? delegate.getString() : '';
+            var userInput = prompt('please enter your word:', this._currentInputString);
+            if (userInput != null)
                 this._processDomInputString(userInput);
-            this.dispatchInsertText("\n", 1);
-        }else{
+            this.dispatchInsertText('\n', 1);
+        }else {
             this.impl._delegateWithIme = delegate;
-            this._currentInputString = delegate.getString ? delegate.getString() : "";
+            this._currentInputString = delegate.getString ? delegate.getString() : '';
             delegate.didAttachWithIME();
             this._domInputControl.focus();
             this._domInputControl.value = this._currentInputString;
@@ -401,10 +401,10 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.IMEDispatcher# */{
         }
     },
 
-    _domInputControlTranslate:function () {
+    _domInputControlTranslate: function() {
         if (/msie/i.test(navigator.userAgent)) {
-            this._domInputControl.style.left = this._lastClickPosition.x + "px";
-            this._domInputControl.style.top = this._lastClickPosition.y + "px";
+            this._domInputControl.style.left = this._lastClickPosition.x + 'px';
+            this._domInputControl.style.top = this._lastClickPosition.y + 'px';
         } else {
             this._domInputControl.translates(this._lastClickPosition.x, this._lastClickPosition.y);
         }
@@ -418,7 +418,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.IMEDispatcher# */{
      * //example
      * var ret = cc.IMEDispatcher.getInstance().detachDelegateWithIME(this);
      */
-    detachDelegateWithIME:function (delegate) {
+    detachDelegateWithIME: function(delegate) {
         if (!this.impl || !delegate)
             return false;
 
@@ -442,7 +442,7 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.IMEDispatcher# */{
      * //example
      * cc.IMEDispatcher.getInstance().removeDelegate(this);
      */
-    removeDelegate:function (delegate) {
+    removeDelegate: function(delegate) {
         if (!this.impl || !delegate)
             return;
 
@@ -467,12 +467,12 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.IMEDispatcher# */{
      *      cc.IMEDispatcher.getInstance().processKeycode(e.keyCode);
      * });
      */
-    processKeycode:function (keyCode) {
+    processKeycode: function(keyCode) {
         if (keyCode < 32) {
             if (keyCode == cc.KEY.backspace) {
                 this.dispatchDeleteBackward();
             } else if (keyCode == cc.KEY.enter) {
-                this.dispatchInsertText("\n", 1);
+                this.dispatchInsertText('\n', 1);
             } else if (keyCode == cc.KEY.tab) {
                 //tab input
             } else if (keyCode == cc.KEY.escape) {
@@ -491,12 +491,12 @@ cc.IMEDispatcher = cc.Class.extend(/**  @lends cc.IMEDispatcher# */{
  * @extends cc.Class
  */
 cc.IMEDispatcher.Impl = cc.Class.extend(/** @lends cc.IMEDispatcher.Impl# */{
-    _delegateWithIme:null,
-    _delegateList:null,
+    _delegateWithIme: null,
+    _delegateList: null,
     /**
      * Constructor
      */
-    ctor:function () {
+    ctor: function() {
         this._delegateList = [];
     },
     /**
@@ -504,7 +504,7 @@ cc.IMEDispatcher.Impl = cc.Class.extend(/** @lends cc.IMEDispatcher.Impl# */{
      * @param {cc.IMEDelegate} delegate
      * @return {Number|Null}
      */
-    findDelegate:function (delegate) {
+    findDelegate: function(delegate) {
         for (var i = 0; i < this._delegateList.length; i++) {
             if (this._delegateList[i] == delegate)
                 return i;
@@ -517,7 +517,7 @@ cc.IMEDispatcher.Impl = cc.Class.extend(/** @lends cc.IMEDispatcher.Impl# */{
  * Returns the shared CCIMEDispatcher object for the system.
  * @return {cc.IMEDispatcher}
  */
-cc.IMEDispatcher.getInstance = function () {
+cc.IMEDispatcher.getInstance = function() {
     if (!cc.IMEDispatcher.instance) {
         cc.IMEDispatcher.instance = new cc.IMEDispatcher();
         cc.IMEDispatcher.instance.init();

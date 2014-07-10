@@ -24,37 +24,37 @@
  ****************************************************************************/
 
 cc.SortableObject = cc.Class.extend({
-    setObjectID:function (objectId) {
+    setObjectID: function(objectId) {
     },
-    getObjectID:function () {
+    getObjectID: function() {
         return 0;
     }
 });
 
 cc.SortedObject = cc.SortableObject.extend({
-    _objectID:0,
+    _objectID: 0,
 
-    ctor:function () {
+    ctor: function() {
         this._objectID = 0;
     },
 
-    setObjectID:function (objectID) {
+    setObjectID: function(objectID) {
         this._objectID = objectID;
     },
 
-    getObjectID:function () {
+    getObjectID: function() {
         return this._objectID;
     }
 });
 
-var _compareObject = function (val1, val2) {
+var _compareObject = function(val1, val2) {
     return (val1.getObjectID() - val2.getObjectID());
 };
 
 cc.ArrayForObjectSorting = cc.Class.extend({
-    _saveObjectArr:null,
+    _saveObjectArr: null,
 
-    ctor:function () {
+    ctor: function() {
         this._saveObjectArr = [];
     },
     /**
@@ -68,9 +68,9 @@ cc.ArrayForObjectSorting = cc.Class.extend({
      *
      * @param {object} addObject
      */
-    insertSortedObject:function (addObject) {
-        if(!addObject)
-            throw "cc.ArrayForObjectSorting.insertSortedObject(): addObject should be non-null.";
+    insertSortedObject: function(addObject) {
+        if (!addObject)
+            throw 'cc.ArrayForObjectSorting.insertSortedObject(): addObject should be non-null.';
         var idx = this.indexOfSortedObject(addObject);
         this.insertObject(addObject, idx);
     },
@@ -83,7 +83,7 @@ cc.ArrayForObjectSorting = cc.Class.extend({
      *
      * @param value to remove
      */
-    removeSortedObject:function (delObject) {
+    removeSortedObject: function(delObject) {
         if (this.count() == 0) {
             return;
         }
@@ -107,7 +107,7 @@ cc.ArrayForObjectSorting = cc.Class.extend({
      * @param value to set
      * @param object the object which has the value
      */
-    setObjectID_ofSortedObject:function (tag, setObject) {
+    setObjectID_ofSortedObject: function(tag, setObject) {
         var idx = this.indexOfSortedObject(setObject);
         if (idx < this.count() && idx != cc.INVALID_INDEX) {
             var foundObj = this.objectAtIndex(idx);
@@ -119,7 +119,7 @@ cc.ArrayForObjectSorting = cc.Class.extend({
         }
     },
 
-    objectWithObjectID:function (tag) {
+    objectWithObjectID: function(tag) {
         if (this.count() == 0) {
             return null;
         }
@@ -144,7 +144,7 @@ cc.ArrayForObjectSorting = cc.Class.extend({
      * @param value to locate object
      * @return object found or nil.
      */
-    getObjectWithObjectID:function (tag) {
+    getObjectWithObjectID: function(tag) {
         return null;
     },
 
@@ -159,7 +159,7 @@ cc.ArrayForObjectSorting = cc.Class.extend({
      * @param value to locate object
      * @return index of an object found
      */
-    indexOfSortedObject:function (idxObj) {
+    indexOfSortedObject: function(idxObj) {
         var idx = 0;
         if (idxObj) {
             //       CCObject* pObj = (CCObject*)bsearch((CCObject*)&object, data.arr, data.num, sizeof(CCObject*), _compareObject);
@@ -185,32 +185,32 @@ cc.ArrayForObjectSorting = cc.Class.extend({
     },
 
     //implement array method
-    count:function () {
+    count: function() {
         return this._saveObjectArr.length;
     },
 
-    lastObject:function () {
+    lastObject: function() {
         var locObjectArr = this._saveObjectArr;
         if (locObjectArr.length == 0)
             return null;
         return locObjectArr[locObjectArr.length - 1];
     },
 
-    objectAtIndex:function (idx) {
+    objectAtIndex: function(idx) {
         return this._saveObjectArr[idx];
     },
 
-    addObject:function (addObj) {
+    addObject: function(addObj) {
         this._saveObjectArr.push(addObj);
         this._saveObjectArr.sort(_compareObject);
     },
 
-    removeObjectAtIndex:function (idx) {
+    removeObjectAtIndex: function(idx) {
         cc.ArrayRemoveObjectAtIndex(this._saveObjectArr, idx);
         this._saveObjectArr.sort(_compareObject);
     },
 
-    insertObject:function (addObj, idx) {
+    insertObject: function(addObj, idx) {
         this._saveObjectArr = cc.ArrayAppendObjectToIndex(this._saveObjectArr, addObj, idx);
         this._saveObjectArr.sort(_compareObject);
     }

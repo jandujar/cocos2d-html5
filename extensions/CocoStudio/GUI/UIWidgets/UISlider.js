@@ -48,11 +48,11 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
     _percent: 0,
     _scale9Enabled: false,
     _prevIgnoreSize: true,
-    _textureFile: "",
-    _progressBarTextureFile: "",
-    _slidBallNormalTextureFile: "",
-    _slidBallPressedTextureFile: "",
-    _slidBallDisabledTextureFile: "",
+    _textureFile: '',
+    _progressBarTextureFile: '',
+    _slidBallNormalTextureFile: '',
+    _slidBallPressedTextureFile: '',
+    _slidBallDisabledTextureFile: '',
     _capInsetsBarRenderer: null,
     _capInsetsProgressBarRenderer: null,
     _sliderEventListener: null,
@@ -63,7 +63,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
     _ballPTexType: null,
     _ballDTexType: null,
     _isTextureLoaded: false,
-    ctor: function () {
+    ctor: function() {
         ccs.Widget.prototype.ctor.call(this);
         this._barRenderer = null;
         this._progressBarRenderer = null;
@@ -76,11 +76,11 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
         this._percent = 0;
         this._scale9Enabled = false;
         this._prevIgnoreSize = true;
-        this._textureFile = "";
-        this._progressBarTextureFile = "";
-        this._slidBallNormalTextureFile = "";
-        this._slidBallPressedTextureFile = "";
-        this._slidBallDisabledTextureFile = "";
+        this._textureFile = '';
+        this._progressBarTextureFile = '';
+        this._slidBallNormalTextureFile = '';
+        this._slidBallPressedTextureFile = '';
+        this._slidBallDisabledTextureFile = '';
         this._capInsetsBarRenderer = cc.RectZero();
         this._capInsetsProgressBarRenderer = cc.RectZero();
         this._sliderEventListener = null;
@@ -93,7 +93,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
         this._isTextureLoaded = false;
     },
 
-    initRenderer: function () {
+    initRenderer: function() {
         this._barRenderer = cc.Sprite.create();
         this._progressBarRenderer = cc.Sprite.create();
         this._progressBarRenderer.setAnchorPoint(0.0, 0.5);
@@ -116,7 +116,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
      * @param {String} fileName
      * @param {ccs.TextureResType} texType
      */
-    loadBarTexture: function (fileName, texType) {
+    loadBarTexture: function(fileName, texType) {
         if (!fileName) {
             return;
         }
@@ -138,7 +138,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
         this.barRendererScaleChangedWithSize();
 
         if (!barRenderer.textureLoaded()) {
-            barRenderer.addLoadedEventListener(function () {
+            barRenderer.addLoadedEventListener(function() {
                 this.barRendererScaleChangedWithSize();
             }, this);
         }
@@ -149,7 +149,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
      * @param {String} fileName
      * @param {ccs.TextureResType} texType
      */
-    loadProgressBarTexture: function (fileName, texType) {
+    loadProgressBarTexture: function(fileName, texType) {
         if (!fileName) {
             return;
         }
@@ -177,7 +177,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
         var textLoaded = progressBarRenderer.textureLoaded();
         this._isTextureLoaded = textLoaded;
         if (!textLoaded) {
-            progressBarRenderer.addLoadedEventListener(function () {
+            progressBarRenderer.addLoadedEventListener(function() {
                 this._isTextureLoaded = true;
                 var locSize = progressBarRenderer.getContentSize();
                 this._progressBarTextureSize.width = locSize.width;
@@ -187,7 +187,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
         }
     },
 
-    _updateDisplay:function(){
+    _updateDisplay: function() {
         this.updateDisplayedColor(this.getColor());
         this.updateDisplayedOpacity(this.getOpacity());
     },
@@ -196,7 +196,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
      * Sets if slider is using scale9 renderer.
      * @param {Boolean} able
      */
-    setScale9Enabled: function (able) {
+    setScale9Enabled: function(able) {
         if (this._scale9Enabled == able) {
             return;
         }
@@ -234,7 +234,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
      * override "ignoreContentAdaptWithSize" method of widget.
      * @param {Boolean} ignore
      */
-    ignoreContentAdaptWithSize: function (ignore) {
+    ignoreContentAdaptWithSize: function(ignore) {
         if (!this._scale9Enabled || (this._scale9Enabled && !ignore)) {
             ccs.Widget.prototype.ignoreContentAdaptWithSize.call(this, ignore);
             this._prevIgnoreSize = ignore;
@@ -245,7 +245,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
      * Sets capinsets for slider, if slider is using scale9 renderer.
      * @param {cc.Rect} capInsets
      */
-    setCapInsets: function (capInsets) {
+    setCapInsets: function(capInsets) {
         this.setCapInsetsBarRenderer(capInsets);
         this.setCapInsetProgressBarRebderer(capInsets);
     },
@@ -254,7 +254,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
      * Sets capinsets for slider, if slider is using scale9 renderer.
      * @param {cc.Rect} capInsets
      */
-    setCapInsetsBarRenderer: function (capInsets) {
+    setCapInsetsBarRenderer: function(capInsets) {
         this._capInsetsBarRenderer = capInsets;
         if (!this._scale9Enabled) {
             return;
@@ -266,7 +266,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
      * Sets capinsets for slider, if slider is using scale9 renderer.
      * @param {cc.Rect} capInsets
      */
-    setCapInsetProgressBarRebderer: function (capInsets) {
+    setCapInsetProgressBarRebderer: function(capInsets) {
         this._capInsetsProgressBarRenderer = capInsets;
         if (!this._scale9Enabled) {
             return;
@@ -281,7 +281,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
      * @param {String} disabled
      * @param {ccs.TextureResType} texType
      */
-    loadSlidBallTextures: function (normal, pressed, disabled, texType) {
+    loadSlidBallTextures: function(normal, pressed, disabled, texType) {
         this.loadSlidBallTextureNormal(normal, texType);
         this.loadSlidBallTexturePressed(pressed, texType);
         this.loadSlidBallTextureDisabled(disabled, texType);
@@ -292,7 +292,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
      * @param {String} normal
      * @param {ccs.TextureResType} texType
      */
-    loadSlidBallTextureNormal: function (normal, texType) {
+    loadSlidBallTextureNormal: function(normal, texType) {
         if (!normal) {
             return;
         }
@@ -317,7 +317,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
      * @param {String} pressed
      * @param {ccs.TextureResType} texType
      */
-    loadSlidBallTexturePressed: function (pressed, texType) {
+    loadSlidBallTexturePressed: function(pressed, texType) {
         if (!pressed) {
             return;
         }
@@ -342,7 +342,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
      * @param {String} disabled
      * @param {ccs.TextureResType} texType
      */
-    loadSlidBallTextureDisabled: function (disabled, texType) {
+    loadSlidBallTextureDisabled: function(disabled, texType) {
         if (!disabled) {
             return;
         }
@@ -366,7 +366,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
      * Changes the progress direction of slider.
      * @param {number} percent
      */
-    setPercent: function (percent) {
+    setPercent: function(percent) {
         if (percent > 100) {
             percent = 100;
         }
@@ -374,7 +374,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
             percent = 0;
         }
         this._percent = percent;
-        if(!this._isTextureLoaded){
+        if (!this._isTextureLoaded) {
             return;
         }
         var dis = this._barLength * (percent / 100.0);
@@ -396,9 +396,9 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
         }
     },
 
-    onTouchBegan: function (touch , event) {
-        var pass = ccs.Widget.prototype.onTouchBegan.call(this,touch , event);
-        if(this._hitted){
+    onTouchBegan: function(touch , event) {
+        var pass = ccs.Widget.prototype.onTouchBegan.call(this, touch, event);
+        if (this._hitted) {
             var nsp = this.convertToNodeSpace(this._touchStartPos);
             this.setPercent(this.getPercentWithBallPos(nsp.x));
             this.percentChangedEvent();
@@ -406,7 +406,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
         return pass;
     },
 
-    onTouchMoved: function (touch , event) {
+    onTouchMoved: function(touch , event) {
         var touchPoint = touch.getLocation();
         this._touchMovePos.x = touchPoint.x;
         this._touchMovePos.y = touchPoint.y;
@@ -416,20 +416,20 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
         this.percentChangedEvent();
     },
 
-    onTouchEnded: function (touch , event) {
-        ccs.Widget.prototype.onTouchEnded.call(this, touch , event);
+    onTouchEnded: function(touch , event) {
+        ccs.Widget.prototype.onTouchEnded.call(this, touch, event);
     },
 
-    onTouchCancelled: function (touch , event) {
-        ccs.Widget.prototype.onTouchCancelled.call(this, touch , event);
+    onTouchCancelled: function(touch , event) {
+        ccs.Widget.prototype.onTouchCancelled.call(this, touch, event);
     },
 
     /**
      * get percent with ballPos
      * @param {cc.Point} px
-     * @returns {number}
+     * @return {number}
      */
-    getPercentWithBallPos: function (px) {
+    getPercentWithBallPos: function(px) {
         return (((px - (-this._barLength / 2.0)) / this._barLength) * 100.0);
     },
 
@@ -438,12 +438,12 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
      * @param {Function} selector
      * @param {Object} target
      */
-    addEventListenerSlider: function (selector, target) {
+    addEventListenerSlider: function(selector, target) {
         this._sliderEventSelector = selector;
         this._sliderEventListener = target;
     },
 
-    percentChangedEvent: function () {
+    percentChangedEvent: function() {
         if (this._sliderEventListener && this._sliderEventSelector) {
             this._sliderEventSelector.call(this._sliderEventListener, this, ccs.SliderEventType.percent_changed);
         }
@@ -451,13 +451,13 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
 
     /**
      * Gets the progress direction of slider.
-     * @returns {number}
+     * @return {number}
      */
-    getPercent: function () {
+    getPercent: function() {
         return this._percent;
     },
 
-    onSizeChanged: function () {
+    onSizeChanged: function() {
         ccs.Widget.prototype.onSizeChanged.call(this);
         this.barRendererScaleChangedWithSize();
         this.progressBarRendererScaleChangedWithSize();
@@ -465,22 +465,22 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
 
     /**
      * override "getContentSize" method of widget.
-     * @returns {cc.Size}
+     * @return {cc.Size}
      */
-    getContentSize: function () {
+    getContentSize: function() {
         var locContentSize = this._barRenderer.getContentSize();
-        return cc.size(locContentSize.width,locContentSize.height);
+        return cc.size(locContentSize.width, locContentSize.height);
     },
 
     /**
      * override "getContentSize" method of widget.
-     * @returns {cc.Node}
+     * @return {cc.Node}
      */
-    getVirtualRenderer: function () {
+    getVirtualRenderer: function() {
         return this._barRenderer;
     },
 
-    barRendererScaleChangedWithSize: function () {
+    barRendererScaleChangedWithSize: function() {
         if (this._ignoreSize) {
             this._barRenderer.setScale(1.0);
             var locSize = this._barRenderer.getContentSize();
@@ -491,7 +491,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
         else {
             this._barLength = this._size.width;
             if (this._scale9Enabled) {
-                this._barRenderer.setPreferredSize(cc.size(this._size.width,this._size.height));
+                this._barRenderer.setPreferredSize(cc.size(this._size.width, this._size.height));
             }
             else {
                 var btextureSize = this._barRenderer.getContentSize();
@@ -508,7 +508,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
         this.setPercent(this._percent);
     },
 
-    progressBarRendererScaleChangedWithSize: function () {
+    progressBarRendererScaleChangedWithSize: function() {
         if (this._ignoreSize) {
             if (!this._scale9Enabled) {
                 var ptextureSize = this._progressBarTextureSize;
@@ -520,7 +520,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
         }
         else {
             if (this._scale9Enabled) {
-                this._progressBarRenderer.setPreferredSize(cc.size(this._size.width,this._size.height));
+                this._progressBarRenderer.setPreferredSize(cc.size(this._size.width, this._size.height));
             }
             else {
                 var ptextureSize = this._progressBarTextureSize;
@@ -538,19 +538,19 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
         this.setPercent(this._percent);
     },
 
-    onPressStateChangedToNormal: function () {
+    onPressStateChangedToNormal: function() {
         this._slidBallNormalRenderer.setVisible(true);
         this._slidBallPressedRenderer.setVisible(false);
         this._slidBallDisabledRenderer.setVisible(false);
     },
 
-    onPressStateChangedToPressed: function () {
+    onPressStateChangedToPressed: function() {
         this._slidBallNormalRenderer.setVisible(false);
         this._slidBallPressedRenderer.setVisible(true);
         this._slidBallDisabledRenderer.setVisible(false);
     },
 
-    onPressStateChangedToDisabled: function () {
+    onPressStateChangedToDisabled: function() {
         this._slidBallNormalRenderer.setVisible(false);
         this._slidBallPressedRenderer.setVisible(false);
         this._slidBallDisabledRenderer.setVisible(true);
@@ -558,17 +558,17 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
 
     /**
      * Returns the "class name" of widget.
-     * @returns {string}
+     * @return {string}
      */
-    getDescription: function () {
-        return "Slider";
+    getDescription: function() {
+        return 'Slider';
     },
 
-    createCloneInstance: function () {
+    createCloneInstance: function() {
         return ccs.Slider.create();
     },
 
-    copySpecialProperties: function (slider) {
+    copySpecialProperties: function(slider) {
         this._prevIgnoreSize = slider._prevIgnoreSize;
         this.setScale9Enabled(slider._scale9Enabled);
         this.loadBarTexture(slider._textureFile, slider._barTexType);
@@ -587,7 +587,7 @@ ccs.Slider = ccs.Widget.extend(/** @lends ccs.Slider# */{
  * // example
  * var uiSlider = ccs.Slider.create();
  */
-ccs.Slider.create = function () {
+ccs.Slider.create = function() {
     var uiSlider = new ccs.Slider();
     if (uiSlider && uiSlider.init()) {
         return uiSlider;

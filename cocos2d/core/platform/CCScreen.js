@@ -32,19 +32,19 @@
  */
 cc.Screen = cc.Class.extend({
     _supportsFullScreen: false,
-    _browserPrefix: "",
+    _browserPrefix: '',
     _preElement: null,//the pre element to show in full screen mode.
     _preOnFullScreenChange: null,//the pre fullscreenchange function
-    _touchEvent: "",
-    init: function () {
+    _touchEvent: '',
+    init: function() {
         var browserPres = 'webkit,moz,o,ms,khtml'.split(',');
         var body = document.body;
-        if (body["requestFullScreen"]) {
+        if (body['requestFullScreen']) {
             this._supportsFullScreen = true;
         } else {
             for (var i = 0, il = browserPres.length, prefix; i < il; i++) {
                 prefix = browserPres[i];
-                if (body[prefix + "RequestFullScreen"]) {
+                if (body[prefix + 'RequestFullScreen']) {
                     this._supportsFullScreen = true;
                     this._browserPrefix = prefix;
                     break;
@@ -57,16 +57,16 @@ cc.Screen = cc.Class.extend({
 
     /**
      * return true if it's full now.
-     * @returns {Boolean}
+     * @return {Boolean}
      */
-    fullScreen: function () {
+    fullScreen: function() {
         var d = document;
         if (this._supportsFullScreen) {
             switch (this._browserPrefix) {
                 case '':
-                    return d["fullScreen"];
+                    return d['fullScreen'];
                 case 'webkit':
-                    return d["webkitIsFullScreen"];
+                    return d['webkitIsFullScreen'];
                 default:
                     return d[this._browserPrefix + 'FullScreen'];
             }
@@ -78,33 +78,33 @@ cc.Screen = cc.Class.extend({
      * change the screen to full mode.
      * @param {Element} element
      * @param {Function} onFullScreenChange
-     * @returns {*}
+     * @return {*}
      */
-    requestFullScreen: function (element, onFullScreenChange) {
+    requestFullScreen: function(element, onFullScreenChange) {
         if (!this._supportsFullScreen || this.fullScreen()) return;
         if (onFullScreenChange) {
-            var eventName = this._browserPrefix + "fullscreenchange";
+            var eventName = this._browserPrefix + 'fullscreenchange';
             if (this._preElement && this._preOnFullScreenChange) this._preElement.removeEventListener(eventName, this._preOnFullScreenChange);
             this._preElement = element;
             this._preOnFullScreenChange = onFullScreenChange;
             element.addEventListener(eventName, onFullScreenChange, false);
         }
-        return (this._browserPrefix === '') ? element["requestFullScreen"]() : element[this._browserPrefix + 'RequestFullScreen']();
+        return (this._browserPrefix === '') ? element['requestFullScreen']() : element[this._browserPrefix + 'RequestFullScreen']();
     },
 
     /**
      * exit the full mode.
-     * @returns {*}
+     * @return {*}
      */
-    exitFullScreen: function () {
+    exitFullScreen: function() {
         if (!this._supportsFullScreen || !this.fullScreen()) return;
-        return (this._browserPrefix === '') ? document.body["cancelFullScreen"]() : document.body[this._browserPrefix + 'CancelFullScreen']();
+        return (this._browserPrefix === '') ? document.body['cancelFullScreen']() : document.body[this._browserPrefix + 'CancelFullScreen']();
     },
 
     /**
      * Automatically request full screen with a touch/click event
      */
-    autoFullScreen: function (element, onFullScreenChange) {
+    autoFullScreen: function(element, onFullScreenChange) {
         var theScreen = this;
         // Function bind will be too complicated here because we need the callback function's reference to remove the listener
         function callback() {
@@ -121,8 +121,8 @@ cc.Screen = cc.Class.extend({
  * @function
  * @return {cc.Screen}
  */
-cc.Screen.getInstance = function () {
-    if (!this._instance){
+cc.Screen.getInstance = function() {
+    if (!this._instance) {
         var screen = new cc.Screen();
         screen.init();
         this._instance = screen;

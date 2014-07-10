@@ -25,13 +25,13 @@
  ****************************************************************************/
 
 var Helloworld = cc.Layer.extend({
-    isMouseDown:false,
-    helloImg:null,
-    helloLabel:null,
-    circle:null,
-    sprite:null,
+    isMouseDown: false,
+    helloImg: null,
+    helloLabel: null,
+    circle: null,
+    sprite: null,
 
-    init:function () {
+    init: function() {
         //////////////////////////////
         // 1. super init first
         this._super();
@@ -44,15 +44,15 @@ var Helloworld = cc.Layer.extend({
 
         // add a "close" icon to exit the progress. it's an autorelease object
         var closeItem = cc.MenuItemImage.create(
-            "res/CloseNormal.png",
-            "res/CloseSelected.png",
-            function () {
+            'res/CloseNormal.png',
+            'res/CloseSelected.png',
+            function() {
                 history.go(-1);
             },this);
         closeItem.setAnchorPoint(0.5, 0.5);
 
         var menu = cc.Menu.create(closeItem);
-        menu.setPosition(0,0);
+        menu.setPosition(0, 0);
         this.addChild(menu, 1);
         closeItem.setPosition(size.width - 20, 20);
 
@@ -60,7 +60,7 @@ var Helloworld = cc.Layer.extend({
         // 3. add your codes below...
         // add a label shows "Hello World"
         // create and initialize a label
-        this.helloLabel = cc.LabelTTF.create("Hello World", "Arial", 38);
+        this.helloLabel = cc.LabelTTF.create('Hello World', 'Arial', 38);
         // position the label on the center of the screen
         this.helloLabel.setPosition(size.width / 2, 0);
         // add the label as a child to this layer
@@ -70,7 +70,7 @@ var Helloworld = cc.Layer.extend({
         this.addChild(lazyLayer);
 
         // add "HelloWorld" splash screen"
-        this.sprite = cc.Sprite.create("res/HelloWorld.png");
+        this.sprite = cc.Sprite.create('res/HelloWorld.png');
         this.sprite.setPosition(size.width / 2, size.height / 2);
         this.sprite.setScale(0.5);
         this.sprite.setRotation(180);
@@ -81,35 +81,35 @@ var Helloworld = cc.Layer.extend({
         var scaleToA = cc.ScaleTo.create(2, 1, 1);
 
         this.sprite.runAction(cc.Sequence.create(rotateToA, scaleToA));
-        this.helloLabel.runAction(cc.Spawn.create(cc.MoveBy.create(2.5, cc.p(0, size.height - 40)),cc.TintTo.create(2.5,255,125,0)));
+        this.helloLabel.runAction(cc.Spawn.create(cc.MoveBy.create(2.5, cc.p(0, size.height - 40)), cc.TintTo.create(2.5, 255, 125, 0)));
 
         this.setTouchEnabled(true);
         return true;
     },
     // a selector callback
-    menuCloseCallback:function (sender) {
+    menuCloseCallback: function(sender) {
         cc.Director.getInstance().end();
     },
-    onTouchesBegan:function (touches, event) {
+    onTouchesBegan: function(touches, event) {
         this.isMouseDown = true;
     },
-    onTouchesMoved:function (touches, event) {
+    onTouchesMoved: function(touches, event) {
         if (this.isMouseDown) {
             if (touches) {
                 //this.circle.setPosition(touches[0].getLocation().x, touches[0].getLocation().y);
             }
         }
     },
-    onTouchesEnded:function (touches, event) {
+    onTouchesEnded: function(touches, event) {
         this.isMouseDown = false;
     },
-    onTouchesCancelled:function (touches, event) {
-        console.log("onTouchesCancelled");
+    onTouchesCancelled: function(touches, event) {
+        console.log('onTouchesCancelled');
     }
 });
 
 var HelloWorldScene = cc.Scene.extend({
-    onEnter:function () {
+    onEnter: function() {
         this._super();
         var layer = new Helloworld();
         layer.init();

@@ -34,7 +34,7 @@ cc.AppController = cc.Class.extend(/** @lends cc.AppController# */{
      * did something when Finish Launching
      * @return {Boolean}
      */
-    didFinishLaunchingWithOptions:function () {
+    didFinishLaunchingWithOptions: function() {
         // Override point for customization after application launch.
         //var app = new cc.AppDelegate();
         cc.Application.getInstance().run();
@@ -51,7 +51,7 @@ cc.AppController = cc.Class.extend(/** @lends cc.AppController# */{
      *  Games should use this method to pause the game.
      * </p>
      */
-    applicationWillResignActive:function () {
+    applicationWillResignActive: function() {
         cc.Director.getInstance().pause();
     },
 
@@ -61,7 +61,7 @@ cc.AppController = cc.Class.extend(/** @lends cc.AppController# */{
      * If the application was previously in the background, optionally refresh the user interface.
      * </p>
      */
-    applicationDidBecomeActive:function () {
+    applicationDidBecomeActive: function() {
         cc.Director.getInstance().resume();
     },
 
@@ -72,7 +72,7 @@ cc.AppController = cc.Class.extend(/** @lends cc.AppController# */{
      *   If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
      * </p>
      */
-    applicationDidEnterBackground:function () {
+    applicationDidEnterBackground: function() {
         cc.Application.getInstance().applicationDidEnterBackground();
     },
 
@@ -82,14 +82,14 @@ cc.AppController = cc.Class.extend(/** @lends cc.AppController# */{
      *      here you can undo many of the changes made on entering the background.
      * </p>
      */
-    applicationWillEnterForeground:function () {
+    applicationWillEnterForeground: function() {
         cc.Application.getInstance().applicationWillEnterForeground();
     },
 
     /**
      * Called when the application is about to terminate. See also applicationDidEnterBackground.
      */
-    applicationWillTerminate:function () {
+    applicationWillTerminate: function() {
     }
 });
 
@@ -97,12 +97,12 @@ cc.AppController = cc.Class.extend(/** @lends cc.AppController# */{
  * Return Controller of Game Application
  * @return {cc.AppController}
  */
-cc.AppController.shareAppController = function () {
+cc.AppController.shareAppController = function() {
     if (cc.sharedAppController == null) {
         cc.sharedAppController = new cc.AppController();
     }
-    if(!cc.sharedAppController)
-        throw "Application initialize failure";
+    if (!cc.sharedAppController)
+        throw 'Application initialize failure';
     return cc.sharedAppController;
 };
 

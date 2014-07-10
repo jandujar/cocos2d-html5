@@ -34,29 +34,29 @@ cc.ActionInstant = cc.FiniteTimeAction.extend(/** @lends cc.ActionInstant# */{
     /**
      * @return {Boolean}
      */
-    isDone:function () {
+    isDone: function() {
         return true;
     },
 
     /**
      * @param {Number} dt
      */
-    step:function (dt) {
+    step: function(dt) {
         this.update(1);
     },
 
     /**
      * @param {Number} time
      */
-    update:function (time) {
+    update: function(time) {
         //nothing
     },
 
-    reverse:function(){
+    reverse: function() {
         return this.clone();
     },
 
-    clone:function(){
+    clone: function() {
         return new cc.ActionInstant();
     }
 });
@@ -69,18 +69,18 @@ cc.Show = cc.ActionInstant.extend(/** @lends cc.Show# */{
     /**
      * @param {Number} time
      */
-    update:function (time) {
+    update: function(time) {
         this._target.setVisible(true);
     },
 
     /**
      * @return {cc.FiniteTimeAction}
      */
-    reverse:function () {
+    reverse: function() {
         return cc.Hide.create();
     },
 
-    clone:function(){
+    clone: function() {
         return new cc.Show();
     }
 });
@@ -90,7 +90,7 @@ cc.Show = cc.ActionInstant.extend(/** @lends cc.Show# */{
  * // example
  * var showAction = cc.Show.create();
  */
-cc.Show.create = function () {
+cc.Show.create = function() {
     return new cc.Show();
 };
 
@@ -103,18 +103,18 @@ cc.Hide = cc.ActionInstant.extend(/** @lends cc.Hide# */{
     /**
      * @param {Number} time
      */
-    update:function (time) {
+    update: function(time) {
         this._target.setVisible(false);
     },
 
     /**
      * @return {cc.FiniteTimeAction}
      */
-    reverse:function () {
+    reverse: function() {
         return cc.Show.create();
     },
 
-    clone:function(){
+    clone: function() {
         return new cc.Hide();
     }
 });
@@ -124,7 +124,7 @@ cc.Hide = cc.ActionInstant.extend(/** @lends cc.Hide# */{
  * // example
  * var hideAction = cc.Hide.create();
  */
-cc.Hide.create = function () {
+cc.Hide.create = function() {
     return (new cc.Hide());
 };
 
@@ -137,18 +137,18 @@ cc.ToggleVisibility = cc.ActionInstant.extend(/** @lends cc.ToggleVisibility# */
     /**
      * @param {Number} time
      */
-    update:function (time) {
+    update: function(time) {
         this._target.setVisible(!this._target.isVisible());
     },
 
     /**
      * @return {cc.ToggleVisibility}
      */
-    reverse:function () {
+    reverse: function() {
         return new cc.ToggleVisibility();
     },
 
-    clone:function(){
+    clone: function() {
         return new cc.ToggleVisibility();
     }
 });
@@ -159,40 +159,40 @@ cc.ToggleVisibility = cc.ActionInstant.extend(/** @lends cc.ToggleVisibility# */
  * // example
  * var toggleVisibilityAction = cc.ToggleVisibility.create();
  */
-cc.ToggleVisibility.create = function () {
+cc.ToggleVisibility.create = function() {
     return (new cc.ToggleVisibility());
 };
 
 cc.RemoveSelf = cc.ActionInstant.extend({
-     _isNeedCleanUp:true,
-    ctor:function(){
+     _isNeedCleanUp: true,
+    ctor: function() {
         cc.FiniteTimeAction.prototype.ctor.call(this);
         this._isNeedCleanUp = true;
     },
 
-    update:function(time){
+    update: function(time) {
         this._target.removeFromParent(this._isNeedCleanUp);
     },
 
-    init:function(isNeedCleanUp){
+    init: function(isNeedCleanUp) {
         this._isNeedCleanUp = isNeedCleanUp;
         return true;
     },
 
-    reverse:function(){
+    reverse: function() {
         return new cc.RemoveSelf(this._isNeedCleanUp);
     },
 
-    clone:function(){
+    clone: function() {
         return new cc.RemoveSelf(this._isNeedCleanUp);
     }
 });
 
-cc.RemoveSelf.create = function(isNeedCleanUp){
-    if(isNeedCleanUp == null)
+cc.RemoveSelf.create = function(isNeedCleanUp) {
+    if (isNeedCleanUp == null)
         isNeedCleanUp = true;
     var removeSelf = new cc.RemoveSelf();
-    if(removeSelf)
+    if (removeSelf)
         removeSelf.init(isNeedCleanUp);
     return removeSelf;
 };
@@ -203,8 +203,8 @@ cc.RemoveSelf.create = function(isNeedCleanUp){
  * @extends cc.ActionInstant
  */
 cc.FlipX = cc.ActionInstant.extend(/** @lends cc.FlipX# */{
-    _flippedX:false,
-    ctor:function(){
+    _flippedX: false,
+    ctor: function() {
         cc.FiniteTimeAction.prototype.ctor.call(this);
         this._flippedX = false;
     },
@@ -212,7 +212,7 @@ cc.FlipX = cc.ActionInstant.extend(/** @lends cc.FlipX# */{
      * @param {Boolean} x
      * @return {Boolean}
      */
-    initWithFlipX:function (x) {
+    initWithFlipX: function(x) {
         this._flippedX = x;
         return true;
     },
@@ -220,18 +220,18 @@ cc.FlipX = cc.ActionInstant.extend(/** @lends cc.FlipX# */{
     /**
      * @param {Number} time
      */
-    update:function (time) {
+    update: function(time) {
         this._target.setFlippedX(this._flippedX);
     },
 
     /**
      * @return {cc.FiniteTimeAction}
      */
-    reverse:function () {
+    reverse: function() {
         return cc.FlipX.create(!this._flippedX);
     },
 
-    clone:function(){
+    clone: function() {
         var action = new cc.FlipX();
         action.initWithFlipX(this._flippedX);
         return action;
@@ -243,7 +243,7 @@ cc.FlipX = cc.ActionInstant.extend(/** @lends cc.FlipX# */{
  * @return {cc.FlipX}
  * var flipXAction = cc.FlipX.create(true);
  */
-cc.FlipX.create = function (x) {
+cc.FlipX.create = function(x) {
     var ret = new cc.FlipX();
     if (ret.initWithFlipX(x))
         return ret;
@@ -256,8 +256,8 @@ cc.FlipX.create = function (x) {
  * @extends cc.ActionInstant
  */
 cc.FlipY = cc.ActionInstant.extend(/** @lends cc.FlipY# */{
-    _flippedY:false,
-    ctor:function(){
+    _flippedY: false,
+    ctor: function() {
         cc.FiniteTimeAction.prototype.ctor.call(this);
         this._flippedY = false;
     },
@@ -265,7 +265,7 @@ cc.FlipY = cc.ActionInstant.extend(/** @lends cc.FlipY# */{
      * @param {Boolean} Y
      * @return {Boolean}
      */
-    initWithFlipY:function (Y) {
+    initWithFlipY: function(Y) {
         this._flippedY = Y;
         return true;
     },
@@ -273,7 +273,7 @@ cc.FlipY = cc.ActionInstant.extend(/** @lends cc.FlipY# */{
     /**
      * @param {Number} time
      */
-    update:function (time) {
+    update: function(time) {
         //this._super();
         this._target.setFlippedY(this._flippedY);
     },
@@ -281,11 +281,11 @@ cc.FlipY = cc.ActionInstant.extend(/** @lends cc.FlipY# */{
     /**
      * @return {cc.FiniteTimeAction}
      */
-    reverse:function () {
+    reverse: function() {
         return cc.FlipY.create(!this._flippedY);
     },
 
-    clone:function(){
+    clone: function() {
         var action = new cc.FlipY();
         action.initWithFlipY(this._flippedY);
         return action;
@@ -298,7 +298,7 @@ cc.FlipY = cc.ActionInstant.extend(/** @lends cc.FlipY# */{
  * // example
  * var flipYAction = cc.FlipY.create();
  */
-cc.FlipY.create = function (y) {
+cc.FlipY.create = function(y) {
     var ret = new cc.FlipY();
     if (ret.initWithFlipY(y))
         return ret;
@@ -311,8 +311,8 @@ cc.FlipY.create = function (y) {
  * @extends cc.ActionInstant
  */
 cc.Place = cc.ActionInstant.extend(/** @lends cc.Place# */{
-    _position:null,
-    ctor:function(){
+    _position: null,
+    ctor: function() {
         cc.FiniteTimeAction.prototype.ctor.call(this);
         this._position = cc.p(0, 0);
     },
@@ -321,7 +321,7 @@ cc.Place = cc.ActionInstant.extend(/** @lends cc.Place# */{
      * @param {cc.Point} pos
      * @return {Boolean}
      */
-    initWithPosition:function (pos) {
+    initWithPosition: function(pos) {
         this._position.x = pos.x;
         this._position.y = pos.y;
         return true;
@@ -330,11 +330,11 @@ cc.Place = cc.ActionInstant.extend(/** @lends cc.Place# */{
     /**
      * @param {Number} time
      */
-    update:function (time) {
+    update: function(time) {
         this._target.setPosition(this._position);
     },
 
-    clone:function(){
+    clone: function() {
         var action = new cc.Place();
         action.initWithPosition(this._position);
         return action;
@@ -347,7 +347,7 @@ cc.Place = cc.ActionInstant.extend(/** @lends cc.Place# */{
  * // example
  * var placeAction = cc.Place.create(cc.p(200, 200));
  */
-cc.Place.create = function (pos) {
+cc.Place.create = function(pos) {
     var ret = new cc.Place();
     ret.initWithPosition(pos);
     return ret;
@@ -359,12 +359,12 @@ cc.Place.create = function (pos) {
  * @extends cc.ActionInstant
  */
 cc.CallFunc = cc.ActionInstant.extend(/** @lends cc.CallFunc# */{
-    _selectorTarget:null,
-    _callFunc:null,
-    _function:null,
-    _data:null,
+    _selectorTarget: null,
+    _callFunc: null,
+    _function: null,
+    _data: null,
 
-    ctor:function(){
+    ctor: function() {
         cc.FiniteTimeAction.prototype.ctor.call(this);
         this._selectorTarget = null;
         this._callFunc = null;
@@ -378,7 +378,7 @@ cc.CallFunc = cc.ActionInstant.extend(/** @lends cc.CallFunc# */{
      * @param {*|Null} data data for function, it accepts all data types.
      * @return {Boolean}
      */
-    initWithTarget:function (selector, selectorTarget, data) {
+    initWithTarget: function(selector, selectorTarget, data) {
         this._data = data;
         this._callFunc = selector;
         this._selectorTarget = selectorTarget;
@@ -388,9 +388,9 @@ cc.CallFunc = cc.ActionInstant.extend(/** @lends cc.CallFunc# */{
     /**
      * initializes the action with the std::function<void()>
      * @param {function} func
-     * @returns {boolean}
+     * @return {boolean}
      */
-    initWithFunction:function(func){
+    initWithFunction: function(func) {
         this._function = func;
         return true;
     },
@@ -398,17 +398,17 @@ cc.CallFunc = cc.ActionInstant.extend(/** @lends cc.CallFunc# */{
     /**
      * execute the function.
      */
-    execute:function () {
+    execute: function() {
         if (this._callFunc != null)         //CallFunc, N, ND
             this._callFunc.call(this._selectorTarget, this._target, this._data);
-        else if(this._function)
+        else if (this._function)
             this._function.call(null, this._target);
     },
 
     /**
      * @param {Number} time
      */
-    update:function (time) {
+    update: function(time) {
         //this._super(target);
         this.execute();
     },
@@ -416,14 +416,14 @@ cc.CallFunc = cc.ActionInstant.extend(/** @lends cc.CallFunc# */{
     /**
      * @return {object}
      */
-    getTargetCallback:function () {
+    getTargetCallback: function() {
         return this._selectorTarget;
     },
 
     /**
      * @param {object} sel
      */
-    setTargetCallback:function (sel) {
+    setTargetCallback: function(sel) {
         if (sel != this._selectorTarget) {
             if (this._selectorTarget)
                 this._selectorTarget = null;
@@ -431,21 +431,21 @@ cc.CallFunc = cc.ActionInstant.extend(/** @lends cc.CallFunc# */{
         }
     },
 
-    copy:function() {
+    copy: function() {
         var n = new cc.CallFunc();
-        if(this._selectorTarget){
-            n.initWithTarget(this._callFunc,  this._selectorTarget, this._data)
-        }else if(this._function){
+        if (this._selectorTarget) {
+            n.initWithTarget(this._callFunc, this._selectorTarget, this._data);
+        }else if (this._function) {
             n.initWithFunction(this._function);
         }
         return n;
     },
 
-    clone:function(){
+    clone: function() {
        var action = new cc.CallFunc();
-        if(this._selectorTarget){
-             action.initWithTarget(this._callFunc,  this._selectorTarget, this._data)
-        }else if(this._function){
+        if (this._selectorTarget) {
+             action.initWithTarget(this._callFunc, this._selectorTarget, this._data);
+        }else if (this._function) {
              action.initWithFunction(this._function);
         }
         return action;
@@ -453,7 +453,7 @@ cc.CallFunc = cc.ActionInstant.extend(/** @lends cc.CallFunc# */{
 });
 /** creates the action with the callback
  * @param {function} selector
- * @param {object|null} [selectorTarget=]
+ * @param {?object} [selectorTarget=]
  * @param {*|Null} [data=] data for function, it accepts all data types.
  * @return {cc.CallFunc}
  * @example
@@ -464,13 +464,13 @@ cc.CallFunc = cc.ActionInstant.extend(/** @lends cc.CallFunc# */{
  * // CallFunc with data
  * var finish = cc.CallFunc.create(this.removeFromParentAndCleanup, this._grossini,  true),
  */
-cc.CallFunc.create = function (selector, selectorTarget, data) {
+cc.CallFunc.create = function(selector, selectorTarget, data) {
     var ret = new cc.CallFunc();
-    if(arguments.length == 1){
+    if (arguments.length == 1) {
         if (ret && ret.initWithFunction(selector)) {
             return ret;
         }
-    }else{
+    }else {
         if (ret && ret.initWithTarget(selector, selectorTarget, data)) {
             ret._callFunc = selector;
             return ret;

@@ -49,7 +49,7 @@ cc.VERTEX_ATTRIB_FLAG_TEXCOORDS = 1 << 2;
  * @constant
  * @type {Number}
  */
-cc.VERTEX_ATTRIB_FLAG_POSCOLORTEX = ( cc.VERTEX_ATTRIB_FLAG_POSITION | cc.VERTEX_ATTRIB_FLAG_COLOR | cc.VERTEX_ATTRIB_FLAG_TEXCOORDS );
+cc.VERTEX_ATTRIB_FLAG_POSCOLORTEX = (cc.VERTEX_ATTRIB_FLAG_POSITION | cc.VERTEX_ATTRIB_FLAG_COLOR | cc.VERTEX_ATTRIB_FLAG_TEXCOORDS);
 
 /**
  * GL server side states
@@ -71,7 +71,7 @@ if (cc.ENABLE_GL_STATE_CACHE) {
     cc._blendingSource = -1;
     cc._blendingDest = -1;
     cc._GLServerState = 0;
-    if(cc.TEXTURE_ATLAS_USE_VAO)
+    if (cc.TEXTURE_ATLAS_USE_VAO)
         cc._uVAO = 0;
 }
 
@@ -81,7 +81,7 @@ if (cc.ENABLE_GL_STATE_CACHE) {
  * Invalidates the GL state cache.<br/>
  * If CC_ENABLE_GL_STATE_CACHE it will reset the GL state cache.
  */
-cc.glInvalidateStateCache = function () {
+cc.glInvalidateStateCache = function() {
     cc.kmGLFreeAll();
     cc._currentProjectionMatrix = -1;
     cc._vertexAttribPosition = false;
@@ -103,17 +103,17 @@ cc.glInvalidateStateCache = function () {
  * If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glUseProgram() directly.
  * @param {WebGLProgram} program
  */
-cc.glUseProgram = function (program) {
+cc.glUseProgram = function(program) {
     if (program !== cc._currentShaderProgram) {
         cc._currentShaderProgram = program;
         cc.renderContext.useProgram(program);
     }
 };
 
-if(!cc.ENABLE_GL_STATE_CACHE){
-    cc.glUseProgram = function (program) {
+if (!cc.ENABLE_GL_STATE_CACHE) {
+    cc.glUseProgram = function(program) {
         cc.renderContext.useProgram(program);
-    }
+    };
 }
 
 /**
@@ -121,7 +121,7 @@ if(!cc.ENABLE_GL_STATE_CACHE){
  * If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glDeleteProgram() directly.
  * @param {WebGLProgram} program
  */
-cc.glDeleteProgram = function (program) {
+cc.glDeleteProgram = function(program) {
     if (cc.ENABLE_GL_STATE_CACHE) {
         if (program === cc._currentShaderProgram)
             cc._currentShaderProgram = -1;
@@ -135,7 +135,7 @@ cc.glDeleteProgram = function (program) {
  * @param {Number} sfactor
  * @param {Number} dfactor
  */
-cc.glBlendFunc = function (sfactor, dfactor) {
+cc.glBlendFunc = function(sfactor, dfactor) {
     if ((sfactor !== cc._blendingSource) || (dfactor !== cc._blendingDest)) {
         cc._blendingSource = sfactor;
         cc._blendingDest = dfactor;
@@ -143,13 +143,13 @@ cc.glBlendFunc = function (sfactor, dfactor) {
     }
 };
 
-cc.setBlending = function (sfactor, dfactor) {
+cc.setBlending = function(sfactor, dfactor) {
     var ctx = cc.renderContext;
     if ((sfactor === ctx.ONE) && (dfactor === ctx.ZERO)) {
         ctx.disable(ctx.BLEND);
     } else {
         ctx.enable(ctx.BLEND);
-        cc.renderContext.blendFunc(sfactor,dfactor);
+        cc.renderContext.blendFunc(sfactor, dfactor);
         //TODO need fix for WebGL
         //ctx.blendFuncSeparate(ctx.SRC_ALPHA, dfactor, sfactor, dfactor);
     }
@@ -170,15 +170,15 @@ cc.glBlendFuncForParticle = function(sfactor, dfactor) {
     }
 };
 
-if(!cc.ENABLE_GL_STATE_CACHE){
+if (!cc.ENABLE_GL_STATE_CACHE) {
     cc.glBlendFunc = cc.setBlending;
-};
+}
 
 /**
  * Resets the blending mode back to the cached state in case you used glBlendFuncSeparate() or glBlendEquation().<br/>
  * If CC_ENABLE_GL_STATE_CACHE is disabled, it will just set the default blending mode using GL_FUNC_ADD.
  */
-cc.glBlendResetToCache = function () {
+cc.glBlendResetToCache = function() {
     var ctx = cc.renderContext;
     ctx.blendEquation(ctx.FUNC_ADD);
     if (cc.ENABLE_GL_STATE_CACHE)
@@ -190,7 +190,7 @@ cc.glBlendResetToCache = function () {
 /**
  * sets the projection matrix as dirty
  */
-cc.setProjectionMatrixDirty = function () {
+cc.setProjectionMatrixDirty = function() {
     cc._currentProjectionMatrix = -1;
 };
 
@@ -206,10 +206,10 @@ cc.setProjectionMatrixDirty = function () {
  * </p>
  * @param {cc.VERTEX_ATTRIB_FLAG_POSITION | cc.VERTEX_ATTRIB_FLAG_COLOR | cc.VERTEX_ATTRIB_FLAG_TEXCOORDS} flags
  */
-cc.glEnableVertexAttribs = function (flags) {
+cc.glEnableVertexAttribs = function(flags) {
     /* Position */
     var ctx = cc.renderContext;
-    var enablePosition = ( flags & cc.VERTEX_ATTRIB_FLAG_POSITION );
+    var enablePosition = (flags & cc.VERTEX_ATTRIB_FLAG_POSITION);
     if (enablePosition !== cc._vertexAttribPosition) {
         if (enablePosition)
             ctx.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
@@ -244,7 +244,7 @@ cc.glEnableVertexAttribs = function (flags) {
  * If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
  * @param {cc.Texture2D} textureId
  */
-cc.glBindTexture2D = function (textureId) {
+cc.glBindTexture2D = function(textureId) {
     cc.glBindTexture2DN(0, textureId);
 };
 
@@ -254,23 +254,23 @@ cc.glBindTexture2D = function (textureId) {
  * @param {Number} textureUnit
  * @param {cc.Texture2D} textureId
  */
-cc.glBindTexture2DN = function (textureUnit, textureId) {
+cc.glBindTexture2DN = function(textureUnit, textureId) {
     if (cc._currentBoundTexture[textureUnit] == textureId)
         return;
     cc._currentBoundTexture[textureUnit] = textureId;
 
     var ctx = cc.renderContext;
     ctx.activeTexture(ctx.TEXTURE0 + textureUnit);
-    if(textureId)
+    if (textureId)
         ctx.bindTexture(ctx.TEXTURE_2D, textureId._webTextureObj);
     else
         ctx.bindTexture(ctx.TEXTURE_2D, null);
 };
-if (!cc.ENABLE_GL_STATE_CACHE){
-    cc.glBindTexture2DN = function (textureUnit, textureId) {
+if (!cc.ENABLE_GL_STATE_CACHE) {
+    cc.glBindTexture2DN = function(textureUnit, textureId) {
         var ctx = cc.renderContext;
         ctx.activeTexture(ctx.TEXTURE0 + textureUnit);
-        if(textureId)
+        if (textureId)
             ctx.bindTexture(ctx.TEXTURE_2D, textureId._webTextureObj);
         else
             ctx.bindTexture(ctx.TEXTURE_2D, null);
@@ -282,7 +282,7 @@ if (!cc.ENABLE_GL_STATE_CACHE){
  * If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glDeleteTextures() directly.
  * @param {WebGLTexture} textureId
  */
-cc.glDeleteTexture = function (textureId) {
+cc.glDeleteTexture = function(textureId) {
     cc.glDeleteTextureN(0, textureId);
 };
 
@@ -292,10 +292,10 @@ cc.glDeleteTexture = function (textureId) {
  * @param {Number} textureUnit
  * @param {WebGLTexture} textureId
  */
-cc.glDeleteTextureN = function (textureUnit, textureId) {
+cc.glDeleteTextureN = function(textureUnit, textureId) {
     if (cc.ENABLE_GL_STATE_CACHE) {
-        if (textureId == cc._currentBoundTexture[ textureUnit ])
-            cc._currentBoundTexture[ textureUnit ] = -1;
+        if (textureId == cc._currentBoundTexture[textureUnit])
+            cc._currentBoundTexture[textureUnit] = -1;
     }
     cc.renderContext.deleteTexture(textureId);
 };
@@ -305,7 +305,7 @@ cc.glDeleteTextureN = function (textureUnit, textureId) {
  * If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindVertexArray() directly.
  * @param vaoId
  */
-cc.glBindVAO = function (vaoId) {
+cc.glBindVAO = function(vaoId) {
     if (!cc.TEXTURE_ATLAS_USE_VAO)
         return;
 
@@ -325,7 +325,7 @@ cc.glBindVAO = function (vaoId) {
  * If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glEnable() directly.
  * @param {Number} flags
  */
-cc.glEnable = function (flags) {
+cc.glEnable = function(flags) {
     if (cc.ENABLE_GL_STATE_CACHE) {
         /*var enabled;
 

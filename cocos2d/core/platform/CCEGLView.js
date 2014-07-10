@@ -67,7 +67,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
     // The visible rect in content's coordinate in point
     _visibleRect: null,
     // the view name
-    _viewName: "",
+    _viewName: '',
     // Custom callback for resize event
     _resizeCallback: null,
     _scaleX: 1,
@@ -99,7 +99,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
     __resizeWithBrowserSize: false,
     _isAdjustViewPort: false,
 
-    ctor: function () {
+    ctor: function() {
         this._frame = (cc.container.parentNode === document.body) ? document.documentElement : cc.container.parentNode;
         this._frameSize = cc.size(0, 0);
         this._initFrameSize();
@@ -111,7 +111,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
         this._visibleRect = cc.rect(0, 0, w, h);
         this._delegate = cc.Director.getInstance().getTouchDispatcher();
         this._contentTranslateLeftTop = {left: 0, top: 0};
-        this._viewName = "Cocos2dHTML5";
+        this._viewName = 'Cocos2dHTML5';
 
         cc.VisibleRect.init(this._designResolutionSize);
 
@@ -127,7 +127,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
     },
 
     // Resize helper functions
-    _resizeEvent: function () {
+    _resizeEvent: function() {
         var width = this._originalDesignResolutionSize.width;
         var height = this._originalDesignResolutionSize.height;
         if (this._resizeCallback) {
@@ -138,7 +138,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
             this.setDesignResolutionSize(width, height, this._resolutionPolicy);
     },
 
-    resizeWithBrowserSize: function (enabled) {
+    resizeWithBrowserSize: function(enabled) {
         var adjustSize;
         if (enabled) {
             //enable
@@ -157,33 +157,33 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
         }
     },
 
-    setResizeCallback: function (callback) {
-        if (typeof callback == "function" || callback == null) {
+    setResizeCallback: function(callback) {
+        if (typeof callback == 'function' || callback == null) {
             this._resizeCallback = callback;
         }
     },
 
-    _initFrameSize: function () {
+    _initFrameSize: function() {
         var locFrameSize = this._frameSize;
         locFrameSize.width = this._frame.clientWidth;
         locFrameSize.height = this._frame.clientHeight;
     },
 
     // hack
-    _adjustSizeKeepCanvasSize: function (width, height) {
+    _adjustSizeKeepCanvasSize: function(width, height) {
         var designWidth = this._originalDesignResolutionSize.width;
         var designHeight = this._originalDesignResolutionSize.height;
         if (designWidth > 0)
             this.setDesignResolutionSize(designWidth, designHeight, this._resolutionPolicy);
     },
 
-    _setViewPortMeta: function (width, height) {
+    _setViewPortMeta: function(width, height) {
         if (this._isAdjustViewPort) {
-            var viewportMetas = {"user-scalable": "no", "maximum-scale": "1.0", "initial-scale": "1.0"}, elems = document.getElementsByName("viewport"), vp, content;
+            var viewportMetas = {'user-scalable': 'no', 'maximum-scale': '1.0', 'initial-scale': '1.0'}, elems = document.getElementsByName('viewport'), vp, content;
             if (elems.length == 0) {
-                vp = document.createElement("meta");
-                vp.name = "viewport";
-                vp.content = "";
+                vp = document.createElement('meta');
+                vp.name = 'viewport';
+                vp.content = '';
                 document.head.appendChild(vp);
             }
             else vp = elems[0];
@@ -191,7 +191,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
             for (var key in viewportMetas) {
                 var pattern = new RegExp(key);
                 if (!pattern.test(content)) {
-                    content += (content == "" ? "" : ",") + key + "=" + viewportMetas[key];
+                    content += (content == '' ? '' : ',') + key + '=' + viewportMetas[key];
                 }
             }
             /*
@@ -208,7 +208,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
     },
 
     // RenderTexture hacker
-    _setScaleXYForRenderTexture: function () {
+    _setScaleXYForRenderTexture: function() {
         //hack for RenderTexture on canvas mode when adapting multiple resolution resources
         var scaleFactor = cc.CONTENT_SCALE_FACTOR();
         this._scaleX = scaleFactor;
@@ -216,12 +216,12 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
     },
 
     // Other helper functions
-    _resetScale: function () {
+    _resetScale: function() {
         this._scaleX = this._originalScaleX;
         this._scaleY = this._originalScaleY;
     },
 
-    _getUnUsedIndex: function () {
+    _getUnUsedIndex: function() {
         var i;
         var temp = this._indexBitsUsed;
 
@@ -238,7 +238,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
         return -1;
     },
 
-    _removeUsedIndexBit: function (index) {
+    _removeUsedIndexBit: function(index) {
         if (index < 0 || index >= this._maxTouches) {
             return;
         }
@@ -249,24 +249,24 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
     },
 
     // Useless, just make sure the compatibility temporarily, should be removed
-    _adjustSizeToBrowser: function () {
+    _adjustSizeToBrowser: function() {
     },
 
     /**
      * init
      */
-    initialize: function () {
+    initialize: function() {
         this._initialized = true;
     },
 
-    adjustViewPort: function (enabled) {
+    adjustViewPort: function(enabled) {
         this._isAdjustViewPort = enabled;
     },
 
     /**
      * Force destroying EGL view, subclass must implement this method.
      */
-    end: function () {
+    end: function() {
     },
 
     /**
@@ -274,7 +274,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * this name is for the compatibility with cocos2d-x, subclass must implement this method.
      * @return {Boolean}
      */
-    isOpenGLReady: function () {
+    isOpenGLReady: function() {
         return (this._hDC != null && this._hRC != null);
     },
 
@@ -282,7 +282,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
      * @param {Number} zoomFactor
      */
-    setFrameZoomFactor: function (zoomFactor) {
+    setFrameZoomFactor: function(zoomFactor) {
         this._frameZoomFactor = zoomFactor;
         this.centerWindow();
         cc.Director.getInstance().setProjection(cc.Director.getInstance().getProjection());
@@ -291,13 +291,13 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
     /**
      * Exchanges the front and back buffers, subclass must implement this method.
      */
-    swapBuffers: function () {
+    swapBuffers: function() {
     },
 
     /**
      * Open or close IME keyboard , subclass must implement this method.
      */
-    setIMEKeyboardState: function (isOpen) {
+    setIMEKeyboardState: function(isOpen) {
         if (isOpen) {
             // [EAGLView sharedEGLView] becomeFirstResponder
         } else {
@@ -312,7 +312,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * @param {Number} offsetLeft
      * @param {Number} offsetTop
      */
-    setContentTranslateLeftTop: function (offsetLeft, offsetTop) {
+    setContentTranslateLeftTop: function(offsetLeft, offsetTop) {
         this._contentTranslateLeftTop = {left: offsetLeft, top: offsetTop};
     },
 
@@ -322,7 +322,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * </p>
      * @return {cc.Size|Object}
      */
-    getContentTranslateLeftTop: function () {
+    getContentTranslateLeftTop: function() {
         return this._contentTranslateLeftTop;
     },
 
@@ -331,7 +331,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * In general, it returns the screen size since the EGL view is a fullscreen view.
      * @return {cc.Size}
      */
-    getFrameSize: function () {
+    getFrameSize: function() {
         return cc.size(this._frameSize.width, this._frameSize.height);
     },
 
@@ -340,20 +340,20 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * @param {Number} width
      * @param {Number} height
      */
-    setFrameSize: function (width, height) {
+    setFrameSize: function(width, height) {
         this._frameSize.width = width;
         this._frameSize.height = height;
-        this._frame.style.width = width + "px";
-        this._frame.style.height = height + "px";
+        this._frame.style.width = width + 'px';
+        this._frame.style.height = height + 'px';
         //this.centerWindow();
         this._resizeEvent();
         cc.Director.getInstance().setProjection(cc.Director.getInstance().getProjection());
     },
 
-    centerWindow: function () {
+    centerWindow: function() {
     },
 
-    setAccelerometerKeyHook: function (accelerometerKeyHook) {
+    setAccelerometerKeyHook: function(accelerometerKeyHook) {
         this._accelerometerKeyHook = accelerometerKeyHook;
     },
 
@@ -361,7 +361,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * Get the visible area size of opengl viewport.
      * @return {cc.Size}
      */
-    getVisibleSize: function () {
+    getVisibleSize: function() {
         return this._visibleRect._size;
     },
 
@@ -369,11 +369,11 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * Get the visible origin povar of opengl viewport.
      * @return {cc.Point}
      */
-    getVisibleOrigin: function () {
+    getVisibleOrigin: function() {
         return this._visibleRect._origin;
     },
 
-    canSetContentScaleFactor: function () {
+    canSetContentScaleFactor: function() {
         return true;
     },
 
@@ -381,7 +381,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * Get the current resolution policy
      * @return {cc.ResolutionPolicy}
      */
-    getResolutionPolicy: function () {
+    getResolutionPolicy: function() {
         return this._resolutionPolicy;
     },
 
@@ -389,7 +389,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * Set the current resolution policy
      * @param {cc.ResolutionPolicy|Number} resolutionPolicy
      */
-    setResolutionPolicy: function (resolutionPolicy) {
+    setResolutionPolicy: function(resolutionPolicy) {
         if (resolutionPolicy instanceof cc.ResolutionPolicy) {
             this._resolutionPolicy = resolutionPolicy;
         }
@@ -427,17 +427,17 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * [5] ResolutionFixedWidth     Scale the content's width to screen's width and proportionally scale its height
      * [cc.ResolutionPolicy]        Custom resolution policy, constructed by cc.ResolutionPolicy
      */
-    setDesignResolutionSize: function (width, height, resolutionPolicy) {
+    setDesignResolutionSize: function(width, height, resolutionPolicy) {
         // Defensive code
         if (isNaN(width) || width == 0 || isNaN(height) || height == 0) {
-            cc.log("Resolution not valid");
+            cc.log('Resolution not valid');
             return;
         }
         this.setResolutionPolicy(resolutionPolicy);
         if (policy = this._resolutionPolicy)
             policy.preApply(this);
         else {
-            cc.log("should set resolutionPolicy");
+            cc.log('should set resolutionPolicy');
             return;
         }
 
@@ -494,7 +494,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * Default resolution size is the same as 'getFrameSize'.
      * @return {cc.Size}
      */
-    getDesignResolutionSize: function () {
+    getDesignResolutionSize: function() {
         return cc.size(this._designResolutionSize.width, this._designResolutionSize.height);
     },
 
@@ -502,7 +502,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * set touch delegate
      * @param {cc.TouchDispatcher} delegate
      */
-    setTouchDelegate: function (delegate) {
+    setTouchDelegate: function(delegate) {
         this._delegate = delegate;
     },
 
@@ -513,7 +513,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * @param {Number} w width
      * @param {Number} h height
      */
-    setViewPortInPoints: function (x, y, w, h) {
+    setViewPortInPoints: function(x, y, w, h) {
         var locFrameZoomFactor = this._frameZoomFactor, locScaleX = this._scaleX, locScaleY = this._scaleY;
         cc.renderContext.viewport((x * locScaleX * locFrameZoomFactor + this._viewPortRect.x * locFrameZoomFactor),
             (y * locScaleY * locFrameZoomFactor + this._viewPortRect.y * locFrameZoomFactor),
@@ -528,7 +528,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * @param {Number} w
      * @param {Number} h
      */
-    setScissorInPoints: function (x, y, w, h) {
+    setScissorInPoints: function(x, y, w, h) {
         var locFrameZoomFactor = this._frameZoomFactor, locScaleX = this._scaleX, locScaleY = this._scaleY;
         cc.renderContext.scissor((x * locScaleX * locFrameZoomFactor + this._viewPortRect.x * locFrameZoomFactor),
             (y * locScaleY * locFrameZoomFactor + this._viewPortRect.y * locFrameZoomFactor),
@@ -539,7 +539,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
     /**
      * Get whether GL_SCISSOR_TEST is enable
      */
-    isScissorEnabled: function () {
+    isScissorEnabled: function() {
         var gl = cc.renderContext;
         return gl.isEnabled(gl.SCISSOR_TEST);
     },
@@ -548,7 +548,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * Get the current scissor rectangle
      * @return {cc.Rect}
      */
-    getScissorRect: function () {
+    getScissorRect: function() {
         var gl = cc.renderContext, scaleX = this._scaleX, scaleY = this._scaleY;
         var boxArr = gl.getParameter(gl.SCISSOR_BOX);
         return cc.rect((boxArr[0] - this._viewPortRect.x) / scaleX, (boxArr[1] - this._viewPortRect.y) / scaleY,
@@ -558,7 +558,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
     /**
      * @param {String} viewName
      */
-    setViewName: function (viewName) {
+    setViewName: function(viewName) {
         if (viewName != null && viewName.length > 0) {
             this._viewName = viewName;
         }
@@ -568,35 +568,35 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * get view name
      * @return {String}
      */
-    getViewName: function () {
+    getViewName: function() {
         return this._viewName;
     },
 
     /**
      * Get the opengl view port rectangle.
      */
-    getViewPortRect: function () {
+    getViewPortRect: function() {
         return this._viewPortRect;
     },
 
     /**
      * Get scale factor of the horizontal direction.
      */
-    getScaleX: function () {
+    getScaleX: function() {
         return this._scaleX;
     },
 
     /**
      * Get scale factor of the vertical direction.
      */
-    getScaleY: function () {
+    getScaleY: function() {
         return this._scaleY;
     },
 
     /**
      * Get the real location in view
      */
-    convertToLocationInView: function (tx, ty, relatedPos) {
+    convertToLocationInView: function(tx, ty, relatedPos) {
         return {x: tx - relatedPos.left, y: relatedPos.top + relatedPos.height - ty};
     },
 
@@ -607,7 +607,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * @param {Number} xs
      * @param {Number} ys
      */
-    handleTouchesBegin: function (num, ids, xs, ys) {
+    handleTouchesBegin: function(num, ids, xs, ys) {
         var arr = [], locViewPortRect = this._viewPortRect, locScaleX = this._scaleX, locScaleY = this._scaleY;
         for (var i = 0; i < num; ++i) {
             var id = ids[i];
@@ -623,7 +623,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
 
                 // The touches is more than MAX_TOUCHES ?
                 if (unusedIndex == -1) {
-                    cc.log("The touches is more than MAX_TOUCHES, nUnusedIndex = " + unusedIndex);
+                    cc.log('The touches is more than MAX_TOUCHES, nUnusedIndex = ' + unusedIndex);
                     continue;
                 }
 
@@ -650,7 +650,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * @param {Number} xs
      * @param {Number} ys
      */
-    handleTouchesMove: function (num, ids, xs, ys) {
+    handleTouchesMove: function(num, ids, xs, ys) {
         var arr = [];
         var locScaleX = this._scaleX, locScaleY = this._scaleY, locViewPortX = this._viewPortRect.x, locViewPortY = this._viewPortRect.y;
         for (var i = 0; i < num; ++i) {
@@ -691,7 +691,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * @param {Number} xs
      * @param {Number} ys
      */
-    handleTouchesEnd: function (num, ids, xs, ys) {
+    handleTouchesEnd: function(num, ids, xs, ys) {
         var arr = [];
         this.getSetOfTouchesEndOrCancel(arr, num, ids, xs, ys);
         this._delegate.touchesEnded(arr, null);
@@ -703,7 +703,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * @param {Number} xs
      * @param {Number} ys
      */
-    handleTouchesCancel: function (num, ids, xs, ys) {
+    handleTouchesCancel: function(num, ids, xs, ys) {
         var arr = [];
         this.getSetOfTouchesEndOrCancel(arr, num, ids, xs, ys);
         this._delegate.touchesCancelled(arr, null);
@@ -716,7 +716,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
      * @param {Number} xs
      * @param {Number} ys
      */
-    getSetOfTouchesEndOrCancel: function (arr, num, ids, xs, ys) {
+    getSetOfTouchesEndOrCancel: function(arr, num, ids, xs, ys) {
         var locScaleX = this._scaleX, locScaleY = this._scaleY, locViewPortRect = this._viewPortRect;
         for (var i = 0; i < num; ++i) {
             var id = ids[i];
@@ -754,7 +754,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
     },
 
     // Pass the touches to the superview
-    touchesBegan: function (touches, event) {
+    touchesBegan: function(touches, event) {
         var ids = [];
         var xs = [];
         var ys = [];
@@ -771,7 +771,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
         this.handleTouchesBegin(i, ids, xs, ys);
     },
 
-    touchesMoved: function (touches, event) {
+    touchesMoved: function(touches, event) {
         var ids = [];
         var xs = [];
         var ys = [];
@@ -788,7 +788,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
         this.handleTouchesMove(i, ids, xs, ys);
     },
 
-    touchesEnded: function (touches, event) {
+    touchesEnded: function(touches, event) {
         var ids = [];
         var xs = [];
         var ys = [];
@@ -805,7 +805,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
         this.handleTouchesEnd(i, ids, xs, ys);
     },
 
-    touchesCancelled: function (touches, event) {
+    touchesCancelled: function(touches, event) {
         var ids = [];
         var xs = [];
         var ys = [];
@@ -824,7 +824,7 @@ cc.EGLView = cc.Class.extend(/** @lends cc.EGLView# */{
 });
 
 
-cc.EGLView.getInstance = function () {
+cc.EGLView.getInstance = function() {
     if (!this._instance) {
         this._instance = new cc.EGLView();
         this._instance.initialize();
@@ -846,7 +846,7 @@ cc.ContainerStrategy = cc.Class.extend({
      * Manipulation before appling the strategy
      * @param {cc.EGLView} The target view
      */
-    preApply: function (view) {
+    preApply: function(view) {
     },
 
     /**
@@ -854,17 +854,17 @@ cc.ContainerStrategy = cc.Class.extend({
      * @param {cc.EGLView} view
      * @param {cc.Size} designedResolution
      */
-    apply: function (view, designedResolution) {
+    apply: function(view, designedResolution) {
     },
 
     /**
      * Manipulation after appling the strategy
      * @param {cc.EGLView} The target view
      */
-    postApply: function (view) {
+    postApply: function(view) {
     },
 
-    _setupContainer: function (frame, w, h) {
+    _setupContainer: function(frame, w, h) {
         if (cc.Browser.isMobile && frame == document.documentElement) {
             // Automatically full screen when user touches on mobile version
             cc.Screen.getInstance().autoFullScreen(cc.canvas);
@@ -875,38 +875,38 @@ cc.ContainerStrategy = cc.Class.extend({
         locCanvasElement.width = w;
         locCanvasElement.height = h;
         // Setup container
-        locContainer.style.width = w + "px";
-        locContainer.style.height = h + "px";
+        locContainer.style.width = w + 'px';
+        locContainer.style.height = h + 'px';
 
         var body = document.body, style;
         if (body && (style = body.style)) {
-            style.paddingTop = style.paddingTop || "0px";
-            style.paddingRight = style.paddingRight || "0px";
-            style.paddingBottom = style.paddingBottom || "0px";
-            style.paddingLeft = style.paddingLeft || "0px";
-            style.borderTop = style.borderTop || "0px";
-            style.borderRight = style.borderRight || "0px";
-            style.borderBottom = style.borderBottom || "0px";
-            style.borderLeft = style.borderLeft || "0px";
-            style.marginTop = style.marginTop || "0px";
-            style.marginRight = style.marginRight || "0px";
-            style.marginBottom = style.marginBottom || "0px";
-            style.marginLeft = style.marginLeft || "0px";
+            style.paddingTop = style.paddingTop || '0px';
+            style.paddingRight = style.paddingRight || '0px';
+            style.paddingBottom = style.paddingBottom || '0px';
+            style.paddingLeft = style.paddingLeft || '0px';
+            style.borderTop = style.borderTop || '0px';
+            style.borderRight = style.borderRight || '0px';
+            style.borderBottom = style.borderBottom || '0px';
+            style.borderLeft = style.borderLeft || '0px';
+            style.marginTop = style.marginTop || '0px';
+            style.marginRight = style.marginRight || '0px';
+            style.marginBottom = style.marginBottom || '0px';
+            style.marginLeft = style.marginLeft || '0px';
         }
     },
 
-    _fixContainer: function () {
+    _fixContainer: function() {
         // Add container to document body
         document.body.insertBefore(cc.container, document.body.firstChild);
         // Set body's width height to window's size, and forbid overflow, so that game will be centered
         var bs = document.body.style;
-        bs.width = window.innerWidth + "px";
-        bs.height = window.innerHeight + "px";
-        bs.overflow = "hidden";
+        bs.width = window.innerWidth + 'px';
+        bs.height = window.innerHeight + 'px';
+        bs.overflow = 'hidden';
         // Body size solution doesn't work on all mobile browser so this is the aleternative: fixed container
         var contStyle = cc.container.style;
-        contStyle.position = "fixed";
-        contStyle.left = contStyle.top = "0px";
+        contStyle.position = 'fixed';
+        contStyle.left = contStyle.top = '0px';
         // Reposition body
         document.body.scrollTop = 0;
     }
@@ -927,7 +927,7 @@ cc.ContentStrategy = cc.Class.extend({
         viewport: null
     },
 
-    _buildResult: function (containerW, containerH, contentW, contentH, scaleX, scaleY) {
+    _buildResult: function(containerW, containerH, contentW, contentH, scaleX, scaleY) {
         var viewport = cc.rect(Math.round((containerW - contentW) / 2),
             Math.round((containerH - contentH) / 2),
             contentW, contentH);
@@ -945,7 +945,7 @@ cc.ContentStrategy = cc.Class.extend({
      * Manipulation before appling the strategy
      * @param {cc.EGLView} The target view
      */
-    preApply: function (view) {
+    preApply: function(view) {
     },
 
     /**
@@ -956,29 +956,29 @@ cc.ContentStrategy = cc.Class.extend({
      * @param {cc.Size} designedResolution
      * @return {object} scaleAndViewportRect
      */
-    apply: function (view, designedResolution) {
-        return {"scale": [1, 1]};
+    apply: function(view, designedResolution) {
+        return {'scale': [1, 1]};
     },
 
     /**
      * Manipulation after appling the strategy
      * @param {cc.EGLView} The target view
      */
-    postApply: function (view) {
+    postApply: function(view) {
     }
 });
 
-(function () {
+(function() {
 
 // Container scale strategys
     var EqualToFrame = cc.ContainerStrategy.extend({
-        apply: function (view) {
+        apply: function(view) {
             this._setupContainer(view._frame, view._frameSize.width, view._frameSize.height);
         }
     });
 
     var ProportionalToFrame = cc.ContainerStrategy.extend({
-        apply: function (view, designedResolution) {
+        apply: function(view, designedResolution) {
             var frameW = view._frameSize.width, frameH = view._frameSize.height, containerStyle = cc.container.style,
                 designW = designedResolution.width, designH = designedResolution.height,
                 scaleX = frameW / designW, scaleY = frameH / designH,
@@ -994,19 +994,19 @@ cc.ContentStrategy = cc.Class.extend({
 
             this._setupContainer(view._frame, containerW, containerH);
             // Setup container's margin
-            containerStyle.marginLeft = offx + "px";
-            containerStyle.marginRight = offx + "px";
-            containerStyle.marginTop = offy + "px";
-            containerStyle.marginBottom = offy + "px";
+            containerStyle.marginLeft = offx + 'px';
+            containerStyle.marginRight = offx + 'px';
+            containerStyle.marginTop = offy + 'px';
+            containerStyle.marginBottom = offy + 'px';
         }
     });
 
     var EqualToWindow = EqualToFrame.extend({
-        preApply: function (view) {
+        preApply: function(view) {
             view._frame = document.documentElement;
         },
 
-        apply: function (view) {
+        apply: function(view) {
             this._super(view);
 
             this._fixContainer();
@@ -1014,11 +1014,11 @@ cc.ContentStrategy = cc.Class.extend({
     });
 
     var ProportionalToWindow = ProportionalToFrame.extend({
-        preApply: function (view) {
+        preApply: function(view) {
             view._frame = document.documentElement;
         },
 
-        apply: function (view, designedResolution) {
+        apply: function(view, designedResolution) {
             this._super(view, designedResolution);
 
             this._fixContainer();
@@ -1040,7 +1040,7 @@ cc.ContentStrategy = cc.Class.extend({
 
 // Content scale strategys
     var ExactFit = cc.ContentStrategy.extend({
-        apply: function (view, designedResolution) {
+        apply: function(view, designedResolution) {
             var containerW = cc.canvas.width, containerH = cc.canvas.height,
                 scaleX = containerW / designedResolution.width, scaleY = containerH / designedResolution.height;
 
@@ -1049,7 +1049,7 @@ cc.ContentStrategy = cc.Class.extend({
     });
 
     var ShowAll = cc.ContentStrategy.extend({
-        apply: function (view, designedResolution) {
+        apply: function(view, designedResolution) {
             var containerW = cc.canvas.width, containerH = cc.canvas.height,
                 designW = designedResolution.width, designH = designedResolution.height,
                 scaleX = containerW / designW, scaleY = containerH / designH, scale,
@@ -1063,7 +1063,7 @@ cc.ContentStrategy = cc.Class.extend({
     });
 
     var NoBorder = cc.ContentStrategy.extend({
-        apply: function (view, designedResolution) {
+        apply: function(view, designedResolution) {
             var containerW = cc.canvas.width, containerH = cc.canvas.height,
                 designW = designedResolution.width, designH = designedResolution.height,
                 scaleX = containerW / designW, scaleY = containerH / designH, scale,
@@ -1077,7 +1077,7 @@ cc.ContentStrategy = cc.Class.extend({
     });
 
     var FixedHeight = cc.ContentStrategy.extend({
-        apply: function (view, designedResolution) {
+        apply: function(view, designedResolution) {
             var containerW = cc.canvas.width, containerH = cc.canvas.height,
                 designH = designedResolution.height, scale = containerH / designH,
                 contentW = containerW, contentH = containerH;
@@ -1085,13 +1085,13 @@ cc.ContentStrategy = cc.Class.extend({
             return this._buildResult(containerW, containerH, contentW, contentH, scale, scale);
         },
 
-        postApply: function (view) {
+        postApply: function(view) {
             cc.Director.getInstance()._winSizeInPoints = view.getVisibleSize();
         }
     });
 
     var FixedWidth = cc.ContentStrategy.extend({
-        apply: function (view, designedResolution) {
+        apply: function(view, designedResolution) {
             var containerW = cc.canvas.width, containerH = cc.canvas.height,
                 designW = designedResolution.width, scale = containerW / designW,
                 contentW = containerW, contentH = containerH;
@@ -1099,7 +1099,7 @@ cc.ContentStrategy = cc.Class.extend({
             return this._buildResult(containerW, containerH, contentW, contentH, scale, scale);
         },
 
-        postApply: function (view) {
+        postApply: function(view) {
             cc.Director.getInstance()._winSizeInPoints = view.getVisibleSize();
         }
     });
@@ -1128,7 +1128,7 @@ cc.ResolutionPolicy = cc.Class.extend({
     _containerStrategy: null,
     _contentStrategy: null,
 
-    ctor: function (containerStg, contentStg) {
+    ctor: function(containerStg, contentStg) {
         this.setContainerStrategy(containerStg);
         this.setContentStrategy(contentStg);
     },
@@ -1137,7 +1137,7 @@ cc.ResolutionPolicy = cc.Class.extend({
      * Manipulation before appling the resolution policy
      * @param {cc.EGLView} The target view
      */
-    preApply: function (view) {
+    preApply: function(view) {
         this._containerStrategy.preApply(view);
         this._contentStrategy.preApply(view);
     },
@@ -1150,7 +1150,7 @@ cc.ResolutionPolicy = cc.Class.extend({
      * @param {cc.Size} The user defined design resolution
      * @return {object} An object contains the scale X/Y values and the viewport rect
      */
-    apply: function (view, designedResolution) {
+    apply: function(view, designedResolution) {
         this._containerStrategy.apply(view, designedResolution);
         return this._contentStrategy.apply(view, designedResolution);
     },
@@ -1159,7 +1159,7 @@ cc.ResolutionPolicy = cc.Class.extend({
      * Manipulation after appling the strategy
      * @param {cc.EGLView} The target view
      */
-    postApply: function (view) {
+    postApply: function(view) {
         this._containerStrategy.postApply(view);
         this._contentStrategy.postApply(view);
     },
@@ -1168,7 +1168,7 @@ cc.ResolutionPolicy = cc.Class.extend({
      * Setup the container's scale strategy
      * @param {cc.ContainerStrategy} containerStg
      */
-    setContainerStrategy: function (containerStg) {
+    setContainerStrategy: function(containerStg) {
         if (containerStg instanceof cc.ContainerStrategy)
             this._containerStrategy = containerStg;
     },
@@ -1177,7 +1177,7 @@ cc.ResolutionPolicy = cc.Class.extend({
      * Setup the content's scale strategy
      * @param {cc.ContentStrategy} contentStg
      */
-    setContentStrategy: function (contentStg) {
+    setContentStrategy: function(contentStg) {
         if (contentStg instanceof cc.ContentStrategy)
             this._contentStrategy = contentStg;
     }

@@ -35,7 +35,7 @@ cc.TextFieldDelegate = cc.Class.extend(/** @lends cc.TextFieldDelegate# */{
      * @param {cc.TextFieldTTF} sender
      * @return {Boolean}
      */
-    onTextFieldAttachWithIME:function (sender) {
+    onTextFieldAttachWithIME: function(sender) {
         return false;
     },
 
@@ -44,7 +44,7 @@ cc.TextFieldDelegate = cc.Class.extend(/** @lends cc.TextFieldDelegate# */{
      * @param {cc.TextFieldTTF} sender
      * @return {Boolean}
      */
-    onTextFieldDetachWithIME:function (sender) {
+    onTextFieldDetachWithIME: function(sender) {
         return false;
     },
 
@@ -55,8 +55,8 @@ cc.TextFieldDelegate = cc.Class.extend(/** @lends cc.TextFieldDelegate# */{
      * @param {Number} len
      * @return {Boolean}
      */
-    onTextFieldInsertText:function (sender, text, len) {
-        return false
+    onTextFieldInsertText: function(sender, text, len) {
+        return false;
     },
 
     /**
@@ -66,7 +66,7 @@ cc.TextFieldDelegate = cc.Class.extend(/** @lends cc.TextFieldDelegate# */{
      * @param {Number} len
      * @return {Boolean}
      */
-    onTextFieldDeleteBackward:function (sender, delText, len) {
+    onTextFieldDeleteBackward: function(sender, delText, len) {
         return false;
     },
 
@@ -75,7 +75,7 @@ cc.TextFieldDelegate = cc.Class.extend(/** @lends cc.TextFieldDelegate# */{
      * @param {cc.TextFieldTTF} sender
      * @return {Boolean}
      */
-    onDraw:function (sender) {
+    onDraw: function(sender) {
         return false;
     }
 });
@@ -86,16 +86,16 @@ cc.TextFieldDelegate = cc.Class.extend(/** @lends cc.TextFieldDelegate# */{
  * @extends cc.LabelTTF
  */
 cc.TextFieldTTF = cc.LabelTTF.extend(/** @lends cc.TextFieldTTF# */{
-    _lens:null,
-    _inputText:"",
-    _placeHolder:"",
-    _charCount:0,
-    _delegate:null,
-    _ColorSpaceHolder:null,
+    _lens: null,
+    _inputText: '',
+    _placeHolder: '',
+    _charCount: 0,
+    _delegate: null,
+    _ColorSpaceHolder: null,
     /**
      * Constructor
      */
-    ctor:function () {
+    ctor: function() {
         this._ColorSpaceHolder = new cc.Color3B(127, 127, 127);
         cc.IMEDispatcher.getInstance().addDelegate(this);
         cc.LabelTTF.prototype.ctor.call(this);
@@ -104,35 +104,35 @@ cc.TextFieldTTF = cc.LabelTTF.extend(/** @lends cc.TextFieldTTF# */{
     /**
      * @return {cc.Node}
      */
-    getDelegate:function () {
+    getDelegate: function() {
         return this._delegate;
     },
 
     /**
      * @param {cc.Node} value
      */
-    setDelegate:function (value) {
+    setDelegate: function(value) {
         this._delegate = value;
     },
 
     /**
      * @return {Number}
      */
-    getCharCount:function () {
+    getCharCount: function() {
         return this._charCount;
     },
 
     /**
      * @return {cc.Color3B}
      */
-    getColorSpaceHolder:function () {
+    getColorSpaceHolder: function() {
         return this._ColorSpaceHolder;
     },
 
     /**
      * @param {cc.Color3B} value
      */
-    setColorSpaceHolder:function (value) {
+    setColorSpaceHolder: function(value) {
         this._ColorSpaceHolder = value;
     },
     /**
@@ -151,13 +151,13 @@ cc.TextFieldTTF = cc.LabelTTF.extend(/** @lends cc.TextFieldTTF# */{
      * // When three parameters
      * textField.initWithPlaceHolder("<click here for input>", "Arial", 32);
      */
-    initWithPlaceHolder:function (placeholder, dimensions, alignment, fontName, fontSize) {
+    initWithPlaceHolder: function(placeholder, dimensions, alignment, fontName, fontSize) {
         switch (arguments.length) {
             case 5:
                 if (placeholder) {
                     this._placeHolder = placeholder;
                 }
-                return this.initWithString(this._placeHolder,fontName, fontSize, dimensions, alignment);
+                return this.initWithString(this._placeHolder, fontName, fontSize, dimensions, alignment);
                 break;
             case 3:
                 if (placeholder) {
@@ -168,7 +168,7 @@ cc.TextFieldTTF = cc.LabelTTF.extend(/** @lends cc.TextFieldTTF# */{
                 return this.initWithString(this._placeHolder, fontName, fontSize);
                 break;
             default:
-                throw "Argument must be non-nil ";
+                throw 'Argument must be non-nil ';
                 break;
         }
     },
@@ -177,46 +177,46 @@ cc.TextFieldTTF = cc.LabelTTF.extend(/** @lends cc.TextFieldTTF# */{
      * Input text property
      * @param {String} text
      */
-    setString:function (text) {
+    setString: function(text) {
         text = String(text);
-        this._inputText = text || "";
+        this._inputText = text || '';
 
         // if there is no input text, display placeholder instead
         if (!this._inputText.length)
             cc.LabelTTF.prototype.setString.call(this, this._placeHolder);
         else
-            cc.LabelTTF.prototype.setString.call(this,this._inputText);
+            cc.LabelTTF.prototype.setString.call(this, this._inputText);
         this._charCount = this._inputText.length;
     },
 
     /**
      * @return {String}
      */
-    getString:function () {
+    getString: function() {
         return this._inputText;
     },
 
     /**
      * @param {String} text
      */
-    setPlaceHolder:function (text) {
-        this._placeHolder = text || "";
+    setPlaceHolder: function(text) {
+        this._placeHolder = text || '';
         if (!this._inputText.length) {
-            cc.LabelTTF.prototype.setString.call(this,this._placeHolder);
+            cc.LabelTTF.prototype.setString.call(this, this._placeHolder);
         }
     },
 
     /**
      * @return {String}
      */
-    getPlaceHolder:function () {
+    getPlaceHolder: function() {
         return this._placeHolder;
     },
 
     /**
      * @param {CanvasContext} ctx
      */
-    draw:function (ctx) {
+    draw: function(ctx) {
         //console.log("size",this._contentSize);
         var context = ctx || cc.renderContext;
         if (this._delegate && this._delegate.onDraw(this))
@@ -230,7 +230,7 @@ cc.TextFieldTTF = cc.LabelTTF.extend(/** @lends cc.TextFieldTTF# */{
         // draw placeholder
         var color = this.getColor();
         this.setColor(this._ColorSpaceHolder);
-        if(cc.renderContextType === cc.CANVAS)
+        if (cc.renderContextType === cc.CANVAS)
             this._updateTexture();
         cc.LabelTTF.prototype.draw.call(this, context);
         this.setColor(color);
@@ -243,7 +243,7 @@ cc.TextFieldTTF = cc.LabelTTF.extend(/** @lends cc.TextFieldTTF# */{
      * Open keyboard and receive input text.
      * @return {Boolean}
      */
-    attachWithIME:function () {
+    attachWithIME: function() {
         return cc.IMEDispatcher.getInstance().attachDelegateWithIME(this);
     },
 
@@ -251,40 +251,40 @@ cc.TextFieldTTF = cc.LabelTTF.extend(/** @lends cc.TextFieldTTF# */{
      * End text input  and close keyboard.
      * @return {Boolean}
      */
-    detachWithIME:function () {
+    detachWithIME: function() {
         return cc.IMEDispatcher.getInstance().detachDelegateWithIME(this);
     },
 
     /**
      * @return {Boolean}
      */
-    canAttachWithIME:function () {
+    canAttachWithIME: function() {
         return (this._delegate) ? (!this._delegate.onTextFieldAttachWithIME(this)) : true;
     },
 
     /**
      * When the delegate detach with IME, this method call by CCIMEDispatcher.
      */
-    didAttachWithIME:function () {
+    didAttachWithIME: function() {
     },
 
     /**
      * @return {Boolean}
      */
-    canDetachWithIME:function () {
+    canDetachWithIME: function() {
         return (this._delegate) ? (!this._delegate.onTextFieldDetachWithIME(this)) : true;
     },
 
     /**
      * When the delegate detach with IME, this method call by CCIMEDispatcher.
      */
-    didDetachWithIME:function () {
+    didDetachWithIME: function() {
     },
 
     /**
      *  Delete backward
      */
-    deleteBackward:function () {
+    deleteBackward: function() {
         var strLen = this._inputText.length;
         if (strLen == 0)
             return;
@@ -299,9 +299,9 @@ cc.TextFieldTTF = cc.LabelTTF.extend(/** @lends cc.TextFieldTTF# */{
 
         // if delete all text, show space holder string
         if (strLen <= deleteLen) {
-            this._inputText = "";
+            this._inputText = '';
             this._charCount = 0;
-            cc.LabelTTF.prototype.setString.call(this,this._placeHolder);
+            cc.LabelTTF.prototype.setString.call(this, this._placeHolder);
             return;
         }
 
@@ -313,7 +313,7 @@ cc.TextFieldTTF = cc.LabelTTF.extend(/** @lends cc.TextFieldTTF# */{
     /**
      *  Remove delegate
      */
-    removeDelegate:function () {
+    removeDelegate: function() {
         cc.IMEDispatcher.getInstance().removeDelegate(this);
     },
 
@@ -321,7 +321,7 @@ cc.TextFieldTTF = cc.LabelTTF.extend(/** @lends cc.TextFieldTTF# */{
      * @param {String} text
      * @param {Number} len
      */
-    insertText:function (text, len) {
+    insertText: function(text, len) {
         var sInsert = text;
 
         // insert \n means input end
@@ -345,7 +345,7 @@ cc.TextFieldTTF = cc.LabelTTF.extend(/** @lends cc.TextFieldTTF# */{
             return;
 
         // '\n' has inserted,  let delegate process first
-        if (this._delegate && this._delegate.onTextFieldInsertText(this, "\n", 1))
+        if (this._delegate && this._delegate.onTextFieldInsertText(this, '\n', 1))
             return;
 
         // if delegate hasn't process, detach with ime as default
@@ -354,20 +354,20 @@ cc.TextFieldTTF = cc.LabelTTF.extend(/** @lends cc.TextFieldTTF# */{
     /**
      * @return {String}
      */
-    getContentText:function () {
+    getContentText: function() {
         return this._inputText;
     },
 
     //////////////////////////////////////////////////////////////////////////
     // keyboard show/hide notification
     //////////////////////////////////////////////////////////////////////////
-    keyboardWillShow:function (info) {
+    keyboardWillShow: function(info) {
     },
-    keyboardDidShow:function (info) {
+    keyboardDidShow: function(info) {
     },
-    keyboardWillHide:function (info) {
+    keyboardWillHide: function(info) {
     },
-    keyboardDidHide:function (info) {
+    keyboardDidHide: function(info) {
     }
 });
 
@@ -386,12 +386,12 @@ cc.TextFieldTTF = cc.LabelTTF.extend(/** @lends cc.TextFieldTTF# */{
  * // When three parameters
  * var textField = cc.TextFieldTTF.create("<click here for input>", "Arial", 32);
  */
-cc.TextFieldTTF.create = function (placeholder, dimensions, alignment, fontName, fontSize) {
+cc.TextFieldTTF.create = function(placeholder, dimensions, alignment, fontName, fontSize) {
     var ret;
     switch (arguments.length) {
         case 5:
             ret = new cc.TextFieldTTF();
-            if (ret && ret.initWithPlaceHolder("", dimensions, alignment, fontName, fontSize)) {
+            if (ret && ret.initWithPlaceHolder('', dimensions, alignment, fontName, fontSize)) {
                 if (placeholder)
                     ret.setPlaceHolder(placeholder);
                 return ret;
@@ -402,7 +402,7 @@ cc.TextFieldTTF.create = function (placeholder, dimensions, alignment, fontName,
             ret = new cc.TextFieldTTF();
             fontName = arguments[1];
             fontSize = arguments[2];
-            if (ret && ret.initWithString("", fontName, fontSize)) {
+            if (ret && ret.initWithString('', fontName, fontSize)) {
                 if (placeholder)
                     ret.setPlaceHolder(placeholder);
                 return ret;
@@ -410,7 +410,7 @@ cc.TextFieldTTF.create = function (placeholder, dimensions, alignment, fontName,
             return null;
             break;
         default:
-            throw "Argument must be non-nil ";
+            throw 'Argument must be non-nil ';
             break;
     }
 };

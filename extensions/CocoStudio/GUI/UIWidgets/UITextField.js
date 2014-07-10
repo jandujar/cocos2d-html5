@@ -38,36 +38,36 @@ ccs.UICCTextField = cc.TextFieldTTF.extend({
     _maxLengthEnabled: false,
     _maxLength: 0,
     _passwordEnabled: false,
-    _passwordStyleText: "",
+    _passwordStyleText: '',
     _attachWithIME: false,
     _detachWithIME: false,
     _insertText: false,
     _deleteBackward: false,
-    ctor: function () {
+    ctor: function() {
         cc.TextFieldTTF.prototype.ctor.call(this);
         this._maxLengthEnabled = false;
         this._maxLength = 0;
         this._passwordEnabled = false;
-        this._passwordStyleText = "*";
+        this._passwordStyleText = '*';
         this._attachWithIME = false;
         this._detachWithIME = false;
         this._insertText = false;
         this._deleteBackward = false;
     },
-    onEnter: function () {
+    onEnter: function() {
         cc.TextFieldTTF.prototype.onEnter.call(this);
-        cc.TextFieldTTF.prototype.setDelegate.call(this,this);
+        cc.TextFieldTTF.prototype.setDelegate.call(this, this);
     },
 
     //CCTextFieldDelegate
 
-    onTextFieldAttachWithIME: function (sender) {
+    onTextFieldAttachWithIME: function(sender) {
         this.setAttachWithIME(true);
         return false;
     },
 
-    onTextFieldInsertText: function (sender, text, len) {
-        if (len == 1 && text == "\n") {
+    onTextFieldInsertText: function(sender, text, len) {
+        if (len == 1 && text == '\n') {
             return false;
         }
         this.setInsertText(true);
@@ -80,22 +80,22 @@ ccs.UICCTextField = cc.TextFieldTTF.extend({
         return false;
     },
 
-    onTextFieldDeleteBackward: function (sender, delText, nLen) {
+    onTextFieldDeleteBackward: function(sender, delText, nLen) {
         this.setDeleteBackward(true);
         return false;
     },
 
-    onTextFieldDetachWithIME: function (sender) {
+    onTextFieldDetachWithIME: function(sender) {
         this.setDetachWithIME(true);
         return false;
     },
 
-    insertText: function (text, len) {
+    insertText: function(text, len) {
         var str_text = text;
         var locString = cc.TextFieldTTF.prototype.getString.call(this);
         var str_len = locString.length;
         var multiple, header;
-        if (text != "\n") {
+        if (text != '\n') {
             if (this._maxLengthEnabled) {
                 multiple = 1;
                 header = text.charCodeAt(0);
@@ -109,7 +109,7 @@ ccs.UICCTextField = cc.TextFieldTTF.extend({
                 }
             }
         }
-        cc.TextFieldTTF.prototype.insertText.call(this,str_text, len);
+        cc.TextFieldTTF.prototype.insertText.call(this, str_text, len);
 
         // password
         if (this._passwordEnabled) {
@@ -119,7 +119,7 @@ ccs.UICCTextField = cc.TextFieldTTF.extend({
         }
     },
 
-    deleteBackward: function () {
+    deleteBackward: function() {
         cc.TextFieldTTF.prototype.deleteBackward.call(this);
 
         if (cc.TextFieldTTF.prototype.getCharCount.call(this) > 0) {
@@ -130,45 +130,45 @@ ccs.UICCTextField = cc.TextFieldTTF.extend({
         }
     },
 
-    openIME: function () {
+    openIME: function() {
         cc.TextFieldTTF.prototype.attachWithIME.call(this);
     },
 
-    closeIME: function () {
+    closeIME: function() {
         cc.TextFieldTTF.prototype.detachWithIME.call(this);
     },
-    onDraw:function (sender) {
+    onDraw: function(sender) {
         return false;
     },
-    setMaxLengthEnabled: function (enable) {
+    setMaxLengthEnabled: function(enable) {
         this._maxLengthEnabled = enable;
     },
 
-    isMaxLengthEnabled: function () {
+    isMaxLengthEnabled: function() {
         return this._maxLengthEnabled;
     },
 
-    setMaxLength: function (length) {
+    setMaxLength: function(length) {
         this._maxLength = length;
     },
 
-    getMaxLength: function () {
+    getMaxLength: function() {
         return this._maxLength;
     },
 
-    getCharCount: function () {
+    getCharCount: function() {
         return cc.TextFieldTTF.prototype.getCharCount.call(this);
     },
 
-    setPasswordEnabled: function (enable) {
+    setPasswordEnabled: function(enable) {
         this._passwordEnabled = enable;
     },
 
-    isPasswordEnabled: function () {
+    isPasswordEnabled: function() {
         return this._passwordEnabled;
     },
 
-    setPasswordStyleText: function (styleText) {
+    setPasswordStyleText: function(styleText) {
         if (styleText.length > 1) {
             return;
         }
@@ -179,50 +179,50 @@ ccs.UICCTextField = cc.TextFieldTTF.extend({
         this._passwordStyleText = styleText;
     },
 
-    setPasswordText: function (text) {
-        var tempStr = "";
+    setPasswordText: function(text) {
+        var tempStr = '';
         for (var i = 0; i < text.length; ++i) {
             tempStr += this._passwordStyleText;
         }
         cc.LabelTTF.prototype.setString.call(this, tempStr);
     },
 
-    setAttachWithIME: function (attach) {
+    setAttachWithIME: function(attach) {
         this._attachWithIME = attach;
     },
 
-    getAttachWithIME: function () {
+    getAttachWithIME: function() {
         return this._attachWithIME;
     },
 
-    setDetachWithIME: function (detach) {
+    setDetachWithIME: function(detach) {
         this._detachWithIME = detach;
     },
 
-    getDetachWithIME: function () {
+    getDetachWithIME: function() {
         return this._detachWithIME;
     },
 
-    setInsertText: function (insert) {
+    setInsertText: function(insert) {
         this._insertText = insert;
     },
 
-    getInsertText: function () {
+    getInsertText: function() {
         return this._insertText;
     },
 
-    setDeleteBackward: function (deleteBackward) {
+    setDeleteBackward: function(deleteBackward) {
         this._deleteBackward = deleteBackward;
     },
 
-    getDeleteBackward: function () {
+    getDeleteBackward: function() {
         return this._deleteBackward;
     }
 });
 
-ccs.UICCTextField.create = function (placeholder, fontName, fontSize) {
+ccs.UICCTextField.create = function(placeholder, fontName, fontSize) {
     var ret = new ccs.UICCTextField();
-    if (ret && ret.initWithString("", fontName, fontSize)) {
+    if (ret && ret.initWithString('', fontName, fontSize)) {
         if (placeholder) {
             ret.setPlaceHolder(placeholder);
         }
@@ -251,8 +251,8 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
     _detachWithIMESelector: null,
     _insertTextSelector: null,
     _deleteBackwardSelector: null,
-    _passwordStyleText:"",
-    ctor: function () {
+    _passwordStyleText: '',
+    ctor: function() {
         ccs.Widget.prototype.ctor.call(this);
         this._textFieldRender = null;
         this._touchWidth = 0;
@@ -271,7 +271,7 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
         this._deleteBackwardSelector = null;
     },
 
-    init: function () {
+    init: function() {
         if (ccs.Widget.prototype.init.call(this)) {
             this.setUpdateEnabled(true);
             return true;
@@ -279,8 +279,8 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
         return false;
     },
 
-    initRenderer: function () {
-        this._textFieldRender = ccs.UICCTextField.create("input words here", "Thonburi", 20);
+    initRenderer: function() {
+        this._textFieldRender = ccs.UICCTextField.create('input words here', 'Thonburi', 20);
         cc.NodeRGBA.prototype.addChild.call(this, this._textFieldRender, ccs.TEXTFIELDRENDERERZ, -1);
 
     },
@@ -289,7 +289,7 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
      * set touch size
      * @param {cc.Size} size
      */
-    setTouchSize: function (size) {
+    setTouchSize: function(size) {
         this._useTouchArea = true;
         this._touchWidth = size.width;
         this._touchHeight = size.height;
@@ -299,7 +299,7 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
      *  Changes the string value of textField.
      * @param {String} text
      */
-    setText: function (text) {
+    setText: function(text) {
         if (!text) {
             return;
         }
@@ -320,7 +320,7 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
     /**
      * @param {String} value
      */
-    setPlaceHolder: function (value) {
+    setPlaceHolder: function(value) {
         this._textFieldRender.setPlaceHolder(value);
         this.textfieldRendererScaleChangedWithSize();
     },
@@ -328,7 +328,7 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
     /**
      * @param {cc.Size} size
      */
-    setFontSize: function (size) {
+    setFontSize: function(size) {
         this._textFieldRender.setFontSize(size);
         this.textfieldRendererScaleChangedWithSize();
     },
@@ -336,7 +336,7 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
     /**
      * @param {String} name
      */
-    setFontName: function (name) {
+    setFontName: function(name) {
         this._textFieldRender.setFontName(name);
         this.textfieldRendererScaleChangedWithSize();
     },
@@ -344,15 +344,15 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
     /**
      * detach with IME
      */
-    didNotSelectSelf: function () {
+    didNotSelectSelf: function() {
         this._textFieldRender.detachWithIME();
     },
 
     /**
      * get textField string value
-     * @returns {String}
+     * @return {String}
      */
-    getStringValue: function () {
+    getStringValue: function() {
         return this._textFieldRender.getString();
     },
 
@@ -360,7 +360,7 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
      * touch began
      * @param {cc.Point} touchPoint
      */
-    onTouchBegan: function (touchPoint) {
+    onTouchBegan: function(touchPoint) {
         var pass = ccs.Widget.prototype.onTouchBegan.call(this, touchPoint);
         return pass;
     },
@@ -369,7 +369,7 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
      * touch ended
      * @param touchPoint
      */
-    onTouchEnded: function (touchPoint) {
+    onTouchEnded: function(touchPoint) {
         ccs.Widget.prototype.onTouchEnded.call(this, touchPoint);
         this._textFieldRender.attachWithIME();
     },
@@ -377,54 +377,54 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
     /**
      * @param {Boolean} enable
      */
-    setMaxLengthEnabled: function (enable) {
+    setMaxLengthEnabled: function(enable) {
         this._textFieldRender.setMaxLengthEnabled(enable);
     },
 
     /**
-     * @returns {Boolean}
+     * @return {Boolean}
      */
-    isMaxLengthEnabled: function () {
+    isMaxLengthEnabled: function() {
         return this._textFieldRender.isMaxLengthEnabled();
     },
 
     /**
      * @param {number} length
      */
-    setMaxLength: function (length) {
+    setMaxLength: function(length) {
         this._textFieldRender.setMaxLength(length);
     },
 
     /**
-     * @returns {number} length
+     * @return {number} length
      */
-    getMaxLength: function () {
+    getMaxLength: function() {
         return this._textFieldRender.getMaxLength();
     },
 
     /**
      * @param {Boolean} enable
      */
-    setPasswordEnabled: function (enable) {
+    setPasswordEnabled: function(enable) {
         this._textFieldRender.setPasswordEnabled(enable);
     },
 
     /**
-     * @returns {Boolean}
+     * @return {Boolean}
      */
-    isPasswordEnabled: function () {
+    isPasswordEnabled: function() {
         return this._textFieldRender.isPasswordEnabled();
     },
 
     /**
      * @param {String} enable
      */
-    setPasswordStyleText: function (styleText) {
+    setPasswordStyleText: function(styleText) {
         this._textFieldRender.setPasswordStyleText(styleText);
         this._passwordStyleText = styleText;
     },
 
-    update: function (dt) {
+    update: function(dt) {
         if (this.getAttachWithIME()) {
             this.attachWithIMEEvent();
             this.setAttachWithIME(false);
@@ -447,9 +447,9 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
 
     /**
      * get whether attach with IME.
-     * @returns {Boolean}
+     * @return {Boolean}
      */
-    getAttachWithIME: function () {
+    getAttachWithIME: function() {
         return this._textFieldRender.getAttachWithIME();
     },
 
@@ -457,15 +457,15 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
      * set attach with IME.
      * @param {Boolean} attach
      */
-    setAttachWithIME: function (attach) {
+    setAttachWithIME: function(attach) {
         this._textFieldRender.setAttachWithIME(attach);
     },
 
     /**
      * get whether eetach with IME.
-     * @returns {Boolean}
+     * @return {Boolean}
      */
-    getDetachWithIME: function () {
+    getDetachWithIME: function() {
         return this._textFieldRender.getDetachWithIME();
     },
 
@@ -473,15 +473,15 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
      * set detach with IME.
      * @param {Boolean} detach
      */
-    setDetachWithIME: function (detach) {
+    setDetachWithIME: function(detach) {
         this._textFieldRender.setDetachWithIME(detach);
     },
 
     /**
      * get insertText
-     * @returns {String}
+     * @return {String}
      */
-    getInsertText: function () {
+    getInsertText: function() {
         return this._textFieldRender.getInsertText();
     },
 
@@ -489,43 +489,43 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
      * set insertText
      * @param {String} insertText
      */
-    setInsertText: function (insertText) {
+    setInsertText: function(insertText) {
         this._textFieldRender.setInsertText(insertText);
     },
 
     /**
-     * @returns {Boolean}
+     * @return {Boolean}
      */
-    getDeleteBackward: function () {
+    getDeleteBackward: function() {
         return this._textFieldRender.getDeleteBackward();
     },
 
     /**
      * @param {Boolean} deleteBackward
      */
-    setDeleteBackward: function (deleteBackward) {
+    setDeleteBackward: function(deleteBackward) {
         this._textFieldRender.setDeleteBackward(deleteBackward);
     },
 
-    attachWithIMEEvent: function () {
+    attachWithIMEEvent: function() {
         if (this._textFieldEventListener && this._textFieldEventSelector) {
             this._textFieldEventSelector.call(this._textFieldEventListener, this, ccs.TextFiledEventType.attach_with_me);
         }
     },
 
-    detachWithIMEEvent: function () {
+    detachWithIMEEvent: function() {
         if (this._textFieldEventListener && this._textFieldEventSelector) {
             this._textFieldEventSelector.call(this._textFieldEventListener, this, ccs.TextFiledEventType.detach_with_ime);
         }
     },
 
-    insertTextEvent: function () {
+    insertTextEvent: function() {
         if (this._textFieldEventListener && this._textFieldEventSelector) {
             this._textFieldEventSelector.call(this._textFieldEventListener, this, ccs.TextFiledEventType.insert_text);
         }
     },
 
-    deleteBackwardEvent: function () {
+    deleteBackwardEvent: function() {
         if (this._textFieldEventListener && this._textFieldEventSelector) {
             this._textFieldEventSelector.call(this._textFieldEventListener, this, ccs.TextFiledEventType.delete_backward);
         }
@@ -536,7 +536,7 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
      * @param {Function} selector
      * @param {Object} target
      */
-    addEventListenerTextField: function (selector, target) {
+    addEventListenerTextField: function(selector, target) {
         this._textFieldEventSelector = selector;
         this._textFieldEventListener = target;
     },
@@ -544,9 +544,9 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
     /**
      * check hit
      * @param {cc.Point} pt
-     * @returns {boolean}
+     * @return {boolean}
      */
-    hitTest: function (pt) {
+    hitTest: function(pt) {
         var nsp = this.convertToNodeSpace(pt);
         var locSize = this._textFieldRender.getContentSize();
         var bb = cc.rect(-locSize.width * this._anchorPoint._x, -locSize.height * this._anchorPoint._y, locSize.width, locSize.height);
@@ -561,8 +561,8 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
      * @param {cc.Point|Number} point The anchor point of UILabelBMFont or The anchor point.x of UILabelBMFont.
      * @param {Number} [y] The anchor point.y of UILabelBMFont.
      */
-    setAnchorPoint: function (point, y) {
-        if(arguments.length === 2){
+    setAnchorPoint: function(point, y) {
+        if (arguments.length === 2) {
             ccs.Widget.prototype.setAnchorPoint.call(this, point, y);
             this._textFieldRender.setAnchorPoint(point, y);
         } else {
@@ -571,12 +571,12 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
         }
     },
 
-    onSizeChanged: function () {
+    onSizeChanged: function() {
         ccs.Widget.prototype.onSizeChanged.call(this);
         this.textfieldRendererScaleChangedWithSize();
     },
 
-    textfieldRendererScaleChangedWithSize: function () {
+    textfieldRendererScaleChangedWithSize: function() {
         if (this._ignoreSize) {
             this._textFieldRender.setScale(1.0);
             var rendererSize = this.getContentSize();
@@ -598,37 +598,37 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
 
     /**
      * override "getContentSize" method of widget.
-     * @returns {cc.Size}
+     * @return {cc.Size}
      */
-    getContentSize: function () {
+    getContentSize: function() {
         return this._textFieldRender.getContentSize();
     },
 
     /**
      * override "getContentSize" method of widget.
-     * @returns {cc.Node}
+     * @return {cc.Node}
      */
-    getVirtualRenderer: function () {
+    getVirtualRenderer: function() {
         return this._textFieldRender;
     },
 
     /**
      * Returns the "class name" of widget.
-     * @returns {string}
+     * @return {string}
      */
-    getDescription: function () {
-        return "TextField";
+    getDescription: function() {
+        return 'TextField';
     },
 
-    attachWithIME: function () {
+    attachWithIME: function() {
         this._textFieldRender.attachWithIME();
     },
 
-    createCloneInstance: function () {
+    createCloneInstance: function() {
         return ccs.TextField.create();
     },
 
-    copySpecialProperties: function (textField) {
+    copySpecialProperties: function(textField) {
         this.setText(textField._textFieldRender.getString());
         this.setPlaceHolder(textField.getStringValue());
         this.setFontSize(textField._textFieldRender.getFontSize());
@@ -651,7 +651,7 @@ ccs.TextField = ccs.Widget.extend(/** @lends ccs.TextField# */{
  * // example
  * var uiTextField = ccs.TextField.create();
  */
-ccs.TextField.create = function () {
+ccs.TextField.create = function() {
     var uiTextField = new ccs.TextField();
     if (uiTextField && uiTextField.init()) {
         return uiTextField;

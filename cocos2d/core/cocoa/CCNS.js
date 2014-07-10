@@ -34,7 +34,7 @@
  * @param {String} strs
  * @return {String}
  */
-cc.splitWithForm = function (content, strs) {
+cc.splitWithForm = function(content, strs) {
     do {
         if (!content) break;
 
@@ -57,7 +57,7 @@ cc.splitWithForm = function (content, strs) {
         var nPos2 = pointStr.indexOf('}');
         // contain '{' or '}'
         if (nPos1 != -1 || nPos2 != -1) break;
-        strs = pointStr.split(",");
+        strs = pointStr.split(',');
         if (strs.length != 2 || strs[0] != null || strs[1] != null) {
             break;
         }
@@ -80,7 +80,7 @@ cc.splitWithForm = function (content, strs) {
  * // example
  * var rect = cc.RectFromString("{{3,2},{4,5}}");
  */
-cc.RectFromString = function (content) {
+cc.RectFromString = function(content) {
     var result = cc.RectZero();
     do {
         if (!content) break;
@@ -127,10 +127,10 @@ cc.RectFromString = function (content) {
  * //example
  * var point = cc.PointFromString("{3.0,2.5}");
  */
-cc.PointFromString = function (content) {
+cc.PointFromString = function(content) {
     var ret = cc.PointZero();
     try {
-        if (content == "")
+        if (content == '')
             return ret;
 
         var strs = cc.splitWithForm(content);
@@ -155,10 +155,10 @@ cc.PointFromString = function (content) {
  * // example
  * var size = cc.SizeFromString("{3.0,2.5}");
  */
-cc.SizeFromString = function (content) {
+cc.SizeFromString = function(content) {
     var ret = cc.SizeZero();
     try {
-        if (content == "")
+        if (content == '')
             return ret;
 
         var strs = cc.splitWithForm(content);

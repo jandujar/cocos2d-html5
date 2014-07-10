@@ -38,7 +38,7 @@ cc.current_stack = null;
 
 cc.initialized = false;
 
-cc.lazyInitialize = function () {
+cc.lazyInitialize = function() {
     if (!cc.initialized) {
         var identity = new cc.kmMat4(); //Temporary identity matrix
 
@@ -60,7 +60,7 @@ cc.lazyInitialize = function () {
 
 cc.lazyInitialize();
 
-cc.kmGLFreeAll = function () {
+cc.kmGLFreeAll = function() {
     //Clear the matrix stacks
     cc.km_mat4_stack_release(cc.modelview_matrix_stack);
     cc.km_mat4_stack_release(cc.projection_matrix_stack);
@@ -71,23 +71,23 @@ cc.kmGLFreeAll = function () {
     cc.current_stack = null; //Set the current stack to point nowhere
 };
 
-cc.kmGLPushMatrix = function () {
+cc.kmGLPushMatrix = function() {
     cc.km_mat4_stack_push(cc.current_stack, cc.current_stack.top);
 };
 
-cc.kmGLPushMatrixWitMat4 = function (saveMat) {
+cc.kmGLPushMatrixWitMat4 = function(saveMat) {
     cc.current_stack.stack.push(cc.current_stack.top);
     cc.kmMat4Assign(saveMat, cc.current_stack.top);
     cc.current_stack.top = saveMat;
 };
 
-cc.kmGLPopMatrix = function () {
+cc.kmGLPopMatrix = function() {
     //No need to lazy initialize, you shouldnt be popping first anyway!
     //cc.km_mat4_stack_pop(cc.current_stack, null);
     cc.current_stack.top = cc.current_stack.stack.pop();
 };
 
-cc.kmGLMatrixMode = function (mode) {
+cc.kmGLMatrixMode = function(mode) {
     //cc.lazyInitialize();
     switch (mode) {
         case cc.KM_GL_MODELVIEW:
@@ -100,27 +100,27 @@ cc.kmGLMatrixMode = function (mode) {
             cc.current_stack = cc.texture_matrix_stack;
             break;
         default:
-            throw "Invalid matrix mode specified";   //TODO: Proper error handling
+            throw 'Invalid matrix mode specified';   //TODO: Proper error handling
             break;
     }
 };
 
-cc.kmGLLoadIdentity = function () {
+cc.kmGLLoadIdentity = function() {
     //cc.lazyInitialize();
     cc.kmMat4Identity(cc.current_stack.top); //Replace the top matrix with the identity matrix
 };
 
-cc.kmGLLoadMatrix = function (pIn) {
+cc.kmGLLoadMatrix = function(pIn) {
     //cc.lazyInitialize();
     cc.kmMat4Assign(cc.current_stack.top, pIn);
 };
 
-cc.kmGLMultMatrix = function (pIn) {
+cc.kmGLMultMatrix = function(pIn) {
     //cc.lazyInitialize();
     cc.kmMat4Multiply(cc.current_stack.top, cc.current_stack.top, pIn);
 };
 
-cc.kmGLTranslatef = function (x, y, z) {
+cc.kmGLTranslatef = function(x, y, z) {
     var translation = new cc.kmMat4();
 
     //Create a rotation matrix using the axis and the angle
@@ -130,7 +130,7 @@ cc.kmGLTranslatef = function (x, y, z) {
     cc.kmMat4Multiply(cc.current_stack.top, cc.current_stack.top, translation);
 };
 
-cc.kmGLRotatef = function (angle, x, y, z) {
+cc.kmGLRotatef = function(angle, x, y, z) {
     var axis = new cc.kmVec3(x, y, z);
     var rotation = new cc.kmMat4();
 
@@ -141,13 +141,13 @@ cc.kmGLRotatef = function (angle, x, y, z) {
     cc.kmMat4Multiply(cc.current_stack.top, cc.current_stack.top, rotation);
 };
 
-cc.kmGLScalef = function (x, y, z) {
+cc.kmGLScalef = function(x, y, z) {
     var scaling = new cc.kmMat4();
     cc.kmMat4Scaling(scaling, x, y, z);
     cc.kmMat4Multiply(cc.current_stack.top, cc.current_stack.top, scaling);
 };
 
-cc.kmGLGetMatrix = function (mode, pOut) {
+cc.kmGLGetMatrix = function(mode, pOut) {
     //cc.lazyInitialize();
 
     switch (mode) {
@@ -161,7 +161,7 @@ cc.kmGLGetMatrix = function (mode, pOut) {
             cc.kmMat4Assign(pOut, cc.texture_matrix_stack.top);
             break;
         default:
-            throw "Invalid matrix mode specified"; //TODO: Proper error handling
+            throw 'Invalid matrix mode specified'; //TODO: Proper error handling
             break;
     }
 };

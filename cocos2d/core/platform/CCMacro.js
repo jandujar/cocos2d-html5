@@ -74,13 +74,13 @@ cc.UINT_MAX = 0xffffffff;
  * @function
  * @deprecated
  */
-cc.SWAP = function (x, y, ref) {
+cc.SWAP = function(x, y, ref) {
     if ((typeof ref) == 'object' && (typeof ref.x) != 'undefined' && (typeof ref.y) != 'undefined') {
         var tmp = ref[x];
         ref[x] = ref[y];
         ref[y] = tmp;
     } else
-        cc.log("cc.SWAP is being modified from original macro, please check usage");
+        cc.log('cc.SWAP is being modified from original macro, please check usage');
 };
 
 /**
@@ -95,7 +95,7 @@ cc.SWAP = function (x, y, ref) {
  * cc.lerp(2,10,0.5)//returns 6<br/>
  * cc.lerp(2,10,0.2)//returns 3.6
  */
-cc.lerp = function (a, b, r) {
+cc.lerp = function(a, b, r) {
     return a + (b - a) * r;
 };
 
@@ -104,7 +104,7 @@ cc.lerp = function (a, b, r) {
  * @return {Number}
  * @function
  */
-cc.RANDOM_MINUS1_1 = function () {
+cc.RANDOM_MINUS1_1 = function() {
     return (Math.random() - 0.5) * 2;
 };
 
@@ -113,7 +113,7 @@ cc.RANDOM_MINUS1_1 = function () {
  * @return {Number}
  * @function
  */
-cc.RANDOM_0_1 = function () {
+cc.RANDOM_0_1 = function() {
     return Math.random();
 };
 
@@ -123,7 +123,7 @@ cc.RANDOM_0_1 = function () {
  * @return {Number}
  * @function
  */
-cc.DEGREES_TO_RADIANS = function (angle) {
+cc.DEGREES_TO_RADIANS = function(angle) {
     return angle * cc.RAD;
 };
 
@@ -133,7 +133,7 @@ cc.DEGREES_TO_RADIANS = function (angle) {
  * @return {Number}
  * @function
  */
-cc.RADIANS_TO_DEGREES = function (angle) {
+cc.RADIANS_TO_DEGREES = function(angle) {
     return angle * cc.DEG;
 };
 
@@ -162,7 +162,7 @@ cc.BLEND_DST = 0x0303;
  * @param {cc.Node} node setup node
  * @function
  */
-cc.NODE_DRAW_SETUP = function (node) {
+cc.NODE_DRAW_SETUP = function(node) {
     //cc.glEnable(node._glServerState);
     if (node._shaderProgram) {
         //cc.renderContext.useProgram(node._shaderProgram._programObj);
@@ -181,7 +181,7 @@ cc.NODE_DRAW_SETUP = function (node) {
  * </p>
  * @function
  */
-cc.ENABLE_DEFAULT_GL_STATES = function () {
+cc.ENABLE_DEFAULT_GL_STATES = function() {
     //TODO OPENGL STUFF
     /*
      glEnableClientState(GL_VERTEX_ARRAY);
@@ -199,7 +199,7 @@ cc.ENABLE_DEFAULT_GL_STATES = function () {
  * </p>
  * @function
  */
-cc.DISABLE_DEFAULT_GL_STATES = function () {
+cc.DISABLE_DEFAULT_GL_STATES = function() {
     //TODO OPENGL
     /*
      glDisable(GL_TEXTURE_2D);
@@ -217,7 +217,7 @@ cc.DISABLE_DEFAULT_GL_STATES = function () {
  * @param {Number} addNumber
  * @function
  */
-cc.INCREMENT_GL_DRAWS = function (addNumber) {
+cc.INCREMENT_GL_DRAWS = function(addNumber) {
     cc.g_NumberOfDraws += addNumber;
 };
 
@@ -234,9 +234,9 @@ cc.FLT_EPSILON = 0.0000001192092896;
  * </p>
  * @function
  */
-cc.CONTENT_SCALE_FACTOR = cc.IS_RETINA_DISPLAY_SUPPORTED ? function () {
+cc.CONTENT_SCALE_FACTOR = cc.IS_RETINA_DISPLAY_SUPPORTED ? function() {
     return cc.Director.getInstance().getContentScaleFactor();
-} : function () {
+} : function() {
     return 1;
 };
 
@@ -246,12 +246,12 @@ cc.CONTENT_SCALE_FACTOR = cc.IS_RETINA_DISPLAY_SUPPORTED ? function () {
  * @return {cc.Point}
  * @function
  */
-cc.POINT_POINTS_TO_PIXELS = function (points) {
+cc.POINT_POINTS_TO_PIXELS = function(points) {
     var scale = cc.CONTENT_SCALE_FACTOR();
     return cc.p(points.x * scale, points.y * scale);
 };
 
-cc._POINT_POINTS_TO_PIXELS_OUT = function (points, outPixels) {
+cc._POINT_POINTS_TO_PIXELS_OUT = function(points, outPixels) {
     var scale = cc.CONTENT_SCALE_FACTOR();
     outPixels._x = points.x * scale;
     outPixels._y = points.y * scale;
@@ -263,7 +263,7 @@ cc._POINT_POINTS_TO_PIXELS_OUT = function (points, outPixels) {
  * @return {cc.Size}
  * @function
  */
-cc.SIZE_POINTS_TO_PIXELS = function (sizeInPoints) {
+cc.SIZE_POINTS_TO_PIXELS = function(sizeInPoints) {
     var scale = cc.CONTENT_SCALE_FACTOR();
     return cc.size(sizeInPoints.width * scale, sizeInPoints.height * scale);
 };
@@ -274,12 +274,12 @@ cc.SIZE_POINTS_TO_PIXELS = function (sizeInPoints) {
  * @return {cc.Size}
  * @function
  */
-cc.SIZE_PIXELS_TO_POINTS = function (sizeInPixels) {
+cc.SIZE_PIXELS_TO_POINTS = function(sizeInPixels) {
     var scale = cc.CONTENT_SCALE_FACTOR();
     return cc.size(sizeInPixels.width / scale, sizeInPixels.height / scale);
 };
 
-cc._SIZE_PIXELS_TO_POINTS_OUT = function (sizeInPixels, outSize) {
+cc._SIZE_PIXELS_TO_POINTS_OUT = function(sizeInPixels, outSize) {
     var scale = cc.CONTENT_SCALE_FACTOR();
     outSize._width = sizeInPixels.width / scale;
     outSize._height = sizeInPixels.height / scale;
@@ -290,12 +290,12 @@ cc._SIZE_PIXELS_TO_POINTS_OUT = function (sizeInPixels, outSize) {
  * @param {Point} pixels
  * @function
  */
-cc.POINT_PIXELS_TO_POINTS = function (pixels) {
+cc.POINT_PIXELS_TO_POINTS = function(pixels) {
     var scale = cc.CONTENT_SCALE_FACTOR();
     return cc.p(pixels.x / scale, pixels.y / scale);
 };
 
-cc._POINT_PIXELS_TO_POINTS_OUT = function(pixels, outPoint){
+cc._POINT_PIXELS_TO_POINTS_OUT = function(pixels, outPoint) {
     var scale = cc.CONTENT_SCALE_FACTOR();
     outPoint._x = pixels.x / scale;
     outPoint._y = pixels.y / scale;
@@ -306,11 +306,11 @@ cc._POINT_PIXELS_TO_POINTS_OUT = function(pixels, outPoint){
  * @param {cc.Rect} pixel
  * @function
  */
-cc.RECT_PIXELS_TO_POINTS = cc.IS_RETINA_DISPLAY_SUPPORTED ? function (pixel) {
+cc.RECT_PIXELS_TO_POINTS = cc.IS_RETINA_DISPLAY_SUPPORTED ? function(pixel) {
     var scale = cc.CONTENT_SCALE_FACTOR();
     return cc.rect(pixel.x / scale, pixel.y / scale,
         pixel.width / scale, pixel.height / scale);
-} : function (p) {
+} : function(p) {
     return p;
 };
 
@@ -319,11 +319,11 @@ cc.RECT_PIXELS_TO_POINTS = cc.IS_RETINA_DISPLAY_SUPPORTED ? function (pixel) {
  * @param {cc.Rect} point
  * @function
  */
-cc.RECT_POINTS_TO_PIXELS = cc.IS_RETINA_DISPLAY_SUPPORTED ? function (point) {
+cc.RECT_POINTS_TO_PIXELS = cc.IS_RETINA_DISPLAY_SUPPORTED ? function(point) {
    var scale = cc.CONTENT_SCALE_FACTOR();
     return cc.rect(point.x * scale, point.y * scale,
         point.width * scale, point.height * scale);
-} : function (p) {
+} : function(p) {
     return p;
 };
 
@@ -365,11 +365,11 @@ if (!cc.Browser.supportWebGL) {
     gl.ONE_MINUS_DST_COLOR = 0x0307;
 }
 
-cc.CHECK_GL_ERROR_DEBUG = function () {
+cc.CHECK_GL_ERROR_DEBUG = function() {
     if (cc.renderMode == cc.WEBGL) {
         var _error = cc.renderContext.getError();
         if (_error) {
-            cc.log("WebGL error " + _error);
+            cc.log('WebGL error ' + _error);
         }
     }
 };

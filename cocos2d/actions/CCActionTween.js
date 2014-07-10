@@ -29,7 +29,7 @@
  * @extends cc.Class
  */
 cc.ActionTweenDelegate = cc.Class.extend(/** @lends cc.ActionTweenDelegate */{
-     updateTweenAction:function(value, key){
+     updateTweenAction: function(value, key) {
 
      }
 });
@@ -51,14 +51,14 @@ cc.ActionTweenDelegate = cc.Class.extend(/** @lends cc.ActionTweenDelegate */{
  * var scaleB = cc.ActionTween.create(2,"scale",1,3);
  */
 cc.ActionTween = cc.ActionInterval.extend(/** @lends cc.ActionTween */{
-    key:"",
-    from:0,
-    to:0,
-    delta:0,
+    key: '',
+    from: 0,
+    to: 0,
+    delta: 0,
 
-    ctor:function(){
+    ctor: function() {
         cc.ActionInterval.prototype.ctor.call(this);
-        this.key = "";
+        this.key = '';
         this.from = 0;
         this.to = 0;
         this.delta = 0;
@@ -72,7 +72,7 @@ cc.ActionTween = cc.ActionInterval.extend(/** @lends cc.ActionTween */{
      * @param {Number} to
      * @return {Boolean}
      */
-    initWithDuration:function (duration, key, from, to) {
+    initWithDuration: function(duration, key, from, to) {
         if (cc.ActionInterval.prototype.initWithDuration.call(this, duration)) {
             this.key = key;
             this.to = to;
@@ -84,26 +84,26 @@ cc.ActionTween = cc.ActionInterval.extend(/** @lends cc.ActionTween */{
     /**
      * @param {cc.Node} target
      */
-    startWithTarget:function (target) {
-        if(!target || !target.updateTweenAction)
-            throw "cc.ActionTween.startWithTarget(): target must be non-null, and target must implement updateTweenAction function";
+    startWithTarget: function(target) {
+        if (!target || !target.updateTweenAction)
+            throw 'cc.ActionTween.startWithTarget(): target must be non-null, and target must implement updateTweenAction function';
         cc.ActionInterval.prototype.startWithTarget.call(this, target);
         this.delta = this.to - this.from;
     },
     /**
      * @param {Number} dt
      */
-    update:function (dt) {
+    update: function(dt) {
         this._target.updateTweenAction(this.to - this.delta * (1 - dt), this.key);
     },
     /**
      * @return {cc.ActionTween}
      */
-    reverse:function () {
+    reverse: function() {
         return cc.ActionTween.create(this.duration, this.key, this.to, this.from);
     },
 
-    clone:function(){
+    clone: function() {
         var action = new cc.ActionTween();
         action.initWithDuration(this._duration, this.key, this.from, this.to);
         return action;
@@ -118,7 +118,7 @@ cc.ActionTween = cc.ActionInterval.extend(/** @lends cc.ActionTween */{
  * @param {Number} to
  * @return {cc.ActionTween}
  */
-cc.ActionTween.create = function (duration, key, from, to) {
+cc.ActionTween.create = function(duration, key, from, to) {
     var ret = new cc.ActionTween();
     if (ret.initWithDuration(duration, key, from, to))
         return ret;

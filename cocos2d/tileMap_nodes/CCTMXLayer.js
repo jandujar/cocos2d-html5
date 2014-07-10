@@ -54,7 +54,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
     _layerOrientation: null,
     _properties: null,
     //name of the layer
-    _layerName: "",
+    _layerName: '',
     //TMX Layer supports opacity
     _opacity: 255,
     _minGID: null,
@@ -69,28 +69,28 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
     //used for retina display
     _contentScaleFactor: null,
 
-    _cacheCanvas:null,
-    _cacheContext:null,
-    _cacheTexture:null,
+    _cacheCanvas: null,
+    _cacheContext: null,
+    _cacheTexture: null,
     // Sub caches for avoid Chrome big image draw issue
-    _subCacheCanvas:null,
-    _subCacheContext:null,
-    _subCacheCount:0,
-    _subCacheWidth:0,
+    _subCacheCanvas: null,
+    _subCacheContext: null,
+    _subCacheCount: 0,
+    _subCacheWidth: 0,
     // Maximum pixel number by cache, a little more than 3072*3072, real limit is 4096*4096
-    _maxCachePixel:10000000,
+    _maxCachePixel: 10000000,
 
     /**
      *  Constructor
      */
-    ctor:function () {
+    ctor: function() {
         cc.SpriteBatchNode.prototype.ctor.call(this);
         this._descendants = [];
 
         this._layerSize = cc.SizeZero();
         this._mapTileSize = cc.SizeZero();
 
-        if(cc.renderContextType === cc.CANVAS){
+        if (cc.renderContextType === cc.CANVAS) {
             var locCanvas = cc.canvas;
             var tmpCanvas = document.createElement('canvas');
             tmpCanvas.width = locCanvas.width;
@@ -111,19 +111,19 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * @param {cc.Size|Number} size The untransformed size of the TMXLayer or The untransformed size's width of the TMXLayer.
      * @param {Number} [height] The untransformed size's height of the TMXLayer.
      */
-    setContentSize:function (size, height) {
+    setContentSize: function(size, height) {
         var locContentSize = this._contentSize;
-        if(arguments.length === 2){
-            if((size === locContentSize._width) && (height === locContentSize._height))
+        if (arguments.length === 2) {
+            if ((size === locContentSize._width) && (height === locContentSize._height))
                 return;
             cc.Node.prototype.setContentSize.call(this, size, height);
         } else {
-            if((size.width === locContentSize._width) && (size.height === locContentSize._height))
+            if ((size.width === locContentSize._width) && (size.height === locContentSize._height))
                 return;
             cc.Node.prototype.setContentSize.call(this, size);
         }
 
-        if(cc.renderContextType === cc.CANVAS){
+        if (cc.renderContextType === cc.CANVAS) {
             var locCanvas = this._cacheCanvas;
             var scaleFactor = cc.CONTENT_SCALE_FACTOR();
             locCanvas.width = 0 | (locContentSize._width * 1.5 * scaleFactor);
@@ -136,23 +136,23 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
 
             // Init sub caches if needed
             var totalPixel = locCanvas.width * locCanvas.height;
-            if(totalPixel > this._maxCachePixel) {
-                if(!this._subCacheCanvas) this._subCacheCanvas = [];
-                if(!this._subCacheContext) this._subCacheContext = [];
+            if (totalPixel > this._maxCachePixel) {
+                if (!this._subCacheCanvas) this._subCacheCanvas = [];
+                if (!this._subCacheContext) this._subCacheContext = [];
 
-                this._subCacheCount = Math.ceil( totalPixel / this._maxCachePixel );
+                this._subCacheCount = Math.ceil(totalPixel / this._maxCachePixel);
                 var locSubCacheCanvas = this._subCacheCanvas, i;
-                for(i = 0; i < this._subCacheCount; i++) {
-                    if(!locSubCacheCanvas[i]) {
+                for (i = 0; i < this._subCacheCount; i++) {
+                    if (!locSubCacheCanvas[i]) {
                         locSubCacheCanvas[i] = document.createElement('canvas');
                         this._subCacheContext[i] = locSubCacheCanvas[i].getContext('2d');
                     }
                     var tmpCanvas = locSubCacheCanvas[i];
-                    tmpCanvas.width = this._subCacheWidth = Math.round( locCanvas.width / this._subCacheCount );
+                    tmpCanvas.width = this._subCacheWidth = Math.round(locCanvas.width / this._subCacheCount);
                     tmpCanvas.height = locCanvas.height;
                 }
                 // Clear wasted cache to release memory
-                for(i = this._subCacheCount; i < locSubCacheCanvas.length; i++) {
+                for (i = this._subCacheCount; i < locSubCacheCanvas.length; i++) {
                     tmpCanvas.width = 0;
                     tmpCanvas.height = 0;
                 }
@@ -166,8 +166,8 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * Return texture of cc.SpriteBatchNode
      * @return {cc.Texture2D}
      */
-    getTexture:function () {
-        if(cc.renderContextType === cc.CANVAS)
+    getTexture: function() {
+        if (cc.renderContextType === cc.CANVAS)
             return this._cacheTexture;
         else
             return cc.SpriteBatchNode.prototype.getTexture.call(this);
@@ -180,7 +180,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      */
     visit: null,
 
-    _visitForCanvas: function (ctx) {
+    _visitForCanvas: function(ctx) {
         var context = ctx || cc.renderContext;
         // quick return if not visible
         if (!this._visible)
@@ -208,9 +208,9 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
             }
             locCacheContext.restore();
             // Update sub caches if needed
-            if(this._subCacheCount > 0) {
+            if (this._subCacheCount > 0) {
                 var subCacheW = this._subCacheWidth, subCacheH = locCacheCanvas.height;
-                for(i = 0; i < this._subCacheCount; i++) {
+                for (i = 0; i < this._subCacheCount; i++) {
                     this._subCacheContext[i].drawImage(locCacheCanvas, i * subCacheW, 0, subCacheW, subCacheH, 0, 0, subCacheW, subCacheH);
                 }
             }
@@ -228,25 +228,25 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * draw cc.SpriteBatchNode (override draw of cc.Node)
      * @param {CanvasRenderingContext2D} ctx
      */
-    draw:null,
+    draw: null,
 
-    _drawForCanvas:function (ctx) {
+    _drawForCanvas: function(ctx) {
         var context = ctx || cc.renderContext;
         //context.globalAlpha = this._opacity / 255;
-        var posX = 0 | ( -this._anchorPointInPoints._x), posY = 0 | ( -this._anchorPointInPoints._y);
+        var posX = 0 | (-this._anchorPointInPoints._x), posY = 0 | (-this._anchorPointInPoints._y);
         var eglViewer = cc.EGLView.getInstance();
         var locCacheCanvas = this._cacheCanvas;
         //direct draw image by canvas drawImage
         if (locCacheCanvas) {
             var locSubCacheCount = this._subCacheCount, locCanvasHeight = locCacheCanvas.height * eglViewer._scaleY;
-            if(locSubCacheCount > 0) {
+            if (locSubCacheCount > 0) {
                 var locSubCacheCanvasArr = this._subCacheCanvas;
-                for(var i = 0; i < locSubCacheCount; i++){
+                for (var i = 0; i < locSubCacheCount; i++) {
                     var selSubCanvas = locSubCacheCanvasArr[i];
                     context.drawImage(locSubCacheCanvasArr[i], 0, 0, selSubCanvas.width, selSubCanvas.height,
                         posX + i * this._subCacheWidth, -(posY + locCanvasHeight), selSubCanvas.width * eglViewer._scaleX, locCanvasHeight);
                 }
-            } else{
+            } else {
                 //context.drawImage(locCacheCanvas, 0, 0, locCacheCanvas.width, locCacheCanvas.height,
                 //    posX, -(posY + locCacheCanvas.height ), locCacheCanvas.width, locCacheCanvas.height );
                 context.drawImage(locCacheCanvas, 0, 0, locCacheCanvas.width, locCacheCanvas.height,
@@ -258,14 +258,14 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
     /**
      * @return {cc.Size}
      */
-    getLayerSize:function () {
+    getLayerSize: function() {
         return cc.size(this._layerSize.width, this._layerSize.height);
     },
 
     /**
      * @param {cc.Size} Var
      */
-    setLayerSize:function (Var) {
+    setLayerSize: function(Var) {
         this._layerSize.width = Var.width;
         this._layerSize.height = Var.height;
     },
@@ -274,14 +274,14 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * Size of the map's tile (could be different from the tile's size)
      * @return {cc.Size}
      */
-    getMapTileSize:function () {
-        return cc.size(this._mapTileSize.width,this._mapTileSize.height);
+    getMapTileSize: function() {
+        return cc.size(this._mapTileSize.width, this._mapTileSize.height);
     },
 
     /**
      * @param {cc.Size} Var
      */
-    setMapTileSize:function (Var) {
+    setMapTileSize: function(Var) {
         this._mapTileSize.width = Var.width;
         this._mapTileSize.height = Var.height;
     },
@@ -290,14 +290,14 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * Pointer to the map of tiles
      * @return {Array}
      */
-    getTiles:function () {
+    getTiles: function() {
         return this._tiles;
     },
 
     /**
      * @param {Array} Var
      */
-    setTiles:function (Var) {
+    setTiles: function(Var) {
         this._tiles = Var;
     },
 
@@ -305,14 +305,14 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * Tile set information for the layer
      * @return {cc.TMXTilesetInfo}
      */
-    getTileSet:function () {
+    getTileSet: function() {
         return this._tileSet;
     },
 
     /**
      * @param {cc.TMXTilesetInfo} Var
      */
-    setTileSet:function (Var) {
+    setTileSet: function(Var) {
         this._tileSet = Var;
     },
 
@@ -320,14 +320,14 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * Layer orientation, which is the same as the map orientation
      * @return {Number}
      */
-    getLayerOrientation:function () {
+    getLayerOrientation: function() {
         return this._layerOrientation;
     },
 
     /**
      * @param {Number} Var
      */
-    setLayerOrientation:function (Var) {
+    setLayerOrientation: function(Var) {
         this._layerOrientation = Var;
     },
 
@@ -335,14 +335,14 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * properties from the layer. They can be added using Tiled
      * @return {Array}
      */
-    getProperties:function () {
+    getProperties: function() {
         return this._properties;
     },
 
     /**
      * @param {Array} Var
      */
-    setProperties:function (Var) {
+    setProperties: function(Var) {
         this._properties = Var;
     },
 
@@ -353,7 +353,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * @param {cc.TMXMapInfo} mapInfo
      * @return {Boolean}
      */
-    initWithTilesetInfo:function (tilesetInfo, layerInfo, mapInfo) {
+    initWithTilesetInfo: function(tilesetInfo, layerInfo, mapInfo) {
         // XXX: is 35% a good estimate ?
         var size = layerInfo._layerSize;
         var totalNumberOfTiles = parseInt(size.width * size.height);
@@ -399,7 +399,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * Unless you want to know at runtime the tiles positions, you can safely call this method. <br />
      * If you are going to call layer.getTileGIDAt() then, don't release the map</p>
      */
-    releaseMap:function () {
+    releaseMap: function() {
         if (this._tiles)
             this._tiles = null;
 
@@ -417,13 +417,13 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * @param {cc.Point} pos
      * @return {cc.Sprite}
      */
-    getTileAt: function (pos) {
-        if(!pos)
-            throw "cc.TMXLayer.getTileAt(): pos should be non-null";
-        if(pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0)
-            throw "cc.TMXLayer.getTileAt(): invalid position";
-        if(!this._tiles || !this._atlasIndexArray){
-            cc.log("cc.TMXLayer.getTileAt(): TMXLayer: the tiles map has been released");
+    getTileAt: function(pos) {
+        if (!pos)
+            throw 'cc.TMXLayer.getTileAt(): pos should be non-null';
+        if (pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0)
+            throw 'cc.TMXLayer.getTileAt(): invalid position';
+        if (!this._tiles || !this._atlasIndexArray) {
+            cc.log('cc.TMXLayer.getTileAt(): TMXLayer: the tiles map has been released');
             return null;
         }
 
@@ -446,7 +446,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
             tile.setBatchNode(this);
             tile.setPosition(this.getPositionAt(pos));
             tile.setVertexZ(this._vertexZForPos(pos));
-            tile.setAnchorPoint(0,0);
+            tile.setAnchorPoint(0, 0);
             tile.setOpacity(this._opacity);
 
             var indexForZ = this._atlasIndexForExistantZ(z);
@@ -462,13 +462,13 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * @param {cc.Point} pos
      * @return {Number}
      */
-    getTileGIDAt:function (pos) {
-        if(!pos)
-            throw "cc.TMXLayer.getTileGIDAt(): pos should be non-null";
-        if(pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0)
-            throw "cc.TMXLayer.getTileGIDAt(): invalid position";
-        if(!this._tiles || !this._atlasIndexArray){
-            cc.log("cc.TMXLayer.getTileGIDAt(): TMXLayer: the tiles map has been released");
+    getTileGIDAt: function(pos) {
+        if (!pos)
+            throw 'cc.TMXLayer.getTileGIDAt(): pos should be non-null';
+        if (pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0)
+            throw 'cc.TMXLayer.getTileGIDAt(): invalid position';
+        if (!this._tiles || !this._atlasIndexArray) {
+            cc.log('cc.TMXLayer.getTileGIDAt(): TMXLayer: the tiles map has been released');
             return null;
         }
 
@@ -486,13 +486,13 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * @param {cc.Point} pos
      * @return {Number}
      */
-    getTileFlagsAt:function (pos) {
-        if(!pos)
-            throw "cc.TMXLayer.getTileFlagsAt(): pos should be non-null";
-        if(pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0)
-            throw "cc.TMXLayer.getTileFlagsAt(): invalid position";
-        if(!this._tiles || !this._atlasIndexArray){
-            cc.log("cc.TMXLayer.getTileFlagsAt(): TMXLayer: the tiles map has been released");
+    getTileFlagsAt: function(pos) {
+        if (!pos)
+            throw 'cc.TMXLayer.getTileFlagsAt(): pos should be non-null';
+        if (pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0)
+            throw 'cc.TMXLayer.getTileFlagsAt(): invalid position';
+        if (!this._tiles || !this._atlasIndexArray) {
+            cc.log('cc.TMXLayer.getTileFlagsAt(): TMXLayer: the tiles map has been released');
             return null;
         }
 
@@ -513,17 +513,17 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * @param {cc.Point} pos
      * @param {Number} flags
      */
-    setTileGID:function (gid, pos, flags) {
-        if(!pos)
-            throw "cc.TMXLayer.setTileGID(): pos should be non-null";
-        if(pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0)
-            throw "cc.TMXLayer.setTileGID(): invalid position";
-        if(!this._tiles || !this._atlasIndexArray){
-            cc.log("cc.TMXLayer.setTileGID(): TMXLayer: the tiles map has been released");
+    setTileGID: function(gid, pos, flags) {
+        if (!pos)
+            throw 'cc.TMXLayer.setTileGID(): pos should be non-null';
+        if (pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0)
+            throw 'cc.TMXLayer.setTileGID(): invalid position';
+        if (!this._tiles || !this._atlasIndexArray) {
+            cc.log('cc.TMXLayer.setTileGID(): TMXLayer: the tiles map has been released');
             return null;
         }
-        if(gid !== 0 && gid < this._tileSet.firstGid){
-            cc.log( "cc.TMXLayer.setTileGID(): invalid gid:" + gid);
+        if (gid !== 0 && gid < this._tileSet.firstGid) {
+            cc.log('cc.TMXLayer.setTileGID(): invalid gid:' + gid);
             return null;
         }
 
@@ -562,13 +562,13 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * Removes a tile at given tile coordinate
      * @param {cc.Point} pos
      */
-    removeTileAt:function (pos) {
-        if(!pos)
-            throw "cc.TMXLayer.removeTileAt(): pos should be non-null";
-        if(pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0)
-            throw "cc.TMXLayer.removeTileAt(): invalid position";
-        if(!this._tiles || !this._atlasIndexArray){
-            cc.log("cc.TMXLayer.removeTileAt(): TMXLayer: the tiles map has been released");
+    removeTileAt: function(pos) {
+        if (!pos)
+            throw 'cc.TMXLayer.removeTileAt(): pos should be non-null';
+        if (pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0)
+            throw 'cc.TMXLayer.removeTileAt(): invalid position';
+        if (!this._tiles || !this._atlasIndexArray) {
+            cc.log('cc.TMXLayer.removeTileAt(): TMXLayer: the tiles map has been released');
             return null;
         }
 
@@ -590,7 +590,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
             if (sprite)
                 cc.SpriteBatchNode.prototype.removeChild.call(this, sprite, true);           //this.removeChild(sprite, true);
             else {
-                if(cc.renderContextType === cc.WEBGL)
+                if (cc.renderContextType === cc.WEBGL)
                     this._textureAtlas.removeQuadAtIndex(atlasIndex);
 
                 // update possible children
@@ -614,7 +614,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * @param {cc.Point} pos
      * @return {cc.Point}
      */
-    getPositionAt:function (pos) {
+    getPositionAt: function(pos) {
         var ret = cc.PointZero();
         switch (this._layerOrientation) {
             case cc.TMX_ORIENTATION_ORTHO:
@@ -637,14 +637,14 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * @param {String} propertyName
      * @return {*}
      */
-    getProperty:function (propertyName) {
+    getProperty: function(propertyName) {
         return this._properties[propertyName];
     },
 
     /**
      * Creates the tiles
      */
-    setupTiles:function () {
+    setupTiles: function() {
         // Optimization: quick hack that sets the image size on the tileset
         if (cc.renderContextType === cc.CANVAS) {
             this._tileSet.imageSize = this._originalTexture.getContentSizeInPixels();
@@ -681,7 +681,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
         }
 
         if (!((this._maxGID >= this._tileSet.firstGid) && (this._minGID >= this._tileSet.firstGid))) {
-            cc.log("cocos2d:TMX: Only 1 tileset per layer is supported");
+            cc.log('cocos2d:TMX: Only 1 tileset per layer is supported');
         }
     },
 
@@ -692,8 +692,8 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * @param {number} zOrder
      * @param {number} tag
      */
-    addChild:function (child, zOrder, tag) {
-        cc.log("addChild: is not supported on cc.TMXLayer. Instead use setTileGID or tileAt.");
+    addChild: function(child, zOrder, tag) {
+        cc.log('addChild: is not supported on cc.TMXLayer. Instead use setTileGID or tileAt.');
     },
 
     /**
@@ -701,13 +701,13 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
      * @param  {cc.Sprite} sprite
      * @param  {Boolean} cleanup
      */
-    removeChild:function (sprite, cleanup) {
+    removeChild: function(sprite, cleanup) {
         // allows removing nil objects
         if (!sprite)
             return;
 
-        if(this._children.indexOf(sprite) === -1){
-            cc.log("cc.TMXLayer.removeChild(): Tile does not belong to TMXLayer");
+        if (this._children.indexOf(sprite) === -1) {
+            cc.log('cc.TMXLayer.removeChild(): Tile does not belong to TMXLayer');
             return;
         }
 
@@ -723,34 +723,34 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
     /**
      * @return {String}
      */
-    getLayerName:function () {
+    getLayerName: function() {
         return this._layerName.toString();
     },
 
     /**
      * @param {String} layerName
      */
-    setLayerName:function (layerName) {
+    setLayerName: function(layerName) {
         this._layerName = layerName;
     },
 
-    _positionForIsoAt:function (pos) {
-        return cc.p(this._mapTileSize.width / 2 * ( this._layerSize.width + pos.x - pos.y - 1),
-            this._mapTileSize.height / 2 * (( this._layerSize.height * 2 - pos.x - pos.y) - 2));
+    _positionForIsoAt: function(pos) {
+        return cc.p(this._mapTileSize.width / 2 * (this._layerSize.width + pos.x - pos.y - 1),
+            this._mapTileSize.height / 2 * ((this._layerSize.height * 2 - pos.x - pos.y) - 2));
     },
 
-    _positionForOrthoAt:function (pos) {
+    _positionForOrthoAt: function(pos) {
         return cc.p(pos.x * this._mapTileSize.width,
             (this._layerSize.height - pos.y - 1) * this._mapTileSize.height);
     },
 
-    _positionForHexAt:function (pos) {
+    _positionForHexAt: function(pos) {
         var diffY = (pos.x % 2 == 1) ? (-this._mapTileSize.height / 2) : 0;
         return cc.p(pos.x * this._mapTileSize.width * 3 / 4,
             (this._layerSize.height - pos.y - 1) * this._mapTileSize.height + diffY);
     },
 
-    _calculateLayerOffset:function (pos) {
+    _calculateLayerOffset: function(pos) {
         var ret = cc.PointZero();
         switch (this._layerOrientation) {
             case cc.TMX_ORIENTATION_ORTHO:
@@ -758,17 +758,17 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
                 break;
             case cc.TMX_ORIENTATION_ISO:
                 ret = cc.p((this._mapTileSize.width / 2) * (pos.x - pos.y),
-                    (this._mapTileSize.height / 2 ) * (-pos.x - pos.y));
+                    (this._mapTileSize.height / 2) * (-pos.x - pos.y));
                 break;
             case cc.TMX_ORIENTATION_HEX:
-                if(pos.x !== 0 || pos.y !== 0)
-                    cc.log("offset for hexagonal map not implemented yet");
+                if (pos.x !== 0 || pos.y !== 0)
+                    cc.log('offset for hexagonal map not implemented yet');
                 break;
         }
         return ret;
     },
 
-    _appendTileForGID:function (gid, pos) {
+    _appendTileForGID: function(gid, pos) {
         var rect = this._tileSet.rectForGID(gid);
         rect = cc.RECT_PIXELS_TO_POINTS(rect);
 
@@ -789,7 +789,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
         return tile;
     },
 
-    _insertTileForGID:function (gid, pos) {
+    _insertTileForGID: function(gid, pos) {
         var rect = this._tileSet.rectForGID(gid);
         rect = cc.RECT_PIXELS_TO_POINTS(rect);
 
@@ -821,7 +821,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
         return tile;
     },
 
-    _updateTileForGID:function (gid, pos) {
+    _updateTileForGID: function(gid, pos) {
         var rect = this._tileSet.rectForGID(gid);
         var locScaleFactor = this._contentScaleFactor;
         rect = cc.rect(rect.x / locScaleFactor, rect.y / locScaleFactor,
@@ -842,13 +842,13 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
     },
 
     //The layer recognizes some special properties, like cc_vertez
-    _parseInternalProperties:function () {
+    _parseInternalProperties: function() {
         // if cc_vertex=automatic, then tiles will be rendered using vertexz
-        var vertexz = this.getProperty("cc_vertexz");
+        var vertexz = this.getProperty('cc_vertexz');
         if (vertexz) {
-            if (vertexz == "automatic") {
+            if (vertexz == 'automatic') {
                 this._useAutomaticVertexZ = true;
-                var alphaFuncVal = this.getProperty("cc_alpha_func");
+                var alphaFuncVal = this.getProperty('cc_alpha_func');
                 var alphaFuncValue = 0;
                 if (alphaFuncVal)
                     alphaFuncValue = parseFloat(alphaFuncVal);
@@ -865,7 +865,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
         }
     },
 
-    _setupTileSprite:function (sprite, pos, gid) {
+    _setupTileSprite: function(sprite, pos, gid) {
         var z = pos.x + pos.y * this._layerSize.width;
         sprite.setPosition(this.getPositionAt(pos));
         if (cc.renderContextType === cc.WEBGL)
@@ -873,7 +873,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
         else
             sprite.setTag(z);
 
-        sprite.setAnchorPoint(0,0);
+        sprite.setAnchorPoint(0, 0);
         sprite.setOpacity(this._opacity);
         if (cc.renderContextType === cc.WEBGL) {
             sprite.setRotation(0.0);
@@ -911,8 +911,8 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
         }
     },
 
-    _reusedTileWithRect:function (rect) {
-        if(cc.renderContextType === cc.WEBGL){
+    _reusedTileWithRect: function(rect) {
+        if (cc.renderContextType === cc.WEBGL) {
             if (!this._reusedTile) {
                 this._reusedTile = new cc.Sprite();
                 this._reusedTile.initWithTexture(this.getTexture(), rect, false);
@@ -937,7 +937,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
         return this._reusedTile;
     },
 
-    _vertexZForPos:function (pos) {
+    _vertexZForPos: function(pos) {
         var ret = 0;
         var maxVal = 0;
         if (this._useAutomaticVertexZ) {
@@ -950,10 +950,10 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
                     ret = -(this._layerSize.height - pos.y);
                     break;
                 case cc.TMX_ORIENTATION_HEX:
-                    cc.log("TMX Hexa zOrder not supported");
+                    cc.log('TMX Hexa zOrder not supported');
                     break;
                 default:
-                    cc.log("TMX invalid value");
+                    cc.log('TMX invalid value');
                     break;
             }
         } else
@@ -961,7 +961,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
         return ret;
     },
 
-    _atlasIndexForExistantZ:function (z) {
+    _atlasIndexForExistantZ: function(z) {
         var item;
         if (this._atlasIndexArray) {
             var locAtlasIndexArray = this._atlasIndexArray;
@@ -971,12 +971,12 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
                     break;
             }
         }
-        if(!item)
-            cc.log("cc.TMXLayer._atlasIndexForExistantZ(): TMX atlas index not found. Shall not happen");
+        if (!item)
+            cc.log('cc.TMXLayer._atlasIndexForExistantZ(): TMX atlas index not found. Shall not happen');
         return i;
     },
 
-    _atlasIndexForNewZ:function (z) {
+    _atlasIndexForNewZ: function(z) {
         var locAtlasIndexArray = this._atlasIndexArray;
         for (var i = 0, len = locAtlasIndexArray.length; i < len; i++) {
             var val = locAtlasIndexArray[i];
@@ -987,10 +987,10 @@ cc.TMXLayer = cc.SpriteBatchNode.extend(/** @lends cc.TMXLayer# */{
     }
 });
 
-if(cc.Browser.supportWebGL){
+if (cc.Browser.supportWebGL) {
     cc.TMXLayer.prototype.draw = cc.SpriteBatchNode.prototype.draw;
     cc.TMXLayer.prototype.visit = cc.SpriteBatchNode.prototype.visit;
-}else{
+}else {
     cc.TMXLayer.prototype.draw = cc.TMXLayer.prototype._drawForCanvas;
     cc.TMXLayer.prototype.visit = cc.TMXLayer.prototype._visitForCanvas;
 }
@@ -1002,7 +1002,7 @@ if(cc.Browser.supportWebGL){
  * @param {cc.TMXMapInfo} mapInfo
  * @return {cc.TMXLayer|Null}
  */
-cc.TMXLayer.create = function (tilesetInfo, layerInfo, mapInfo) {
+cc.TMXLayer.create = function(tilesetInfo, layerInfo, mapInfo) {
     var ret = new cc.TMXLayer();
     if (ret.initWithTilesetInfo(tilesetInfo, layerInfo, mapInfo))
         return ret;

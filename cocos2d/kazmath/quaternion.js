@@ -24,7 +24,7 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-cc.kmQuaternion = function (x, y, z, w) {
+cc.kmQuaternion = function(x, y, z, w) {
     this.x = x || 0;
     this.y = y || 0;
     this.z = z || 0;
@@ -32,7 +32,7 @@ cc.kmQuaternion = function (x, y, z, w) {
 };
 
 ///< Returns pOut, sets pOut to the conjugate of pIn
-cc.kmQuaternionConjugate = function (pOut, pIn) {
+cc.kmQuaternionConjugate = function(pOut, pIn) {
     pOut.x = -pIn.x;
     pOut.y = -pIn.y;
     pOut.z = -pIn.z;
@@ -42,7 +42,7 @@ cc.kmQuaternionConjugate = function (pOut, pIn) {
 };
 
 ///< Returns the dot product of the 2 quaternions
-cc.kmQuaternionDot = function (q1, q2) {
+cc.kmQuaternionDot = function(q1, q2) {
     // A dot B = B dot A = AtBt + AxBx + AyBy + AzBz
     return (q1.w * q2.w +
         q1.x * q2.x +
@@ -51,14 +51,14 @@ cc.kmQuaternionDot = function (q1, q2) {
 };
 
 ///< Returns the exponential of the quaternion
-cc.kmQuaternionExp = function (pOut, pIn) {
+cc.kmQuaternionExp = function(pOut, pIn) {
     //TODO not implement
     //cc.assert(0);
     return pOut;
 };
 
 ///< Makes the passed quaternion an identity quaternion
-cc.kmQuaternionIdentity = function (pOut) {
+cc.kmQuaternionIdentity = function(pOut) {
     pOut.x = 0.0;
     pOut.y = 0.0;
     pOut.z = 0.0;
@@ -68,7 +68,7 @@ cc.kmQuaternionIdentity = function (pOut) {
 };
 
 ///< Returns the inverse of the passed Quaternion
-cc.kmQuaternionInverse = function (pOut, pIn) {
+cc.kmQuaternionInverse = function(pOut, pIn) {
     var l = cc.kmQuaternionLength(pIn);
     var tmp = new cc.kmQuaternion();
 
@@ -88,24 +88,24 @@ cc.kmQuaternionInverse = function (pOut, pIn) {
 };
 
 ///< Returns true if the quaternion is an identity quaternion
-cc.kmQuaternionIsIdentity = function (pIn) {
+cc.kmQuaternionIsIdentity = function(pIn) {
     return (pIn.x == 0.0 && pIn.y == 0.0 && pIn.z == 0.0 &&
         pIn.w == 1.0);
 };
 
 ///< Returns the length of the quaternion
-cc.kmQuaternionLength = function (pIn) {
+cc.kmQuaternionLength = function(pIn) {
     return Math.sqrt(cc.kmQuaternionLengthSq(pIn));
 };
 
 ///< Returns the length of the quaternion squared (prevents a sqrt)
-cc.kmQuaternionLengthSq = function (pIn) {
+cc.kmQuaternionLengthSq = function(pIn) {
     return pIn.x * pIn.x + pIn.y * pIn.y +
         pIn.z * pIn.z + pIn.w * pIn.w;
 };
 
 ///< Returns the natural logarithm
-cc.kmQuaternionLn = function (pOut, pIn) {
+cc.kmQuaternionLn = function(pOut, pIn) {
     /*
      A unit quaternion, is defined by:
      Q == (cos(theta), sin(theta) * v) where |v| = 1
@@ -117,7 +117,7 @@ cc.kmQuaternionLn = function (pOut, pIn) {
 };
 
 ///< Multiplies 2 quaternions together
-cc.kmQuaternionMultiply = function (pOut, q1, q2) {
+cc.kmQuaternionMultiply = function(pOut, q1, q2) {
     pOut.w = q1.w * q2.w - q1.x * q2.x - q1.y * q2.y - q1.z * q2.z;
     pOut.x = q1.w * q2.x + q1.x * q2.w + q1.y * q2.z - q1.z * q2.y;
     pOut.y = q1.w * q2.y + q1.y * q2.w + q1.z * q2.x - q1.x * q2.z;
@@ -127,17 +127,17 @@ cc.kmQuaternionMultiply = function (pOut, q1, q2) {
 };
 
 ///< Normalizes a quaternion
-cc.kmQuaternionNormalize = function (pOut, pIn) {
+cc.kmQuaternionNormalize = function(pOut, pIn) {
     var length = cc.kmQuaternionLength(pIn);
-    if(Math.abs(length) <= cc.kmEpsilon)
-        throw "cc.kmQuaternionNormalize(): pIn is an invalid value";
+    if (Math.abs(length) <= cc.kmEpsilon)
+        throw 'cc.kmQuaternionNormalize(): pIn is an invalid value';
     cc.kmQuaternionScale(pOut, pIn, 1.0 / length);
 
     return pOut;
 };
 
 ///< Rotates a quaternion around an axis
-cc.kmQuaternionRotationAxis = function (pOut, pV, angle) {
+cc.kmQuaternionRotationAxis = function(pOut, pV, angle) {
     var rad = angle * 0.5;
     var scale = Math.sin(rad);
 
@@ -150,7 +150,7 @@ cc.kmQuaternionRotationAxis = function (pOut, pV, angle) {
 };
 
 ///< Creates a quaternion from a rotation matrix
-cc.kmQuaternionRotationMatrix = function (pOut, pIn) {
+cc.kmQuaternionRotationMatrix = function(pOut, pIn) {
     /*
      Note: The OpenGL matrices are transposed from the description below
      taken from the Matrix and Quaternion FAQ
@@ -212,9 +212,9 @@ cc.kmQuaternionRotationMatrix = function (pOut, pIn) {
         scale = Math.sqrt(diagonal) * 2;
 
         // Calculate the x, y, x and w of the quaternion through the respective equation
-        x = ( pMatrix[9] - pMatrix[6] ) / scale;
-        y = ( pMatrix[2] - pMatrix[8] ) / scale;
-        z = ( pMatrix[4] - pMatrix[1] ) / scale;
+        x = (pMatrix[9] - pMatrix[6]) / scale;
+        y = (pMatrix[2] - pMatrix[8]) / scale;
+        z = (pMatrix[4] - pMatrix[1]) / scale;
         w = 0.25 * scale;
     } else {
         // If the first element of the diagonal is the greatest value
@@ -224,9 +224,9 @@ cc.kmQuaternionRotationMatrix = function (pOut, pIn) {
 
             // Calculate the x, y, x and w of the quaternion through the respective equation
             x = 0.25 * scale;
-            y = (pMatrix[4] + pMatrix[1] ) / scale;
-            z = (pMatrix[2] + pMatrix[8] ) / scale;
-            w = (pMatrix[9] - pMatrix[6] ) / scale;
+            y = (pMatrix[4] + pMatrix[1]) / scale;
+            z = (pMatrix[2] + pMatrix[8]) / scale;
+            w = (pMatrix[9] - pMatrix[6]) / scale;
         }
         // Else if the second element of the diagonal is the greatest value
         else if (pMatrix[5] > pMatrix[10]) {
@@ -234,10 +234,10 @@ cc.kmQuaternionRotationMatrix = function (pOut, pIn) {
             scale = Math.sqrt(1.0 + pMatrix[5] - pMatrix[0] - pMatrix[10]) * 2.0;
 
             // Calculate the x, y, x and w of the quaternion through the respective equation
-            x = (pMatrix[4] + pMatrix[1] ) / scale;
+            x = (pMatrix[4] + pMatrix[1]) / scale;
             y = 0.25 * scale;
-            z = (pMatrix[9] + pMatrix[6] ) / scale;
-            w = (pMatrix[2] - pMatrix[8] ) / scale;
+            z = (pMatrix[9] + pMatrix[6]) / scale;
+            w = (pMatrix[2] - pMatrix[8]) / scale;
         } else {
             // Else the third element of the diagonal is the greatest value
 
@@ -245,10 +245,10 @@ cc.kmQuaternionRotationMatrix = function (pOut, pIn) {
             scale = Math.sqrt(1.0 + pMatrix[10] - pMatrix[0] - pMatrix[5]) * 2.0;
 
             // Calculate the x, y, x and w of the quaternion through the respective equation
-            x = (pMatrix[2] + pMatrix[8] ) / scale;
-            y = (pMatrix[9] + pMatrix[6] ) / scale;
+            x = (pMatrix[2] + pMatrix[8]) / scale;
+            y = (pMatrix[9] + pMatrix[6]) / scale;
             z = 0.25 * scale;
-            w = (pMatrix[4] - pMatrix[1] ) / scale;
+            w = (pMatrix[4] - pMatrix[1]) / scale;
         }
     }
 
@@ -261,7 +261,7 @@ cc.kmQuaternionRotationMatrix = function (pOut, pIn) {
 };
 
 ///< Create a quaternion from yaw, pitch and roll
-cc.kmQuaternionRotationYawPitchRoll = function (pOut, yaw, pitch, roll) {
+cc.kmQuaternionRotationYawPitchRoll = function(pOut, yaw, pitch, roll) {
     var ex, ey, ez;        // temp half euler angles
     var cr, cp, cy, sr, sp, sy, cpcy, spsy;        // temp vars in roll,pitch yaw
 
@@ -292,7 +292,7 @@ cc.kmQuaternionRotationYawPitchRoll = function (pOut, yaw, pitch, roll) {
 };
 
 ///< Interpolate between 2 quaternions
-cc.kmQuaternionSlerp = function (pOut, q1, q2, t) {
+cc.kmQuaternionSlerp = function(pOut, q1, q2, t) {
     /*float CosTheta = Q0.DotProd(Q1);
      float Theta = acosf(CosTheta);
      float SinTheta = sqrtf(1.0f-CosTheta*CosTheta);
@@ -334,7 +334,7 @@ cc.kmQuaternionSlerp = function (pOut, q1, q2, t) {
 };
 
 ///< Get the axis and angle of rotation from a quaternion
-cc.kmQuaternionToAxisAngle = function (pIn, pAxis, pAngle) {
+cc.kmQuaternionToAxisAngle = function(pIn, pAxis, pAngle) {
     var tempAngle;        // temp angle
     var scale;            // temp vars
 
@@ -359,7 +359,7 @@ cc.kmQuaternionToAxisAngle = function (pIn, pAxis, pAngle) {
 };
 
 ///< Scale a quaternion
-cc.kmQuaternionScale = function (pOut, pIn, s) {
+cc.kmQuaternionScale = function(pOut, pIn, s) {
     pOut.x = pIn.x * s;
     pOut.y = pIn.y * s;
     pOut.z = pIn.z * s;
@@ -368,7 +368,7 @@ cc.kmQuaternionScale = function (pOut, pIn, s) {
     return pOut;
 };
 
-cc.kmQuaternionAssign = function (pOut, pIn) {
+cc.kmQuaternionAssign = function(pOut, pIn) {
     pOut.x = pIn.x;
     pOut.y = pIn.y;
     pOut.z = pIn.z;
@@ -377,7 +377,7 @@ cc.kmQuaternionAssign = function (pOut, pIn) {
     return pOut;
 };
 
-cc.kmQuaternionAdd = function (pOut, pQ1, pQ2) {
+cc.kmQuaternionAdd = function(pOut, pQ1, pQ2) {
     pOut.x = pQ1.x + pQ2.x;
     pOut.y = pQ1.y + pQ2.y;
     pOut.z = pQ1.z + pQ2.z;
@@ -396,7 +396,7 @@ cc.kmQuaternionAdd = function (pOut, pQ1, pQ2) {
  (if specified, or a generated axis if not) since in this case
  ANY axis of rotation is valid.
  */
-cc.kmQuaternionRotationBetweenVec3 = function (pOut, vec1, vec2, fallback) {
+cc.kmQuaternionRotationBetweenVec3 = function(pOut, vec1, vec2, fallback) {
     var v1 = new cc.kmVec3(), v2 = new cc.kmVec3();
     var a;
 
@@ -455,7 +455,7 @@ cc.kmQuaternionRotationBetweenVec3 = function (pOut, vec1, vec2, fallback) {
     return pOut;
 };
 
-cc.kmQuaternionMultiplyVec3 = function (pOut, q, v) {
+cc.kmQuaternionMultiplyVec3 = function(pOut, q, v) {
     var uv = new cc.kmVec3(), uuv = new cc.kmVec3(), qvec = new cc.kmVec3();
 
     qvec.x = q.x;

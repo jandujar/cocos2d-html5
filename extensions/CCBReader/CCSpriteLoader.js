@@ -24,51 +24,51 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var PROPERTY_FLIP = "flip";
-var PROPERTY_DISPLAYFRAME = "displayFrame";
-var PROPERTY_COLOR = "color";
-var PROPERTY_OPACITY = "opacity";
-var PROPERTY_BLENDFUNC = "blendFunc";
+var PROPERTY_FLIP = 'flip';
+var PROPERTY_DISPLAYFRAME = 'displayFrame';
+var PROPERTY_COLOR = 'color';
+var PROPERTY_OPACITY = 'opacity';
+var PROPERTY_BLENDFUNC = 'blendFunc';
 
 cc.SpriteLoader = cc.NodeLoader.extend({
-    _createCCNode:function (parent, ccbReader) {
+    _createCCNode: function(parent, ccbReader) {
         return cc.Sprite.create();
     },
 
-    onHandlePropTypeColor3:function (node, parent, propertyName, ccColor3B, ccbReader) {
+    onHandlePropTypeColor3: function(node, parent, propertyName, ccColor3B, ccbReader) {
         if (propertyName === PROPERTY_COLOR) {
-            if(ccColor3B.r !== 255 || ccColor3B.g !== 255 || ccColor3B.b !== 255){
+            if (ccColor3B.r !== 255 || ccColor3B.g !== 255 || ccColor3B.b !== 255) {
                 node.setColor(ccColor3B);
             }
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeColor3.call(this, node, parent, propertyName, ccColor3B, ccbReader);
         }
     },
-    onHandlePropTypeByte:function (node, parent, propertyName, byteValue, ccbReader) {
+    onHandlePropTypeByte: function(node, parent, propertyName, byteValue, ccbReader) {
         if (propertyName === PROPERTY_OPACITY) {
             node.setOpacity(byteValue);
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeByte.call(this, node, parent, propertyName, byteValue, ccbReader);
         }
     },
-    onHandlePropTypeBlendFunc:function (node, parent, propertyName, ccbBlendFunc, ccbReader) {
+    onHandlePropTypeBlendFunc: function(node, parent, propertyName, ccbBlendFunc, ccbReader) {
         if (propertyName === PROPERTY_BLENDFUNC) {
             node.setBlendFunc(ccbBlendFunc);
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeBlendFunc.call(this, node, parent, propertyName, ccbBlendFunc, ccbReader);
         }
     },
-    onHandlePropTypeSpriteFrame:function (node, parent, propertyName, ccSpriteFrame, ccbReader) {
+    onHandlePropTypeSpriteFrame: function(node, parent, propertyName, ccSpriteFrame, ccbReader) {
         if (propertyName === PROPERTY_DISPLAYFRAME) {
-            if(ccSpriteFrame)
+            if (ccSpriteFrame)
                 node.setDisplayFrame(ccSpriteFrame);
             else
-                cc.log("ERROR: SpriteFrame is null");
+                cc.log('ERROR: SpriteFrame is null');
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeSpriteFrame.call(this, node, parent, propertyName, ccSpriteFrame, ccbReader);
         }
     },
-    onHandlePropTypeFlip:function (node, parent, propertyName, flip, ccbReader) {
+    onHandlePropTypeFlip: function(node, parent, propertyName, flip, ccbReader) {
         if (propertyName === PROPERTY_FLIP) {
             node.setFlippedX(flip[0]);
             node.setFlippedY(flip[1]);
@@ -78,38 +78,38 @@ cc.SpriteLoader = cc.NodeLoader.extend({
     }
 });
 
-cc.SpriteLoader.loader = function () {
+cc.SpriteLoader.loader = function() {
     return new cc.SpriteLoader();
 };
 
-var PROPERTY_TOUCH_ENABLED = "touchEnabled";
-var PROPERTY_IS_TOUCH_ENABLED = "isTouchEnabled";
-var PROPERTY_ACCELEROMETER_ENABLED = "accelerometerEnabled";
-var PROPERTY_IS_ACCELEROMETER_ENABLED = "isAccelerometerEnabled";
-var PROPERTY_IS_MOUSE_ENABLED = "isMouseEnabled";
-var PROPERTY_MOUSE_ENABLED = "mouseEnabled";
-var PROPERTY_KEYBOARD_ENABLED = "keyboardEnabled";
-var PROPERTY_IS_KEYBOARD_ENABLED = "isKeyboardEnabled";
+var PROPERTY_TOUCH_ENABLED = 'touchEnabled';
+var PROPERTY_IS_TOUCH_ENABLED = 'isTouchEnabled';
+var PROPERTY_ACCELEROMETER_ENABLED = 'accelerometerEnabled';
+var PROPERTY_IS_ACCELEROMETER_ENABLED = 'isAccelerometerEnabled';
+var PROPERTY_IS_MOUSE_ENABLED = 'isMouseEnabled';
+var PROPERTY_MOUSE_ENABLED = 'mouseEnabled';
+var PROPERTY_KEYBOARD_ENABLED = 'keyboardEnabled';
+var PROPERTY_IS_KEYBOARD_ENABLED = 'isKeyboardEnabled';
 
 cc.LayerLoader = cc.NodeLoader.extend({
-    _createCCNode:function (parent, ccbReader) {
+    _createCCNode: function(parent, ccbReader) {
 
-        var layer=cc.Layer.create();
+        var layer = cc.Layer.create();
 
-        layer.setContentSize(0,0);
+        layer.setContentSize(0, 0);
 
         return layer;
     },
-    onHandlePropTypeCheck:function (node, parent, propertyName, check, ccbReader) {
+    onHandlePropTypeCheck: function(node, parent, propertyName, check, ccbReader) {
         if (propertyName === PROPERTY_TOUCH_ENABLED || propertyName === PROPERTY_IS_TOUCH_ENABLED) {
             node.setTouchEnabled(check);
         } else if (propertyName === PROPERTY_ACCELEROMETER_ENABLED || propertyName === PROPERTY_IS_ACCELEROMETER_ENABLED) {
             node.setAccelerometerEnabled(check);
-        } else if (propertyName === PROPERTY_MOUSE_ENABLED || propertyName === PROPERTY_IS_MOUSE_ENABLED ) {
+        } else if (propertyName === PROPERTY_MOUSE_ENABLED || propertyName === PROPERTY_IS_MOUSE_ENABLED) {
             node.setMouseEnabled(check);
         } else if (propertyName === PROPERTY_KEYBOARD_ENABLED || propertyName === PROPERTY_IS_KEYBOARD_ENABLED) {
             // TODO XXX
-            if(node.setKeyboardEnabled && sys.platform === "browser") {
+            if (node.setKeyboardEnabled && sys.platform === 'browser') {
                 node.setKeyboardEnabled(check);
             } else {
                 cc.log("The property '" + PROPERTY_IS_KEYBOARD_ENABLED + "' is not supported!");
@@ -121,31 +121,31 @@ cc.LayerLoader = cc.NodeLoader.extend({
     }
 });
 
-cc.LayerLoader.loader = function () {
+cc.LayerLoader.loader = function() {
     return new cc.LayerLoader();
 };
 
 
 cc.LayerColorLoader = cc.LayerLoader.extend({
-    _createCCNode:function (parent, ccbReader) {
+    _createCCNode: function(parent, ccbReader) {
         return cc.LayerColor.create();
     },
 
-    onHandlePropTypeColor3:function (node, parent, propertyName, ccColor3B, ccbReader) {
+    onHandlePropTypeColor3: function(node, parent, propertyName, ccColor3B, ccbReader) {
         if (propertyName === PROPERTY_COLOR) {
             node.setColor(ccColor3B);
         } else {
             cc.LayerLoader.prototype.onHandlePropTypeColor3.call(this, node, parent, propertyName, ccColor3B, ccbReader);
         }
     },
-    onHandlePropTypeByte:function (node, parent, propertyName, byteValue, ccbReader) {
+    onHandlePropTypeByte: function(node, parent, propertyName, byteValue, ccbReader) {
         if (propertyName === PROPERTY_OPACITY) {
             node.setOpacity(byteValue);
         } else {
             cc.LayerLoader.prototype.onHandlePropTypeByte.call(this, node, parent, propertyName, byteValue, ccbReader);
         }
     },
-    onHandlePropTypeBlendFunc:function (node, parent, propertyName, ccBlendFunc, ccbReader) {
+    onHandlePropTypeBlendFunc: function(node, parent, propertyName, ccBlendFunc, ccbReader) {
         if (propertyName === PROPERTY_BLENDFUNC) {
             node.setBlendFunc(ccBlendFunc);
         } else {
@@ -154,21 +154,21 @@ cc.LayerColorLoader = cc.LayerLoader.extend({
     }
 });
 
-cc.LayerColorLoader.loader = function () {
+cc.LayerColorLoader.loader = function() {
     return new cc.LayerColorLoader();
 };
 
-var PROPERTY_STARTCOLOR = "startColor";
-var PROPERTY_ENDCOLOR = "endColor";
-var PROPERTY_STARTOPACITY = "startOpacity";
-var PROPERTY_ENDOPACITY = "endOpacity";
-var PROPERTY_VECTOR = "vector";
+var PROPERTY_STARTCOLOR = 'startColor';
+var PROPERTY_ENDCOLOR = 'endColor';
+var PROPERTY_STARTOPACITY = 'startOpacity';
+var PROPERTY_ENDOPACITY = 'endOpacity';
+var PROPERTY_VECTOR = 'vector';
 
 cc.LayerGradientLoader = cc.LayerLoader.extend({
-    _createCCNode:function (parent, ccbReader) {
+    _createCCNode: function(parent, ccbReader) {
         return cc.LayerGradient.create();
     },
-    onHandlePropTypeColor3:function (node, parent, propertyName, ccColor3B, ccbReader) {
+    onHandlePropTypeColor3: function(node, parent, propertyName, ccColor3B, ccbReader) {
         if (propertyName === PROPERTY_STARTCOLOR) {
             node.setStartColor(ccColor3B);
         } else if (propertyName == PROPERTY_ENDCOLOR) {
@@ -177,7 +177,7 @@ cc.LayerGradientLoader = cc.LayerLoader.extend({
             cc.LayerLoader.prototype.onHandlePropTypeColor3.call(this, node, parent, propertyName, ccColor3B, ccbReader);
         }
     },
-    onHandlePropTypeByte:function (node, parent, propertyName, byteValue, ccbReader) {
+    onHandlePropTypeByte: function(node, parent, propertyName, byteValue, ccbReader) {
         if (propertyName === PROPERTY_STARTOPACITY) {
             node.setStartOpacity(byteValue);
         } else if (propertyName === PROPERTY_ENDOPACITY) {
@@ -186,7 +186,7 @@ cc.LayerGradientLoader = cc.LayerLoader.extend({
             cc.LayerLoader.prototype.onHandlePropTypeByte.call(this, node, parent, propertyName, byteValue, ccbReader);
         }
     },
-    onHandlePropTypePoint:function (node, parent, propertyName, point, ccbReader) {
+    onHandlePropTypePoint: function(node, parent, propertyName, point, ccbReader) {
         if (propertyName === PROPERTY_VECTOR) {
             node.setVector(point);
             // TODO Not passed along the ccbi file.
@@ -195,7 +195,7 @@ cc.LayerGradientLoader = cc.LayerLoader.extend({
             cc.LayerLoader.prototype.onHandlePropTypePoint.call(this, node, parent, propertyName, point, ccbReader);
         }
     },
-    onHandlePropTypeBlendFunc:function (node, parent, propertyName, ccBlendFunc, ccbReader) {
+    onHandlePropTypeBlendFunc: function(node, parent, propertyName, ccBlendFunc, ccbReader) {
         if (propertyName === PROPERTY_BLENDFUNC) {
             node.setBlendFunc(ccBlendFunc);
         } else {
@@ -204,33 +204,33 @@ cc.LayerGradientLoader = cc.LayerLoader.extend({
     }
 });
 
-cc.LayerGradientLoader.loader = function () {
+cc.LayerGradientLoader.loader = function() {
     return new cc.LayerGradientLoader();
 };
 
 cc.MenuLoader = cc.LayerLoader.extend({
-    _createCCNode:function (parent, ccbReader) {
+    _createCCNode: function(parent, ccbReader) {
         var menu = cc.Menu.create();
 
-        menu.setContentSize(0,0);
+        menu.setContentSize(0, 0);
 
         return menu;
     }
 });
 
-cc.MenuLoader.loader = function () {
+cc.MenuLoader.loader = function() {
     return new cc.MenuLoader();
 };
 
-var PROPERTY_BLOCK = "block";
-var PROPERTY_ISENABLED = "isEnabled";
+var PROPERTY_BLOCK = 'block';
+var PROPERTY_ISENABLED = 'isEnabled';
 
 cc.MenuItemLoader = cc.NodeLoader.extend({
-    _createCCNode:function (parent, ccbReader) {
+    _createCCNode: function(parent, ccbReader) {
         return null;
     },
 
-    onHandlePropTypeBlock:function (node, parent, propertyName, blockData, ccbReader) {
+    onHandlePropTypeBlock: function(node, parent, propertyName, blockData, ccbReader) {
         if (propertyName === PROPERTY_BLOCK) {
             if (null != blockData) { // Add this condition to allow CCMenuItemImage without target/selector predefined
                 node.setTarget(blockData.selMenuHander, blockData.target);
@@ -239,7 +239,7 @@ cc.MenuItemLoader = cc.NodeLoader.extend({
             cc.NodeLoader.prototype.onHandlePropTypeBlock.call(this, node, parent, propertyName, blockData, ccbReader);
         }
     },
-    onHandlePropTypeCheck:function (node, parent, propertyName, check, ccbReader) {
+    onHandlePropTypeCheck: function(node, parent, propertyName, check, ccbReader) {
         if (propertyName === PROPERTY_ISENABLED) {
             node.setEnabled(check);
         } else {
@@ -248,16 +248,16 @@ cc.MenuItemLoader = cc.NodeLoader.extend({
     }
 });
 
-var PROPERTY_NORMALDISPLAYFRAME = "normalSpriteFrame";
-var PROPERTY_SELECTEDDISPLAYFRAME = "selectedSpriteFrame";
-var PROPERTY_DISABLEDDISPLAYFRAME = "disabledSpriteFrame";
+var PROPERTY_NORMALDISPLAYFRAME = 'normalSpriteFrame';
+var PROPERTY_SELECTEDDISPLAYFRAME = 'selectedSpriteFrame';
+var PROPERTY_DISABLEDDISPLAYFRAME = 'disabledSpriteFrame';
 
 cc.MenuItemImageLoader = cc.MenuItemLoader.extend({
-    _createCCNode:function (parent, ccbReader) {
+    _createCCNode: function(parent, ccbReader) {
         return cc.MenuItemImage.create();
     },
 
-    onHandlePropTypeSpriteFrame:function (node, parent, propertyName, spriteFrame, ccbReader) {
+    onHandlePropTypeSpriteFrame: function(node, parent, propertyName, spriteFrame, ccbReader) {
         if (propertyName === PROPERTY_NORMALDISPLAYFRAME) {
             if (spriteFrame != null) {
                 node.setNormalSpriteFrame(spriteFrame);
@@ -276,66 +276,66 @@ cc.MenuItemImageLoader = cc.MenuItemLoader.extend({
     }
 });
 
-cc.MenuItemImageLoader.loader = function () {
+cc.MenuItemImageLoader.loader = function() {
     return new cc.MenuItemImageLoader();
 };
 
-var PROPERTY_FONTNAME = "fontName";
-var PROPERTY_FONTSIZE = "fontSize";
-var PROPERTY_HORIZONTALALIGNMENT = "horizontalAlignment";
-var PROPERTY_VERTICALALIGNMENT = "verticalAlignment";
-var PROPERTY_STRING = "string";
-var PROPERTY_DIMENSIONS = "dimensions";
+var PROPERTY_FONTNAME = 'fontName';
+var PROPERTY_FONTSIZE = 'fontSize';
+var PROPERTY_HORIZONTALALIGNMENT = 'horizontalAlignment';
+var PROPERTY_VERTICALALIGNMENT = 'verticalAlignment';
+var PROPERTY_STRING = 'string';
+var PROPERTY_DIMENSIONS = 'dimensions';
 
 cc.LabelTTFLoader = cc.NodeLoader.extend({
-    _createCCNode:function (parent, ccbReader) {
+    _createCCNode: function(parent, ccbReader) {
         return cc.LabelTTF.create();
     },
-    onHandlePropTypeColor3:function (node, parent, propertyName, ccColor3B, ccbReader) {
+    onHandlePropTypeColor3: function(node, parent, propertyName, ccColor3B, ccbReader) {
         if (propertyName === PROPERTY_COLOR) {
-            if(ccColor3B.r !== 255 || ccColor3B.g !== 255 || ccColor3B.b !== 255){
+            if (ccColor3B.r !== 255 || ccColor3B.g !== 255 || ccColor3B.b !== 255) {
                 node.setColor(ccColor3B);
             }
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeColor3.call(this, node, parent, propertyName, ccColor3B, ccbReader);
         }
     },
-    onHandlePropTypeByte:function (node, parent, propertyName, byteValue, ccbReader) {
+    onHandlePropTypeByte: function(node, parent, propertyName, byteValue, ccbReader) {
         if (propertyName === PROPERTY_OPACITY) {
             node.setOpacity(byteValue);
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeByte.call(this, node, parent, propertyName, byteValue, ccbReader);
         }
     },
-    onHandlePropTypeBlendFunc:function (node, parent, propertyName, ccBlendFunc, ccbReader) {
+    onHandlePropTypeBlendFunc: function(node, parent, propertyName, ccBlendFunc, ccbReader) {
         if (propertyName === PROPERTY_BLENDFUNC) {
             node.setBlendFunc(ccBlendFunc);
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeBlendFunc.call(this, node, parent, propertyName, ccBlendFunc, ccbReader);
         }
     },
-    onHandlePropTypeFontTTF:function (node, parent, propertyName, fontTTF, ccbReader) {
+    onHandlePropTypeFontTTF: function(node, parent, propertyName, fontTTF, ccbReader) {
         if (propertyName === PROPERTY_FONTNAME) {
             node.setFontName(fontTTF);
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeFontTTF.call(this, node, parent, propertyName, fontTTF, ccbReader);
         }
     },
-    onHandlePropTypeText:function (node, parent, propertyName, textValue, ccbReader) {
+    onHandlePropTypeText: function(node, parent, propertyName, textValue, ccbReader) {
         if (propertyName === PROPERTY_STRING) {
             node.setString(textValue);
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeText.call(this, node, parent, propertyName, textValue, ccbReader);
         }
     },
-    onHandlePropTypeFloatScale:function (node, parent, propertyName, floatScale, ccbReader) {
+    onHandlePropTypeFloatScale: function(node, parent, propertyName, floatScale, ccbReader) {
         if (propertyName === PROPERTY_FONTSIZE) {
             node.setFontSize(floatScale);
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeFloatScale.call(this, node, parent, propertyName, floatScale, ccbReader);
         }
     },
-    onHandlePropTypeIntegerLabeled:function (node, parent, propertyName, integerLabeled, ccbReader) {
+    onHandlePropTypeIntegerLabeled: function(node, parent, propertyName, integerLabeled, ccbReader) {
         if (propertyName === PROPERTY_HORIZONTALALIGNMENT) {
             node.setHorizontalAlignment(integerLabeled);
         } else if (propertyName === PROPERTY_VERTICALALIGNMENT) {
@@ -344,7 +344,7 @@ cc.LabelTTFLoader = cc.NodeLoader.extend({
             cc.NodeLoader.prototype.onHandlePropTypeIntegerLabeled.call(this, node, parent, propertyName, integerLabeled, ccbReader);
         }
     },
-    onHandlePropTypeSize:function (node, parent, propertyName, size, ccbReader) {
+    onHandlePropTypeSize: function(node, parent, propertyName, size, ccbReader) {
         if (propertyName === PROPERTY_DIMENSIONS) {
             node.setDimensions(size);
         } else {
@@ -353,48 +353,48 @@ cc.LabelTTFLoader = cc.NodeLoader.extend({
     }
 });
 
-cc.LabelTTFLoader.loader = function () {
+cc.LabelTTFLoader.loader = function() {
     return new cc.LabelTTFLoader();
 };
 
-var PROPERTY_FNTFILE = "fntFile";
+var PROPERTY_FNTFILE = 'fntFile';
 
 cc.LabelBMFontLoader = cc.NodeLoader.extend({
-    _createCCNode:function (parent, ccbReader) {
+    _createCCNode: function(parent, ccbReader) {
         return cc.LabelBMFont.create();
     },
 
-    onHandlePropTypeColor3:function (node, parent, propertyName, ccColor3B, ccbReader) {
+    onHandlePropTypeColor3: function(node, parent, propertyName, ccColor3B, ccbReader) {
         if (propertyName === PROPERTY_COLOR) {
-            if(ccColor3B.r !== 255 || ccColor3B.g !== 255 || ccColor3B.b !== 255){
+            if (ccColor3B.r !== 255 || ccColor3B.g !== 255 || ccColor3B.b !== 255) {
                 node.setColor(ccColor3B);
             }
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeColor3.call(this, node, parent, propertyName, ccColor3B, ccbReader);
         }
     },
-    onHandlePropTypeByte:function (node, parent, propertyName, byteValue, ccbReader) {
+    onHandlePropTypeByte: function(node, parent, propertyName, byteValue, ccbReader) {
         if (propertyName === PROPERTY_OPACITY) {
             node.setOpacity(byteValue);
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeByte.call(this, node, parent, propertyName, byteValue, ccbReader);
         }
     },
-    onHandlePropTypeBlendFunc:function (node, parent, propertyName, ccBlendFunc, ccbReader) {
+    onHandlePropTypeBlendFunc: function(node, parent, propertyName, ccBlendFunc, ccbReader) {
         if (propertyName === PROPERTY_BLENDFUNC) {
             node.setBlendFunc(ccBlendFunc);
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeBlendFunc.call(this, node, parent, propertyName, ccBlendFunc, ccbReader);
         }
     },
-    onHandlePropTypeFntFile:function (node, parent, propertyName, fntFile, ccbReader) {
+    onHandlePropTypeFntFile: function(node, parent, propertyName, fntFile, ccbReader) {
         if (propertyName === PROPERTY_FNTFILE) {
             node.setFntFile(fntFile);
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeFntFile.call(this, node, parent, propertyName, fntFile, ccbReader);
         }
     },
-    onHandlePropTypeText:function (node, parent, propertyName, textValue, ccbReader) {
+    onHandlePropTypeText: function(node, parent, propertyName, textValue, ccbReader) {
         if (propertyName === PROPERTY_STRING) {
             node.setString(textValue);
         } else {
@@ -403,43 +403,43 @@ cc.LabelBMFontLoader = cc.NodeLoader.extend({
     }
 });
 
-cc.LabelBMFontLoader.loader = function () {
+cc.LabelBMFontLoader.loader = function() {
     return new cc.LabelBMFontLoader();
 };
 
-var PROPERTY_EMITERMODE = "emitterMode";
-var PROPERTY_POSVAR = "posVar";
-var PROPERTY_EMISSIONRATE = "emissionRate";
-var PROPERTY_DURATION = "duration";
-var PROPERTY_TOTALPARTICLES = "totalParticles";
-var PROPERTY_LIFE = "life";
-var PROPERTY_STARTSIZE = "startSize";
-var PROPERTY_ENDSIZE = "endSize";
-var PROPERTY_STARTSPIN = "startSpin";
-var PROPERTY_ENDSPIN = "endSpin";
-var PROPERTY_ANGLE = "angle";
-var PROPERTY_GRAVITY = "gravity";
-var PROPERTY_SPEED = "speed";
-var PROPERTY_TANGENTIALACCEL = "tangentialAccel";
-var PROPERTY_RADIALACCEL = "radialAccel";
-var PROPERTY_TEXTURE = "texture";
-var PROPERTY_STARTRADIUS = "startRadius";
-var PROPERTY_ENDRADIUS = "endRadius";
-var PROPERTY_ROTATEPERSECOND = "rotatePerSecond";
+var PROPERTY_EMITERMODE = 'emitterMode';
+var PROPERTY_POSVAR = 'posVar';
+var PROPERTY_EMISSIONRATE = 'emissionRate';
+var PROPERTY_DURATION = 'duration';
+var PROPERTY_TOTALPARTICLES = 'totalParticles';
+var PROPERTY_LIFE = 'life';
+var PROPERTY_STARTSIZE = 'startSize';
+var PROPERTY_ENDSIZE = 'endSize';
+var PROPERTY_STARTSPIN = 'startSpin';
+var PROPERTY_ENDSPIN = 'endSpin';
+var PROPERTY_ANGLE = 'angle';
+var PROPERTY_GRAVITY = 'gravity';
+var PROPERTY_SPEED = 'speed';
+var PROPERTY_TANGENTIALACCEL = 'tangentialAccel';
+var PROPERTY_RADIALACCEL = 'radialAccel';
+var PROPERTY_TEXTURE = 'texture';
+var PROPERTY_STARTRADIUS = 'startRadius';
+var PROPERTY_ENDRADIUS = 'endRadius';
+var PROPERTY_ROTATEPERSECOND = 'rotatePerSecond';
 
 cc.ParticleSystemLoader = cc.NodeLoader.extend({
-    _createCCNode:function (parent, ccbReader) {
+    _createCCNode: function(parent, ccbReader) {
         return cc.ParticleSystem.create();
     },
 
-    onHandlePropTypeIntegerLabeled:function (node, parent, propertyName, integerLabeled, ccbReader) {
+    onHandlePropTypeIntegerLabeled: function(node, parent, propertyName, integerLabeled, ccbReader) {
         if (propertyName === PROPERTY_EMITERMODE) {
             node.setEmitterMode(integerLabeled);
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeIntegerLabeled.call(this, node, parent, propertyName, integerLabeled, ccbReader);
         }
     },
-    onHandlePropTypePoint:function (node, parent, propertyName, point, ccbReader) {
+    onHandlePropTypePoint: function(node, parent, propertyName, point, ccbReader) {
         if (propertyName === PROPERTY_POSVAR) {
             node.setPosVar(point);
         } else if (propertyName === PROPERTY_GRAVITY) {
@@ -448,7 +448,7 @@ cc.ParticleSystemLoader = cc.NodeLoader.extend({
             cc.NodeLoader.prototype.onHandlePropTypePoint.call(this, node, parent, propertyName, point, ccbReader);
         }
     },
-    onHandlePropTypeFloat:function (node, parent, propertyName, floatValue, ccbReader) {
+    onHandlePropTypeFloat: function(node, parent, propertyName, floatValue, ccbReader) {
         if (propertyName === PROPERTY_EMISSIONRATE) {
             node.setEmissionRate(floatValue);
         } else if (propertyName === PROPERTY_DURATION) {
@@ -457,14 +457,14 @@ cc.ParticleSystemLoader = cc.NodeLoader.extend({
             cc.NodeLoader.prototype.onHandlePropTypeFloat.call(this, node, parent, propertyName, floatValue, ccbReader);
         }
     },
-    onHandlePropTypeInteger:function (node, parent, propertyName, integerValue, ccbReader) {
+    onHandlePropTypeInteger: function(node, parent, propertyName, integerValue, ccbReader) {
         if (propertyName === PROPERTY_TOTALPARTICLES) {
             node.setTotalParticles(integerValue);
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeInteger.call(this, node, parent, propertyName, integerValue, ccbReader);
         }
     },
-    onHandlePropTypeFloatVar:function (node, parent, propertyName, floatVar, ccbReader) {
+    onHandlePropTypeFloatVar: function(node, parent, propertyName, floatVar, ccbReader) {
         if (propertyName === PROPERTY_LIFE) {
             node.setLife(floatVar[0]);
             node.setLifeVar(floatVar[1]);
@@ -505,7 +505,7 @@ cc.ParticleSystemLoader = cc.NodeLoader.extend({
             cc.NodeLoader.prototype.onHandlePropTypeFloatVar.call(this, node, parent, propertyName, floatVar, ccbReader);
         }
     },
-    onHandlePropTypeColor4FVar:function (node, parent, propertyName, ccColor4FVar, ccbReader) {
+    onHandlePropTypeColor4FVar: function(node, parent, propertyName, ccColor4FVar, ccbReader) {
         if (propertyName === PROPERTY_STARTCOLOR) {
             node.setStartColor(ccColor4FVar[0]);
             node.setStartColorVar(ccColor4FVar[1]);
@@ -516,14 +516,14 @@ cc.ParticleSystemLoader = cc.NodeLoader.extend({
             cc.NodeLoader.prototype.onHandlePropTypeColor4FVar.call(this, node, parent, propertyName, ccColor4FVar, ccbReader);
         }
     },
-    onHandlePropTypeBlendFunc:function (node, parent, propertyName, ccBlendFunc, ccbReader) {
+    onHandlePropTypeBlendFunc: function(node, parent, propertyName, ccBlendFunc, ccbReader) {
         if (propertyName === PROPERTY_BLENDFUNC) {
             node.setBlendFunc(ccBlendFunc);
         } else {
             cc.NodeLoader.prototype.onHandlePropTypeBlendFunc.call(this, node, parent, propertyName, ccBlendFunc, ccbReader);
         }
     },
-    onHandlePropTypeTexture:function (node, parent, propertyName, ccTexture2D, ccbReader) {
+    onHandlePropTypeTexture: function(node, parent, propertyName, ccTexture2D, ccbReader) {
         if (propertyName === PROPERTY_TEXTURE) {
             node.setTexture(ccTexture2D);
         } else {
@@ -532,7 +532,7 @@ cc.ParticleSystemLoader = cc.NodeLoader.extend({
     }
 });
 
-cc.ParticleSystemLoader.loader = function () {
+cc.ParticleSystemLoader.loader = function() {
     return new cc.ParticleSystemLoader();
 };
 

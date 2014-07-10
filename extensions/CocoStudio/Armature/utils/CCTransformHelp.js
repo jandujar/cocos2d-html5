@@ -35,7 +35,7 @@ ccs.TransformHelp.helpPoint2 = cc.p(0, 0);
  * @return {cc.AffineTransform}
  * Constructor
  */
-ccs.TransformHelp.transformFromParent = function (bone, parentBone) {
+ccs.TransformHelp.transformFromParent = function(bone, parentBone) {
     this.nodeToMatrix(bone, this.helpMatrix1);
     this.nodeToMatrix(parentBone, this.helpMatrix2);
 
@@ -50,7 +50,7 @@ ccs.TransformHelp.transformFromParent = function (bone, parentBone) {
  * @param {ccs.BaseData} node
  * @param {cc.AffineTransform} matrix
  */
-ccs.TransformHelp.nodeToMatrix = function (node, matrix) {
+ccs.TransformHelp.nodeToMatrix = function(node, matrix) {
     if (node.skewX == -node.skewY) {
         var sine = Math.sin(node.skewX);
         var cosine = Math.cos(node.skewX);
@@ -73,7 +73,7 @@ ccs.TransformHelp.nodeToMatrix = function (node, matrix) {
  * @param {cc.AffineTransform} matrix
  * @param {ccs.BaseData} node
  */
-ccs.TransformHelp.matrixToNode = function (matrix, node) {
+ccs.TransformHelp.matrixToNode = function(matrix, node) {
     /*
      *  In as3 language, there is a function called "deltaTransformPoint", it calculate a point used give Transform
      *  but not used the tx, ty value. we simulate the function here
@@ -104,7 +104,7 @@ ccs.TransformHelp.matrixToNode = function (matrix, node) {
  * @param {ccs.BaseData} target
  * @param {ccs.BaseData} source
  */
-ccs.TransformHelp.nodeConcat = function (target, source) {
+ccs.TransformHelp.nodeConcat = function(target, source) {
     target.x += source.x;
     target.y += source.y;
     target.skewX += source.skewX;
@@ -118,7 +118,7 @@ ccs.TransformHelp.nodeConcat = function (target, source) {
  * @param {ccs.BaseData} target
  * @param {ccs.BaseData} source
  */
-ccs.TransformHelp.nodeSub = function (target, source) {
+ccs.TransformHelp.nodeSub = function(target, source) {
     target.x -= source.x;
     target.y -= source.y;
     target.skewX -= source.skewX;

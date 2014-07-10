@@ -24,9 +24,9 @@
 
 /**
  * Get CocoStudio version
- * @returns {string}
+ * @return {string}
  * @constructor
  */
-ccs.CocosGUIVersion = function(){
-    return "CocosGUI v1.0.0.0";
+ccs.CocosGUIVersion = function() {
+    return 'CocosGUI v1.0.0.0';
 };

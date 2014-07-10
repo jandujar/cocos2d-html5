@@ -34,7 +34,7 @@ ccs.UILayer = cc.Layer.extend(/** @lends ccs.UILayer# */{
     _touchMovedPoint: null,
     _touchEndedPoint: null,
     _touchCanceledPoint: null,
-    ctor: function () {
+    ctor: function() {
         cc.Layer.prototype.ctor.call(this);
         this._selectedWidgets = [];
         this._touchBeganedPoint = cc.p(0, 0);
@@ -42,7 +42,7 @@ ccs.UILayer = cc.Layer.extend(/** @lends ccs.UILayer# */{
         this._touchEndedPoint = cc.p(0, 0);
         this._touchCanceledPoint = cc.p(0, 0);
     },
-    init: function () {
+    init: function() {
         if (cc.Layer.prototype.init.call(this)) {
             this._rootWidget = ccs.Widget.create();
             this.addChild(this._rootWidget);
@@ -51,14 +51,14 @@ ccs.UILayer = cc.Layer.extend(/** @lends ccs.UILayer# */{
         return false;
     },
 
-    onEnter: function () {
+    onEnter: function() {
         this.setTouchMode(cc.TOUCH_ONE_BY_ONE);
         this.setTouchEnabled(true);
         cc.Layer.prototype.onEnter.call(this);
 
     },
 
-    onExit: function () {
+    onExit: function() {
         this.setTouchEnabled(false);
         cc.Layer.prototype.onExit.call(this);
     },
@@ -68,19 +68,19 @@ ccs.UILayer = cc.Layer.extend(/** @lends ccs.UILayer# */{
      * @param {ccs.Widget} root
      * @param {cc.Touch} touch
      * @param {event} event
-     * @returns {boolean}
+     * @return {boolean}
      */
-    checkTouchEvent: function (root, touch,event) {
-        if(!this.isVisible()){ return false };
+    checkTouchEvent: function(root, touch, event) {
+        if (!this.isVisible()) { return false }
         var arrayRootChildren = root.getChildren();
         var length = arrayRootChildren.length;
         for (var i = length - 1; i >= 0; i--) {
             var widget = arrayRootChildren[i];
-            if (this.checkTouchEvent(widget, touch,event)) {
+            if (this.checkTouchEvent(widget, touch, event)) {
                 return true;
             }
         }
-        var pass = root.onTouchBegan(touch,event);
+        var pass = root.onTouchBegan(touch, event);
         if (root._hitted)
         {
             this._selectedWidgets.push(root);
@@ -93,10 +93,10 @@ ccs.UILayer = cc.Layer.extend(/** @lends ccs.UILayer# */{
      * Finds a widget which is selected and call it's "onTouchBegan" method.
      * @param {cc.Touch} touch
      * @param {event} event
-     * @returns {boolean}
+     * @return {boolean}
      */
-    checkEventWidget: function (touch,event) {
-        this.checkTouchEvent(this._rootWidget, touch,event);
+    checkEventWidget: function(touch, event) {
+        this.checkTouchEvent(this._rootWidget, touch, event);
         return (this._selectedWidgets.length > 0);
     },
 
@@ -104,7 +104,7 @@ ccs.UILayer = cc.Layer.extend(/** @lends ccs.UILayer# */{
      * add widget
      * @param {ccs.Widget} widget
      */
-    addWidget: function (widget) {
+    addWidget: function(widget) {
         this._rootWidget.addChild(widget);
     },
 
@@ -112,16 +112,16 @@ ccs.UILayer = cc.Layer.extend(/** @lends ccs.UILayer# */{
      * remove widget
      * @param {ccs.Widget} widget
      */
-    removeWidget: function (widget) {
+    removeWidget: function(widget) {
         this._rootWidget.removeChild(widget);
     },
 
     /**
      * get widget by tag
      * @param {Number} tag
-     * @returns {ccs.Widget}
+     * @return {ccs.Widget}
      */
-    getWidgetByTag: function (tag) {
+    getWidgetByTag: function(tag) {
         if (!this._rootWidget) {
             return null;
         }
@@ -131,9 +131,9 @@ ccs.UILayer = cc.Layer.extend(/** @lends ccs.UILayer# */{
     /**
      * get widget by name
      * @param name
-     * @returns {ccs.Widget}
+     * @return {ccs.Widget}
      */
-    getWidgetByName: function (name) {
+    getWidgetByName: function(name) {
         if (!this._rootWidget) {
             return null;
         }
@@ -142,53 +142,53 @@ ccs.UILayer = cc.Layer.extend(/** @lends ccs.UILayer# */{
 
     /**
      * get root widget
-     * @returns {ccs.Widget}
+     * @return {ccs.Widget}
      */
-    getRootWidget: function () {
+    getRootWidget: function() {
         return this._rootWidget;
     },
 
     /**
      * get inputManager
-     * @returns {ccs.UIInputManager}
+     * @return {ccs.UIInputManager}
      */
-    getInputManager: function () {
+    getInputManager: function() {
         return this._inputManager;
     },
 
     /**
      * remove all children
      */
-    clear: function () {
+    clear: function() {
         this._rootWidget.removeAllChildren();
     },
 
-    onTouchBegan: function (touch, event) {
-        return this.isVisible() && this.checkEventWidget(touch,event);
+    onTouchBegan: function(touch, event) {
+        return this.isVisible() && this.checkEventWidget(touch, event);
     },
 
-    onTouchMoved: function (touch, event) {
+    onTouchMoved: function(touch, event) {
         var selectedWidgetArray = this._selectedWidgets;
         for (var i = 0; i < selectedWidgetArray.length; ++i) {
             var hitWidget = selectedWidgetArray[i];
-            hitWidget.onTouchMoved(touch,event);
+            hitWidget.onTouchMoved(touch, event);
         }
     },
 
-    onTouchEnded: function (touch, event) {
+    onTouchEnded: function(touch, event) {
         var selectedWidgetArray = this._selectedWidgets;
         for (var i = 0; i < selectedWidgetArray.length; ++i) {
             var hitWidget = selectedWidgetArray[i];
-            hitWidget.onTouchEnded(touch,event);
+            hitWidget.onTouchEnded(touch, event);
         }
         this._selectedWidgets = [];
     },
 
-    onTouchCancelled: function (touch, event) {
+    onTouchCancelled: function(touch, event) {
         var selectedWidgetArray = this._selectedWidgets;
         for (var i = 0; i < selectedWidgetArray.length; ++i) {
             var hitWidget = selectedWidgetArray[i];
-            hitWidget.onTouchCancelled(touch,event);
+            hitWidget.onTouchCancelled(touch, event);
         }
         this._selectedWidgets = [];
     }
@@ -201,7 +201,7 @@ ccs.UILayer = cc.Layer.extend(/** @lends ccs.UILayer# */{
  * // example
  * var uiLayer = ccs.UILayer.create();
  */
-ccs.UILayer.create = function () {
+ccs.UILayer.create = function() {
     var uiLayer = new ccs.UILayer();
     if (uiLayer && uiLayer.init()) {
         return uiLayer;

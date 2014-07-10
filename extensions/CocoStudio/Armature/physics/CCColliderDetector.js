@@ -30,11 +30,11 @@ ccs.PT_RATIO = 32;
 ccs.ColliderFilter = ccs.Class.extend(/** @lends ccs.ColliderFilter# */{
     _collisionType: 0,
     _group: 0,
-    ctor: function (collisionType, group) {
+    ctor: function(collisionType, group) {
         this._collisionType = collisionType || 0;
         this._group = group || 0;
     },
-    updateShape: function (shape) {
+    updateShape: function(shape) {
         shape.collision_type = this._collisionType;
         shape.group = this._group;
     }
@@ -47,38 +47,38 @@ ccs.ColliderFilter = ccs.Class.extend(/** @lends ccs.ColliderFilter# */{
 ccs.ColliderBody = ccs.Class.extend(/** @lends ccs.ColliderBody# */{
     _shape: null,
     _contourData: null,
-    _filter:null,
-    _calculatedVertexList:null,
-    ctor: function (contourData) {
+    _filter: null,
+    _calculatedVertexList: null,
+    ctor: function(contourData) {
         this._shape = null;
         this._contourData = contourData;
         this._filter = new ccs.ColliderFilter();
-        if(ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX){
+        if (ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
             this._calculatedVertexList = [];
         }
     },
 
     /**
      * contourData getter
-     * @returns {ccs.ContourData}
+     * @return {ccs.ContourData}
      */
-    getContourData: function () {
+    getContourData: function() {
         return this._contourData;
     },
 
     /**
      * contourData setter
-     * @param {ccs.ContourData}contourData
+     * @param {ccs.ContourData} contourData
      */
-    setContourData: function (contourData) {
+    setContourData: function(contourData) {
         this._contourData = contourData;
     },
 
     /**
      * shape setter
-     * @param {cs.Shape}contourData
+     * @param {cs.Shape} contourData
      */
-    getShape: function () {
+    getShape: function() {
         return this._shape;
     },
 
@@ -86,15 +86,15 @@ ccs.ColliderBody = ccs.Class.extend(/** @lends ccs.ColliderBody# */{
      * shape getter
      * @param {cs.Shape} shage
      */
-    setShape: function (shage) {
+    setShape: function(shage) {
         this._shape = shage;
     },
 
     /**
      * colliderFilter getter
-     * @returns {ccs.ColliderFilter}
+     * @return {ccs.ColliderFilter}
      */
-    getColliderFilter: function () {
+    getColliderFilter: function() {
         return this._filter;
     },
 
@@ -102,15 +102,15 @@ ccs.ColliderBody = ccs.Class.extend(/** @lends ccs.ColliderBody# */{
      * colliderFilter setter
      * @param {ccs.ColliderFilter} filter
      */
-    setColliderFilter: function (filter) {
+    setColliderFilter: function(filter) {
         this._filter = filter;
     },
 
     /**
      * get calculated vertex list
-     * @returns {Array}
+     * @return {Array}
      */
-    getCalculatedVertexList:function(){
+    getCalculatedVertexList: function() {
         return this._calculatedVertexList;
     }
 });
@@ -126,14 +126,14 @@ ccs.ColliderDetector = ccs.Class.extend(/** @lends ccs.ColliderDetector# */{
     _body: null,
     _active: false,
     _filter: null,
-    ctor: function () {
+    ctor: function() {
         this._colliderBodyList = [];
         this._bone = null;
         this._body = null;
         this._active = false;
         this._filter = null;
     },
-    init: function (bone) {
+    init: function(bone) {
         this._colliderBodyList = [];
         if (bone)
             this._bone = bone;
@@ -145,7 +145,7 @@ ccs.ColliderDetector = ccs.Class.extend(/** @lends ccs.ColliderDetector# */{
      *  add contourData
      * @param {ccs.ContourData} contourData
      */
-    addContourData: function (contourData) {
+    addContourData: function(contourData) {
         var colliderBody = new ccs.ColliderBody(contourData);
         this._colliderBodyList.push(colliderBody);
         if (ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
@@ -162,7 +162,7 @@ ccs.ColliderDetector = ccs.Class.extend(/** @lends ccs.ColliderDetector# */{
      * add contourData
      * @param {Array} contourDataList
      */
-    addContourDataList: function (contourDataList) {
+    addContourDataList: function(contourDataList) {
         for (var i = 0; i < contourDataList.length; i++) {
             this.addContourData(contourDataList[i]);
         }
@@ -172,10 +172,10 @@ ccs.ColliderDetector = ccs.Class.extend(/** @lends ccs.ColliderDetector# */{
      * remove contourData
      * @param contourData
      */
-    removeContourData: function (contourData) {
+    removeContourData: function(contourData) {
         var locColliderBodyList = this._colliderBodyList;
         for (var i = 0; i < locColliderBodyList.length; i++) {
-            if(locColliderBodyList[i].getContourData()==contourData){
+            if (locColliderBodyList[i].getContourData() == contourData) {
                 locColliderBodyList.splice(i, 1);
                 return;
             }
@@ -185,7 +185,7 @@ ccs.ColliderDetector = ccs.Class.extend(/** @lends ccs.ColliderDetector# */{
     /**
      * remove all body
      */
-    removeAll: function () {
+    removeAll: function() {
         this._colliderBodyList = [];
     },
 
@@ -193,7 +193,7 @@ ccs.ColliderDetector = ccs.Class.extend(/** @lends ccs.ColliderDetector# */{
      * set colliderFilter
      * @param {ccs.ColliderFilter} filter
      */
-    setColliderFilter: function (filter) {
+    setColliderFilter: function(filter) {
         this._filter = filter;
         for (var i = 0; i < this._colliderBodyList.length; i++) {
             var colliderBody = this._colliderBodyList[i];
@@ -208,13 +208,13 @@ ccs.ColliderDetector = ccs.Class.extend(/** @lends ccs.ColliderDetector# */{
 
     /**
      * get colliderFilter
-     * @returns {ccs.ColliderFilter}
+     * @return {ccs.ColliderFilter}
      */
-    getColliderFilter:function(){
+    getColliderFilter: function() {
         return this._filter;
     },
 
-    setActive: function (active) {
+    setActive: function(active) {
         if (this._active == active)
             return;
         this._active = active;
@@ -238,14 +238,14 @@ ccs.ColliderDetector = ccs.Class.extend(/** @lends ccs.ColliderDetector# */{
             }
         }
     },
-    getActive: function () {
+    getActive: function() {
         return this._active;
     },
-    getColliderBodyList: function () {
+    getColliderBodyList: function() {
         return this._colliderBodyList;
     },
     helpPoint: cc.p(0, 0),
-    updateTransform: function (t) {
+    updateTransform: function(t) {
         if (!this._active)
             return;
 
@@ -273,7 +273,7 @@ ccs.ColliderDetector = ccs.Class.extend(/** @lends ccs.ColliderDetector# */{
                     shape.verts[i * 2 + 1] = locHelpPoint.y - t.ty;
                 }
                 if (ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
-                    var v =  cc.p(0, 0);
+                    var v = cc.p(0, 0);
                     v.x = locHelpPoint.x;
                     v.y = locHelpPoint.y;
                     cvs[i] = v;
@@ -281,10 +281,10 @@ ccs.ColliderDetector = ccs.Class.extend(/** @lends ccs.ColliderDetector# */{
             }
         }
     },
-    getBody: function () {
+    getBody: function() {
         return this._body;
     },
-    setBody: function (body) {
+    setBody: function(body) {
         this._body = body;
         var colliderBody;
         for (var i = 0; i < this._colliderBodyList.length; i++) {
@@ -300,7 +300,7 @@ ccs.ColliderDetector = ccs.Class.extend(/** @lends ccs.ColliderDetector# */{
             var shape = new cp.PolyShape(this._body, verts, cp.vzero);
             shape.sensor = true;
             shape.data = this._bone;
-            if (this._active){
+            if (this._active) {
                 this._body.space.addShape(shape);
             }
             colliderBody.setShape(shape);
@@ -308,7 +308,7 @@ ccs.ColliderDetector = ccs.Class.extend(/** @lends ccs.ColliderDetector# */{
         }
     }
 });
-ccs.ColliderDetector.create = function (bone) {
+ccs.ColliderDetector.create = function(bone) {
     var colliderDetector = new ccs.ColliderDetector();
     if (colliderDetector && colliderDetector.init(bone)) {
         return colliderDetector;

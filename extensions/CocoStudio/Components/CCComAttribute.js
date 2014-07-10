@@ -29,14 +29,14 @@
  */
 ccs.ComAttribute = ccs.Component.extend(/** @lends ccs.ComAttribute# */{
     _jsonDict: null,
-    _filePath: "",
-    ctor: function () {
+    _filePath: '',
+    ctor: function() {
         cc.Component.prototype.ctor.call(this);
         this._jsonDict = {};
-        this._filePath = "";
-        this._name = "CCComAttribute";
+        this._filePath = '';
+        this._name = 'CCComAttribute';
     },
-    init: function () {
+    init: function() {
         this._jsonDict = {};
         return true;
     },
@@ -46,9 +46,9 @@ ccs.ComAttribute = ccs.Component.extend(/** @lends ccs.ComAttribute# */{
      * @param {String} key
      * @param {number} value
      */
-    setInt: function (key, value) {
+    setInt: function(key, value) {
         if (!key) {
-            cc.log("Argument must be non-nil");
+            cc.log('Argument must be non-nil');
             return;
         }
         this._jsonDict[key] = value;
@@ -59,9 +59,9 @@ ccs.ComAttribute = ccs.Component.extend(/** @lends ccs.ComAttribute# */{
      * @param {String} key
      * @param {number} value
      */
-    setDouble: function (key, value) {
+    setDouble: function(key, value) {
         if (!key) {
-            cc.log("Argument must be non-nil");
+            cc.log('Argument must be non-nil');
             return;
         }
         this._jsonDict[key] = value;
@@ -72,9 +72,9 @@ ccs.ComAttribute = ccs.Component.extend(/** @lends ccs.ComAttribute# */{
      * @param {String} key
      * @param {number} value
      */
-    setFloat: function (key, value) {
+    setFloat: function(key, value) {
         if (!key) {
-            cc.log("Argument must be non-nil");
+            cc.log('Argument must be non-nil');
             return;
         }
         this._jsonDict[key] = value;
@@ -85,9 +85,9 @@ ccs.ComAttribute = ccs.Component.extend(/** @lends ccs.ComAttribute# */{
      * @param {String} key
      * @param {Boolean} value
      */
-    setBool: function (key, value) {
+    setBool: function(key, value) {
         if (!key) {
-            cc.log("Argument must be non-nil");
+            cc.log('Argument must be non-nil');
             return;
         }
         this._jsonDict[key] = value;
@@ -98,9 +98,9 @@ ccs.ComAttribute = ccs.Component.extend(/** @lends ccs.ComAttribute# */{
      * @param {String} key
      * @param {Boolean} value
      */
-    setCString: function (key, value) {
+    setCString: function(key, value) {
         if (!key) {
-            cc.log("Argument must be non-nil");
+            cc.log('Argument must be non-nil');
             return;
         }
         this._jsonDict[key] = value;
@@ -111,9 +111,9 @@ ccs.ComAttribute = ccs.Component.extend(/** @lends ccs.ComAttribute# */{
      * @param {String} key
      * @param {Object} value
      */
-    setObject: function (key, value) {
+    setObject: function(key, value) {
         if (!key) {
-            cc.log("Argument must be non-nil");
+            cc.log('Argument must be non-nil');
             return;
         }
         this._jsonDict[key] = value;
@@ -122,9 +122,9 @@ ccs.ComAttribute = ccs.Component.extend(/** @lends ccs.ComAttribute# */{
     /**
      * Get int value from attribute
      * @param {String} key
-     * @returns {Number}
+     * @return {Number}
      */
-    getInt: function (key) {
+    getInt: function(key) {
         var ret = this._jsonDict[key];
         return parseInt(ret || 0);
     },
@@ -132,9 +132,9 @@ ccs.ComAttribute = ccs.Component.extend(/** @lends ccs.ComAttribute# */{
     /**
      * Get double value from attribute
      * @param {String} key
-     * @returns {Number}
+     * @return {Number}
      */
-    getDouble: function (key) {
+    getDouble: function(key) {
         var ret = this._jsonDict[key];
         return parseFloat(ret || 0.0);
     },
@@ -142,9 +142,9 @@ ccs.ComAttribute = ccs.Component.extend(/** @lends ccs.ComAttribute# */{
     /**
      * Get float value from attribute
      * @param {String} key
-     * @returns {Number}
+     * @return {Number}
      */
-    getFloat: function (key) {
+    getFloat: function(key) {
         var ret = this._jsonDict[key];
         return parseFloat(ret || 0.0);
     },
@@ -152,9 +152,9 @@ ccs.ComAttribute = ccs.Component.extend(/** @lends ccs.ComAttribute# */{
     /**
      * Get boolean value from attribute
      * @param {String} key
-     * @returns {Boolean}
+     * @return {Boolean}
      */
-    getBool: function (key) {
+    getBool: function(key) {
         var ret = this._jsonDict[key];
         return Boolean(ret || false);
     },
@@ -162,19 +162,19 @@ ccs.ComAttribute = ccs.Component.extend(/** @lends ccs.ComAttribute# */{
     /**
      * Get string value from attribute
      * @param {String} key
-     * @returns {String}
+     * @return {String}
      */
-    getCString: function (key) {
+    getCString: function(key) {
         var ret = this._jsonDict[key];
-        return ret || "";
+        return ret || '';
     },
 
     /**
      * Get object value from attribute
      * @param {String} key
-     * @returns {Object}
+     * @return {Object}
      */
-    getObject: function (key) {
+    getObject: function(key) {
         return this._jsonDict[key];
     },
 
@@ -182,7 +182,7 @@ ccs.ComAttribute = ccs.Component.extend(/** @lends ccs.ComAttribute# */{
      *
      * @param path
      */
-    parse:function(path){
+    parse: function(path) {
         var data = cc.FileUtils.getInstance().getTextFileData(path);
         if (data) {
             this._jsonDict = JSON.parse(data);
@@ -197,7 +197,7 @@ ccs.ComAttribute = ccs.Component.extend(/** @lends ccs.ComAttribute# */{
  * // example
  * var com = ccs.ComAttribute.create();
  */
-ccs.ComAttribute.create = function () {
+ccs.ComAttribute.create = function() {
     var com = new ccs.ComAttribute();
     if (com && com.init()) {
         return com;

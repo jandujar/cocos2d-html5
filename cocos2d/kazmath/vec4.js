@@ -24,7 +24,7 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-cc.kmVec4 = function (x, y, z, w) {
+cc.kmVec4 = function(x, y, z, w) {
     this.x = x || 0;
     this.y = y || 0;
     this.z = z || 0;
@@ -32,7 +32,7 @@ cc.kmVec4 = function (x, y, z, w) {
 };
 
 
-cc.kmVec4Fill = function(outVec, x, y ,z, w){
+cc.kmVec4Fill = function(outVec, x, y, z, w) {
     outVec.x = x;
     outVec.y = y;
     outVec.z = z;
@@ -40,7 +40,7 @@ cc.kmVec4Fill = function(outVec, x, y ,z, w){
     return outVec;
 };
 
-cc.kmVec4Add = function(outVec, pV1, pV2){
+cc.kmVec4Add = function(outVec, pV1, pV2) {
     outVec.x = pV1.x + pV2.x;
     outVec.y = pV1.y + pV2.y;
     outVec.z = pV1.z + pV2.z;
@@ -49,26 +49,26 @@ cc.kmVec4Add = function(outVec, pV1, pV2){
     return outVec;
 };
 
-cc.kmVec4Dot = function( vec1, vec2){
-    return (  vec1.x * vec2.x
+cc.kmVec4Dot = function(vec1, vec2) {
+    return (vec1.x * vec2.x
         + vec1.y * vec2.y
         + vec1.z * vec2.z
-        + vec1.w * vec2.w );
+        + vec1.w * vec2.w);
 };
 
-cc.kmVec4Length = function(inVec){
+cc.kmVec4Length = function(inVec) {
     return Math.sqrt(cc.kmSQR(inVec.x) + cc.kmSQR(inVec.y) + cc.kmSQR(inVec.z) + cc.kmSQR(inVec.w));
 };
 
-cc.kmVec4LengthSq = function(inVec){
+cc.kmVec4LengthSq = function(inVec) {
     return cc.kmSQR(inVec.x) + cc.kmSQR(inVec.y) + cc.kmSQR(inVec.z) + cc.kmSQR(inVec.w);
 };
 
-cc.kmVec4Lerp = function(outVec, pV1, pV2, t){
+cc.kmVec4Lerp = function(outVec, pV1, pV2, t) {
     return outVec;
 };
 
-cc.kmVec4Normalize = function(outVec, inVec){
+cc.kmVec4Normalize = function(outVec, inVec) {
     var l = 1.0 / cc.kmVec4Length(inVec);
 
     outVec.x *= l;
@@ -79,7 +79,7 @@ cc.kmVec4Normalize = function(outVec, inVec){
     return outVec;
 };
 
-cc.kmVec4Scale = function(outVec, inVec, scale){
+cc.kmVec4Scale = function(outVec, inVec, scale) {
     cc.kmVec4Normalize(outVec, inVec);
 
     outVec.x *= scale;
@@ -89,7 +89,7 @@ cc.kmVec4Scale = function(outVec, inVec, scale){
     return outVec;
 };
 
-cc.kmVec4Subtract = function(outVec,vec1, vec2){
+cc.kmVec4Subtract = function(outVec, vec1, vec2) {
     outVec.x = vec1.x - vec2.x;
     outVec.y = vec1.y - vec2.y;
     outVec.z = vec1.z - vec2.z;
@@ -98,7 +98,7 @@ cc.kmVec4Subtract = function(outVec,vec1, vec2){
     return outVec;
 };
 
-cc.kmVec4Transform = function(outVec, vec,mat4Obj){
+cc.kmVec4Transform = function(outVec, vec, mat4Obj) {
     outVec.x = vec.x * mat4Obj.mat[0] + vec.y * mat4Obj.mat[4] + vec.z * mat4Obj.mat[8] + vec.w * mat4Obj.mat[12];
     outVec.y = vec.x * mat4Obj.mat[1] + vec.y * mat4Obj.mat[5] + vec.z * mat4Obj.mat[9] + vec.w * mat4Obj.mat[13];
     outVec.z = vec.x * mat4Obj.mat[2] + vec.y * mat4Obj.mat[6] + vec.z * mat4Obj.mat[10] + vec.w * mat4Obj.mat[14];
@@ -106,7 +106,7 @@ cc.kmVec4Transform = function(outVec, vec,mat4Obj){
     return outVec;
 };
 
-cc.kmVec4TransformArray = function(outVec,outStride,vecObj,stride,mat4Obj,count){
+cc.kmVec4TransformArray = function(outVec, outStride, vecObj, stride, mat4Obj, count) {
     var i = 0;
     //Go through all of the vectors
     while (i < count) {
@@ -119,7 +119,7 @@ cc.kmVec4TransformArray = function(outVec,outStride,vecObj,stride,mat4Obj,count)
     return outVec;
 };
 
-cc.kmVec4AreEqual = function(vec1,vec2){
+cc.kmVec4AreEqual = function(vec1, vec2) {
     return (
         (vec1.x < vec2.x + cc.kmEpsilon && vec1.x > vec2.x - cc.kmEpsilon) &&
             (vec1.y < vec2.y + cc.kmEpsilon && vec1.y > vec2.y - cc.kmEpsilon) &&
@@ -128,9 +128,9 @@ cc.kmVec4AreEqual = function(vec1,vec2){
         );
 };
 
-cc.kmVec4Assign = function(destVec, srcVec){
-    if(destVec == srcVec){
-        cc.log("destVec and srcVec are same object");
+cc.kmVec4Assign = function(destVec, srcVec) {
+    if (destVec == srcVec) {
+        cc.log('destVec and srcVec are same object');
         return destVec;
     }
 
@@ -142,8 +142,8 @@ cc.kmVec4Assign = function(destVec, srcVec){
     return destVec;
 };
 
-cc.kmVec4ToTypeArray = function(vecValue){
-    if(!vecValue)
+cc.kmVec4ToTypeArray = function(vecValue) {
+    if (!vecValue)
         return null;
 
     var tyArr = new Float32Array(4);

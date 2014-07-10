@@ -103,7 +103,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
     _touchEventListener: null,
     _touchEventSelector: null,
 
-    _name: "default",
+    _name: 'default',
     _widgetType: null,
     _actionTag: 0,
     _size: null,
@@ -120,7 +120,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
     _reorderWidgetChildDirty: false,
     _hitted: false,
     _nodes: null,
-    ctor: function () {
+    ctor: function() {
         cc.NodeRGBA.prototype.ctor.call(this);
         this._enabled = true;
         this._bright = true;
@@ -134,7 +134,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
         this._touchEndPos = cc.PointZero();
         this._touchEventListener = null;
         this._touchEventSelector = null;
-        this._name = "default";
+        this._name = 'default';
         this._widgetType = ccs.WidgetType.widget;
         this._actionTag = 0;
         this._size = cc.SizeZero();
@@ -154,10 +154,10 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
 
     /**
      * initializes state of widget.
-     * @returns {boolean}
+     * @return {boolean}
      */
-    init: function () {
-        if (cc.NodeRGBA.prototype.init.call(this)){
+    init: function() {
+        if (cc.NodeRGBA.prototype.init.call(this)) {
             this._layoutParameterDictionary = {};
             this._widgetChildren = [];
             this.initRenderer();
@@ -170,14 +170,14 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
         return true;
     },
 
-    onEnter: function () {
+    onEnter: function() {
         this.updateSizeAndPosition();
         cc.NodeRGBA.prototype.onEnter.call(this);
     },
 
-    visit: function (ctx) {
+    visit: function(ctx) {
         if (this._enabled) {
-            cc.NodeRGBA.prototype.visit.call(this,ctx);
+            cc.NodeRGBA.prototype.visit.call(this, ctx);
         }
     },
 
@@ -185,16 +185,16 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * Adds a child to the container.
      * @param {ccs.Widget} child
      */
-    addChild: function (child, zOrder, tag) {
-        if(!(child instanceof ccs.Widget)){
-            cc.log("Widget only supports Widgets as children");
+    addChild: function(child, zOrder, tag) {
+        if (!(child instanceof ccs.Widget)) {
+            cc.log('Widget only supports Widgets as children');
             return;
         }
         cc.NodeRGBA.prototype.addChild.call(this, child, zOrder, tag);
         this._widgetChildren.push(child);
     },
 
-    sortAllChildren: function () {
+    sortAllChildren: function() {
         this._reorderWidgetChildDirty = this._reorderChildDirty;
         cc.NodeRGBA.prototype.sortAllChildren.call(this);
         if (this._reorderWidgetChildDirty) {
@@ -208,8 +208,8 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
                 tempChild = _children[j];
 
                 //continue moving element downwards while zOrder is smaller or when zOrder is the same but mutatedIndex is smaller
-                while (j >= 0 && ( tempItem._zOrder < tempChild._zOrder ||
-                    ( tempItem._zOrder == tempChild._zOrder && tempItem._orderOfArrival < tempChild._orderOfArrival ))) {
+                while (j >= 0 && (tempItem._zOrder < tempChild._zOrder ||
+                    (tempItem._zOrder == tempChild._zOrder && tempItem._orderOfArrival < tempChild._orderOfArrival))) {
                     _children[j + 1] = tempChild;
                     j = j - 1;
                     tempChild = _children[j];
@@ -225,33 +225,33 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
 
     /**
      * Return an array of children
-     * @returns {Array}
+     * @return {Array}
      */
-    getChildren: function () {
+    getChildren: function() {
         return this._widgetChildren;
     },
 
     /**
      * get the count of children
-     * @returns {Number}
+     * @return {Number}
      */
-    getChildrenCount: function () {
+    getChildrenCount: function() {
         return this._widgetChildren ? this._widgetChildren.length : 0;
     },
 
-    getWidgetParent: function () {
+    getWidgetParent: function() {
         var widget = this.getParent();
-        if(widget instanceof ccs.Widget){
+        if (widget instanceof ccs.Widget) {
             return widget;
         }
         return null;
     },
 
-    removeFromParent: function (cleanup) {
+    removeFromParent: function(cleanup) {
         cc.NodeRGBA.prototype.removeFromParent.call(this, cleanup);
     },
 
-    removeFromParentAndCleanup: function (cleanup) {
+    removeFromParentAndCleanup: function(cleanup) {
         cc.NodeRGBA.prototype.removeFromParent.call(this, cleanup);
     },
 
@@ -260,16 +260,16 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * @param {ccs.Widget} child
      * @param {Boolean} cleanup
      */
-    removeChild: function (child, cleanup) {
+    removeChild: function(child, cleanup) {
         cc.NodeRGBA.prototype.removeChild.call(this, child, cleanup);
         cc.ArrayRemoveObject(this._widgetChildren, child);
     },
 
-    removeChildByTag: function (tag, cleanup) {
+    removeChildByTag: function(tag, cleanup) {
         var child = this.getChildByTag(tag);
 
         if (child == null) {
-            cc.log("cocos2d: removeChildByTag(tag = " + tag + "): child not found!");
+            cc.log('cocos2d: removeChildByTag(tag = ' + tag + '): child not found!');
         }
         else {
             this.removeChild(child, cleanup);
@@ -279,10 +279,10 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
     /**
      * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
      */
-    removeAllChildren: function (cleanup) {
+    removeAllChildren: function(cleanup) {
         var childrenLength = this._widgetChildren.length;
         if (childrenLength <= 0) {
-            return
+            return;
         }
         cc.NodeRGBA.prototype.removeAllChildren.call(this, cleanup);
         this._widgetChildren = [];
@@ -292,7 +292,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * Set enabled renderer
      * @param {Boolean} enabled
      */
-    setEnabled: function (enabled) {
+    setEnabled: function(enabled) {
         this._enabled = enabled;
         var arrayChildren = this._widgetChildren;
         var childrenCount = arrayChildren.length;
@@ -305,9 +305,9 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
     /**
      * Gets a child from the container with its name
      * @param {string} name
-     * @returns {ccs.Widget}
+     * @return {ccs.Widget}
      */
-    getChildByName: function (name) {
+    getChildByName: function(name) {
         var arrayChildren = this._widgetChildren;
         var childrenCount = arrayChildren.length;
         for (var i = 0; i < childrenCount; i++) {
@@ -321,7 +321,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
     /**
      * initializes renderer of widget.
      */
-    initRenderer: function () {
+    initRenderer: function() {
     },
 
     /**
@@ -330,9 +330,9 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * @param {Number} zOrder
      * @param {Number} tag
      */
-    addNode: function (node, zOrder, tag) {
+    addNode: function(node, zOrder, tag) {
         if (node instanceof ccs.Widget) {
-            cc.log("Widget only supports Nodes as renderer");
+            cc.log('Widget only supports Nodes as renderer');
             return;
         }
         cc.NodeRGBA.prototype.addChild.call(this, node, zOrder, tag);
@@ -342,9 +342,9 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
     /**
      * get node by tag
      * @param {Number} tag
-     * @returns {cc.Node}
+     * @return {cc.Node}
      */
-    getNodeByTag: function (tag) {
+    getNodeByTag: function(tag) {
         for (var i = 0; i < this._nodes.length; i++) {
             var node = this._nodes[i];
             if (node && node.getTag() == tag) {
@@ -356,9 +356,9 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
 
     /**
      * get all node
-     * @returns {Array}
+     * @return {Array}
      */
-    getNodes: function () {
+    getNodes: function() {
         return this._nodes;
     },
 
@@ -366,7 +366,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * remove node
      * @param {cc.Node} node
      */
-    removeNode: function (node) {
+    removeNode: function(node) {
         cc.NodeRGBA.prototype.removeChild.call(this, node);
         cc.ArrayRemoveObject(this._nodes, node);
     },
@@ -375,10 +375,10 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      *  remove node by tag
      * @param tag
      */
-    removeNodeByTag: function (tag) {
+    removeNodeByTag: function(tag) {
         var node = this.getNodeByTag(tag);
         if (!node) {
-            cc.log("cocos2d: removeNodeByTag(tag = %d): child not found!", tag);
+            cc.log('cocos2d: removeNodeByTag(tag = %d): child not found!', tag);
         }
         else {
             this.removeNode(node);
@@ -388,7 +388,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
     /**
      * remove all node
      */
-    removeAllNodes: function () {
+    removeAllNodes: function() {
         for (var i = 0; i < this._nodes.length; i++) {
             var node = this._nodes[i];
             cc.NodeRGBA.prototype.removeChild.call(this, node);
@@ -400,7 +400,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * Changes the size that is widget's size
      * @param {cc.Size} size
      */
-    setSize: function (size) {
+    setSize: function(size) {
         this._customSize.width = size.width;
         this._customSize.height = size.height;
         var locSize;
@@ -413,19 +413,19 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
         this._size.width = locSize.width;
         this._size.height = locSize.height;
 
-        if(this._running){
-            var  widgetParent = this.getWidgetParent();
-            if(widgetParent){
+        if (this._running) {
+            var widgetParent = this.getWidgetParent();
+            if (widgetParent) {
                 locSize = widgetParent.getSize();
-            }else{
+            }else {
                 locSize = this._parent.getContentSize();
             }
             this._sizePercent.x = 0;
             this._sizePercent.y = 0;
-            if(locSize.width>0){
+            if (locSize.width > 0) {
                 this._sizePercent.x = this._customSize.width / locSize.width;
             }
-            if(locSize.height>0){
+            if (locSize.height > 0) {
                 this._sizePercent.y = this._customSize.height / locSize.height;
             }
         }
@@ -436,7 +436,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * Changes the percent that is widget's percent size
      * @param {cc.Point} percent
      */
-    setSizePercent: function (percent) {
+    setSizePercent: function(percent) {
         this._sizePercent = percent;
         var size = cc.size(this._customSize.width, this._customSize.height);
         if (this._running) {
@@ -467,7 +467,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
     /**
      * update size and position
      */
-    updateSizeAndPosition: function () {
+    updateSizeAndPosition: function() {
         switch (this._sizeType) {
             case ccs.SizeType.absolute:
                 var locSize;
@@ -480,11 +480,11 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
                 this._size.width = locSize.width;
                 this._size.height = locSize.height;
 
-                var pSize,spx=spy=0;
+                var pSize, spx = spy = 0;
                 var widgetParent = this.getWidgetParent();
-                if (widgetParent){
+                if (widgetParent) {
                     pSize = widgetParent.getSize();
-                }else{
+                }else {
                     pSize = this._parent.getContentSize();
                 }
                 if (pSize.width > 0) {
@@ -498,11 +498,11 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
                 break;
             case ccs.SizeType.percent:
                 var widgetParent = this.getWidgetParent();
-                var cSize = cc.size(0,0);
-                if (widgetParent){
+                var cSize = cc.size(0, 0);
+                if (widgetParent) {
                     cSize.width = widgetParent.getSize().width * this._sizePercent.x;
                     cSize.height = widgetParent.getSize().height * this._sizePercent.x;
-                }else{
+                }else {
                     cSize.width = this._parent.getContentSize().width * this._sizePercent.x;
                     cSize.height = this._parent.getContentSize().height * this._sizePercent.y;
                 }
@@ -527,15 +527,15 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
             case ccs.PositionType.absolute:
                 var widgetParent = this.getWidgetParent();
                 var pSize;
-                if(widgetParent){
+                if (widgetParent) {
                     pSize = widgetParent.getSize();
-                }else{
+                }else {
                     pSize = this._parent.getContentSize();
                 }
-                if(pSize.width<=0||pSize.height<=0){
+                if (pSize.width <= 0 || pSize.height <= 0) {
                     this._positionPercent.x = 0;
                     this._positionPercent.y = 0;
-                }else{
+                }else {
                     this._positionPercent.x = absPos.x / pSize.width;
                     this._positionPercent.y = absPos.y / pSize.height;
                 }
@@ -543,9 +543,9 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
             case ccs.PositionType.percent:
                 var widgetParent = this.getWidgetParent();
                 var pSize;
-                if(widgetParent){
+                if (widgetParent) {
                     pSize = widgetParent.getSize();
-                }else{
+                }else {
                     pSize = this._parent.getContentSize();
                 }
                 absPos = cc.p(pSize.width * this._positionPercent.x, pSize.height * this._positionPercent.y);
@@ -560,15 +560,15 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * Changes the size type of widget.
      * @param {ccs.SizeType} type
      */
-    setSizeType: function (type) {
+    setSizeType: function(type) {
         this._sizeType = type;
     },
 
     /**
      * Gets the size type of widget.
-     * @returns {ccs.SizeType}
+     * @return {ccs.SizeType}
      */
-    getSizeType: function () {
+    getSizeType: function() {
         return this._sizeType;
     },
 
@@ -576,7 +576,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * Ignore the widget size
      * @param {Boolean} ignore
      */
-    ignoreContentAdaptWithSize: function (ignore) {
+    ignoreContentAdaptWithSize: function(ignore) {
         this._ignoreSize = ignore;
         var locSize;
         if (this._ignoreSize) {
@@ -592,48 +592,48 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
 
     /**
      * Gets the widget if is ignore it's size.
-     * @returns {boolean}
+     * @return {boolean}
      */
-    isIgnoreContentAdaptWithSize: function () {
+    isIgnoreContentAdaptWithSize: function() {
         return this._ignoreSize;
     },
 
     /**
      * Returns size of widget
-     * @returns {cc.Size}
+     * @return {cc.Size}
      */
-    getSize: function () {
+    getSize: function() {
         return this._size;
     },
 
     /**
      * Returns size percent of widget
-     * @returns {cc.Point}
+     * @return {cc.Point}
      */
-    getSizePercent: function () {
+    getSizePercent: function() {
         return this._sizePercent;
     },
 
     /**
      *  Gets world position of widget.
-     * @returns {cc.Point}
+     * @return {cc.Point}
      */
-    getWorldPosition: function () {
+    getWorldPosition: function() {
         return this.convertToWorldSpace(cc.PointZero());
     },
 
     /**
      * Gets the Virtual Renderer of widget.
-     * @returns {cc.Node}
+     * @return {cc.Node}
      */
-    getVirtualRenderer: function () {
+    getVirtualRenderer: function() {
         return this;
     },
 
     /**
      * call back function called when size changed.
      */
-    onSizeChanged: function () {
+    onSizeChanged: function() {
         for (var i = 0; i < this._widgetChildren.length; i++) {
             var child = this._widgetChildren[i];
             child.updateSizeAndPosition();
@@ -642,9 +642,9 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
 
     /**
      * Gets the content size of widget.
-     * @returns {cc.Size}
+     * @return {cc.Size}
      */
-    getContentSize: function () {
+    getContentSize: function() {
         return this._size;
     },
 
@@ -652,15 +652,15 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * Sets whether the widget is touch enabled
      * @param enable
      */
-    setTouchEnabled: function (enable) {
+    setTouchEnabled: function(enable) {
         this._touchEnabled = enable;
     },
 
     /**
      * To set the bright style of widget.
-     * @returns {boolean}
+     * @return {boolean}
      */
-    isTouchEnabled: function () {
+    isTouchEnabled: function() {
         return this._touchEnabled;
     },
 
@@ -668,7 +668,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * Schedules the "update" method.
      * @param enable
      */
-    setUpdateEnabled: function (enable) {
+    setUpdateEnabled: function(enable) {
         if (this._updateEnabled == enable) {
             return;
         }
@@ -683,17 +683,17 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
 
     /**
      * is the "update" method scheduled.
-     * @returns {boolean}
+     * @return {boolean}
      */
-    isUpdateEnabled: function () {
+    isUpdateEnabled: function() {
         return this._updateEnabled;
     },
 
     /**
      * Determines if the widget is on focused
-     * @returns {boolean}
+     * @return {boolean}
      */
-    isFocused: function () {
+    isFocused: function() {
         return this._focus;
     },
 
@@ -702,7 +702,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * The default value is false, a widget is default to not on focused
      * @param {boolean} fucos
      */
-    setFocused: function (fucos) {
+    setFocused: function(fucos) {
         if (fucos == this._focus) {
             return;
         }
@@ -720,7 +720,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
         }
     },
 
-    setBright: function (bright, containChild) {
+    setBright: function(bright, containChild) {
         this._bright = bright;
         if (this._bright) {
             this._brightStyle = ccs.BrightStyle.none;
@@ -735,11 +735,11 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * To set the bright style of widget.
      * @param {ccs.BrightStyle} style
      */
-    setBrightStyle: function (style) {
+    setBrightStyle: function(style) {
         if (this._brightStyle == style) {
             return;
         }
-        style = style|| ccs.BrightStyle.normal;
+        style = style || ccs.BrightStyle.normal;
         this._brightStyle = style;
         switch (this._brightStyle) {
             case ccs.BrightStyle.normal:
@@ -756,37 +756,37 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
     /**
      * call back function called widget's state changed to normal.
      */
-    onPressStateChangedToNormal: function () {
+    onPressStateChangedToNormal: function() {
 
     },
 
     /**
      * call back function called widget's state changed to selected.
      */
-    onPressStateChangedToPressed: function () {
+    onPressStateChangedToPressed: function() {
 
     },
 
     /**
      * call back function called widget's state changed to dark.
      */
-    onPressStateChangedToDisabled: function () {
+    onPressStateChangedToDisabled: function() {
 
     },
 
     /**
      * A call back function when widget lost of focus.
      */
-    didNotSelectSelf: function () {
+    didNotSelectSelf: function() {
 
     },
 
-    onTouchBegan: function (touch,event) {
+    onTouchBegan: function(touch, event) {
         var touchPoint = touch.getLocation();
         this._touchStartPos.x = touchPoint.x;
         this._touchStartPos.y = touchPoint.y;
-        this._hitted = this.isEnabled() && this.isTouchEnabled() && this.isVisible() && this.hitTest(touchPoint)&& this.clippingParentAreaContainPoint(touchPoint);
-        if(!this._hitted){
+        this._hitted = this.isEnabled() && this.isTouchEnabled() && this.isVisible() && this.hitTest(touchPoint) && this.clippingParentAreaContainPoint(touchPoint);
+        if (!this._hitted) {
             return false;
         }
         this.setFocused(true);
@@ -798,7 +798,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
         return !this._touchPassedEnabled;
     },
 
-    onTouchMoved: function (touch,event) {
+    onTouchMoved: function(touch, event) {
         var touchPoint = touch.getLocation();
         this._touchMovePos.x = touchPoint.x;
         this._touchMovePos.y = touchPoint.y;
@@ -811,7 +811,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
     },
 
 
-    onTouchEnded: function (touch,event) {
+    onTouchEnded: function(touch, event) {
         var touchPoint = touch.getLocation();
         this._touchEndPos.x = touchPoint.x;
         this._touchEndPos.y = touchPoint.y;
@@ -833,7 +833,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * A call back function called when widget is selected, and on touch canceled.
      * @param {cc.Point} touchPoint
      */
-    onTouchCancelled: function (touchPoint) {
+    onTouchCancelled: function(touchPoint) {
         this.setFocused(false);
         this.cancelUpEvent();
     },
@@ -842,13 +842,13 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * A call back function called when widget is selected, and on touch long clicked.
      * @param {cc.Point} touchPoint
      */
-    onTouchLongClicked: function (touchPoint) {
+    onTouchLongClicked: function(touchPoint) {
         this.longClickEvent();
     },
 
     //call back function called widget's state changed to dark.
 
-    pushDownEvent: function () {
+    pushDownEvent: function() {
         if (this._touchEventListener && this._touchEventSelector) {
             if (this._touchEventSelector) {
                 this._touchEventSelector.call(this._touchEventListener, this, ccs.TouchEventType.began);
@@ -856,7 +856,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
         }
     },
 
-    moveEvent: function () {
+    moveEvent: function() {
         if (this._touchEventListener && this._touchEventSelector) {
             if (this._touchEventSelector) {
                 this._touchEventSelector.call(this._touchEventListener, this, ccs.TouchEventType.moved);
@@ -864,7 +864,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
         }
     },
 
-    releaseUpEvent: function () {
+    releaseUpEvent: function() {
         if (this._touchEventListener && this._touchEventSelector) {
             if (this._touchEventSelector) {
                 this._touchEventSelector.call(this._touchEventListener, this, ccs.TouchEventType.ended);
@@ -872,13 +872,13 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
         }
     },
 
-    cancelUpEvent: function () {
+    cancelUpEvent: function() {
         if (this._touchEventSelector) {
             this._touchEventSelector.call(this._touchEventListener, this, ccs.TouchEventType.canceled);
         }
     },
 
-    longClickEvent: function () {
+    longClickEvent: function() {
 
     },
 
@@ -887,7 +887,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * @param {Function} selector
      * @param {Object} target
      */
-    addTouchEventListener: function (selector, target) {
+    addTouchEventListener: function(selector, target) {
         this._touchEventSelector = selector;
         this._touchEventListener = target;
     },
@@ -895,9 +895,9 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
     /**
      * Checks a point if is in widget's space
      * @param {cc.Point} pt
-     * @returns {boolean}
+     * @return {boolean}
      */
-    hitTest: function (pt) {
+    hitTest: function(pt) {
         var nsp = this.convertToNodeSpace(pt);
         var bb = cc.rect(-this._size.width * this._anchorPoint.x, -this._size.height * this._anchorPoint.y, this._size.width, this._size.height);
         if (nsp.x >= bb.x && nsp.x <= bb.x + bb.width && nsp.y >= bb.y && nsp.y <= bb.y + bb.height) {
@@ -909,9 +909,9 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
     /**
      * Checks a point if in parent's area.
      * @param {cc.Point} pt
-     * @returns {Boolean}
+     * @return {Boolean}
      */
-    clippingParentAreaContainPoint: function (pt) {
+    clippingParentAreaContainPoint: function(pt) {
         this._affectByClipping = false;
         var parent = this.getParent();
         var clippingParent = null;
@@ -950,7 +950,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * @param {ccs.Widget} sender
      * @param {cc.Point} touchPoint
      */
-    checkChildInfo: function (handleState, sender, touchPoint) {
+    checkChildInfo: function(handleState, sender, touchPoint) {
         var widgetParent = this.getWidgetParent();
         if (widgetParent) {
             widgetParent.checkChildInfo(handleState, sender, touchPoint);
@@ -962,7 +962,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * @param {cc.Point||Number} pos
      * @param {Number} posY
      */
-    setPosition: function (pos, posY) {
+    setPosition: function(pos, posY) {
         if (this._running) {
             var widgetParent = this.getWidgetParent();
             if (widgetParent) {
@@ -972,10 +972,10 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
                     this._positionPercent.y = 0;
                 }
                 else {
-                    if(posY){
+                    if (posY) {
                         this._positionPercent.x = pos / pSize.width;
                         this._positionPercent.y = posY / pSize.height;
-                    }else{
+                    }else {
                         this._positionPercent.x = pos.x / pSize.width;
                         this._positionPercent.y = pos.y / pSize.height;
                     }
@@ -983,18 +983,18 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
             }
         }
 
-        cc.NodeRGBA.prototype.setPosition.apply(this,arguments);
+        cc.NodeRGBA.prototype.setPosition.apply(this, arguments);
     },
 
     /**
      * Changes the position (x,y) of the widget
      * @param {cc.Point} percent
      */
-    setPositionPercent: function (percent) {
+    setPositionPercent: function(percent) {
         this._positionPercent = percent;
         if (this._running) {
             var widgetParent = this.getWidgetParent();
-            if(widgetParent){
+            if (widgetParent) {
                 var parentSize = widgetParent.getSize();
                 var absPos = cc.p(parentSize.width * this._positionPercent.x, parentSize.height * this._positionPercent.y);
                 this.setPosition(absPos);
@@ -1002,15 +1002,15 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
         }
     },
 
-    updateAnchorPoint:function(){
+    updateAnchorPoint: function() {
         this.setAnchorPoint(this.getAnchorPoint());
     },
 
     /**
      * Gets the percent (x,y) of the widget
-     * @returns {cc.Point}
+     * @return {cc.Point}
      */
-    getPositionPercent: function () {
+    getPositionPercent: function() {
         return this._positionPercent;
     },
 
@@ -1018,100 +1018,100 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * Changes the position type of the widget
      * @param {ccs.PositionType} type
      */
-    setPositionType: function (type) {
+    setPositionType: function(type) {
         this._positionType = type;
     },
 
     /**
      * Gets the position type of the widget
-     * @returns {cc.pPositionType}
+     * @return {cc.pPositionType}
      */
-    getPositionType: function () {
+    getPositionType: function() {
         return this._positionType;
     },
 
-    setFlippedX: function (flipX) {
+    setFlippedX: function(flipX) {
     },
 
-    isFlippedX: function () {
+    isFlippedX: function() {
         return false;
     },
 
-    setFlippedY: function (flipY) {
+    setFlippedY: function(flipY) {
     },
-    isFlippedY: function () {
+    isFlippedY: function() {
         return false;
     },
 
     /**
      * Determines if the widget is bright
-     * @returns {boolean}
+     * @return {boolean}
      */
-    isBright: function () {
+    isBright: function() {
         return this._bright;
     },
 
     /**
      * Determines if the widget is enabled
-     * @returns {boolean}
+     * @return {boolean}
      */
-    isEnabled: function () {
+    isEnabled: function() {
         return this._enabled;
     },
 
     /**
      * Gets the left boundary position of this widget.
-     * @returns {number}
+     * @return {number}
      */
-    getLeftInParent: function () {
+    getLeftInParent: function() {
         return this.getPosition().x - this.getAnchorPoint().x * this._size.width;
     },
 
     /**
      * Gets the bottom boundary position of this widget.
-     * @returns {number}
+     * @return {number}
      */
-    getBottomInParent: function () {
+    getBottomInParent: function() {
         return this.getPosition().y - this.getAnchorPoint().y * this._size.height;
     },
 
     /**
      * Gets the right boundary position of this widget.
-     * @returns {number}
+     * @return {number}
      */
-    getRightInParent: function () {
+    getRightInParent: function() {
         return this.getLeftInParent() + this._size.width;
     },
 
     /**
      * Gets the top boundary position of this widget.
-     * @returns {number}
+     * @return {number}
      */
-    getTopInParent: function () {
+    getTopInParent: function() {
         return this.getBottomInParent() + this._size.height;
     },
 
     /**
      * Gets touch start position
-     * @returns {cc.Point}
+     * @return {cc.Point}
      */
-    getTouchStartPos: function () {
+    getTouchStartPos: function() {
         return this._touchStartPos;
     },
 
     /**
      * Gets touch move position
-     * @returns {cc.Point}
+     * @return {cc.Point}
      */
-    getTouchMovePos: function () {
+    getTouchMovePos: function() {
         return this._touchMovePos;
     },
 
     /**
      * Gets touch end position
-     * @returns {cc.Point}
+     * @return {cc.Point}
      */
-    getTouchEndPos: function () {
+    getTouchEndPos: function() {
         return this._touchEndPos;
     },
 
@@ -1119,23 +1119,23 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * Sets the name of widget
      * @param {String} name
      */
-    setName: function (name) {
+    setName: function(name) {
         this._name = name;
     },
 
     /**
      * Gets the name of widget
-     * @returns {string}
+     * @return {string}
      */
-    getName: function () {
+    getName: function() {
         return this._name;
     },
 
     /**
      * get widget type
-     * @returns {ccs.WidgetType}
+     * @return {ccs.WidgetType}
      */
-    getWidgetType: function () {
+    getWidgetType: function() {
         return this._widgetType;
     },
 
@@ -1143,28 +1143,28 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
      * Sets layout parameter
      * @param {ccs.LayoutParameter} parameter
      */
-    setLayoutParameter: function (parameter) {
+    setLayoutParameter: function(parameter) {
         this._layoutParameterDictionary[parameter.getLayoutType()] = parameter;
     },
 
     /**
      * Gets layout parameter
      * @param {ccs.LayoutParameterType} type
-     * @returns {ccs.LayoutParameter}
+     * @return {ccs.LayoutParameter}
      */
-    getLayoutParameter: function (type) {
+    getLayoutParameter: function(type) {
         return this._layoutParameterDictionary[type];
     },
 
     /**
      * Returns the "class name" of widget.
-     * @returns {string}
+     * @return {string}
      */
-    getDescription: function () {
-        return "Widget";
+    getDescription: function() {
+        return 'Widget';
     },
 
-    clone: function () {
+    clone: function() {
         var clonedWidget = this.createCloneInstance();
         clonedWidget.copyProperties(this);
         clonedWidget.copyClonedWidgetChildren(this);
@@ -1172,36 +1172,36 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
         return clonedWidget;
     },
 
-    createCloneInstance: function () {
+    createCloneInstance: function() {
         return ccs.Widget.create();
     },
 
-    copyClonedWidgetChildren: function (model) {
+    copyClonedWidgetChildren: function(model) {
         var widgetChildren = model.getChildren();
         for (var i = 0; i < widgetChildren.length; i++) {
             var locChild = widgetChildren[i];
-            if(locChild instanceof ccs.Widget){
+            if (locChild instanceof ccs.Widget) {
                 this.addChild(locChild.clone());
             }
         }
     },
 
-    copySpecialProperties: function (model) {
+    copySpecialProperties: function(model) {
 
     },
-    copyLayoutParameters: function(widget){
+    copyLayoutParameters: function(widget) {
         var layoutParameter = widget.getLayoutParameter(ccs.LayoutParameterType.relative);
-        if(layoutParameter){
+        if (layoutParameter) {
             this.setLayoutParameter(layoutParameter);
         }
 
         layoutParameter = widget.getLayoutParameter(ccs.LayoutParameterType.linear);
-        if(layoutParameter){
+        if (layoutParameter) {
             this.setLayoutParameter(layoutParameter);
         }
     },
 
-    copyProperties: function (widget) {
+    copyProperties: function(widget) {
         this.setEnabled(widget.isEnabled());
         this.setVisible(widget.isVisible());
         this.setBright(widget.isBright());
@@ -1235,13 +1235,13 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
         this.setCascadeColorEnabled(widget.isCascadeColorEnabled());
         this.onSizeChanged();
     },
-    
+
     /*temp action*/
-    setActionTag: function (tag) {
+    setActionTag: function(tag) {
         this._actionTag = tag;
     },
 
-    getActionTag: function () {
+    getActionTag: function() {
         return this._actionTag;
     }
 });
@@ -1253,7 +1253,7 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
  * // example
  * var uiWidget = ccs.Widget.create();
  */
-ccs.Widget.create = function () {
+ccs.Widget.create = function() {
     var widget = new ccs.Widget();
     if (widget && widget.init()) {
         return widget;

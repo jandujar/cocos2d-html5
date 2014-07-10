@@ -24,10 +24,10 @@
 
 
 plugin.PluginType = {
-    ADS:["AdSense"],
-    ANALYTICS:["AdsGoogle"],
-    IAP:[""],
-    SOCIAL:["SocialTwitter","SocialFacebook","SocialQzone","SocialQQWeibo","SocialWeibo"]
+    ADS: ['AdSense'],
+    ANALYTICS: ['AdsGoogle'],
+    IAP: [''],
+    SOCIAL: ['SocialTwitter', 'SocialFacebook', 'SocialQzone', 'SocialQQWeibo', 'SocialWeibo']
 };
 
 /**
@@ -39,7 +39,7 @@ plugin.PluginFactory = cc.Class.extend({
     /**
      * create the plugin by name
      */
-    createPlugin:function (name) {
+    createPlugin: function(name) {
         if (name == null || name.length == 0) return null;
 
         var ret;
@@ -64,7 +64,7 @@ plugin.PluginFactory = cc.Class.extend({
                 ret = new plugin.ProtocolSocial();
                 break;
             default:
-                throw "Plugin " + name + " not implements a right protocol";
+                throw 'Plugin ' + name + ' not implements a right protocol';
 
         }
 
@@ -79,7 +79,7 @@ plugin.PluginFactory = cc.Class.extend({
 /**
  * Get singleton of PluginFactory
  */
-plugin.PluginFactory.getInstance = function () {
+plugin.PluginFactory.getInstance = function() {
     if (!this._instnace) {
         this._instnace = new plugin.PluginFactory();
     }
@@ -89,7 +89,7 @@ plugin.PluginFactory.getInstance = function () {
 /**
  * Destory the instance of PluginFactory
  */
-plugin.PluginFactory.purgeFactory = function () {
+plugin.PluginFactory.purgeFactory = function() {
     if (this._instnace) {
         delete this._instnace;
     }

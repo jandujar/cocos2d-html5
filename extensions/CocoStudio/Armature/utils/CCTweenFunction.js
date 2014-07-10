@@ -79,7 +79,7 @@ ccs.M_PI_X_2 = Math.PI * 2;
 ccs.M_PI_2 = Math.PI / 2;
 ccs.M_PI = Math.PI;
 
-ccs.TweenFunction.tweenTo = function (time, type, easingParam) {
+ccs.TweenFunction.tweenTo = function(time, type, easingParam) {
     var delta = 0;
 
     switch (type) {
@@ -199,31 +199,31 @@ ccs.TweenFunction.tweenTo = function (time, type, easingParam) {
 
 
 // Linear
-ccs.TweenFunction.linear = function (time) {
+ccs.TweenFunction.linear = function(time) {
     return time;
 };
 
 
 // Sine Ease
-ccs.TweenFunction.sineEaseIn = function (time) {
+ccs.TweenFunction.sineEaseIn = function(time) {
     return -1 * Math.cos(time * ccs.M_PI_2) + 1;
 };
-ccs.TweenFunction.sineEaseOut = function (time) {
+ccs.TweenFunction.sineEaseOut = function(time) {
     return Math.sin(time * ccs.M_PI_2);
 };
-ccs.TweenFunction.sineEaseInOut = function (time) {
+ccs.TweenFunction.sineEaseInOut = function(time) {
     return -0.5 * (Math.cos(ccs.M_PI * time) - 1);
 };
 
 
 // Quad Ease
-ccs.TweenFunction.quadEaseIn = function (time) {
+ccs.TweenFunction.quadEaseIn = function(time) {
     return time * time;
 };
-ccs.TweenFunction.quadEaseOut = function (time) {
+ccs.TweenFunction.quadEaseOut = function(time) {
     return -1 * time * (time - 2);
 };
-ccs.TweenFunction.quadEaseInOut = function (time) {
+ccs.TweenFunction.quadEaseInOut = function(time) {
     time = time * 2;
     if (time < 1)
         return 0.5 * time * time;
@@ -233,14 +233,14 @@ ccs.TweenFunction.quadEaseInOut = function (time) {
 
 
 // Cubic Ease
-ccs.TweenFunction.cubicEaseIn = function (time) {
+ccs.TweenFunction.cubicEaseIn = function(time) {
     return time * time * time;
 };
-ccs.TweenFunction.cubicEaseOut = function (time) {
+ccs.TweenFunction.cubicEaseOut = function(time) {
     time -= 1;
     return (time * time * time + 1);
 };
-ccs.TweenFunction.cubicEaseInOut = function (time) {
+ccs.TweenFunction.cubicEaseInOut = function(time) {
     time = time * 2;
     if (time < 1)
         return 0.5 * time * time * time;
@@ -250,14 +250,14 @@ ccs.TweenFunction.cubicEaseInOut = function (time) {
 
 
 // Quart Ease
-ccs.TweenFunction.quartEaseIn = function (time) {
+ccs.TweenFunction.quartEaseIn = function(time) {
     return time * time * time * time;
 };
-ccs.TweenFunction.quartEaseOut = function (time) {
+ccs.TweenFunction.quartEaseOut = function(time) {
     time -= 1;
     return -(time * time * time * time - 1);
 };
-ccs.TweenFunction.quartEaseInOut = function (time) {
+ccs.TweenFunction.quartEaseInOut = function(time) {
     time = time * 2;
     if (time < 1)
         return 0.5 * time * time * time * time;
@@ -267,14 +267,14 @@ ccs.TweenFunction.quartEaseInOut = function (time) {
 
 
 // Quint Ease
-ccs.TweenFunction.quintEaseIn = function (time) {
+ccs.TweenFunction.quintEaseIn = function(time) {
     return time * time * time * time * time;
 };
-ccs.TweenFunction.quintEaseOut = function (time) {
+ccs.TweenFunction.quintEaseOut = function(time) {
     time -= 1;
     return (time * time * time * time * time + 1);
 };
-ccs.TweenFunction.quintEaseInOut = function (time) {
+ccs.TweenFunction.quintEaseInOut = function(time) {
     time = time * 2;
     if (time < 1)
         return 0.5 * time * time * time * time * time;
@@ -284,13 +284,13 @@ ccs.TweenFunction.quintEaseInOut = function (time) {
 
 
 // Expo Ease
-ccs.TweenFunction.expoEaseIn = function (time) {
+ccs.TweenFunction.expoEaseIn = function(time) {
     return time == 0 ? 0 : Math.pow(2, 10 * (time - 1)) - 0.001;
 };
-ccs.TweenFunction.expoEaseOut = function (time) {
+ccs.TweenFunction.expoEaseOut = function(time) {
     return time == 1 ? 1 : (-Math.pow(2, -10 * time) + 1);
 };
-ccs.TweenFunction.expoEaseInOut = function (time) {
+ccs.TweenFunction.expoEaseInOut = function(time) {
     time /= 0.5;
     if (time < 1) {
         time = 0.5 * Math.pow(2, 10 * (time - 1));
@@ -304,14 +304,14 @@ ccs.TweenFunction.expoEaseInOut = function (time) {
 
 
 // Circ Ease
-ccs.TweenFunction.circEaseIn = function (time) {
+ccs.TweenFunction.circEaseIn = function(time) {
     return -1 * (Math.sqrt(1 - time * time) - 1);
 };
-ccs.TweenFunction.circEaseOut = function (time) {
+ccs.TweenFunction.circEaseOut = function(time) {
     time = time - 1;
     return Math.sqrt(1 - time * time);
 };
-ccs.TweenFunction.circEaseInOut = function (time) {
+ccs.TweenFunction.circEaseInOut = function(time) {
     time = time * 2;
     if (time < 1)
         return -0.5 * (Math.sqrt(1 - time * time) - 1);
@@ -321,7 +321,7 @@ ccs.TweenFunction.circEaseInOut = function (time) {
 
 
 // Elastic Ease
-ccs.TweenFunction.elasticEaseIn = function (time, easingParam) {
+ccs.TweenFunction.elasticEaseIn = function(time, easingParam) {
     var period = 0.3;
 
     if (easingParam.length > 0) {
@@ -340,7 +340,7 @@ ccs.TweenFunction.elasticEaseIn = function (time, easingParam) {
 
     return newT;
 };
-ccs.TweenFunction.elasticEaseOut = function (time, easingParam) {
+ccs.TweenFunction.elasticEaseOut = function(time, easingParam) {
     var period = 0.3;
 
     if (easingParam.length > 0) {
@@ -358,7 +358,7 @@ ccs.TweenFunction.elasticEaseOut = function (time, easingParam) {
 
     return newT;
 };
-ccs.TweenFunction.elasticEaseInOut = function (time, easingParam) {
+ccs.TweenFunction.elasticEaseInOut = function(time, easingParam) {
     var period = 0.3;
 
     if (easingParam.length > 0) {
@@ -390,17 +390,17 @@ ccs.TweenFunction.elasticEaseInOut = function (time, easingParam) {
 
 
 // Back Ease
-ccs.TweenFunction.backEaseIn = function (time) {
+ccs.TweenFunction.backEaseIn = function(time) {
     var overshoot = 1.70158;
     return time * time * ((overshoot + 1) * time - overshoot);
 };
-ccs.TweenFunction.backEaseOut = function (time) {
+ccs.TweenFunction.backEaseOut = function(time) {
     var overshoot = 1.70158;
 
     time = time - 1;
     return time * time * ((overshoot + 1) * time + overshoot) + 1;
 };
-ccs.TweenFunction.backEaseInOut = function (time) {
+ccs.TweenFunction.backEaseInOut = function(time) {
     var overshoot = 1.70158 * 1.525;
 
     time = time * 2;
@@ -415,7 +415,7 @@ ccs.TweenFunction.backEaseInOut = function (time) {
 
 
 // Bounce Ease
-ccs.bounceTime = function (time) {
+ccs.bounceTime = function(time) {
     if (time < 1 / 2.75) {
         return 7.5625 * time * time;
     } else if (time < 2 / 2.75) {
@@ -429,15 +429,15 @@ ccs.bounceTime = function (time) {
     time -= 2.625 / 2.75;
     return 7.5625 * time * time + 0.984375;
 };
-ccs.TweenFunction.bounceEaseIn = function (time) {
+ccs.TweenFunction.bounceEaseIn = function(time) {
     return 1 - ccs.bounceTime(1 - time);
 };
 
-ccs.TweenFunction.bounceEaseOut = function (time) {
+ccs.TweenFunction.bounceEaseOut = function(time) {
     return ccs.bounceTime(time);
 };
 
-ccs.TweenFunction.bounceEaseInOut = function (time) {
+ccs.TweenFunction.bounceEaseInOut = function(time) {
     var newT = 0;
     if (time < 0.5) {
         time = time * 2;
@@ -452,7 +452,7 @@ ccs.TweenFunction.bounceEaseInOut = function (time) {
 
 
 // Custom Ease
-ccs.TweenFunction.customEase = function (time, easingParam) {
+ccs.TweenFunction.customEase = function(time, easingParam) {
     if (easingParam.length > 0) {
         var tt = 1 - time;
         return easingParam[1] * tt * tt * tt + 3 * easingParam[3] * time * tt * tt + 3 * easingParam[5] * time * time * tt + easingParam[7] * time * time * time;

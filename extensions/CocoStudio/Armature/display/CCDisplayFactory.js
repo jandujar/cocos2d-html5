@@ -23,22 +23,22 @@
  ****************************************************************************/
 
 ccs.DisplayFactory = ccs.DisplayFactory || ccs.Class.extend({});
-ccs.DisplayFactory.addDisplay = function (bone, decoDisplay, displayData) {
+ccs.DisplayFactory.addDisplay = function(bone, decoDisplay, displayData) {
     switch (displayData.displayType) {
         case ccs.DisplayType.sprite:
             this.addSpriteDisplay(bone, decoDisplay, displayData);
             break;
-        case  ccs.DisplayType.particle:
+        case ccs.DisplayType.particle:
             this.addParticleDisplay(bone, decoDisplay, displayData);
             break;
-        case  ccs.DisplayType.armature:
+        case ccs.DisplayType.armature:
             this.addArmatureDisplay(bone, decoDisplay, displayData);
             break;
         default:
             break;
     }
 };
-ccs.DisplayFactory.createDisplay = function (bone, decoDisplay) {
+ccs.DisplayFactory.createDisplay = function(bone, decoDisplay) {
     switch (decoDisplay.getDisplayData().displayType) {
         case ccs.DisplayType.sprite:
             this.createSpriteDisplay(bone, decoDisplay);
@@ -53,16 +53,16 @@ ccs.DisplayFactory.createDisplay = function (bone, decoDisplay) {
             break;
     }
 };
-ccs.DisplayFactory._helpTransform =  {a:1, b:0, c:0, d:1, tx:0, ty:0};
-ccs.DisplayFactory.updateDisplay = function (bone,dt, dirty) {
+ccs.DisplayFactory._helpTransform = {a: 1, b: 0, c: 0, d: 1, tx: 0, ty: 0};
+ccs.DisplayFactory.updateDisplay = function(bone, dt, dirty) {
     var display = bone.getDisplayRenderNode();
-    if(!display)
+    if (!display)
         return;
 
     switch (bone.getDisplayRenderNodeType()) {
         case ccs.DisplayType.sprite:
-            if (dirty){
-                if(bone.isBlendDirty()){
+            if (dirty) {
+                if (bone.isBlendDirty()) {
                     display.setBlendFunc(bone.getBlendFunc());
                     bone.setBlendDirty(false);
                 }
@@ -94,7 +94,7 @@ ccs.DisplayFactory.updateDisplay = function (bone,dt, dirty) {
                 helpTransform.d = displayTransform.d;
                 helpTransform.tx = displayTransform.tx;
                 helpTransform.ty = displayTransform.ty;
-                var anchorPoint =  node.getAnchorPointInPoints();
+                var anchorPoint = node.getAnchorPointInPoints();
                 anchorPoint = cc.PointApplyAffineTransform(anchorPoint, helpTransform);
                 helpTransform.tx = anchorPoint.x;
                 helpTransform.ty = anchorPoint.y;
@@ -105,28 +105,28 @@ ccs.DisplayFactory.updateDisplay = function (bone,dt, dirty) {
     }
 
 };
-ccs.DisplayFactory.addSpriteDisplay = function (bone, decoDisplay, displayData) {
+ccs.DisplayFactory.addSpriteDisplay = function(bone, decoDisplay, displayData) {
     var sdp = new ccs.SpriteDisplayData();
     sdp.copy(displayData);
     decoDisplay.setDisplayData(sdp);
     this.createSpriteDisplay(bone, decoDisplay);
 };
 
-ccs.DisplayFactory.createSpriteDisplay = function (bone, decoDisplay) {
+ccs.DisplayFactory.createSpriteDisplay = function(bone, decoDisplay) {
     var skin = null;
     var displayData = decoDisplay.getDisplayData();
     //! remove .xxx
     var textureName = displayData.displayName;
-    var startPos = textureName.lastIndexOf(".");
+    var startPos = textureName.lastIndexOf('.');
     if (startPos != -1) {
         textureName = textureName.substring(0, startPos);
     }
     //! create display
-    if (textureName == "") {
+    if (textureName == '') {
         skin = ccs.Skin.create();
     }
     else {
-        skin = ccs.Skin.createWithSpriteFrameName(textureName + ".png");
+        skin = ccs.Skin.createWithSpriteFrameName(textureName + '.png');
     }
     decoDisplay.setDisplay(skin);
     skin.setBone(bone);
@@ -142,9 +142,9 @@ ccs.DisplayFactory.createSpriteDisplay = function (bone, decoDisplay) {
 
 };
 
-ccs.DisplayFactory.initSpriteDisplay = function(bone, decoDisplay, displayName, skin){
+ccs.DisplayFactory.initSpriteDisplay = function(bone, decoDisplay, displayName, skin) {
     var textureName = displayName;
-    var startPos = textureName.lastIndexOf(".");
+    var startPos = textureName.lastIndexOf('.');
     if (startPos != -1) {
         textureName = textureName.substring(0, startPos);
     }
@@ -154,7 +154,7 @@ ccs.DisplayFactory.initSpriteDisplay = function(bone, decoDisplay, displayName, 
         skin.setAnchorPoint(textureData.pivotX, textureData.pivotY);
     }
     if (ccs.ENABLE_PHYSICS_CHIPMUNK_DETECT || ccs.ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX) {
-        if (textureData && textureData.contourDataList.length > 0)        {
+        if (textureData && textureData.contourDataList.length > 0) {
             var colliderDetector = ccs.ColliderDetector.create(bone);
             colliderDetector.addContourDataList(textureData.contourDataList);
             decoDisplay.setColliderDetector(colliderDetector);
@@ -162,41 +162,41 @@ ccs.DisplayFactory.initSpriteDisplay = function(bone, decoDisplay, displayName, 
     }
 };
 
-ccs.DisplayFactory.addArmatureDisplay = function (bone, decoDisplay, displayData) {
+ccs.DisplayFactory.addArmatureDisplay = function(bone, decoDisplay, displayData) {
     var adp = new ccs.ArmatureDisplayData();
     adp.copy(displayData);
     decoDisplay.setDisplayData(adp);
 
     this.createArmatureDisplay(bone, decoDisplay);
 };
-ccs.DisplayFactory.createArmatureDisplay = function (bone, decoDisplay) {
+ccs.DisplayFactory.createArmatureDisplay = function(bone, decoDisplay) {
     var displayData = decoDisplay.getDisplayData();
     var armature = ccs.Armature.create(displayData.displayName, bone);
     decoDisplay.setDisplay(armature);
 };
-ccs.DisplayFactory.updateArmatureDisplay = function (bone, armature, dt) {
+ccs.DisplayFactory.updateArmatureDisplay = function(bone, armature, dt) {
     if (armature) {
         armature.sortAllChildren();
         armature.update(dt);
     }
 };
 
-ccs.DisplayFactory.addParticleDisplay = function (bone, decoDisplay, displayData) {
+ccs.DisplayFactory.addParticleDisplay = function(bone, decoDisplay, displayData) {
     var adp = new ccs.ParticleDisplayData();
     adp.copy(displayData);
     decoDisplay.setDisplayData(adp);
     this.createParticleDisplay(bone, decoDisplay);
 };
-ccs.DisplayFactory.createParticleDisplay = function (bone, decoDisplay) {
+ccs.DisplayFactory.createParticleDisplay = function(bone, decoDisplay) {
     var displayData = decoDisplay.getDisplayData();
     var system = cc.ParticleSystem.create(displayData.displayName);
     var armature = bone.getArmature();
-    if (armature)    {
+    if (armature) {
         system.setParent(bone.getArmature());
     }
     decoDisplay.setDisplay(system);
 };
-ccs.DisplayFactory.updateParticleDisplay = function (bone, particleSystem, dt) {
+ccs.DisplayFactory.updateParticleDisplay = function(bone, particleSystem, dt) {
     var node = new ccs.BaseData();
     ccs.TransformHelp.matrixToNode(bone.nodeToArmatureTransform(), node);
     particleSystem.setPosition(node.x, node.y);

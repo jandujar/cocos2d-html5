@@ -59,21 +59,21 @@ ccs.DisplayType = {
  * @extends ccs.Class
  */
 ccs.BaseData = ccs.Class.extend(/** @lends ccs.BaseData# */{
-    x:0,
-    y:0,
-    zOrder:0,
-    skewX:0,
-    skewY:0,
-    scaleX:1,
-    scaleY:1,
-    tweenRotate:0,
-    isUseColorInfo:false,
-    r:255,
-    g:255,
-    b:255,
-    a:255,
+    x: 0,
+    y: 0,
+    zOrder: 0,
+    skewX: 0,
+    skewY: 0,
+    scaleX: 1,
+    scaleY: 1,
+    tweenRotate: 0,
+    isUseColorInfo: false,
+    r: 255,
+    g: 255,
+    b: 255,
+    a: 255,
 
-    ctor:function () {
+    ctor: function() {
         this.x = 0;
         this.y = 0;
         this.zOrder = 0;
@@ -91,7 +91,7 @@ ccs.BaseData = ccs.Class.extend(/** @lends ccs.BaseData# */{
      * Copy data from node
      * @param {ccs.BaseData} node
      */
-    copy:function (node) {
+    copy: function(node) {
         this.x = node.x;
         this.y = node.y;
         this.zOrder = node.zOrder;
@@ -111,7 +111,7 @@ ccs.BaseData = ccs.Class.extend(/** @lends ccs.BaseData# */{
      * color setter
      * @param {cc.Color4B} color
      */
-    setColor:function(color){
+    setColor: function(color) {
         this.r = color.r;
         this.g = color.g;
         this.b = color.b;
@@ -120,9 +120,9 @@ ccs.BaseData = ccs.Class.extend(/** @lends ccs.BaseData# */{
 
     /**
      * color getter
-     * @returns {cc.Color4B}
+     * @return {cc.Color4B}
      */
-    getColor:function(){
+    getColor: function() {
         return cc.c4b(this.r, this.g, this.b, this.a);
     },
 
@@ -132,7 +132,7 @@ ccs.BaseData = ccs.Class.extend(/** @lends ccs.BaseData# */{
      * @param {ccs.BaseData} to
      * @param {Boolean} limit
      */
-    subtract:function (from, to, limit) {
+    subtract: function(from, to, limit) {
         this.x = to.x - from.x;
         this.y = to.y - from.y;
         this.scaleX = to.scaleX - from.scaleX;
@@ -179,20 +179,20 @@ ccs.BaseData = ccs.Class.extend(/** @lends ccs.BaseData# */{
  * @extends ccs.Class
  */
 ccs.DisplayData = ccs.Class.extend(/** @lends ccs.DisplayData# */{
-    displayType:ccs.DisplayType.max,
-    displayName:"",
-    ctor:function () {
+    displayType: ccs.DisplayType.max,
+    displayName: '',
+    ctor: function() {
         this.displayType = ccs.DisplayType.max;
     },
     /**
      * change display name to texture type
      * @param {String} displayName
-     * @returns {String}
+     * @return {String}
      */
-    changeDisplayToTexture:function (displayName) {
+    changeDisplayToTexture: function(displayName) {
         // remove .xxx
         var textureName = displayName;
-        var startPos = textureName.lastIndexOf(".");
+        var startPos = textureName.lastIndexOf('.');
 
         if (startPos != -1) {
             textureName = textureName.substring(0, startPos);
@@ -203,7 +203,7 @@ ccs.DisplayData = ccs.Class.extend(/** @lends ccs.DisplayData# */{
      * copy data
      * @param {ccs.DisplayData} displayData
      */
-    copy:function (displayData) {
+    copy: function(displayData) {
         this.displayName = displayData.displayName;
         this.displayType = displayData.displayType;
     }
@@ -215,8 +215,8 @@ ccs.DisplayData = ccs.Class.extend(/** @lends ccs.DisplayData# */{
  * @extends ccs.DisplayData
  */
 ccs.SpriteDisplayData = ccs.DisplayData.extend(/** @lends ccs.SpriteDisplayData# */{
-    skinData:null,
-    ctor:function () {
+    skinData: null,
+    ctor: function() {
         this.skinData = new ccs.BaseData();
         this.displayType = ccs.DisplayType.sprite;
     },
@@ -224,8 +224,8 @@ ccs.SpriteDisplayData = ccs.DisplayData.extend(/** @lends ccs.SpriteDisplayData#
      * copy data
      * @param {ccs.SpriteDisplayData} displayData
      */
-    copy:function (displayData) {
-        ccs.DisplayData.prototype.copy.call(this,displayData);
+    copy: function(displayData) {
+        ccs.DisplayData.prototype.copy.call(this, displayData);
         this.skinData = displayData.skinData;
     }
 });
@@ -236,9 +236,9 @@ ccs.SpriteDisplayData = ccs.DisplayData.extend(/** @lends ccs.SpriteDisplayData#
  * @extends ccs.DisplayData
  */
 ccs.ArmatureDisplayData = ccs.DisplayData.extend(/** @lends ccs.ArmatureDisplayData# */{
-    displayName:"",
-    ctor:function () {
-        this.displayName = "";
+    displayName: '',
+    ctor: function() {
+        this.displayName = '';
         this.displayType = ccs.DisplayType.armature;
     }
 });
@@ -249,7 +249,7 @@ ccs.ArmatureDisplayData = ccs.DisplayData.extend(/** @lends ccs.ArmatureDisplayD
  * @extends ccs.DisplayData
  */
 ccs.ParticleDisplayData = ccs.DisplayData.extend(/** @lends ccs.ParticleDisplayData# */{
-    ctor:function () {
+    ctor: function() {
         this.displayType = ccs.DisplayType.particle;
     }
 });
@@ -260,34 +260,34 @@ ccs.ParticleDisplayData = ccs.DisplayData.extend(/** @lends ccs.ParticleDisplayD
  * @extends ccs.BaseData
  */
 ccs.BoneData = ccs.BaseData.extend(/** @lends ccs.BoneData# */{
-    displayDataList:null,
-    name:"",
-    parentName:"",
-    boneDataTransform:null,
-    ctor:function () {
+    displayDataList: null,
+    name: '',
+    parentName: '',
+    boneDataTransform: null,
+    ctor: function() {
         this.displayDataList = [];
-        this.name = "";
-        this.parentName = "";
+        this.name = '';
+        this.parentName = '';
         this.boneDataTransform = null;
 
     },
-    init:function () {
+    init: function() {
 
     },
     /**
      * add display data
      * @param {ccs.DisplayData} displayData
      */
-    addDisplayData:function (displayData) {
+    addDisplayData: function(displayData) {
         this.displayDataList.push(displayData);
     },
 
     /**
      * get display data
      * @param {Number} index
-     * @returns {ccs.DisplayData}
+     * @return {ccs.DisplayData}
      */
-    getDisplayData:function (index) {
+    getDisplayData: function(index) {
         return this.displayDataList[index];
     }
 });
@@ -298,37 +298,37 @@ ccs.BoneData = ccs.BaseData.extend(/** @lends ccs.BoneData# */{
  * @extends ccs.Class
  */
 ccs.ArmatureData = ccs.Class.extend(/** @lends ccs.ArmatureData# */{
-    boneDataDic:null,
-    name:"",
-    dataVersion:0.1,
-    ctor:function () {
+    boneDataDic: null,
+    name: '',
+    dataVersion: 0.1,
+    ctor: function() {
         this.boneDataDic = {};
-        this.name = "";
+        this.name = '';
         this.dataVersion = 0.1;
     },
-    init:function () {
+    init: function() {
         return true;
     },
     /**
      * add bone data
      * @param {ccs.BoneData} boneData
      */
-    addBoneData:function (boneData) {
+    addBoneData: function(boneData) {
         this.boneDataDic[boneData.name] = boneData;
     },
     /**
      * get bone datas
-     * @returns {Object}
+     * @return {Object}
      */
-    getBoneDataDic:function () {
+    getBoneDataDic: function() {
         return this.boneDataDic;
     },
     /**
      * get bone data by bone name
      * @param {String} boneName
-     * @returns {ccs.BoneData}
+     * @return {ccs.BoneData}
      */
-    getBoneData:function (boneName) {
+    getBoneData: function(boneName) {
         return this.boneDataDic[boneName];
     }
 });
@@ -339,29 +339,29 @@ ccs.ArmatureData = ccs.Class.extend(/** @lends ccs.ArmatureData# */{
  * @extends ccs.BaseData
  */
 ccs.FrameData = ccs.BaseData.extend(/** @lends ccs.FrameData# */{
-        duration:0,
-        tweenEasing:0,
+        duration: 0,
+        tweenEasing: 0,
         easingParamNumber: 0,
         easingParams: null,
-        displayIndex:-1,
-        movement:"",
-        event:"",
-        sound:"",
-        soundEffect:"",
-        blendFunc:0,
-        frameID:0,
-        isTween:true,
-        ctor:function () {
+        displayIndex: -1,
+        movement: '',
+        event: '',
+        sound: '',
+        soundEffect: '',
+        blendFunc: 0,
+        frameID: 0,
+        isTween: true,
+        ctor: function() {
             ccs.BaseData.prototype.ctor.call(this);
             this.duration = 1;
             this.tweenEasing = ccs.TweenType.linear;
             this.easingParamNumber = 0;
             this.easingParams = [];
             this.displayIndex = 0;
-            this.movement = "";
-            this.event = "";
-            this.sound = "";
-            this.soundEffect = "";
+            this.movement = '';
+            this.event = '';
+            this.sound = '';
+            this.soundEffect = '';
             this.blendFunc = new cc.BlendFunc(cc.BLEND_SRC, cc.BLEND_DST);
             this.frameID = 0;
             this.isTween = true;
@@ -371,7 +371,7 @@ ccs.FrameData = ccs.BaseData.extend(/** @lends ccs.FrameData# */{
          * copy data
          * @param frameData
          */
-        copy:function (frameData) {
+        copy: function(frameData) {
             ccs.BaseData.prototype.copy.call(this, frameData);
             this.duration = frameData.duration;
             this.tweenEasing = frameData.tweenEasing;
@@ -385,8 +385,8 @@ ccs.FrameData = ccs.BaseData.extend(/** @lends ccs.FrameData# */{
 
             this.easingParamNumber = frameData.easingParamNumber;
             this.easingParams = [];
-            if (this.easingParamNumber != 0)            {
-                for (var i = 0; i<this.easingParamNumber; i++)                {
+            if (this.easingParamNumber != 0) {
+                for (var i = 0; i < this.easingParamNumber; i++) {
                     this.easingParams[i] = frameData.easingParams[i];
                 }
             }
@@ -400,34 +400,34 @@ ccs.FrameData = ccs.BaseData.extend(/** @lends ccs.FrameData# */{
  * @extends ccs.Class
  */
 ccs.MovementBoneData = ccs.Class.extend(/** @lends ccs.MovementBoneData# */{
-    delay:0,
-    scale:1,
-    duration:0,
-    frameList:null,
-    name:"",
-    ctor:function () {
+    delay: 0,
+    scale: 1,
+    duration: 0,
+    frameList: null,
+    name: '',
+    ctor: function() {
         this.delay = 0;
         this.scale = 1;
         this.duration = 0;
         this.frameList = [];
-        this.name = "";
+        this.name = '';
     },
-    init:function () {
+    init: function() {
         this.frameList = [];
     },
     /**
      * add frame data
      * @param {ccs.FrameData} frameData
      */
-    addFrameData:function (frameData) {
+    addFrameData: function(frameData) {
         this.frameList.push(frameData);
     },
     /**
      * get frame data
      * @param {Number} index
-     * @returns {ccs.FrameData}
+     * @return {ccs.FrameData}
      */
-    getFrameData:function (index) {
+    getFrameData: function(index) {
         return this.frameList[index];
     }
 });
@@ -438,16 +438,16 @@ ccs.MovementBoneData = ccs.Class.extend(/** @lends ccs.MovementBoneData# */{
  * @extends ccs.Class
  */
 ccs.MovementData = ccs.Class.extend(/** @lends ccs.MovementData# */{
-    movBoneDataDic:null,
-    duration:0,
-    scale:1,
-    durationTo:0,
-    durationTween:ccs.TweenType.linear,
-    loop:true,
-    tweenEasing:2,
-    name:"",
-    ctor:function () {
-        this.name = "";
+    movBoneDataDic: null,
+    duration: 0,
+    scale: 1,
+    durationTo: 0,
+    durationTween: ccs.TweenType.linear,
+    loop: true,
+    tweenEasing: 2,
+    name: '',
+    ctor: function() {
+        this.name = '';
         this.duration = 0;
         this.scale = 1;
         this.durationTo = 0;
@@ -461,17 +461,17 @@ ccs.MovementData = ccs.Class.extend(/** @lends ccs.MovementData# */{
      * add movement bone data
      * @param {ccs.MovementBoneData} movBoneData
      */
-    addMovementBoneData:function (movBoneData) {
-        this.movBoneDataDic[ movBoneData.name] = movBoneData;
+    addMovementBoneData: function(movBoneData) {
+        this.movBoneDataDic[movBoneData.name] = movBoneData;
     },
 
     /**
      * get movement bone data
      * @param {String} boneName
-     * @returns {ccs.MovementBoneData}
+     * @return {ccs.MovementBoneData}
      */
-    getMovementBoneData:function (boneName) {
-        return  this.movBoneDataDic[boneName];
+    getMovementBoneData: function(boneName) {
+        return this.movBoneDataDic[boneName];
     }
 });
 
@@ -481,10 +481,10 @@ ccs.MovementData = ccs.Class.extend(/** @lends ccs.MovementData# */{
  * @extends ccs.Class
  */
 ccs.AnimationData = ccs.Class.extend(/** @lends ccs.AnimationData# */{
-    moveDataDic:null,
-    movementNames:null,
-    name:"",
-    ctor:function () {
+    moveDataDic: null,
+    movementNames: null,
+    name: '',
+    ctor: function() {
         this.moveDataDic = {};
         this.movementNames = [];
     },
@@ -492,23 +492,23 @@ ccs.AnimationData = ccs.Class.extend(/** @lends ccs.AnimationData# */{
      * add movement data
      * @param {ccs.MovementData} moveData
      */
-    addMovement:function (moveData) {
+    addMovement: function(moveData) {
         this.moveDataDic[moveData.name] = moveData;
         this.movementNames.push(moveData.name);
     },
     /**
      * get movement data
      * @param {String} moveName
-     * @returns {ccs.MovementData}
+     * @return {ccs.MovementData}
      */
-    getMovement:function (moveName) {
+    getMovement: function(moveName) {
         return this.moveDataDic[moveName];
     },
     /**
      *
-     * @returns {Number}
+     * @return {Number}
      */
-    getMovementCount:function () {
+    getMovementCount: function() {
         return Object.keys(this.moveDataDic).length;
     }
 });
@@ -519,7 +519,7 @@ ccs.AnimationData = ccs.Class.extend(/** @lends ccs.AnimationData# */{
  * @param {Number} y
  * @constructor
  */
-ccs.ContourVertex2 = function (x, y) {
+ccs.ContourVertex2 = function(x, y) {
     this.x = x || 0;
     this.y = y || 0;
 };
@@ -530,12 +530,12 @@ ccs.ContourVertex2 = function (x, y) {
  * @extends ccs.Class
  */
 ccs.ContourData = ccs.Class.extend({
-    vertexList:null,
-    ctor:function () {
+    vertexList: null,
+    ctor: function() {
         this.vertexList = [];
     },
 
-    init:function () {
+    init: function() {
         this.vertexList = [];
         return true;
     },
@@ -544,7 +544,7 @@ ccs.ContourData = ccs.Class.extend({
      * add vertex
      * @param {cc.Point} p
      */
-    addVertex: function (p) {
+    addVertex: function(p) {
        var v = ccs.ContourVertex2(p.x, p.y);
        this.vertexList.push(v);
     }
@@ -556,22 +556,22 @@ ccs.ContourData = ccs.Class.extend({
  * @extends ccs.Class
  */
 ccs.TextureData = ccs.Class.extend(/** @lends ccs.TextureData# */{
-    height:0,
-    width:0,
-    pivotX:0,
-    pivotY:0,
-    name:"",
-    contourDataList:null,
-    ctor:function () {
+    height: 0,
+    width: 0,
+    pivotX: 0,
+    pivotY: 0,
+    name: '',
+    contourDataList: null,
+    ctor: function() {
         this.height = 0;
         this.width = 0;
         this.pivotX = 0.5;
         this.pivotY = 0.5;
-        this.name = "";
+        this.name = '';
         this.contourDataList = [];
     },
 
-    init:function () {
+    init: function() {
         this.contourDataList = [];
     },
 
@@ -579,16 +579,16 @@ ccs.TextureData = ccs.Class.extend(/** @lends ccs.TextureData# */{
      * set contourData
      * @param {ccs.ContourData} contourData
      */
-    addContourData:function (contourData) {
+    addContourData: function(contourData) {
         this.contourDataList.push(contourData);
     },
 
     /**
      * get contourData
      * @param {Number} index
-     * @returns {ccs.ContourData}
+     * @return {ccs.ContourData}
      */
-    getContourData:function (index) {
+    getContourData: function(index) {
         return this.contourDataList[index];
     }
 });

@@ -35,7 +35,7 @@ cc.SAXParser = cc.Class.extend(/** @lends cc.SAXParser# */{
     _xmlDict: null,
     _isSupportDOMParser: null,
 
-    ctor: function () {
+    ctor: function() {
         this._xmlDict = {};
 
         if (window.DOMParser) {
@@ -51,7 +51,7 @@ cc.SAXParser = cc.Class.extend(/** @lends cc.SAXParser# */{
      * @param {String} textxml plist xml contents
      * @return {Array} plist object array
      */
-    parse: function (textxml) {
+    parse: function(textxml) {
         var path = textxml;
         textxml = this.getList(textxml);
 
@@ -59,14 +59,14 @@ cc.SAXParser = cc.Class.extend(/** @lends cc.SAXParser# */{
 
         var plist = xmlDoc.documentElement;
         if (plist.tagName != 'plist')
-            throw "cocos2d: " + path + " is not a plist file or you forgot to preload the plist file";
+            throw 'cocos2d: ' + path + ' is not a plist file or you forgot to preload the plist file';
 
         // Get first real node
         var node = null;
         for (var i = 0, len = plist.childNodes.length; i < len; i++) {
             node = plist.childNodes[i];
             if (node.nodeType == 1)
-                break
+                break;
         }
         xmlDoc = null;
 
@@ -78,32 +78,32 @@ cc.SAXParser = cc.Class.extend(/** @lends cc.SAXParser# */{
      * @param  {String} textxml  tilemap xml content
      * @return {Document} xml document
      */
-    tmxParse: function (textxml, isXMLString) {
+    tmxParse: function(textxml, isXMLString) {
         if ((isXMLString == null) || (isXMLString === false))
             textxml = this.getList(textxml);
 
         return this._parserXML(textxml);
     },
 
-    _parserXML: function (textxml, path) {
+    _parserXML: function(textxml, path) {
         // get a reference to the requested corresponding xml file
         var xmlDoc;
         if (this._isSupportDOMParser) {
-            xmlDoc = this._parser.parseFromString(textxml, "text/xml");
+            xmlDoc = this._parser.parseFromString(textxml, 'text/xml');
         } else {
             // Internet Explorer (untested!)
-            xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
-            xmlDoc.async = "false";
+            xmlDoc = new ActiveXObject('Microsoft.XMLDOM');
+            xmlDoc.async = 'false';
             xmlDoc.loadXML(textxml);
         }
 
         if (xmlDoc == null)
-            cc.log("cocos2d:xml " + path + " not found!");
+            cc.log('cocos2d:xml ' + path + ' not found!');
 
         return xmlDoc;
     },
 
-    _parseNode: function (node) {
+    _parseNode: function(node) {
         var data = null;
         switch (node.tagName) {
             case 'dict':
@@ -117,7 +117,7 @@ cc.SAXParser = cc.Class.extend(/** @lends cc.SAXParser# */{
                     data = node.firstChild.nodeValue;
                 else {
                     //handle Firefox's 4KB nodeValue limit
-                    data = "";
+                    data = '';
                     for (var i = 0; i < node.childNodes.length; i++)
                         data += node.childNodes[i].nodeValue;
                 }
@@ -139,7 +139,7 @@ cc.SAXParser = cc.Class.extend(/** @lends cc.SAXParser# */{
         return data;
     },
 
-    _parseArray: function (node) {
+    _parseArray: function(node) {
         var data = [];
         for (var i = 0, len = node.childNodes.length; i < len; i++) {
             var child = node.childNodes[i];
@@ -150,7 +150,7 @@ cc.SAXParser = cc.Class.extend(/** @lends cc.SAXParser# */{
         return data;
     },
 
-    _parseDict: function (node) {
+    _parseDict: function(node) {
         var data = {};
 
         var key = null;
@@ -172,7 +172,7 @@ cc.SAXParser = cc.Class.extend(/** @lends cc.SAXParser# */{
      * Preload plist file
      * @param {String} filePath
      */
-    preloadPlist: function (filePath) {
+    preloadPlist: function(filePath) {
         var filePath2 = cc.FileUtils.getInstance().fullPathForFilename(filePath);
 
         if (window.XMLHttpRequest) {
@@ -183,7 +183,7 @@ cc.SAXParser = cc.Class.extend(/** @lends cc.SAXParser# */{
 
         if (xmlhttp != null) {
             var that = this;
-            xmlhttp.onreadystatechange = function () {
+            xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4) {
                     if (xmlhttp.responseText) {
                         cc.Loader.getInstance().onResLoaded();
@@ -191,22 +191,22 @@ cc.SAXParser = cc.Class.extend(/** @lends cc.SAXParser# */{
                         xmlhttp = null;
                     } else {
                         cc.Loader.getInstance().onResLoaded();
-                        cc.log("cocos2d:There was a problem retrieving the xml data:" + xmlhttp.statusText);
+                        cc.log('cocos2d:There was a problem retrieving the xml data:' + xmlhttp.statusText);
                     }
                 }
             };
             // load xml
-            xmlhttp.open("GET", filePath2, true);
+            xmlhttp.open('GET', filePath2, true);
             xmlhttp.send(null);
         } else
-            throw "cocos2d:Your browser does not support XMLHTTP.";
+            throw 'cocos2d:Your browser does not support XMLHTTP.';
     },
 
     /**
      * Unload the preloaded plist from xmlList
      * @param {String} filePath
      */
-    unloadPlist: function (filePath) {
+    unloadPlist: function(filePath) {
         if (this._xmlDict.hasOwnProperty(filePath))
             delete this._xmlDict[filePath];
     },
@@ -216,9 +216,9 @@ cc.SAXParser = cc.Class.extend(/** @lends cc.SAXParser# */{
      * @param {String} filePath
      * @return {String}
      */
-    getName: function (filePath) {
-        var startPos = filePath.lastIndexOf("/", filePath.length) + 1;
-        var endPos = filePath.lastIndexOf(".", filePath.length);
+    getName: function(filePath) {
+        var startPos = filePath.lastIndexOf('/', filePath.length) + 1;
+        var endPos = filePath.lastIndexOf('.', filePath.length);
         return filePath.substring(startPos, endPos);
     },
 
@@ -227,8 +227,8 @@ cc.SAXParser = cc.Class.extend(/** @lends cc.SAXParser# */{
      * @param {String} filePath
      * @return {String}
      */
-    getExt: function (filePath) {
-        var startPos = filePath.lastIndexOf(".", filePath.length) + 1;
+    getExt: function(filePath) {
+        var startPos = filePath.lastIndexOf('.', filePath.length) + 1;
         return filePath.substring(startPos, filePath.length);
     },
 
@@ -237,7 +237,7 @@ cc.SAXParser = cc.Class.extend(/** @lends cc.SAXParser# */{
      * @param {String} key
      * @return {String} xml content
      */
-    getList: function (key) {
+    getList: function(key) {
         if (this._xmlDict != null) {
             return this._xmlDict[key];
         }
@@ -250,7 +250,7 @@ cc.SAXParser = cc.Class.extend(/** @lends cc.SAXParser# */{
  * @function
  * @return {cc.SAXParser}
  */
-cc.SAXParser.getInstance = function () {
+cc.SAXParser.getInstance = function() {
     if (!this._instance) {
         this._instance = new cc.SAXParser();
     }

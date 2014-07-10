@@ -33,7 +33,7 @@
  * @param {Number} tx
  * @param {Number} ty
  */
-cc.AffineTransform = function (a, b, c, d, tx, ty) {
+cc.AffineTransform = function(a, b, c, d, tx, ty) {
     this.a = a;
     this.b = b;
     this.c = c;
@@ -42,7 +42,7 @@ cc.AffineTransform = function (a, b, c, d, tx, ty) {
     this.ty = ty;
 };
 
-cc.__AffineTransformMake = function (a, b, c, d, tx, ty) {
+cc.__AffineTransformMake = function(a, b, c, d, tx, ty) {
     return {a: a, b: b, c: c, d: d, tx: tx, ty: ty};
 };
 
@@ -57,11 +57,11 @@ cc.__AffineTransformMake = function (a, b, c, d, tx, ty) {
  * @return {cc.AffineTransform}
  * Constructor
  */
-cc.AffineTransformMake = function (a, b, c, d, tx, ty) {
+cc.AffineTransformMake = function(a, b, c, d, tx, ty) {
     return {a: a, b: b, c: c, d: d, tx: tx, ty: ty};
 };
 
-cc.__PointApplyAffineTransform = function (point, t) {
+cc.__PointApplyAffineTransform = function(point, t) {
     return {x: t.a * point.x + t.c * point.y + t.tx, y: t.b * point.x + t.d * point.y + t.ty};
 };
 
@@ -72,16 +72,16 @@ cc.__PointApplyAffineTransform = function (point, t) {
  * @return {cc.Point}
  * Constructor
  */
-cc.PointApplyAffineTransform = function (point, t) {
+cc.PointApplyAffineTransform = function(point, t) {
     return {x: t.a * point.x + t.c * point.y + t.tx, y: t.b * point.x + t.d * point.y + t.ty};
 };
 
-cc._PointApplyAffineTransform = function (x, y, t) {
+cc._PointApplyAffineTransform = function(x, y, t) {
     return {x: t.a * x + t.c * y + t.tx,
         y: t.b * x + t.d * y + t.ty};
 };
 
-cc.__SizeApplyAffineTransform = function (size, t) {
+cc.__SizeApplyAffineTransform = function(size, t) {
     return {width: t.a * size.width + t.c * size.height, height: t.b * size.width + t.d * size.height};
 };
 
@@ -92,7 +92,7 @@ cc.__SizeApplyAffineTransform = function (size, t) {
  * @return {cc.Size}
  * Constructor
  */
-cc.SizeApplyAffineTransform = function (size, t) {
+cc.SizeApplyAffineTransform = function(size, t) {
     return {width: t.a * size.width + t.c * size.height, height: t.b * size.width + t.d * size.height};
 };
 
@@ -101,7 +101,7 @@ cc.SizeApplyAffineTransform = function (size, t) {
  * @return {cc.AffineTransform}
  * Constructor
  */
-cc.AffineTransformMakeIdentity = function () {
+cc.AffineTransformMakeIdentity = function() {
     return {a: 1.0, b: 0.0, c: 0.0, d: 1.0, tx: 0.0, ty: 0.0};
 };
 
@@ -110,7 +110,7 @@ cc.AffineTransformMakeIdentity = function () {
  * @return {cc.AffineTransform}
  * Constructor
  */
-cc.AffineTransformIdentity = function () {
+cc.AffineTransformIdentity = function() {
     return {a: 1.0, b: 0.0, c: 0.0, d: 1.0, tx: 0.0, ty: 0.0};
 };
 
@@ -121,7 +121,7 @@ cc.AffineTransformIdentity = function () {
  * @return {cc.Rect}
  * Constructor
  */
-cc.RectApplyAffineTransform = function (rect, anAffineTransform) {
+cc.RectApplyAffineTransform = function(rect, anAffineTransform) {
     var top = cc.rectGetMinY(rect);
     var left = cc.rectGetMinX(rect);
     var right = cc.rectGetMaxX(rect);
@@ -140,7 +140,7 @@ cc.RectApplyAffineTransform = function (rect, anAffineTransform) {
     return cc.rect(minX, minY, (maxX - minX), (maxY - minY));
 };
 
-cc._RectApplyAffineTransformIn = function(rect, anAffineTransform){
+cc._RectApplyAffineTransformIn = function(rect, anAffineTransform) {
     var top = cc.rectGetMinY(rect);
     var left = cc.rectGetMinX(rect);
     var right = cc.rectGetMaxX(rect);
@@ -167,11 +167,11 @@ cc._RectApplyAffineTransformIn = function(rect, anAffineTransform){
  * @function
  * @param {cc.AffineTransform} t
  * @param {Number} tx
- * @param {Number}ty
+ * @param {Number} ty
  * @return {cc.AffineTransform}
  * Constructor
  */
-cc.AffineTransformTranslate = function (t, tx, ty) {
+cc.AffineTransformTranslate = function(t, tx, ty) {
     return {
         a: t.a,
         b: t.b,
@@ -190,7 +190,7 @@ cc.AffineTransformTranslate = function (t, tx, ty) {
  * @return {cc.AffineTransform}
  * Constructor
  */
-cc.AffineTransformScale = function (t, sx, sy) {
+cc.AffineTransformScale = function(t, sx, sy) {
     return {a: t.a * sx, b: t.b * sx, c: t.c * sy, d: t.d * sy, tx: t.tx, ty: t.ty};
 };
 
@@ -201,7 +201,7 @@ cc.AffineTransformScale = function (t, sx, sy) {
  * @return {cc.AffineTransform}
  * Constructor
  */
-cc.AffineTransformRotate = function (aTransform, anAngle) {
+cc.AffineTransformRotate = function(aTransform, anAngle) {
     var fSin = Math.sin(anAngle);
     var fCos = Math.cos(anAngle);
 
@@ -220,7 +220,7 @@ cc.AffineTransformRotate = function (aTransform, anAngle) {
  * @return {cc.AffineTransform}
  * Constructor
  */
-cc.AffineTransformConcat = function (t1, t2) {
+cc.AffineTransformConcat = function(t1, t2) {
     return {a: t1.a * t2.a + t1.b * t2.c,                          //a
         b: t1.a * t2.b + t1.b * t2.d,                               //b
         c: t1.c * t2.a + t1.d * t2.c,                               //c
@@ -237,7 +237,7 @@ cc.AffineTransformConcat = function (t1, t2) {
  * @return {Boolean}
  * Constructor
  */
-cc.AffineTransformEqualToTransform = function (t1, t2) {
+cc.AffineTransformEqualToTransform = function(t1, t2) {
     return ((t1.a === t2.a) && (t1.b === t2.b) && (t1.c === t2.c) && (t1.d === t2.d) && (t1.tx === t2.tx) && (t1.ty === t2.ty));
 };
 
@@ -247,7 +247,7 @@ cc.AffineTransformEqualToTransform = function (t1, t2) {
  * @return {cc.AffineTransform}
  * Constructor
  */
-cc.AffineTransformInvert = function (t) {
+cc.AffineTransformInvert = function(t) {
     var determinant = 1 / (t.a * t.d - t.b * t.c);
     return {a: determinant * t.d, b: -determinant * t.b, c: -determinant * t.c, d: determinant * t.a,
         tx: determinant * (t.c * t.ty - t.d * t.tx), ty: determinant * (t.b * t.tx - t.a * t.ty)};

@@ -40,7 +40,7 @@ cc.Codec.GZip = function Jacob__GZip(data) {
  * @param string  The bytestream to decompress. Either an array of Integers between 0 and 255, or a String.
  * @return {String}
  */
-cc.Codec.GZip.gunzip = function (string) {
+cc.Codec.GZip.gunzip = function(string) {
     if (string.constructor === Array) {
     } else if (string.constructor === String) {
     }
@@ -48,7 +48,7 @@ cc.Codec.GZip.gunzip = function (string) {
     return gzip.gunzip()[0][0];
 };
 
-cc.Codec.GZip.HufNode = function () {
+cc.Codec.GZip.HufNode = function() {
     this.b0 = 0;
     this.b1 = 0;
     this.jump = null;
@@ -128,7 +128,7 @@ cc.Codec.GZip.border = [16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 1
  * gunzip
  * @return {Array}
  */
-cc.Codec.GZip.prototype.gunzip = function () {
+cc.Codec.GZip.prototype.gunzip = function() {
     this.outputArr = [];
 
     //convertToByteArray(input);
@@ -138,7 +138,7 @@ cc.Codec.GZip.prototype.gunzip = function () {
     return this.unzipped;
 };
 
-cc.Codec.GZip.prototype.readByte = function () {
+cc.Codec.GZip.prototype.readByte = function() {
     this.bits += 8;
     if (this.bytepos < this.data.length) {
         //return this.data[this.bytepos++]; // Array
@@ -148,11 +148,11 @@ cc.Codec.GZip.prototype.readByte = function () {
     }
 };
 
-cc.Codec.GZip.prototype.byteAlign = function () {
+cc.Codec.GZip.prototype.byteAlign = function() {
     this.bb = 1;
 };
 
-cc.Codec.GZip.prototype.readBit = function () {
+cc.Codec.GZip.prototype.readBit = function() {
     var carry;
     this.bits++;
     carry = (this.bb & 1);
@@ -165,7 +165,7 @@ cc.Codec.GZip.prototype.readBit = function () {
     return carry;
 };
 
-cc.Codec.GZip.prototype.readBits = function (a) {
+cc.Codec.GZip.prototype.readBits = function(a) {
     var res = 0,
         i = a;
 
@@ -175,25 +175,25 @@ cc.Codec.GZip.prototype.readBits = function (a) {
     return res;
 };
 
-cc.Codec.GZip.prototype.flushBuffer = function () {
+cc.Codec.GZip.prototype.flushBuffer = function() {
     this.bIdx = 0;
 };
 
-cc.Codec.GZip.prototype.addBuffer = function (a) {
+cc.Codec.GZip.prototype.addBuffer = function(a) {
     this.buf32k[this.bIdx++] = a;
     this.outputArr.push(String.fromCharCode(a));
     if (this.bIdx == 0x8000) this.bIdx = 0;
 };
 
-cc.Codec.GZip.prototype.IsPat = function () {
+cc.Codec.GZip.prototype.IsPat = function() {
     while (1) {
-        if (this.fpos[this.len] >= this.fmax)       return -1;
+        if (this.fpos[this.len] >= this.fmax) return -1;
         if (this.flens[this.fpos[this.len]] == this.len) return this.fpos[this.len]++;
         this.fpos[this.len]++;
     }
 };
 
-cc.Codec.GZip.prototype.Rec = function () {
+cc.Codec.GZip.prototype.Rec = function() {
     var curplace = this.Places[this.treepos];
     var tmp;
     //if (this.debug) document.write("<br>len:"+this.len+" treepos:"+this.treepos);
@@ -234,7 +234,7 @@ cc.Codec.GZip.prototype.Rec = function () {
     return 0;
 };
 
-cc.Codec.GZip.prototype.CreateTree = function (currentTree, numval, lengths, show) {
+cc.Codec.GZip.prototype.CreateTree = function(currentTree, numval, lengths, show) {
     var i;
     /* Create the Huffman decode tree/table */
     //if (this.debug) document.write("currentTree "+currentTree+" numval "+numval+" lengths "+lengths+" show "+show);
@@ -259,7 +259,7 @@ cc.Codec.GZip.prototype.CreateTree = function (currentTree, numval, lengths, sho
     return 0;
 };
 
-cc.Codec.GZip.prototype.DecodeValue = function (currentTree) {
+cc.Codec.GZip.prototype.DecodeValue = function(currentTree) {
     var len, i,
         xtreepos = 0,
         X = currentTree[xtreepos],
@@ -298,7 +298,7 @@ cc.Codec.GZip.prototype.DecodeValue = function (currentTree) {
     return -1;
 };
 
-cc.Codec.GZip.prototype.DeflateLoop = function () {
+cc.Codec.GZip.prototype.DeflateLoop = function() {
     var last, c, type, i, len;
     do {
         last = this.readBit();
@@ -316,7 +316,7 @@ cc.Codec.GZip.prototype.DeflateLoop = function () {
             cSum |= (this.readByte() << 8);
 
             if (((blockLen ^ ~cSum) & 0xffff)) {
-                document.write("BlockLen checksum mismatch\n"); // FIXME: use throw
+                document.write('BlockLen checksum mismatch\n'); // FIXME: use throw
             }
             while (blockLen--) {
                 c = this.readByte();
@@ -516,7 +516,7 @@ cc.Codec.GZip.prototype.DeflateLoop = function () {
     return 0;
 };
 
-cc.Codec.GZip.prototype.unzipFile = function (name) {
+cc.Codec.GZip.prototype.unzipFile = function(name) {
     var i;
     this.gunzip();
     for (i = 0; i < this.unzipped.length; i++) {
@@ -526,7 +526,7 @@ cc.Codec.GZip.prototype.unzipFile = function (name) {
     }
 };
 
-cc.Codec.GZip.prototype.nextFile = function () {
+cc.Codec.GZip.prototype.nextFile = function() {
     // if (this.debug) alert("NEXTFILE");
 
     this.outputArr = [];
@@ -541,14 +541,14 @@ cc.Codec.GZip.prototype.nextFile = function () {
         // if (this.debug) alert("GEONExT-GZIP");
         this.DeflateLoop();
         // if (this.debug) alert(this.outputArr.join(''));
-        this.unzipped[this.files] = [this.outputArr.join(''), "geonext.gxt"];
+        this.unzipped[this.files] = [this.outputArr.join(''), 'geonext.gxt'];
         this.files++;
     }
     if (tmp[0] == 0x1f && tmp[1] == 0x8b) { //GZIP
         // if (this.debug) alert("GZIP");
         this.skipdir();
         // if (this.debug) alert(this.outputArr.join(''));
-        this.unzipped[this.files] = [this.outputArr.join(''), "file"];
+        this.unzipped[this.files] = [this.outputArr.join(''), 'file'];
         this.files++;
     }
     if (tmp[0] == 0x50 && tmp[1] == 0x4b) { //ZIP
@@ -602,7 +602,7 @@ cc.Codec.GZip.prototype.nextFile = function () {
             this.nameBuf = [];
             while (filelen--) {
                 var c = this.readByte();
-                if (c == "/" | c == ":") {
+                if (c == '/' | c == ':') {
                     i = 0;
                 } else if (i < cc.Codec.GZip.NAMEMAX - 1) {
                     this.nameBuf[i++] = String.fromCharCode(c);
@@ -633,7 +633,7 @@ cc.Codec.GZip.prototype.nextFile = function () {
     }
 };
 
-cc.Codec.GZip.prototype.skipdir = function () {
+cc.Codec.GZip.prototype.skipdir = function() {
     var tmp = [];
     var compSize, size, os, i, c;
 
@@ -695,7 +695,7 @@ cc.Codec.GZip.prototype.skipdir = function () {
         i = 0;
         this.nameBuf = [];
         while (c = this.readByte()) {
-            if (c == "7" || c == ":")
+            if (c == '7' || c == ':')
                 i = 0;
             if (i < cc.Codec.GZip.NAMEMAX - 1)
                 this.nameBuf[i++] = c;

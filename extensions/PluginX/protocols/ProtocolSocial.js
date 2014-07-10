@@ -30,7 +30,7 @@ plugin.ShareResultCode = {
 };
 
 plugin.ShareResultListener = cc.Class.extend({
-    onShareResult: function (ret, msg) {
+    onShareResult: function(ret, msg) {
 
     }
 });
@@ -45,21 +45,21 @@ plugin.ProtocolSocial = plugin.PluginProtocol.extend({
      * @param {Number} ret
      * @param {String} msg
      */
-    onShareResult: function (ret, msg) {
+    onShareResult: function(ret, msg) {
         if (this._listener) {
             this._listener.onShareResult(ret, msg);
         }
         else {
-            cc.log("Share result listener of " + this.getPluginName() + " is null!");
+            cc.log('Share result listener of ' + this.getPluginName() + ' is null!');
         }
-        cc.log("Share result of " + this.getPluginName() + " is : " + ret + msg);
+        cc.log('Share result of ' + this.getPluginName() + ' is : ' + ret + msg);
     },
 
     /**
      * set the result listener
      * @param {Function} listener The callback object for share result
      */
-    setResultListener: function (listener) {
+    setResultListener: function(listener) {
         this._listener = listener;
     },
 
@@ -70,12 +70,12 @@ plugin.ProtocolSocial = plugin.PluginProtocol.extend({
      * SharedImagePath The full path of image file need to share (optinal)
      * SharedURL url of the site
      */
-    share: function (info) {
+    share: function(info) {
         if (Object.keys(info).length == 0) {
             if (null != this._listener) {
-                this.onShareResult(plugin.ShareResultCode.Fail, "Share info error");
+                this.onShareResult(plugin.ShareResultCode.Fail, 'Share info error');
             }
-            cc.log("The Share info of " + this.getPluginName() + " is empty!");
+            cc.log('The Share info of ' + this.getPluginName() + ' is empty!');
         }
         else {
             var data = plugin.PluginUtils.getPluginData(this);
@@ -88,9 +88,9 @@ plugin.ProtocolSocial = plugin.PluginProtocol.extend({
      * config the social developer info
      * @param {Object} devInfo This parameter is the info of developer,different plugin have different format
      */
-    configDeveloperInfo: function (devInfo) {
+    configDeveloperInfo: function(devInfo) {
         if (Object.keys(devInfo).length == 0) {
-            cc.log("The developer info is empty for " + this.getPluginName());
+            cc.log('The developer info is empty for ' + this.getPluginName());
         }
         else {
             var data = plugin.PluginUtils.getPluginData(this);
@@ -99,7 +99,7 @@ plugin.ProtocolSocial = plugin.PluginProtocol.extend({
         }
     },
 
-    setDebugMode:function(value){
+    setDebugMode: function(value) {
         //invalid on html5
     }
 });

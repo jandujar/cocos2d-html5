@@ -28,15 +28,15 @@
  */
 var plugin = plugin || {};
 
-plugin.Version = "0.2.0";
+plugin.Version = '0.2.0';
 
 /**
  * plugin param
  * @type {Object}
  */
-plugin.PluginParam = function(type, value){
-    var paramType = plugin.PluginParam.ParamType,tmpValue;
-    switch(type){
+plugin.PluginParam = function(type, value) {
+    var paramType = plugin.PluginParam.ParamType, tmpValue;
+    switch (type) {
         case paramType.TypeInt:
             tmpValue = parseInt(value);
             break;
@@ -55,37 +55,37 @@ plugin.PluginParam = function(type, value){
         default:
             tmpValue = value;
     }
-    return tmpValue
+    return tmpValue;
 };
 
 plugin.PluginParam.ParamType = {
-    TypeInt:1,
-    TypeFloat:2,
-    TypeBool:3,
-    TypeString:4,
-    TypeStringMap:5
+    TypeInt: 1,
+    TypeFloat: 2,
+    TypeBool: 3,
+    TypeString: 4,
+    TypeStringMap: 5
 };
 
 plugin.PluginParam.AdsResultCode = {
-    AdsReceived:0,
-    FullScreenViewShown:1,
-    FullScreenViewDismissed:2,
-    PointsSpendSucceed:3,
-    PointsSpendFailed:4,
-    NetworkError:5,
-    UnknownError:6
+    AdsReceived: 0,
+    FullScreenViewShown: 1,
+    FullScreenViewDismissed: 2,
+    PointsSpendSucceed: 3,
+    PointsSpendFailed: 4,
+    NetworkError: 5,
+    UnknownError: 6
 };
 
 plugin.PluginParam.PayResultCode = {
-    PaySuccess:0,
-    PayFail:1,
-    PayCancel:2,
-    PayTimeOut:3
+    PaySuccess: 0,
+    PayFail: 1,
+    PayCancel: 2,
+    PayTimeOut: 3
 };
 
 plugin.PluginParam.ShareResultCode = {
-    ShareSuccess:0,
-    ShareFail:1,
-    ShareCancel:2,
-    ShareTimeOut:3
+    ShareSuccess: 0,
+    ShareFail: 1,
+    ShareCancel: 2,
+    ShareTimeOut: 3
 };
