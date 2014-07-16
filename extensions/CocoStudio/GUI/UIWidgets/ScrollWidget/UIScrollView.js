@@ -1515,6 +1515,20 @@ ccs.ScrollView = ccs.Layout.extend(/** @lends ccs.ScrollView# */{
         this.setDirection(scrollView._direction);
         this.setBounceEnabled(scrollView._bounceEnabled);
         this.setInertiaScrollEnabled(scrollView._inertiaScrollEnabled);
+    },
+
+    // On mouse Wheel event
+    onScrollWheel: function(event) {
+        if(this.isMouseEnabled()){
+            this.scrollWheel(-event.getWheelDelta(),1,true);
+            return true;
+        }else{
+            return false;
+        }
+    },
+
+    scrollWheel: function(wheel, time, attenuated) {
+        this.startAutoScrollChildrenWithDestination(cc.p(this._innerContainer.getPosition().x, this._innerContainer.getPosition().y + wheel), time, attenuated);
     }
 });
 /**

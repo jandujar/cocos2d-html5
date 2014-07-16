@@ -508,8 +508,11 @@ cc.MouseDispatcher = cc.Class.extend({
                         handler.getDelegate().onMouseExited(mouseObj);
                     break;
                 case cc.SCROLL_WHEEL:
-                    if (handler.getDelegate().onScrollWheel)
-                        handler.getDelegate().onScrollWheel(mouseObj);
+                    if (handler.getDelegate().onScrollWheel){
+                        if(handler.getDelegate().onScrollWheel(mouseObj)){
+                           return;
+                        }
+                    }
                     break;
             }
         }

@@ -120,6 +120,11 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
     _reorderWidgetChildDirty: false,
     _hitted: false,
     _nodes: null,
+
+    // Mouse events (scrollwheel)
+    _isMouseEnabled: false,
+    _mousePriority: 0,
+
     ctor: function() {
         cc.NodeRGBA.prototype.ctor.call(this);
         this._enabled = true;
@@ -173,7 +178,21 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
     onEnter: function() {
         this.updateSizeAndPosition();
         cc.NodeRGBA.prototype.onEnter.call(this);
+
+        var director = cc.Director.getInstance();
+        if (this._isMouseEnabled && cc.MouseDispatcher)
+            director.getMouseDispatcher().addMouseDelegate(this, this._mousePriority);
     },
+
+    onExit: function() {
+        var director = cc.Director.getInstance();
+        
+        if (this._isMouseEnabled && cc.MouseDispatcher)
+            director.getMouseDispatcher().removeMouseDelegate(this);
+
+        cc.NodeRGBA.prototype.onExit.call(this);
+    },
+
 
     visit: function(ctx) {
         if (this._enabled) {
@@ -1243,6 +1262,180 @@ ccs.Widget = ccs.NodeRGBA.extend(/** @lends ccs.Widget# */{
 
     getActionTag: function() {
         return this._actionTag;
+    },
+
+
+    // Temas mouse
+    isMouseEnabled: function() {
+        return this.isVisible() && this._isMouseEnabled;
+    },
+
+    setMouseEnabled: function(enabled) {
+        if (!cc.MouseDispatcher)
+            throw 'cc.MouseDispatcher is undefined, maybe it has been removed from js loading list.';
+
+        if (this._isMouseEnabled != enabled) {
+            this._isMouseEnabled = enabled;
+            if (this._running) {
+                if (enabled)
+                    cc.Director.getInstance().getMouseDispatcher().addMouseDelegate(this, this._mousePriority);
+                else
+                    cc.Director.getInstance().getMouseDispatcher().removeMouseDelegate(this);
+            }
+        }
+    },
+
+    setMousePriority: function(priority) {
+        if (!cc.MouseDispatcher)
+            throw 'cc.MouseDispatcher is undefined, maybe it has been removed from js loading list.';
+
+        if (this._mousePriority !== priority) {
+            this._mousePriority = priority;
+            // Update touch priority with handler
+            if (this._isMouseEnabled) {
+                this.setMouseEnabled(false);
+                this.setMouseEnabled(true);
+            }
+        }
+    },
+
+    getMousePriority: function() {
+        return this._mousePriority;
+    },
+    // ---------------------CCMouseEventDelegate interface------------------------------
+
+    /**
+     * <p>called when the "mouseDown" event is received. <br/>
+     * Return YES to avoid propagating the event to other delegates.  </p>
+     * @param event
+     * @return {Boolean}
+     */
+    onMouseDown: function(event) {
+        return false;
+    },
+
+    /**
+     * <p>called when the "mouseDragged" event is received.         <br/>
+     * Return YES to avoid propagating the event to other delegates.</p>
+     * @param event
+     * @return {Boolean}
+     */
+    onMouseDragged: function(event) {
+        return false;
+    },
+
+    /**
+     * <p> called when the "mouseMoved" event is received.            <br/>
+     * Return YES to avoid propagating the event to other delegates.  </p>
+     * @param event
+     * @return {Boolean}
+     */
+    onMouseMoved: function(event) {
+        return false;
+    },
+
+    /**
+     * <p> called when the "mouseUp" event is received.               <br/>
+     * Return YES to avoid propagating the event to other delegates.  </p>
+     * @param event
+     * @return {Boolean}
+     */
+    onMouseUp: function(event) {
+        return false;
+    },
+
+    //right
+    /**
+     * <p> called when the "rightMouseDown" event is received.        <br/>
+     * Return YES to avoid propagating the event to other delegates.  </p>
+     * @param event
+     * @return {Boolean}
+     */
+    onRightMouseDown: function(event) {
+        return false;
+    },
+
+    /**
+     * <p> called when the "rightMouseDragged" event is received.    <br/>
+     * Return YES to avoid propagating the event to other delegates. </p>
+     * @param event
+     * @return {Boolean}
+     */
+    onRightMouseDragged: function(event) {
+        return false;
+    },
+
+    /**
+     * <p> called when the "rightMouseUp" event is received.          <br/>
+     * Return YES to avoid propagating the event to other delegates.  </p>
+     * @param event
+     * @return {Boolean}
+     */
+    onRightMouseUp: function(event) {
+        return false;
+    },
+
+    //other
+    /**
+     * <p>called when the "otherMouseDown" event is received.         <br/>
+     * Return YES to avoid propagating the event to other delegates.  </p>
+     * @param event
+     * @return {Boolean}
+     */
+    onOtherMouseDown: function(event) {
+        return false;
+    },
+
+    /**
+     * <p> called when the "otherMouseDragged" event is received.     <br/>
+     * Return YES to avoid propagating the event to other delegates.  </p>
+     * @param event
+     * @return {Boolean}
+     */
+    onOtherMouseDragged: function(event) {
+        return false;
+    },
+
+    /**
+     * <p> called when the "otherMouseUp" event is received.          <br/>
+     * Return YES to avoid propagating the event to other delegates.  </p>
+     * @param event
+     * @return {Boolean}
+     */
+    onOtherMouseUp: function(event) {
+        return false;
+    },
+
+    //scroll wheel
+    /**
+     * <p> called when the "scrollWheel" event is received.           <br/>
+     * Return YES to avoid propagating the event to other delegates.  </p>
+     * @param event
+     * @return {Boolean}
+     */
+    onScrollWheel: function(event) {
+        return false;
+    },
+
+    // enter / exit
+    /**
+     *  <p> called when the "mouseEntered" event is received.         <br/>
+     *  Return YES to avoid propagating the event to other delegates. </p>
+     * @param theEvent
+     * @return {Boolean}
+     */
+    onMouseEntered: function(theEvent) {
+        return false;
+    },
+
+    /**
+     * <p> called when the "mouseExited" event is received.          <br/>
+     * Return YES to avoid propagating the event to other delegates. </p>
+     * @param theEvent
+     * @return {Boolean}
+     */
+    onMouseExited: function(theEvent) {
+        return false;
     }
 });
 /**
